@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L Radio – Live</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* ================= HERO BACKGROUND ================= */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('les.jpg') center/cover no-repeat;
+    animation: heroZoom 20s ease-in-out infinite;
+}
+
+/* Soft animated zoom */
+@keyframes heroZoom {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* Dark cinematic overlay */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top right, rgba(255,105,180,0.25), transparent 50%),
+        radial-gradient(circle at bottom left, rgba(255,105,180,0.2), transparent 50%),
+        linear-gradient(to bottom, rgba(5,5,10,0.7), rgba(5,5,10,0.9));
+    z-index: 1;
+}
+
+/* Floating light sweep */
+.hero::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        transparent 40%,
+        rgba(255,105,180,0.15) 50%,
+        transparent 60%
+    );
+    animation: sweep 14s linear infinite;
+    z-index: 1;
+}
+
+@keyframes sweep {
+    0% { transform: translateX(-50%) translateY(-50%); }
+    100% { transform: translateX(50%) translateY(50%); }
+}
+
+/* ================= CONTENT ================= */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Glass card */
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 45px 40px;
+    border-radius: 30px;
+    background: rgba(20,20,30,0.65);
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.7),
+        0 0 90px rgba(255,105,180,0.25);
+}
+
+/* ================= LOGO ================= */
+.logo-section {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255,105,180,0.4), rgba(255,105,180,0.15));
+    box-shadow: 0 0 50px rgba(255,105,180,0.5);
+}
+
+.logo span {
+    font-size: 46px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, #ff69b4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1 {
+    color: #fff;
+    font-size: 30px;
+}
+
+.tagline {
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* ================= PLAYER ================= */
+.player {
+    background: rgba(255,255,255,0.05);
+    border-radius: 22px;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #ff69b4;
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.4; }
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 28px;
+    border: 2px solid rgba(255,105,180,0.6);
+    background: linear-gradient(135deg, rgba(255,105,180,0.5), rgba(255,105,180,0.25));
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 35px rgba(255,105,180,0.6);
+    transition: transform .2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.volume {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+input[type=range] {
+    flex: 1;
+}
+
+/* ================= NOW PLAYING ================= */
+.now {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.now h3 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+}
+
+.track {
+    color: #fff;
+    font-size: 17px;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+    <div class="hero-content">
+
+        <div class="container">
+
+            <div class="logo-section">
+                <div class="logo"><span>CL</span></div>
+                <h1>Coach L Radio</h1>
+                <p class="tagline">Inspire · Teach · Heal</p>
+            </div>
+
+            <div class="player">
+                <div class="status">
+                    <span class="dot"></span>
+                    <span style="color:rgba(255,255,255,0.8)">LIVE NOW</span>
+                </div>
+
+                <div class="controls">
+                    <button id="playBtn" onclick="togglePlay()">▶</button>
+                </div>
+
+                <div class="volume">
+                    <span>🔊</span>
+                    <input type="range" min="0" max="100" value="70" oninput="setVolume(this.value)">
+                </div>
+            </div>
+
+            <div class="now">
+                <h3>NOW PLAYING</h3>
+                <div class="track" id="trackInfo">Tap play to connect…</div>
+            </div>
+
+            <div class="footer">
+                Streaming 24/7 · Coach L Academy
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<audio id="audio">
+    <source src="https://coach-l-radio.duckdns.org/listen/coach-l-radio/radio.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playBtn');
+const track = document.getElementById('trackInfo');
+let playing = false;
+
+audio.volume = 0.7;
+
+function togglePlay() {
+    if (playing) {
+        audio.pause();
+        btn.textContent = '▶';
+        playing = false;
+    } else {
+        audio.play().then(() => {
+            btn.textContent = '⏸';
+            track.textContent = 'Streaming live…';
+            playing = true;
+        });
+    }
+}
+
+function setVolume(v) {
+    audio.volume = v / 100;
+}
+</script>
+
+</body>
+</html>
