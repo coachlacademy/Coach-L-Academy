@@ -1,0 +1,741 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Services - Coach L Academy</title>  
+<style>  
+  * {  
+    margin: 0;  
+    padding: 0;  
+    box-sizing: border-box;  
+  }  
+  
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(60px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-25px); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(200%) rotate(45deg); }
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+    background-size: 400% 400%;
+    animation: gradientFlow 20s ease infinite;
+    color: #1a1a2e;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(240, 147, 251, 0.3), transparent);
+    border-radius: 50%;
+    animation: float 10s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #667eea;
+    margin-left: 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #764ba2;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 20px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 70px;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .page-header h2 {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .page-header p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 500;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .services-intro {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 50px;
+    margin-bottom: 60px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    animation: scaleIn 0.8s ease-out;
+  }
+
+  .services-intro h3 {
+    font-size: 2rem;
+    color: #667eea;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .services-intro p {
+    font-size: 1.2rem;
+    color: #4a5568;
+    line-height: 1.8;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .service-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.8s ease-out;
+    animation-fill-mode: both;
+  }
+
+  .service-card:nth-child(1) { animation-delay: 0.1s; }
+  .service-card:nth-child(2) { animation-delay: 0.2s; }
+  .service-card:nth-child(3) { animation-delay: 0.3s; }
+  .service-card:nth-child(4) { animation-delay: 0.4s; }
+  .service-card:nth-child(5) { animation-delay: 0.5s; }
+  .service-card:nth-child(6) { animation-delay: 0.6s; }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transform: translateX(-100%) rotate(45deg);
+  }
+
+  .service-card:hover::before {
+    animation: shimmer 1.5s ease-in-out;
+  }
+
+  .service-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+    border-color: rgba(102, 126, 234, 0.5);
+  }
+
+  .service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .service-card:hover .service-icon {
+    animation: pulse 1s ease-in-out infinite;
+    transform: rotate(5deg);
+  }
+
+  .service-card h3 {
+    font-size: 1.8rem;
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+
+  .service-card p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .service-features {
+    list-style: none;
+    margin-bottom: 25px;
+  }
+
+  .service-features li {
+    padding: 10px 0;
+    color: #4a5568;
+    font-size: 1rem;
+    position: relative;
+    padding-left: 30px;
+  }
+
+  .service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  .service-price {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+
+  .service-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+
+  .service-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .service-btn:hover::before {
+    left: 100%;
+  }
+
+  .service-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  }
+
+  .service-btn:active {
+    transform: translateY(0);
+  }
+
+  .testimonials-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 60px 50px;
+    margin-bottom: 60px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: slideInLeft 0.8s ease-out;
+  }
+
+  .testimonials-section h3 {
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 800;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .testimonial-card {
+    background: rgba(102, 126, 234, 0.05);
+    padding: 30px;
+    border-radius: 15px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+  }
+
+  .testimonial-card:hover {
+    transform: translateX(10px);
+    background: rgba(102, 126, 234, 0.1);
+  }
+
+  .testimonial-card p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    font-weight: 700;
+    color: #667eea;
+    font-size: 1rem;
+  }
+
+  .cta-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: scaleIn 0.8s ease-out;
+    margin-bottom: 60px;
+  }
+
+  .cta-section h3 {
+    font-size: 2.5rem;
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-weight: 800;
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  .cta-section p {
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin-bottom: 30px;
+    line-height: 1.8;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .cta-btn:hover::before {
+    left: 100%;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  }
+
+  .cta-btn.secondary {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+  }
+
+  .cta-btn.secondary:hover {
+    background: #667eea;
+    color: white;
+  }
+
+  footer {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    color: #4a5568;
+    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-bottom p {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #4a5568;
+  }
+
+  .footer-tagline {
+    font-size: 0.95rem;
+    color: #718096;
+    font-style: italic;
+  }
+
+  @media (max-width: 968px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    header {  
+      padding: 15px 20px;  
+    }  
+
+    header h1 {  
+      font-size: 1.3rem;  
+    }  
+
+    nav a {  
+      margin-left: 20px;  
+      font-size: 0.9rem;  
+    }  
+
+    .page-header h2 {  
+      font-size: 2.5rem;  
+    }  
+
+    .page-header p {  
+      font-size: 1.1rem;  
+    }  
+
+    .services-intro, .testimonials-section, .cta-section {  
+      padding: 40px 30px;  
+    }  
+
+    .service-card {  
+      padding: 30px;  
+    }  
+
+    .cta-buttons {  
+      flex-direction: column;  
+    }  
+
+    .cta-btn {  
+      width: 100%;  
+    }
+  }
+</style>
+</head>  
+<body>  
+  <header>  
+    <h1>Coach L Academy</h1>  
+    <nav>  
+      <a href="index.html">Home</a>  
+      <a href="index5.html">Courses</a>  
+      <a href="contact.html">Contact</a>  
+    </nav>  
+  </header>  
+  
+  <div class="container">  
+    <div class="page-header">  
+      <h2>Our Services</h2>  
+      <p>Personalized coaching and support for your healing journey</p>  
+    </div>    
+    
+    <div class="services-intro">  
+      <h3>Transform Your Life with Expert Guidance</h3>  
+      <p>At Coach L Academy, we offer comprehensive coaching services tailored to your unique needs. Whether you're recovering from narcissistic abuse, building boundaries, or seeking personal growth, we're here to support you every step of the way.</p>  
+    </div>    
+    
+    <div class="services-grid">  
+      <div class="service-card">  
+        <div class="service-icon">💬</div>  
+        <h3>One-on-One Coaching</h3>  
+        <p>Personalized coaching sessions designed specifically for your healing journey and goals.</p>  
+        <ul class="service-features">  
+          <li>60-minute private sessions</li>  
+          <li>Customized action plans</li>  
+          <li>Email support between sessions</li>  
+          <li>Progress tracking tools</li>  
+        </ul>  
+        <div class="service-price">From R850/session</div>  
+        <a href="index3.html" class="service-btn">Book a Session</a>  
+      </div>  
+
+      <div class="service-card">  
+        <div class="service-icon">👥</div>  
+        <h3>Group Coaching</h3>  
+        <p>Join a supportive community of women on similar healing journeys in our group sessions.</p>  
+        <ul class="service-features">  
+          <li>Weekly 90-minute sessions</li>  
+          <li>Safe, confidential space</li>  
+          <li>Peer support network</li>  
+          <li>Monthly group activities</li>  
+        </ul>  
+        <div class="service-price">R450/session</div>  
+        <a href="contact.html" class="service-btn">Join a Group</a>  
+      </div>  
+
+      <div class="service-card">  
+        <div class="service-icon">📦</div>  
+        <h3>Coaching Packages</h3>  
+        <p>Commit to your transformation with our comprehensive coaching packages.</p>  
+        <ul class="service-features">  
+          <li>4, 8, or 12 session packages</li>  
+          <li>Save up to 20% on sessions</li>  
+          <li>Priority scheduling</li>  
+          <li>Bonus resources included</li>  
+        </ul>  
+        <div class="service-price">From R3,200</div>  
+        <a href="contact.html" class="service-btn">View Packages</a>  
+      </div>  
+
+      <div class="service-card">  
+        <div class="service-icon">🎯</div>  
+        <h3>Intensive Programs</h3>  
+        <p>Deep dive into specific areas with our focused intensive programs.</p>  
+        <ul class="service-features">  
+          <li>3-day or 5-day intensives</li>  
+          <li>Immersive healing experience</li>  
+          <li>Breakthrough strategies</li>  
+          <li>Follow-up support included</li>  
+        </ul>  
+        <div class="service-price">From R6,500</div>  
+        <a href="contact.html" class="service-btn">Learn More</a>  
+      </div>  
+
+      <div class="service-card">  
+        <div class="service-icon">🎓</div>  
+        <h3>Workshop Series</h3>  
+        <p>Interactive workshops focusing on specific skills and healing techniques.</p>  
+        <ul class="service-features">  
+          <li>Monthly themed workshops</li>  
+          <li>Practical tools & exercises</li>  
+          <li>Take-home materials</li>  
+          <li>Certificate of completion</li>  
+        </ul>  
+        <div class="service-price">R650/workshop</div>  
+        <a href="contact.html" class="service-btn">See Schedule</a>  
+      </div>  
+
+      <div class="service-card">  
+        <div class="service-icon">📞</div>  
+        <h3>Crisis Support</h3>  
+        <p>Immediate support when you need it most during challenging times.</p>  
+        <ul class="service-features">  
+          <li>Emergency session availability</li>  
+          <li>Same-day booking options</li>  
+          <li>Extended session times</li>  
+          <li>Safety planning support</li>  
+        </ul>  
+        <div class="service-price">R1,200/session</div>  
+        <a href="contact.html" class="service-btn">Get Support</a>  
+      </div>
+    </div>    
+    
+    <div class="testimonials-section">  
+      <h3>What Our Clients Say</h3>  
+      <div class="testimonials-grid">  
+        <div class="testimonial-card">  
+          <p>"Coach L's guidance helped me break free from a toxic relationship and rebuild my self-worth. I'm forever grateful."</p>  
+          <div class="testimonial-author">— Sarah M.</div>  
+        </div>  
+        <div class="testimonial-card">  
+          <p>"The group coaching sessions gave me a community I never knew I needed. We heal together."</p>  
+          <div class="testimonial-author">— Thandiwe K.</div>  
+        </div>  
+        <div class="testimonial-card">  
+          <p>"Life-changing doesn't even begin to describe it. Coach L helped me find myself again."</p>  
+          <div class="testimonial-author">— Jessica T.</div>  
+        </div>  
+      </div>  
+    </div>    
+    
+    <div class="cta-section">  
+      <h3>Ready to Begin Your Journey?</h3>  
+      <p>Take the first step towards healing and transformation today. Book a free 20-minute consultation to discuss which service is right for you.</p>  
+      <div class="cta-buttons">  
+        <a href="contact.html" class="cta-btn">Book Free Consultation</a>  
+        <a href="index5.html" class="cta-btn secondary">Browse Courses</a>  
+      </div>  
+    </div>  
+  </div>  
+  
+  <footer>  
+    <div class="footer-content">  
+      <div class="footer-bottom">  
+        <p>© 2025 Coach L Academy — Inspire • Teach • Heal</p>  
+        <p class="footer-tagline">Transforming lives, one course at a time</p>  
+      </div>  
+    </div>  
+  </footer>  
+</body>  
+</html>
