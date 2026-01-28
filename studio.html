@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L Radio – Host Studio</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { width:100%; height:100%; font-family:'Segoe UI', sans-serif; background:#000; overflow:hidden; }
+
+  /* ===== HEADER + NOTICE ===== */
+  .top-ui { position: relative; z-index: 10; transition: all 0.6s ease; }
+  header { padding: 15px 25px; background: rgba(0,0,0,0.55); display:flex; justify-content:space-between; align-items:center; color:#fff; }
+  header h1 { font-size: 1.1rem; letter-spacing: 1px; }
+  .badge { background: #e53935; padding:6px 12px; border-radius:20px; font-size:0.75rem; font-weight:bold; text-transform:uppercase; }
+  .notice { padding: 12px; background: rgba(255,255,255,0.08); color:#ddd; text-align:center; font-size:0.85rem; }
+  .hidden { opacity:0; pointer-events:none; transform:translateY(-100%); transition: all 0.6s ease; }
+
+  /* ===== EXIT BUTTON ===== */
+  #exitBtn { position: fixed; bottom: 20px; right: 20px; background: #ff3366; color: #fff; padding: 10px 18px; border-radius: 30px; font-weight:bold; cursor:pointer; z-index:20; opacity:0.85; transition:opacity 0.3s; }
+  #exitBtn:hover { opacity:1; }
+
+  /* ===== GUEST ALERT ===== */
+  #guestAlert { position: fixed; bottom: 80px; left:50%; transform:translateX(-50%); background:#20b2aa; color:#fff; padding:10px 20px; border-radius:30px; font-weight:bold; z-index:20; opacity:0; transition:opacity 0.5s; }
+
+  /* ===== WEB DJ ===== */
+  #webdj { position: absolute; top:0; left:0; width:100vw; height:75vh; border:none; z-index:1; }
+
+  /* ===== JITSI IFRAME ===== */
+  #jitsiFrame { position:absolute; bottom:0; left:0; width:100%; height:25vh; border:none; z-index:2; display:none; }
+</style>
+</head>
+
+<body>
+
+<div class="top-ui" id="topUI">
+  <header>
+    <h1>🎙 Coach L Radio – Host Studio</h1>
+    <div class="badge">Host Only</div>
+  </header>
+  <div class="notice">When you connect, AutoDJ will pause and your microphone will go live.</div>
+</div>
+
+<iframe id="webdj" src="https://coach-l-radio.duckdns.org/public/coach-l-radio/dj" allow="microphone; autoplay; fullscreen" allowfullscreen></iframe>
+
+<!-- Exit Button -->
+<button id="exitBtn" onclick="exitStudio()">Exit Studio</button>
+
+<!-- Guest Alert -->
+<div id="guestAlert">Guest Incoming!</div>
+
+<!-- Jitsi iframe -->
+<iframe id="jitsiFrame" allow="camera; microphone; fullscreen" allowfullscreen></iframe>
+
+<script>
+const webdj = document.getElementById("webdj");
+const topUI = document.getElementById("topUI");
+const exitBtn = document.getElementById("exitBtn");
+const jitsiFrame = document.getElementById("jitsiFrame");
+const guestAlert = document.getElementById("guestAlert");
+
+let wakeLock = null;
+async function requestWakeLock() {
+  try { wakeLock = await navigator.wakeLock?.request('screen'); }
+  catch(err){ console.warn('WakeLock failed:', err); }
+}
+async function releaseWakeLock() {
+  if(wakeLock){ await wakeLock.release(); wakeLock=null; }
+}
+
+// Hide UI and show Jitsi when WebDJ loads
+webdj.addEventListener("load", async () => {
+  setTimeout(async () => {
+    topUI.classList.add("hidden");
+    exitBtn.style.display="block";
+
+    // Fullscreen
+    const elem=document.documentElement;
+    if(elem.requestFullscreen) elem.requestFullscreen();
+    else if(elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+    else if(elem.msRequestFullscreen) elem.msRequestFullscreen();
+
+    await requestWakeLock();
+
+    // Show guest Jitsi iframe in same window
+    showGuestCall();
+  },1200);
+});
+
+// Exit Studio
+function exitStudio() {
+  releaseWakeLock();
+  if(document.fullscreenElement){ document.exitFullscreen?.(); }
+  window.location.href = "index.html";
+}
+
+// Show guest Jitsi embedded
+function showGuestCall() {
+  guestAlert.style.opacity = 1;
+  setTimeout(()=>{ guestAlert.style.opacity = 0; }, 2500);
+
+  jitsiFrame.src = "https://meet.jit.si/CoachLGuestRoom";
+  jitsiFrame.style.display = "block";
+}
+</script>
+
+</body>
+</html>
