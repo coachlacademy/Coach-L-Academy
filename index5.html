@@ -1,0 +1,832 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Courses - Coach L Academy</title>  
+<style>  
+  * {  
+    margin: 0;  
+    padding: 0;  
+    box-sizing: border-box;  
+  }  @keyframes gradientFlow {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+from {
+opacity: 0;
+transform: translateY(30px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes slideRight {
+from {
+opacity: 0;
+transform: translateX(-20px);
+}
+to {
+opacity: 1;
+transform: translateX(0);
+}
+}
+
+@keyframes shimmerEffect {
+0% { transform: translateX(-100%); }
+100% { transform: translateX(100%); }
+}
+
+body {
+font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+background-size: 400% 400%;
+animation: gradientFlow 20s ease infinite;
+color: #1a1a2e;
+min-height: 100vh;
+position: relative;
+overflow-x: hidden;
+}
+
+body::before {
+content: '';
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(100px);
+pointer-events: none;
+z-index: 0;
+}
+
+header {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px 60px;
+position: fixed;
+width: 100%;
+top: 0;
+z-index: 100;
+border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+header h1 {
+font-size: 2rem;
+font-weight: 800;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+letter-spacing: -0.5px;
+}
+
+nav a {
+text-decoration: none;
+color: #667eea;
+margin-left: 40px;
+font-weight: 600;
+font-size: 1rem;
+transition: all 0.3s ease;
+position: relative;
+}
+
+nav a::after {
+content: '';
+position: absolute;
+bottom: -5px;
+left: 0;
+width: 0;
+height: 2px;
+background: linear-gradient(90deg, #667eea, #764ba2);
+transition: width 0.3s ease;
+}
+
+nav a:hover {
+color: #764ba2;
+}
+
+nav a:hover::after {
+width: 100%;
+}
+
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 120px 20px 60px;
+position: relative;
+z-index: 1;
+}
+
+.page-header {
+text-align: center;
+margin-bottom: 70px;
+animation: fadeInUp 0.8s ease-out;
+}
+
+.page-header h2 {
+font-size: 3.5rem;
+margin-bottom: 15px;
+color: #ffffff;
+font-weight: 900;
+letter-spacing: -1px;
+text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.page-header p {
+font-size: 1.3rem;
+color: rgba(255, 255, 255, 0.95);
+font-weight: 500;
+text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.category-section {
+margin-bottom: 80px;
+animation: slideRight 0.8s ease-out;
+}
+
+.category-title {
+font-size: 2rem;
+margin-bottom: 35px;
+color: #ffffff;
+font-weight: 700;
+padding: 15px 25px;
+background: rgba(255, 255, 255, 0.2);
+backdrop-filter: blur(10px);
+border-radius: 50px;
+display: inline-block;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+letter-spacing: 0.5px;
+}
+
+.courses-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 30px;
+margin-bottom: 30px;
+}
+
+.course-card {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border-radius: 20px;
+overflow: hidden;
+transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+border: 1px solid rgba(255, 255, 255, 0.3);
+cursor: pointer;
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.course-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+border-color: rgba(102, 126, 234, 0.5);
+}
+
+.course-image {
+width: 100%;
+height: 250px;
+background-size: cover;
+background-position: center;
+position: relative;
+overflow: hidden;
+}
+
+.course-image::before {
+content: '';
+position: absolute;
+inset: 0;
+background: linear-gradient(135deg, rgba(102, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+transition: all 0.4s ease;
+}
+
+.course-card:hover .course-image::before {
+background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+}
+
+.course-image::after {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+transition: none;
+}
+
+.course-card:hover .course-image::after {
+animation: shimmerEffect 1.5s ease-in-out;
+}
+
+.course-card:nth-child(1) .course-image { background-image: url('https://images.unsplash.com/photo-1494783367193-149034c05e8f?w=800&h=600&fit=crop'); }
+.course-card:nth-child(2) .course-image { background-image: url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=800&h=600&fit=crop'); }
+.course-card:nth-child(3) .course-image { background-image: url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop'); }
+
+.category-section:nth-child(3) .course-card:nth-child(1) .course-image { background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=600&fit=crop'); }
+.category-section:nth-child(3) .course-card:nth-child(2) .course-image { background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&h=600&fit=crop'); }
+.category-section:nth-child(3) .course-card:nth-child(3) .course-image { background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=800&h=600&fit=crop'); }
+
+.category-section:nth-child(4) .course-card:nth-child(1) .course-image { background-image: url('https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800&h=600&fit=crop'); }
+.category-section:nth-child(4) .course-card:nth-child(2) .course-image { background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&h=600&fit=crop'); }
+.category-section:nth-child(4) .course-card:nth-child(3) .course-image { background-image: url('https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=800&h=600&fit=crop'); }
+
+.category-section:nth-child(5) .course-card:nth-child(1) .course-image { background-image: url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&h=600&fit=crop'); }
+.category-section:nth-child(5) .course-card:nth-child(2) .course-image { background-image: url('https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=800&h=600&fit=crop'); }
+.category-section:nth-child(5) .course-card:nth-child(3) .course-image { background-image: url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&h=600&fit=crop'); }
+
+.category-section:nth-child(6) .course-card:nth-child(1) .course-image { background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=600&fit=crop'); }
+.category-section:nth-child(6) .course-card:nth-child(2) .course-image { background-image: url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&h=600&fit=crop'); }
+.category-section:nth-child(6) .course-card:nth-child(3) .course-image { background-image: url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&h=600&fit=crop'); }
+
+.category-section:nth-child(7) .course-card:nth-child(1) .course-image { background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=600&fit=crop'); }
+.category-section:nth-child(7) .course-card:nth-child(2) .course-image { background-image: url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&h=600&fit=crop'); }
+.category-section:nth-child(7) .course-card:nth-child(3) .course-image { background-image: url('https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop'); }
+
+.category-section:nth-child(8) .course-card:nth-child(1) .course-image { background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=800&h=600&fit=crop'); }
+.category-section:nth-child(8) .course-card:nth-child(2) .course-image { background-image: url('https://images.unsplash.com/photo-1515191107209-c28698631303?w=800&h=600&fit=crop'); }
+.category-section:nth-child(8) .course-card:nth-child(3) .course-image { background-image: url('https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&h=600&fit=crop'); }
+
+.course-content {
+padding: 30px;
+}
+
+.course-title {
+font-size: 1.5rem;
+margin-bottom: 15px;
+color: #2d3748;
+font-weight: 700;
+line-height: 1.3;
+}
+
+.course-description {
+font-size: 1rem;
+color: #4a5568;
+line-height: 1.6;
+margin-bottom: 20px;
+}
+
+.course-details {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 20px;
+padding-top: 20px;
+border-top: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.course-duration {
+font-size: 0.95rem;
+color: #667eea;
+font-weight: 600;
+background: rgba(102, 126, 234, 0.1);
+padding: 8px 16px;
+border-radius: 20px;
+}
+
+.course-price {
+font-size: 1.8rem;
+font-weight: 800;
+background: linear-gradient(135deg, #667eea, #764ba2);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.enroll-btn {
+width: 100%;
+padding: 16px;
+background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+color: white;
+border: none;
+border-radius: 12px;
+font-size: 1.1rem;
+font-weight: 700;
+cursor: pointer;
+margin-top: 20px;
+transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+position: relative;
+overflow: hidden;
+}
+
+.enroll-btn::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+transition: left 0.5s ease;
+}
+
+.enroll-btn:hover::before {
+left: 100%;
+}
+
+.enroll-btn:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+}
+
+.enroll-btn:active {
+transform: translateY(0);
+}
+
+footer {
+text-align: center;
+padding: 50px 40px;
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(20px);
+color: #4a5568;
+box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+position: relative;
+z-index: 1;
+}
+
+.footer-content {
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.footer-brand {
+margin-bottom: 35px;
+}
+
+.footer-brand h3 {
+font-size: 2rem;
+margin-bottom: 10px;
+background: linear-gradient(135deg, #667eea, #764ba2);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+font-weight: 800;
+}
+
+.footer-brand p {
+font-size: 1.1rem;
+color: #718096;
+}
+
+.footer-links {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 40px;
+margin-bottom: 35px;
+}
+
+.footer-column h4 {
+color: #667eea;
+margin-bottom: 15px;
+font-size: 1.2rem;
+font-weight: 700;
+}
+
+.footer-column a {
+display: block;
+color: #718096;
+text-decoration: none;
+margin-bottom: 10px;
+transition: all 0.3s ease;
+font-size: 1rem;
+}
+
+.footer-column a:hover {
+color: #667eea;
+transform: translateX(5px);
+}
+
+.footer-bottom {
+border-top: 1px solid rgba(102, 126, 234, 0.2);
+padding-top: 25px;
+margin-top: 35px;
+}
+
+.footer-bottom p {
+font-size: 1rem;
+margin-bottom: 8px;
+color: #4a5568;
+}
+
+.footer-tagline {
+font-size: 0.95rem;
+color: #718096;
+font-style: italic;
+}
+
+@media (max-width: 768px) {
+header {
+padding: 15px 20px;
+}
+
+header h1 {  
+  font-size: 1.3rem;  
+}  
+
+nav a {  
+  margin-left: 20px;  
+  font-size: 0.9rem;  
+}  
+
+.page-header h2 {  
+  font-size: 2.5rem;  
+}  
+
+.page-header p {  
+  font-size: 1.1rem;  
+}  
+
+.category-title {  
+  font-size: 1.5rem;  
+}  
+
+.courses-grid {  
+  grid-template-columns: 1fr;  
+}  
+
+.course-title {  
+  font-size: 1.3rem;  
+}  
+
+.course-description {  
+  font-size: 0.95rem;  
+}  
+
+.course-image {  
+  height: 200px;  
+}  
+
+.footer-links {  
+  grid-template-columns: 1fr;  
+  text-align: center;  
+}
+
+}
+</style>
+
+<script>  
+  function enroll(index) {  
+    window.location.href = 'index' + index + '.html';  
+  }  
+</script>  </head>  
+<body>  <header>  
+  <h1>Coach L Academy</h1>  
+  <nav>  
+    <a href="index.html">Home</a>  
+  </nav>  
+</header>  <div class="container">  
+  <div class="page-header">  
+    <h2>Course Catalog</h2>  
+    <p>Choose your path to healing, growth, and transformation</p>  
+  </div>    <section class="category-section">  
+    <h3 class="category-title">Dealing with Narcissistic Relationships</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Understanding Narcissistic Abuse</h4>  
+      <p class="course-description">Learn to identify narcissistic patterns, manipulation tactics, and gaslighting techniques to protect yourself.</p>  
+      <div class="course-details">  
+        <span class="course-duration">6 weeks</span>  
+        <span class="course-price">R3,250</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(11)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Breaking Free from Toxic Relationships</h4>  
+      <p class="course-description">Step-by-step guidance on creating boundaries, building exit strategies, and reclaiming your power.</p>  
+      <div class="course-details">  
+        <span class="course-duration">8 weeks</span>  
+        <span class="course-price">R3,950</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(12)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Healing After Narcissistic Abuse</h4>  
+      <p class="course-description">Rebuild your self-esteem, process trauma, and develop healthy relationship patterns moving forward.</p>  
+      <div class="course-details">  
+        <span class="course-duration">10 weeks</span>  
+        <span class="course-price">R4,800</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(13)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>    <section class="category-section">  
+    <h3 class="category-title">Overcoming Codependency</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Recognizing Codependent Patterns</h4>  
+      <p class="course-description">Identify codependent behaviors, people-pleasing tendencies, and learn the roots of your patterns.</p>  
+      <div class="course-details">  
+        <span class="course-duration">5 weeks</span>  
+        <span class="course-price">R2,800</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(14)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Building Healthy Boundaries</h4>  
+      <p class="course-description">Master the art of saying no, establishing limits, and maintaining emotional independence in relationships.</p>  
+      <div class="course-details">  
+        <span class="course-duration">6 weeks</span>  
+        <span class="course-price">R3,350</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(15)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Self-Love & Independence</h4>  
+      <p class="course-description">Develop a strong sense of self, practice self-care, and build confidence independent of others' validation.</p>  
+      <div class="course-details">  
+        <span class="course-duration">8 weeks</span>  
+        <span class="course-price">R3,600</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(16)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>    <section class="category-section">  
+    <h3 class="category-title">Emotional Healing & Trauma Recovery</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Trauma-Informed Healing</h4>  
+      <p class="course-description">Process past trauma with compassionate techniques including somatic practices and emotional regulation.</p>  
+      <div class="course-details">  
+        <span class="course-duration">12 weeks</span>  
+        <span class="course-price">R5,100</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(17)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Inner Child Healing</h4>  
+      <p class="course-description">Connect with your inner child, heal childhood wounds, and reparent yourself with love and compassion.</p>  
+      <div class="course-details">  
+        <span class="course-duration">8 weeks</span>  
+        <span class="course-price">R3,900</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(18)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Grief & Loss Support</h4>  
+      <p class="course-description">Navigate the grieving process, honor your emotions, and find meaning after loss.</p>  
+      <div class="course-details">  
+        <span class="course-duration">6 weeks</span>  
+        <span class="course-price">R3,000</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(19)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>    <section class="category-section">  
+    <h3 class="category-title">Managing Anxiety & Depression</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Anxiety Management Toolkit</h4>  
+      <p class="course-description">Learn practical strategies to reduce anxiety, manage panic attacks, and calm your nervous system.</p>  
+      <div class="course-details">  
+        <span class="course-duration">7 weeks</span>  
+        <span class="course-price">R3,450</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(20)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Overcoming Depression</h4>  
+      <p class="course-description">Understand depression, develop coping mechanisms, and create a personalized wellness plan.</p>  
+      <div class="course-details">  
+        <span class="course-duration">8 weeks</span>  
+        <span class="course-price">R3,750</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(21)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Mindfulness & Emotional Balance</h4>  
+      <p class="course-description">Practice mindfulness meditation, develop emotional awareness, and find inner peace.</p>  
+      <div class="course-details">  
+        <span class="course-duration">6 weeks</span>  
+        <span class="course-price">R2,900</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(22)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>    <section class="category-section">  
+    <h3 class="category-title">Personal Growth & Self-Discovery</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Finding Your Life Purpose</h4>  
+      <p class="course-description">Discover your passions, identify your values, and create a meaningful life aligned with your purpose.</p>  
+      <div class="course-details">  
+        <span class="course-duration">8 weeks</span>  
+        <span class="course-price">R4,100</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(23)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Confidence & Self-Esteem Building</h4>  
+      <p class="course-description">Transform self-doubt into confidence, overcome impostor syndrome, and own your worth.</p>  
+      <div class="course-details">  
+        <span class="course-duration">6 weeks</span>  
+        <span class="course-price">R3,200</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(24)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Goal Setting & Achievement</h4>  
+      <p class="course-description">Set meaningful goals, create actionable plans, and develop habits that lead to lasting success.</p>  
+      <div class="course-details">  
+        <span class="course-duration">5 weeks</span>  
+        <span class="course-price">R2,500</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(25)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>    <section class="category-section">  
+    <h3 class="category-title">Healthy Relationships & Communication</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Effective Communication Skills</h4>  
+      <p class="course-description">Master active listening, assertive communication, and conflict resolution techniques.</p>  
+      <div class="course-details">  
+        <span class="course-duration">6 weeks</span>  
+        <span class="course-price">R3,100</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(26)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Building Healthy Relationships</h4>  
+      <p class="course-description">Learn what makes relationships thrive, recognize red flags, and cultivate authentic connections.</p>  
+      <div class="course-details">  
+        <span class="course-duration">7 weeks</span>  
+        <span class="course-price">R3,550</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(27)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Family Dynamics & Healing</h4>  
+      <p class="course-description">Navigate family relationships, heal generational patterns, and establish healthy family boundaries.</p>  
+      <div class="course-details">  
+        <span class="course-duration">8 weeks</span>  
+        <span class="course-price">R3,850</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(28)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>    <section class="category-section">  
+    <h3 class="category-title">Navigating Life Transitions</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Career Change & Purpose</h4>  
+      <p class="course-description">Navigate career transitions, discover your calling, and build the courage to make bold moves.</p>  
+      <div class="course-details">  
+        <span class="course-duration">7 weeks</span>  
+        <span class="course-price">R3,650</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(29)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Divorce & Separation Recovery</h4>  
+      <p class="course-description">Heal from relationship endings, rediscover yourself, and create a fulfilling new chapter.</p>  
+      <div class="course-details">  
+        <span class="course-duration">10 weeks</span>  
+        <span class="course-price">R4,200</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(30)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Life After Major Change</h4>  
+      <p class="course-description">Adapt to major life changes, find stability in uncertainty, and embrace new beginnings.</p>  
+      <div class="course-details">  
+        <span class="course-duration">6 weeks</span>  
+        <span class="course-price">R3,150</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(31)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>    <section class="category-section">  
+    <h3 class="category-title">Counseling & Support Topics</h3>  
+    <div class="courses-grid">  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Individual Counseling Foundations</h4>  
+      <p class="course-description">Learn effective counseling techniques for one-on-one sessions, including active listening and therapeutic interventions.</p>  
+      <div class="course-details">  
+        <span class="course-duration">9 weeks</span>  
+        <span class="course-price">R4,300</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(32)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+  <div class="course-card">  
+    <div class="course-image"></div>  
+    <div class="course-content">  
+      <h4 class="course-title">Crisis Intervention & Support</h4>  
+      <p class="course-description">Develop skills to provide immediate support during crises, manage emotional distress, and create safety plans.</p>  
+      <div class="course-details">  
+        <span class="course-duration">7 weeks</span>  
+        <span class="course-price">R3,800</span>  
+      </div>  
+      <button class="enroll-btn" onclick="enroll(33)">Enroll Now</button>  
+    </div>  
+  </div>  
+
+</div>
+
+  </section>  </div>  <footer>  
+  <div class="footer-content">  
+    <div class="footer-bottom">  
+      <p>© 2025 Coach L Academy — Inspire • Teach • Heal</p>  
+      <p class="footer-tagline">Transforming lives, one course at a time</p>  
+    </div>  
+  </div>  
+</footer>  </body>  
+</html>  
