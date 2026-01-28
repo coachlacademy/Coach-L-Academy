@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L Radio – Live</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+/* ================= HERO BACKGROUND ================= */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('/Coach-L-Academy/les.jpg') center/cover no-repeat;
+    animation: heroZoom 20s ease-in-out infinite;
+}
+
+/* Soft animated zoom */
+@keyframes heroZoom {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+/* Almost completely transparent overlay - Coach L's portrait crystal clear */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top right, rgba(255,105,180,0.03), transparent 50%),
+        radial-gradient(circle at bottom left, rgba(255,105,180,0.02), transparent 50%),
+        linear-gradient(to bottom, rgba(5,5,10,0.02), rgba(5,5,10,0.03));
+    z-index: 1;
+}
+
+/* Floating light sweep - barely visible */
+.hero::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        120deg,
+        transparent 40%,
+        rgba(255,105,180,0.02) 50%,
+        transparent 60%
+    );
+    animation: sweep 14s linear infinite;
+    z-index: 1;
+}
+
+@keyframes sweep {
+    0% { transform: translateX(-50%) translateY(-50%); }
+    100% { transform: translateX(50%) translateY(50%); }
+}
+
+/* ================= CONTENT ================= */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Glass card - fully transparent, no black background */
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 45px 40px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(25px) saturate(180%);
+    border: 2px solid rgba(255,255,255,0.5);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.2),
+        0 0 90px rgba(255,105,180,0.25),
+        inset 0 0 80px rgba(255,255,255,0.08);
+}
+
+/* ================= LOGO ================= */
+.logo-section {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255,105,180,0.4), rgba(255,105,180,0.15));
+    box-shadow: 0 0 50px rgba(255,105,180,0.5);
+}
+
+.logo span {
+    font-size: 46px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, #ff69b4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1 {
+    color: #fff;
+    font-size: 30px;
+    text-shadow: 0 2px 15px rgba(0,0,0,0.8), 0 0 30px rgba(0,0,0,0.5);
+}
+
+.tagline {
+    color: rgba(255,255,255,0.9);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+/* ================= PLAYER ================= */
+.player {
+    background: rgba(255,255,255,0.08);
+    border-radius: 22px;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background: #ff69b4;
+    border-radius: 50%;
+    margin-right: 10px;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.4; }
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 28px;
+    border: 2px solid rgba(255,105,180,0.6);
+    background: linear-gradient(135deg, rgba(255,105,180,0.5), rgba(255,105,180,0.25));
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 35px rgba(255,105,180,0.6);
+    transition: transform .2s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.volume {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+input[type=range] {
+    flex: 1;
+}
+
+/* ================= NOW PLAYING ================= */
+.now {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.now h3 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+}
+
+.track {
+    color: #fff;
+    font-size: 17px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.55);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+    <div class="hero-content">
+
+        <div class="container">
+
+            <div class="logo-section">
+                <div class="logo"><span>CL</span></div>
+                <h1>Coach L Radio</h1>
+                <p class="tagline">Inspire · Teach · Heal</p>
+            </div>
+
+            <div class="player">
+                <div class="status">
+                    <span class="dot"></span>
+                    <span style="color:#fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">LIVE NOW</span>
+                </div>
+
+                <div class="controls">
+                    <button id="playBtn" onclick="togglePlay()">▶</button>
+                </div>
+
+                <div class="volume">
+                    <span>🔊</span>
+                    <input type="range" min="0" max="100" value="70" oninput="setVolume(this.value)">
+                </div>
+            </div>
+
+            <div class="now">
+                <h3>NOW PLAYING</h3>
+                <div class="track" id="trackInfo">Tap play to connect…</div>
+            </div>
+
+            <div class="footer">
+                Streaming 24/7 · Coach L Academy
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<audio id="audio">
+    <source src="https://coach-l-radio.duckdns.org/listen/coach-l-radio/radio.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById('audio');
+const btn = document.getElementById('playBtn');
+const track = document.getElementById('trackInfo');
+let playing = false;
+let updateInterval;
+
+audio.volume = 0.7;
+
+// Fetch now playing info from radio stream
+async function updateNowPlaying() {
+    try {
+        // Try multiple possible API endpoints
+        const endpoints = [
+            'https://coach-l-radio.duckdns.org/api/nowplaying/coach-l-radio',
+            'https://coach-l-radio.duckdns.org/api/nowplaying',
+            'https://coach-l-radio.duckdns.org/api/station/1/nowplaying'
+        ];
+        
+        for (const endpoint of endpoints) {
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Handle different response structures
+                    let songInfo = null;
+                    
+                    if (data.now_playing && data.now_playing.song) {
+                        songInfo = data.now_playing.song;
+                    } else if (data.song) {
+                        songInfo = data.song;
+                    } else if (data.current_song) {
+                        songInfo = data.current_song;
+                    }
+                    
+                    if (songInfo) {
+                        if (songInfo.text) {
+                            track.textContent = songInfo.text;
+                        } else if (songInfo.title) {
+                            track.textContent = songInfo.artist 
+                                ? `${songInfo.artist} - ${songInfo.title}` 
+                                : songInfo.title;
+                        } else {
+                            track.textContent = 'Streaming live...';
+                        }
+                        return; // Success, exit function
+                    }
+                }
+            } catch (e) {
+                console.log('Trying next endpoint...');
+            }
+        }
+        
+        // If all endpoints fail, show streaming message
+        if (playing) {
+            track.textContent = 'Streaming live...';
+        }
+    } catch (error) {
+        console.log('Could not fetch now playing info:', error);
+        if (playing) {
+            track.textContent = 'Streaming live...';
+        }
+    }
+}
+
+function togglePlay() {
+    if (playing) {
+        audio.pause();
+        btn.textContent = '▶';
+        playing = false;
+        if (updateInterval) {
+            clearInterval(updateInterval);
+        }
+        track.textContent = 'Tap play to connect…';
+    } else {
+        audio.play().then(() => {
+            btn.textContent = '⏸';
+            track.textContent = 'Loading...';
+            playing = true;
+            updateNowPlaying();
+            // Update now playing every 15 seconds when playing
+            updateInterval = setInterval(updateNowPlaying, 15000);
+        }).catch(err => {
+            console.log('Playback error:', err);
+            track.textContent = 'Error connecting...';
+        });
+    }
+}
+
+function setVolume(v) {
+    audio.volume = v / 100;
+}
+
+// Try to fetch initial now playing info
+updateNowPlaying();
+</script>
+
+</body>
+</html>
