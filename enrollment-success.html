@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enrollment Successful - Coach L Academy</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes checkmark {
+    0% {
+      stroke-dashoffset: 100;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes circle {
+    0% {
+      stroke-dashoffset: 150;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+    background-size: 400% 400%;
+    animation: gradientFlow 20s ease infinite;
+    color: #1a1a2e;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .success-container {
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 60px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 0.8s ease-out;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    margin: 20px;
+  }
+
+  .checkmark-circle {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+  }
+
+  .checkmark-circle svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .checkmark-circle .circle {
+    stroke: #48bb78;
+    stroke-width: 4;
+    fill: none;
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+    animation: circle 0.6s ease-in-out forwards;
+  }
+
+  .checkmark-circle .check {
+    stroke: #48bb78;
+    stroke-width: 4;
+    fill: none;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: checkmark 0.4s 0.6s ease-in-out forwards;
+    stroke-linecap: round;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+
+  .success-message {
+    font-size: 1.2rem;
+    color: #4a5568;
+    line-height: 1.8;
+    margin-bottom: 30px;
+  }
+
+  .next-steps {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    padding: 30px;
+    border-radius: 15px;
+    margin: 30px 0;
+    text-align: left;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+  }
+
+  .next-steps h2 {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 15px;
+  }
+
+  .step:last-child {
+    margin-bottom: 0;
+  }
+
+  .step-number {
+    min-width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-content h3 {
+    font-size: 1.1rem;
+    color: #2d3748;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+
+  .step-content p {
+    color: #4a5568;
+    line-height: 1.6;
+  }
+
+  .contact-info {
+    background: rgba(102, 126, 234, 0.05);
+    padding: 25px;
+    border-radius: 15px;
+    margin: 25px 0;
+  }
+
+  .contact-info h3 {
+    font-size: 1.2rem;
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    color: #4a5568;
+    font-size: 1.05rem;
+  }
+
+  .contact-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .contact-item svg {
+    width: 20px;
+    height: 20px;
+    color: #667eea;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 15px 35px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  }
+
+  .btn-secondary {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .success-container {
+      padding: 40px 25px;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    .btn-group {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="success-container">
+  <div class="checkmark-circle">
+    <svg viewBox="0 0 52 52">
+      <circle class="circle" cx="26" cy="26" r="24"/>
+      <path class="check" d="M14 27l7 7 16-16"/>
+    </svg>
+  </div>
+
+  <h1>Enrollment Successful! 🎉</h1>
+  
+  <p class="success-message">
+    Thank you for enrolling! Your journey towards healing, growth, and transformation begins now. We're excited to have you join us.
+  </p>
+
+  <div class="next-steps">
+    <h2>What Happens Next?</h2>
+    
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h3>Confirmation Email</h3>
+        <p>You'll receive a confirmation email within the next few minutes with your enrollment details and course information.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h3>Coach L Will Contact You</h3>
+        <p>Within 24 hours, Coach L will reach out to schedule your first session and answer any questions you may have.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h3>Pre-Session Materials</h3>
+        <p>Before your first session, you'll receive access to preparatory materials and course resources to help you get the most from your experience.</p>
+      </div>
+    </div>
+
+    <div class="step" id="paymentStep" style="display: none;">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h3>Payment on Arrival</h3>
+        <p>Remember to bring your course payment to your first in-person session. Payment methods accepted include cash, card, or bank transfer.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-info">
+    <h3>Need to Get in Touch?</h3>
+    <div class="contact-item">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+      </svg>
+      <span>lesleedalton@gmail.com</span>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <a href="index.html" class="btn btn-primary">Return to Home</a>
+    <a href="courses.html" class="btn btn-secondary">Browse More Courses</a>
+  </div>
+</div>
+
+<script>
+  // Check if this is a pay on arrival enrollment
+  const urlParams = new URLSearchParams(window.location.search);
+  const paymentType = urlParams.get('payment');
+  
+  if (paymentType === 'arrival') {
+    document.getElementById('paymentStep').style.display = 'flex';
+  }
+</script>
+
+</body>
+</html>

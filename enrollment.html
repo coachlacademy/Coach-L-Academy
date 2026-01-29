@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Enrollment - Coach L Academy</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  @keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+    background-size: 400% 400%;
+    animation: gradientFlow 20s ease infinite;
+    color: #1a1a2e;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+  }
+
+  header h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: #667eea;
+    margin-left: 40px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover {
+    color: #764ba2;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 120px 20px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .enrollment-form {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .form-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 900;
+  }
+
+  .course-summary {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+  }
+
+  .course-summary h3 {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin-bottom: 15px;
+  }
+
+  .summary-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+  }
+
+  .summary-label {
+    color: #4a5568;
+    font-weight: 600;
+  }
+
+  .summary-value {
+    color: #667eea;
+    font-weight: 700;
+  }
+
+  .form-group {
+    margin-bottom: 25px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #2d3748;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .required {
+    color: #e53e3e;
+  }
+
+  .payment-options {
+    margin: 30px 0;
+    padding: 25px;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 15px;
+  }
+
+  .payment-options h3 {
+    font-size: 1.3rem;
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .payment-option {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  .payment-option:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+  }
+
+  .payment-option input[type="radio"] {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+    accent-color: #667eea;
+  }
+
+  .payment-option-content {
+    flex: 1;
+  }
+
+  .payment-option-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 5px;
+  }
+
+  .payment-option-description {
+    font-size: 0.95rem;
+    color: #4a5568;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    margin-top: 30px;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .info-box {
+    background: rgba(102, 126, 234, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 25px;
+    border-left: 4px solid #667eea;
+  }
+
+  .info-box p {
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .info-box p:last-child {
+    margin-bottom: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 50px 40px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    color: #4a5568;
+    box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    margin-top: 60px;
+  }
+
+  .footer-bottom p {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #4a5568;
+  }
+
+  .footer-tagline {
+    font-size: 0.95rem;
+    color: #718096;
+    font-style: italic;
+  }
+
+  .success-message {
+    background: #48bb78;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: none;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .error-message {
+    background: #e53e3e;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    display: none;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    header {
+      padding: 15px 20px;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+    }
+
+    nav a {
+      margin-left: 20px;
+      font-size: 0.9rem;
+    }
+
+    .enrollment-form {
+      padding: 30px 20px;
+    }
+
+    .form-header h2 {
+      font-size: 2rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Coach L Academy</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="enrollment-form">
+    <div class="form-header">
+      <h2>Course Enrollment</h2>
+      <p style="color: #4a5568; font-size: 1.1rem;">Complete the form below to secure your spot</p>
+    </div>
+
+    <div id="successMessage" class="success-message"></div>
+    <div id="errorMessage" class="error-message"></div>
+
+    <div class="course-summary">
+      <h3>Course Details</h3>
+      <div class="summary-detail">
+        <span class="summary-label">Course:</span>
+        <span class="summary-value" id="courseName">Loading...</span>
+      </div>
+      <div class="summary-detail">
+        <span class="summary-label">Duration:</span>
+        <span class="summary-value" id="courseDuration">Loading...</span>
+      </div>
+      <div class="summary-detail">
+        <span class="summary-label">Investment:</span>
+        <span class="summary-value" id="coursePrice">Loading...</span>
+      </div>
+    </div>
+
+    <form id="enrollmentForm">
+      <div class="form-group">
+        <label for="fullName">Full Name <span class="required">*</span></label>
+        <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address <span class="required">*</span></label>
+        <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number <span class="required">*</span></label>
+        <input type="tel" id="phone" name="phone" required placeholder="+27 XX XXX XXXX">
+      </div>
+
+      <div class="form-group">
+        <label for="sessionType">Preferred Session Type <span class="required">*</span></label>
+        <select id="sessionType" name="sessionType" required>
+          <option value="">Select an option</option>
+          <option value="online">Online Sessions</option>
+          <option value="in-person">In-Person Sessions</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="additionalInfo">Additional Information (Optional)</label>
+        <textarea id="additionalInfo" name="additionalInfo" placeholder="Any questions or special requirements?"></textarea>
+      </div>
+
+      <div class="payment-options">
+        <h3>Payment Method <span class="required">*</span></h3>
+        
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="pay-now" required>
+          <div class="payment-option-content">
+            <div class="payment-option-title">💳 Pay Now (Online Payment)</div>
+            <div class="payment-option-description">Secure payment via PayFast. Complete payment immediately and receive instant confirmation.</div>
+          </div>
+        </label>
+
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="pay-on-arrival" required>
+          <div class="payment-option-content">
+            <div class="payment-option-title">🏢 Pay on Arrival</div>
+            <div class="payment-option-description">Submit your enrollment and pay during your first session. Available for in-person sessions only.</div>
+          </div>
+        </label>
+      </div>
+
+      <div class="info-box">
+        <p><strong>What happens next?</strong></p>
+        <p>• You'll receive a confirmation email with course details</p>
+        <p>• Coach L will contact you within 24 hours to schedule your sessions</p>
+        <p>• You'll receive access to course materials before your first session</p>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Complete Enrollment</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2025 Coach L Academy — Inspire • Teach • Heal</p>
+    <p class="footer-tagline">Transforming lives, one course at a time</p>
+  </div>
+</footer>
+
+<script>
+  // Get course details from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseName = urlParams.get('course') || 'Course Name';
+  const coursePrice = urlParams.get('price') || '450';
+  const courseDuration = urlParams.get('duration') || '6 weeks';
+
+  // Display course details
+  document.getElementById('courseName').textContent = courseName;
+  document.getElementById('courseDuration').textContent = courseDuration;
+  document.getElementById('coursePrice').textContent = `R${coursePrice}`;
+
+  // Form submission handler
+  document.getElementById('enrollmentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const paymentMethod = formData.get('paymentMethod');
+    const sessionType = formData.get('sessionType');
+    
+    // Validate pay on arrival is only for in-person
+    if (paymentMethod === 'pay-on-arrival' && sessionType === 'online') {
+      showError('Pay on Arrival is only available for In-Person sessions. Please select Online Payment or change to In-Person sessions.');
+      return;
+    }
+
+    // Disable submit button
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Processing...';
+
+    if (paymentMethod === 'pay-now') {
+      // Redirect to PayFast payment
+      processPayFastPayment(formData);
+    } else {
+      // Submit enrollment for pay on arrival
+      submitEnrollment(formData);
+    }
+  });
+
+  function processPayFastPayment(formData) {
+    // PayFast integration
+    // Note: You'll need to replace these with your actual PayFast credentials
+    const merchantId = 'YOUR_MERCHANT_ID'; // Replace with your PayFast merchant ID
+    const merchantKey = 'YOUR_MERCHANT_KEY'; // Replace with your PayFast merchant key
+    const returnUrl = window.location.origin + '/enrollment-success.html';
+    const cancelUrl = window.location.origin + '/enrollment.html';
+    const notifyUrl = window.location.origin + '/payfast-notify.php'; // Backend webhook
+
+    // Create PayFast form
+    const paymentForm = document.createElement('form');
+    paymentForm.method = 'POST';
+    paymentForm.action = 'https://sandbox.payfast.co.za/eng/process'; // Use https://www.payfast.co.za/eng/process for production
+    
+    const fields = {
+      'merchant_id': merchantId,
+      'merchant_key': merchantKey,
+      'return_url': returnUrl,
+      'cancel_url': cancelUrl,
+      'notify_url': notifyUrl,
+      'name_first': formData.get('fullName').split(' ')[0],
+      'name_last': formData.get('fullName').split(' ').slice(1).join(' ') || formData.get('fullName').split(' ')[0],
+      'email_address': formData.get('email'),
+      'cell_number': formData.get('phone'),
+      'amount': coursePrice + '.00',
+      'item_name': courseName,
+      'item_description': `${courseName} - ${courseDuration} - ${formData.get('sessionType')}`,
+      'custom_str1': formData.get('sessionType'),
+      'custom_str2': formData.get('additionalInfo') || 'None'
+    };
+
+    // Add fields to form
+    for (const [key, value] of Object.entries(fields)) {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value;
+      paymentForm.appendChild(input);
+    }
+
+    // Send enrollment email first
+    sendEnrollmentEmail(formData, 'pay-now');
+
+    // Submit payment form
+    document.body.appendChild(paymentForm);
+    paymentForm.submit();
+  }
+
+  function submitEnrollment(formData) {
+    // Send enrollment email for pay on arrival
+    sendEnrollmentEmail(formData, 'pay-on-arrival');
+    
+    setTimeout(() => {
+      showSuccess('Enrollment submitted successfully! Coach L will contact you within 24 hours to confirm your sessions and payment details.');
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        window.location.href = 'enrollment-success.html?payment=arrival';
+      }, 3000);
+    }, 1000);
+  }
+
+  function sendEnrollmentEmail(formData, paymentType) {
+    // Prepare email data
+    const emailData = {
+      to: 'lesleedalton@gmail.com',
+      subject: `New Course Enrollment: ${courseName}`,
+      studentName: formData.get('fullName'),
+      studentEmail: formData.get('email'),
+      studentPhone: formData.get('phone'),
+      courseName: courseName,
+      coursePrice: coursePrice,
+      courseDuration: courseDuration,
+      sessionType: formData.get('sessionType'),
+      paymentMethod: paymentType,
+      additionalInfo: formData.get('additionalInfo') || 'None provided'
+    };
+
+    // In production, this would send to your backend API
+    // For now, we'll use a mailto link as fallback
+    console.log('Email data to send:', emailData);
+    
+    // You can integrate with EmailJS, SendGrid, or your own backend here
+    // Example with EmailJS (you'd need to set up an EmailJS account):
+    /*
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', emailData)
+      .then(function(response) {
+        console.log('Email sent successfully', response);
+      }, function(error) {
+        console.log('Email failed to send', error);
+      });
+    */
+  }
+
+  function showSuccess(message) {
+    const successMsg = document.getElementById('successMessage');
+    successMsg.textContent = message;
+    successMsg.style.display = 'block';
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showError(message) {
+    const errorMsg = document.getElementById('errorMessage');
+    errorMsg.textContent = message;
+    errorMsg.style.display = 'block';
+    
+    // Re-enable submit button
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Complete Enrollment';
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Hide after 5 seconds
+    setTimeout(() => {
+      errorMsg.style.display = 'none';
+    }, 5000);
+  }
+</script>
+
+</body>
+</html>
