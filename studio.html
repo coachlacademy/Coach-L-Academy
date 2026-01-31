@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L Academy – Studio</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    overflow-x: hidden;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    animation: slideDown 1.2s ease-out;
+    position: sticky;
+    top: 0;
+  }
+  header h1 {
+    font-size: 1.4rem;
+    color: #b36eb7;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  /* ===== INSTRUCTIONS PANEL ===== */
+  #instructions {
+    background: linear-gradient(to right, #fff, #ffe6f0);
+    padding: 15px 20px;
+    margin: 15px;
+    border-radius: 8px;
+    color: #b36eb7;
+    font-weight: 600;
+    transition: opacity 0.5s ease;
+  }
+
+  /* ===== LIVE PANEL ===== */
+  #livePanel {
+    display: none; /* becomes visible when host connects */
+    margin: 15px;
+    padding: 10px;
+    border: 2px solid #b36eb7;
+    border-radius: 8px;
+    background-color: #fff0f5;
+  }
+
+  /* ===== JITSI IFRAME ===== */
+  #jitsi-container {
+    width: 100%;
+    height: 600px;
+    margin: 15px auto;
+    border: 2px solid #b36eb7;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  /* ===== MESSAGE PANEL ===== */
+  #messages {
+    margin: 15px;
+    padding: 10px;
+    border: 2px solid #20b2aa;
+    border-radius: 8px;
+    background-color: #e0f7f7;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 0.95rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background-color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-top: 20px;
+  }
+
+  footer p:first-child {
+    font-weight: 600;
+  }
+  footer p span {
+    display: block;
+    font-weight: normal;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    background-color: #b36eb7;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    margin: 5px;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+  .btn:hover {
+    background-color: #9d58a1;
+    transform: scale(1.05);
+  }
+  .btn-tune {
+    background-color: #ff69b4;
+  }
+  .btn-host {
+    background-color: #6a5acd;
+  }
+  .btn-guest {
+    background-color: #20b2aa;
+  }
+
+  /* ===== KEYFRAMES ===== */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+  }
+</style>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+
+<header>
+  <h1>Coach L Radio Host Studio</h1>
+</header>
+
+<!-- Instructions -->
+<div id="instructions">
+  Welcome! Connect your mic and camera, then click "Join Session". Instructions disappear when live.
+</div>
+
+<!-- Live Panel for Host -->
+<div id="livePanel">
+  <p><strong>Host is live!</strong> All incoming guest messages and podcast comments will appear below.</p>
+</div>
+
+<!-- Jitsi Container -->
+<div id="jitsi-container"></div>
+
+<!-- Guest/Podcast Messages -->
+<div id="messages">
+  <p>No messages yet.</p>
+</div>
+
+<!-- Buttons -->
+<div style="text-align:center; margin:15px;">
+  <button class="btn btn-host" id="joinBtn">
+    <i class="fas fa-headset"></i> Join Session
+  </button>
+  <button class="btn btn-guest" onclick="window.location.href='podcasts.html'">
+    <i class="fas fa-podcast"></i> View Podcasts
+  </button>
+</div>
+
+<footer>
+  <p>© 2025 Coach L Academy<br><span>Inspire • Teach • Heal</span></p>
+</footer>
+
+<script>
+let domain = "meet.jit.si";
+let options = {
+    roomName: "CoachLStudioRoom",
+    width: '100%',
+    height: 600,
+    parentNode: document.querySelector('#jitsi-container'),
+    interfaceConfigOverwrite: {
+      SHOW_JITSI_WATERMARK: false,
+      SHOW_WATERMARK_FOR_GUESTS: false,
+      SHOW_BRAND_WATERMARK: false,
+      SHOW_POWERED_BY: false
+    },
+    configOverwrite: {
+      disableDeepLinking: true,
+      startWithAudioMuted: false,
+      startWithVideoMuted: false
+    }
+};
+let api;
+
+document.getElementById('joinBtn').addEventListener('click', () => {
+    api = new JitsiMeetExternalAPI(domain, options);
+    document.getElementById('instructions').style.opacity = 0;
+    setTimeout(()=>{ document.getElementById('instructions').style.display='none'; }, 500);
+    document.getElementById('livePanel').style.display = 'block';
+
+    // Listen for participants leaving
+    api.addEventListener('readyToClose', () => {
+        document.getElementById('livePanel').style.display = 'none';
+        document.getElementById('instructions').style.opacity = 1;
+        document.getElementById('instructions').style.display = 'block';
+        document.getElementById('jitsi-container').innerHTML = '';
+    });
+});
+
+// Mock guest messages (replace with actual messaging system)
+function addMessage(text){
+    let msgDiv = document.getElementById('messages');
+    let p = document.createElement('p');
+    p.textContent = text;
+    msgDiv.appendChild(p);
+    msgDiv.scrollTop = msgDiv.scrollHeight;
+}
+
+// Example: simulate messages
+setTimeout(()=>addMessage("Guest joined the call."), 3000);
+setTimeout(()=>addMessage("Podcast viewer: Hello!"), 5000);
+</script>
+
+<!-- Jitsi API -->
+<script src="https://meet.jit.si/external_api.js"></script>
+
+</body>
+</html>
