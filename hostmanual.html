@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L Academy – Host Manual</title>
+
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background:#000;
+  color:#fff;
+  line-height:1.6;
+}
+header {
+  padding:20px;
+  background:#111;
+  border-bottom:2px solid #e53935;
+}
+h1 { color:#e53935; margin:0; }
+section {
+  padding:20px;
+  max-width:900px;
+  margin:auto;
+}
+h2 { color:#ff6b6b; margin-top:30px; }
+.box {
+  background:#111;
+  padding:15px;
+  border-radius:10px;
+  margin:15px 0;
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th, td {
+  padding:10px;
+  border-bottom:1px solid #333;
+}
+ul, ol {
+  padding-left:20px;
+}
+footer {
+  padding:20px;
+  text-align:center;
+  font-size:0.8rem;
+  color:#777;
+}
+a { color:#ff6b6b; text-decoration:none; }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎙 Coach L Academy – Host Manual</h1>
+</header>
+
+<section>
+
+<h2>1. Purpose of This Manual</h2>
+<div class="box">
+This manual explains how to operate Coach L Academy Radio as a <strong>Host</strong>. It includes access control, WebDJ operation, live video hosting, guests, schedules, and broadcasting details.
+</div>
+
+<h2>2. Host Access – Password Gate</h2>
+<div class="box">
+To enter the Host Studio, you must provide a password.  
+<strong>Valid Host Passwords:</strong>
+</div>
+
+<table>
+<tr><th>Host Name</th><th>Password</th></tr>
+<tr><td>Coach L</td><td>CoachL2025!</td></tr>
+<tr><td>Sadee Belle</td><td>djsadee</td></tr>
+<tr><td>Alexis Love</td><td>djlexi</td></tr>
+<tr><td>Linda</td><td>djlinda</td></tr>
+<tr><td>DJcat</td><td>djcat</td></tr>
+</table>
+
+<h2>3. Host Studio Layout</h2>
+<ul>
+<li><strong>WebDJ Window</strong> – Controls music and live audio</li>
+<li><strong>Live Video Chat Window</strong> – Host + guests communication</li>
+<li><strong>Schedule Window</strong> – Shows current & upcoming shows</li>
+<li><strong>Scroll Snap Navigation</strong> – Scroll down to move between windows</li>
+</ul>
+
+<h2>4. WebDJ / Streamer Accounts</h2>
+<div class="box">
+Use these accounts in WebDJ or broadcasting software. Only one session per username should be active at a time.
+</div>
+
+<table>
+<tr><th>Username</th><th>Password</th><th>Notes</th></tr>
+<tr><td>CoachL</td><td>CoachL2025!</td><td>Host account for Coach L</td></tr>
+<tr><td>Djlexi</td><td>djlexi</td><td>Host account for Alexis Love</td></tr>
+<tr><td>Djlinda</td><td>djlinda</td><td>Host account for Linda</td></tr>
+<tr><td>Djsadee</td><td>djsadee</td><td>Host account for Sadee Belle</td></tr>
+<tr><td>Guest</td><td>guest</td><td>Guest mic access</td></tr>
+<tr><td>DJcat</td><td>djcat</td><td>Extra host account</td></tr>
+</table>
+
+<h2>5. Connection Details (Streaming Software)</h2>
+<div class="box">
+Use the following connection info to broadcast via Icecast or Shoutcast:
+
+<h3>Icecast Clients</h3>
+<ul>
+<li>Server: <code>coach-l-radio.duckdns.org</code></li>
+<li>Direct IP: <code>46.101.154.220</code></li>
+<li>Port: <code>8005</code></li>
+<li>Mount Name: <code>/</code></li>
+</ul>
+
+<h3>Shoutcast Clients</h3>
+<ul>
+<li>Server: <code>coach-l-radio.duckdns.org</code></li>
+<li>Direct IP: <code>46.101.154.220</code></li>
+<li>Port: <code>8005</code> or <code>8006</code> for some clients</li>
+<li>Password format: <code>dj_username:dj_password</code> or <code>dj_username,dj_password</code></li>
+</ul>
+
+<p>Setup instructions for broadcasting software are available on the <a href="https://coach-l-radio.duckdns.org/docs/user-guide/streaming-software/" target="_blank">AzuraCast Wiki</a>.</p>
+</div>
+
+<h2>6. Going Live (Host Workflow)</h2>
+<ol>
+<li>Enter the Host Studio using one of the host passwords</li>
+<li>WebDJ loads automatically (AutoDJ pauses)</li>
+<li>Scroll down to the <strong>Live Video Chat</strong> window</li>
+<li>Click <strong>Join in Browser</strong></li>
+<li>Enter your name (Host / DJ name)</li>
+<li>Allow microphone and camera access</li>
+<li>You are now live on air</li>
+</ol>
+
+<h2>7. Hosting Guests</h2>
+<div class="box">
+Guests join using guest credentials and appear in the Live Video Chat window. Ensure guests have their microphone enabled and communicate via chat if necessary.
+</div>
+
+<table>
+<tr><th>Guest Account</th><th>Password</th></tr>
+<tr><td>GuestDJ1</td><td>red</td></tr>
+<tr><td>GuestDJ2</td><td>blue</td></tr>
+<tr><td>GuestDJ3</td><td>yellow</td></tr>
+<tr><td>GuestDJ4</td><td>green</td></tr>
+<tr><td>GuestDJ5</td><td>purple</td></tr>
+</table>
+
+<h2>8. Live Chat & Communication</h2>
+<ul>
+<li>Use the built-in chat inside the Live Video window</li>
+<li>Chat allows:
+  <ul>
+    <li>Private coordination with guests</li>
+    <li>Reading listener comments (if enabled)</li>
+    <li>Silent communication during live shows</li>
+  </ul>
+</li>
+</ul>
+
+<h2>9. Ending a Show</h2>
+<div class="box">
+<ul>
+<li>End the Live Video Chat</li>
+<li>WebDJ releases control back to AutoDJ</li>
+<li>Return to standby automatically</li>
+<li>Click <strong>Exit Studio</strong> if finished</li>
+</ul>
+</div>
+
+<h2>10. Best Practices</h2>
+<ul>
+<li>Always test microphone before going live</li>
+<li>Use headphones to avoid echo</li>
+<li>Keep credentials private</li>
+<li>Monitor schedule to avoid overlap</li>
+</ul>
+
+</section>
+
+<footer>
+© 2025 Coach L Academy · Inspire • Teach • Heal
+</footer>
+
+</body>
+</html>
