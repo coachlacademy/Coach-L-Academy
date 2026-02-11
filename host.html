@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L Media – Internal Hosting Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: #1e293b;
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.card {
+    background: #1e293b;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #38bdf8;
+}
+
+.highlight {
+    font-size: 24px;
+    font-weight: bold;
+    color: #22c55e;
+}
+
+.danger {
+    color: #ef4444;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+ul {
+    padding-left: 18px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Coach L Media – Internal Hosting Dashboard</h1>
+    <p>Private Financial & Technical Overview</p>
+</header>
+
+<div class="container">
+
+    <!-- MONTHLY COSTS -->
+    <div class="card">
+        <h2>💰 Monthly Expenses</h2>
+        <p>DigitalOcean Droplet: <strong>R400</strong></p>
+        <p>Domain / DNS: <strong>R30</strong></p>
+        <p>Backups / Storage: <strong>R150</strong></p>
+        <p>Misc Tools: <strong>R100</strong></p>
+
+        <p class="danger">Total Monthly Costs: R680</p>
+    </div>
+
+    <!-- CLIENT INCOME -->
+    <div class="card">
+        <h2>📊 Monthly Client Income</h2>
+        <p>Number of Stations: <strong>3</strong></p>
+        <p>Average Package: <strong>R1200</strong></p>
+
+        <p>Total Monthly Revenue: <strong>R3600</strong></p>
+        <p class="highlight">Estimated Profit: R2920</p>
+    </div>
+
+    <!-- DIGITALOCEAN SPECS -->
+    <div class="card">
+        <h2>🖥 DigitalOcean Server Specs</h2>
+        <ul>
+            <li>Droplet Type: Basic</li>
+            <li>RAM: 4GB</li>
+            <li>vCPU: 2 Cores</li>
+            <li>Storage: 80GB SSD</li>
+            <li>Bandwidth: 4TB Transfer</li>
+            <li>Monthly Cost: R400</li>
+        </ul>
+    </div>
+
+    <!-- AZURACAST TASKS -->
+    <div class="card">
+        <h2>⚙ AzuraCast Maintenance Tasks</h2>
+        <ul>
+            <li>Weekly backup check</li>
+            <li>Monitor stream uptime</li>
+            <li>Check CPU & RAM usage</li>
+            <li>Review AutoDJ storage</li>
+            <li>Clean unused media</li>
+            <li>Update AzuraCast (monthly)</li>
+            <li>Renew domains before expiry</li>
+            <li>Monitor SSL certificates</li>
+        </ul>
+    </div>
+
+    <!-- GROWTH PROJECTION -->
+    <div class="card">
+        <h2>📈 Growth Projection</h2>
+        <div class="grid">
+            <div>
+                <h3>5 Stations</h3>
+                <p>Income: R6000</p>
+                <p>Profit: ± R5300</p>
+            </div>
+            <div>
+                <h3>10 Stations</h3>
+                <p>Income: R12,000</p>
+                <p>Upgrade Server Needed</p>
+            </div>
+            <div>
+                <h3>15 Stations</h3>
+                <p>Income: R18,000</p>
+                <p>Consider Dedicated Server</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    Internal Use Only – Coach L Media Infrastructure
+</footer>
+
+</body>
+</html>
