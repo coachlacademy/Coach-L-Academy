@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Digital Infrastructure for Churches & Ministries</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f3f5fa;
+    color: #1e1e1e;
+}
+
+header {
+    background: linear-gradient(135deg, #0c1c3f, #1c3566);
+    color: white;
+    padding: 120px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 44px;
+    margin-bottom: 20px;
+}
+
+header p {
+    font-size: 20px;
+    max-width: 900px;
+    margin: auto;
+    opacity: 0.95;
+}
+
+.section {
+    max-width: 1200px;
+    margin: 110px auto;
+    padding: 0 20px;
+}
+
+.section h2 {
+    text-align: center;
+    font-size: 34px;
+    margin-bottom: 40px;
+    color: #0c1c3f;
+}
+
+.section .subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    margin-top: -25px;
+    margin-bottom: 50px;
+}
+
+.content-box {
+    background: white;
+    padding: 50px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    margin-bottom: 50px;
+    line-height: 1.8;
+    font-size: 18px;
+}
+
+/* ── PACKAGES ── */
+.packages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 50px;
+}
+
+.package {
+    background: white;
+    padding: 50px;
+    border-radius: 26px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+    border-top: 6px solid #0d6efd;
+}
+
+.package h3 {
+    font-size: 26px;
+    margin-top: 0;
+    color: #0c1c3f;
+}
+
+.price {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 25px 0;
+    color: #0d6efd;
+}
+
+.package ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.package ul li {
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    line-height: 1.6;
+}
+
+.package ul li:last-child {
+    border-bottom: none;
+}
+
+.package ul li:before {
+    content: "✓";
+    color: #0d6efd;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+/* ── IFRAME ── */
+.iframe-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+iframe {
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+    width: 100%;
+    max-width: 100%;
+}
+
+/* ── CTA ── */
+.cta {
+    text-align: center;
+    margin-top: 70px;
+}
+
+.cta a {
+    background: #0d6efd;
+    color: white;
+    padding: 18px 50px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    display: inline-block;
+    transition: background 0.3s;
+}
+
+.cta a:hover {
+    background: #0b5ed7;
+}
+
+/* ── WHY NOT YOUTUBE ── */
+.comparison-explainer {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.platform-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.platform-card {
+    border-radius: 22px;
+    padding: 44px 40px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.09);
+}
+
+.platform-them {
+    background: white;
+    border-top: 6px solid #e0e0e0;
+}
+
+.platform-us {
+    background: linear-gradient(160deg, #0c1c3f, #1c3566);
+    border-top: 6px solid #ffd700;
+    color: white;
+}
+
+.platform-logo {
+    font-size: 42px;
+    margin-bottom: 16px;
+}
+
+.platform-card h3 {
+    font-size: 22px;
+    margin: 0 0 24px 0;
+}
+
+.platform-them h3 {
+    color: #555;
+}
+
+.platform-us h3 {
+    color: white;
+}
+
+.platform-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.platform-list li {
+    padding-left: 28px;
+    position: relative;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.platform-list.bad li {
+    color: #666;
+}
+
+.platform-list.bad li::before {
+    content: "✕";
+    position: absolute;
+    left: 0;
+    color: #ccc;
+    font-weight: bold;
+}
+
+.platform-list.good li {
+    color: rgba(255,255,255,0.9);
+}
+
+.platform-list.good li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.verdict-box {
+    background: white;
+    border-radius: 22px;
+    padding: 50px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    font-size: 18px;
+    line-height: 1.9;
+    color: #333;
+}
+
+.verdict-icon {
+    font-size: 44px;
+    min-width: 50px;
+}
+
+/* ── HOW IT WORKS ── */
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.step {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+    position: relative;
+}
+
+.step-number {
+    width: 56px;
+    height: 56px;
+    background: #0d6efd;
+    color: white;
+    border-radius: 50%;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+}
+
+.step h3 {
+    font-size: 20px;
+    color: #0c1c3f;
+    margin: 0 0 12px 0;
+}
+
+.step p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ── COMPARISON TABLE ── */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+    font-size: 17px;
+}
+
+.comparison-table thead {
+    background: linear-gradient(135deg, #0c1c3f, #1c3566);
+    color: white;
+}
+
+.comparison-table thead th {
+    padding: 24px 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.comparison-table thead th:first-child {
+    text-align: left;
+    padding-left: 36px;
+}
+
+.comparison-table tbody tr {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s;
+}
+
+.comparison-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.comparison-table tbody tr:hover {
+    background: #f7f9ff;
+}
+
+.comparison-table td {
+    padding: 18px 20px;
+    text-align: center;
+    color: #444;
+}
+
+.comparison-table td:first-child {
+    text-align: left;
+    padding-left: 36px;
+    font-weight: 500;
+    color: #1e1e1e;
+}
+
+.check {
+    color: #0d6efd;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.cross {
+    color: #ccc;
+    font-size: 22px;
+}
+
+/* ── WHO THIS IS FOR ── */
+.audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 30px;
+}
+
+.audience-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+    border-left: 5px solid #0d6efd;
+}
+
+.audience-card .icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+
+.audience-card h3 {
+    font-size: 20px;
+    color: #0c1c3f;
+    margin: 0 0 12px 0;
+}
+
+.audience-card p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* ── SOCIAL PROOF ── */
+.stats-bar {
+    background: linear-gradient(135deg, #0c1c3f, #1c3566);
+    border-radius: 24px;
+    padding: 60px 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 40px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.stat-item .stat-number {
+    font-size: 42px;
+    font-weight: bold;
+    color: white;
+    line-height: 1;
+}
+
+.stat-item .stat-label {
+    font-size: 15px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 10px;
+}
+
+.testimonials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.testimonial {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+    position: relative;
+}
+
+.testimonial::before {
+    content: "\201C";
+    font-size: 80px;
+    color: #0d6efd;
+    opacity: 0.15;
+    position: absolute;
+    top: 10px;
+    left: 24px;
+    line-height: 1;
+    font-family: Georgia, serif;
+}
+
+.testimonial p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #333;
+    margin: 0 0 24px 0;
+    font-style: italic;
+}
+
+.testimonial .author {
+    font-weight: bold;
+    color: #0c1c3f;
+    font-size: 16px;
+    font-style: normal;
+}
+
+.testimonial .role {
+    font-size: 14px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* ── FAQ ACCORDION ── */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.faq-item {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 28px 36px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    color: #0c1c3f;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    transition: background 0.2s;
+}
+
+.faq-question:hover {
+    background: #f7f9ff;
+}
+
+.faq-icon {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    background: #0d6efd;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.faq-item.open .faq-icon {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    padding: 0 36px;
+    font-size: 17px;
+    color: #444;
+    line-height: 1.8;
+}
+
+.faq-item.open .faq-answer {
+    max-height: 300px;
+    padding: 0 36px 28px 36px;
+}
+
+/* ── FOOTER ── */
+footer {
+    background: #0c1c3f;
+    color: white;
+    text-align: center;
+    padding: 70px 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Elite Digital Ministry Infrastructure</h1>
+    <p>
+    We design and manage complete digital broadcasting systems for churches and global ministries.
+    This includes 24/7 online radio, full podcast distribution, private video prayer sessions,
+    group meeting facilities, and structured digital growth strategy.
+    </p>
+</header>
+
+<!-- WHY CHURCHES ARE MOVING ONLINE -->
+<section class="section">
+    <h2>Why Churches Are Moving Online</h2>
+    <div class="content-box">
+        The congregation no longer connects only inside a building.
+        Members travel, relocate, and live digitally.
+
+        Ministries that implement structured digital infrastructure experience:
+        increased sermon reach, deeper engagement throughout the week,
+        stronger youth connection, and expanded global influence.
+
+        Digital broadcasting transforms a weekly church into a daily ministry presence.
+    </div>
+</section>
+
+<!-- WHO THIS IS FOR -->
+<section class="section">
+    <h2>Who This Is For</h2>
+    <p class="subtitle">Built for ministry leaders ready to grow beyond four walls.</p>
+    <div class="audience-grid">
+        <div class="audience-card">
+            <div class="icon">⛪</div>
+            <h3>Local Churches</h3>
+            <p>Congregations ready to extend their weekly service into a daily digital presence that keeps members connected and engaged throughout the week.</p>
+        </div>
+        <div class="audience-card">
+            <div class="icon">🌍</div>
+            <h3>Global Ministries</h3>
+            <p>Ministries with international followers who need a reliable, professional broadcasting platform to reach and serve audiences across time zones and continents.</p>
+        </div>
+        <div class="audience-card">
+            <div class="icon">🎙️</div>
+            <h3>Independent Pastors & Evangelists</h3>
+            <p>Preachers building their own platform who need infrastructure that positions them with credibility, reach, and consistent content delivery.</p>
+        </div>
+        <div class="audience-card">
+            <div class="icon">📖</div>
+            <h3>Bible Schools & Teaching Ministries</h3>
+            <p>Organisations distributing structured teaching content who need automated podcast libraries and video learning facilities for students worldwide.</p>
+        </div>
+        <div class="audience-card">
+            <div class="icon">🙏</div>
+            <h3>Prayer Networks</h3>
+            <p>Intercessory and prayer communities who need secure video facilities for private sessions, group gatherings, and scheduled broadcast prayer events.</p>
+        </div>
+        <div class="audience-card">
+            <div class="icon">🚀</div>
+            <h3>Church Plants</h3>
+            <p>New and growing churches establishing their digital presence from the ground up, needing a complete infrastructure rather than pieced-together tools.</p>
+        </div>
+    </div>
+</section>
+
+<!-- WHY NOT YOUTUBE/FACEBOOK -->
+<section class="section">
+    <h2>Why Not Just Use YouTube or Facebook?</h2>
+    <p class="subtitle">A question every pastor asks. Here is the honest answer.</p>
+
+    <div class="comparison-explainer">
+
+        <div class="platform-compare">
+            <div class="platform-card platform-them">
+                <div class="platform-logo">📺</div>
+                <h3>YouTube & Facebook Live</h3>
+                <ul class="platform-list bad">
+                    <li>You own nothing — the platform owns your content and audience</li>
+                    <li>Channels deleted or restricted by algorithm with no warning</li>
+                    <li>Algorithm decides who sees your sermons, not you</li>
+                    <li>Your ministry competes with entertainment, ads, and distractions</li>
+                    <li>No brand identity — you are content on their platform</li>
+                    <li>Goes offline when you stop streaming — no 24/7 presence</li>
+                    <li>No private pastoral care or prayer facilities</li>
+                    <li>No custom mobile app or dedicated ministry player</li>
+                    <li>No podcast automation or multi-platform distribution</li>
+                    <li>Platform can monetise your sermons with ads you cannot control</li>
+                </ul>
+            </div>
+
+            <div class="platform-card platform-us">
+                <div class="platform-logo">📡</div>
+                <h3>Elite Ministry Infrastructure</h3>
+                <ul class="platform-list good">
+                    <li>Your ministry owns its platform, content, and audience completely</li>
+                    <li>No algorithm, no restrictions, no risk of sudden removal</li>
+                    <li>You control what plays, when it plays, and who hears it</li>
+                    <li>Dedicated branded environment — no distractions, no competition</li>
+                    <li>Full ministry identity: radio station, web player, mobile app</li>
+                    <li>Broadcasting 24 hours a day, 7 days a week, 365 days a year</li>
+                    <li>Secure private video prayer and pastoral care facilities</li>
+                    <li>Custom mobile app listed on Google Play and Apple App Store</li>
+                    <li>Automatic podcast distribution to all major platforms</li>
+                    <li>Zero ads, zero distractions — pure ministry content only</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="verdict-box">
+            <div class="verdict-icon">💡</div>
+            <p style="margin:0;">
+                <strong>YouTube and Facebook are billboards on someone else's highway.</strong><br><br>
+                This infrastructure is your own broadcast network — running 24/7, under your own name,
+                on your own platform, with your congregation able to tune in at any moment of the day
+                from their own dedicated ministry app.<br><br>
+                YouTube and Facebook can still be used as <em>discovery channels</em> that drive new
+                listeners back to your owned platform. But they should never be the foundation of
+                your ministry's digital presence.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+    <h2>How It Works</h2>
+    <p class="subtitle">From consultation to full launch — a clear, managed process.</p>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Strategy Consultation</h3>
+            <p>We assess your ministry goals, current reach, and digital readiness to determine the right infrastructure package for your needs.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Infrastructure Build</h3>
+            <p>Your radio station, podcast system, video facility, and web presence are professionally configured and branded for your ministry.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Team Onboarding</h3>
+            <p>We walk your team through the system. Simple processes are set up so your ministry can operate confidently without technical knowledge.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">4</div>
+            <h3>Go Live</h3>
+            <p>Your digital ministry infrastructure launches. Sermons broadcast, podcasts distribute, and your online presence becomes active and searchable.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">5</div>
+            <h3>Ongoing Management</h3>
+            <p>We monitor, maintain, and optimize your infrastructure every month so your team stays focused entirely on ministry delivery.</p>
+        </div>
+    </div>
+</section>
+
+<!-- PODCAST NETWORK -->
+<section class="section">
+    <h2>Podcast Network Integration</h2>
+    <div class="content-box">
+        Every sermon can automatically be converted into structured podcast episodes.
+
+        Your ministry content can be distributed to major podcast platforms,
+        allowing members and global followers to listen on-demand.
+
+        This creates:
+        continuous sermon access,
+        global discoverability,
+        and permanent archived teaching libraries.
+    </div>
+</section>
+
+<!-- VIDEO PRAYER -->
+<section class="section">
+    <h2>Integrated Video Prayer & Meeting System</h2>
+    <div class="content-box">
+        The infrastructure includes secure video facilities for:
+        one-on-one private pastoral prayer sessions,
+        scheduled group prayer meetings,
+        leadership meetings,
+        online counselling sessions,
+        and special digital conferences.
+
+        This strengthens pastoral care while expanding access beyond physical limits.
+    </div>
+</section>
+
+<!-- LIVE RADIO -->
+<section class="section">
+    <h2>Live Radio Demonstration</h2>
+    <div class="iframe-container">
+        <iframe
+            src="https://coach-l-radio.duckdns.org/public/coach-l-radio"
+            height="500"
+            allow="autoplay">
+        </iframe>
+    </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section">
+    <h2>Infrastructure vs. Basic Hosting</h2>
+    <p class="subtitle">See the difference between managed ministry infrastructure and standard web hosting.</p>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Standard Church Website</th>
+                <th>Elite Ministry Infrastructure</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>24/7 Live Radio Broadcasting</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Automated Podcast Distribution</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Private Video Prayer Facility</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Dedicated Ministry Web Player</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Listener & Engagement Analytics</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Live Service Streaming</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Monthly Technical Maintenance</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Global Multi-Platform Reach</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Digital Ministry Strategy Consultation</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Basic Web Presence</td>
+                <td><span class="check">✓</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Custom Mobile Application Build</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Google Play Store Listing & Submission</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+                <td>Apple iOS App Store Listing & Submission</td>
+                <td><span class="cross">✕</span></td>
+                <td><span class="check">✓</span></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="section">
+    <h2>Ministry Impact in Numbers</h2>
+    <p class="subtitle">Results from ministries running on this infrastructure.</p>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Continuous Broadcasting</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">10+</div>
+            <div class="stat-label">Podcast Platforms Reached</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Fully Managed Systems</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">Global</div>
+            <div class="stat-label">Listener Reach</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">&lt;3 Wks</div>
+            <div class="stat-label">Average Launch Time</div>
+        </div>
+    </div>
+
+    <div class="testimonials">
+        <div class="testimonial">
+            <p>Since launching our digital infrastructure, our sermon reach has extended far beyond our Sunday congregation. Members who travel or relocate are still fully connected every single week.</p>
+            <div class="author">Pastor M. Dlamini</div>
+            <div class="role">Senior Pastor, Johannesburg</div>
+        </div>
+        <div class="testimonial">
+            <p>The radio station gave our ministry a professional identity we never had before. People across the country are tuning in daily. This is not hosting — this is a real broadcasting platform.</p>
+            <div class="author">Evangelist T. Nkosi</div>
+            <div class="role">Independent Ministry, Cape Town</div>
+        </div>
+        <div class="testimonial">
+            <p>Our leadership team was worried about managing technology. We don't manage anything. It's all handled for us. We just focus on ministry and our reach keeps growing.</p>
+            <div class="author">Bishop R. Mokoena</div>
+            <div class="role">Regional Church Network, Pretoria</div>
+        </div>
+    </div>
+</section>
+
+<!-- RETURN ON MINISTRY IMPACT -->
+<section class="section">
+    <h2>Return on Ministry Impact</h2>
+    <div class="content-box">
+        Churches implementing structured digital broadcasting typically see:
+        higher weekly engagement beyond physical attendance,
+        greater sermon consumption through podcast platforms,
+        increased international reach,
+        stronger pastoral connection through video prayer sessions,
+        and improved perception of leadership innovation.
+
+        This is long-term ministry infrastructure, not simple hosting.
+    </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="section">
+    <h2>Infrastructure Investment Packages</h2>
+
+    <div class="packages">
+
+        <div class="package">
+            <h3>Digital Foundation</h3>
+            <div class="price">Setup: R4,900<br>Monthly: R1,250</div>
+            <ul>
+                <li>24/7 branded online radio station</li>
+                <li>Structured sermon scheduling system</li>
+                <li>Podcast conversion setup</li>
+                <li>Dedicated ministry web player</li>
+                <li>Secure private video prayer facility</li>
+                <li>Monthly system monitoring and maintenance</li>
+                <li>Technical support management</li>
+            </ul>
+        </div>
+
+        <div class="package">
+            <h3>Ministry Expansion</h3>
+            <div class="price">Setup: R12,900<br>Monthly: R2,950</div>
+            <ul>
+                <li>Everything in Digital Foundation</li>
+                <li>Full podcast network distribution</li>
+                <li>Live service broadcasting capability</li>
+                <li>Group prayer & online meeting facility</li>
+                <li>Listener analytics dashboard</li>
+                <li>Custom ministry domain integration</li>
+                <li>Priority support & technical management</li>
+                <li>5 Page Website</li>
+            </ul>
+        </div>
+
+        <div class="package" style="border-top-color: #ffd700; position: relative;">
+            <div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: #ffd700; color: #0c1c3f; font-weight: bold; font-size: 13px; padding: 5px 18px; border-radius: 20px; white-space: nowrap;">MOST COMPLETE</div>
+            <h3>Global Ministry Authority</h3>
+            <div class="price">Setup: R29,900<br>Monthly: R5,900</div>
+            <ul>
+                <li>Complete managed broadcasting infrastructure</li>
+                <li>Advanced podcast strategy & multi-platform distribution</li>
+                <li>Integrated video conference & digital event hosting</li>
+                <li>Full brand positioning & digital identity setup</li>
+                <li>Ongoing optimization & infrastructure scaling</li>
+                <li>Strategic digital ministry consultation</li>
+                <li>7 Page Website build</li>
+                <li>Custom mobile application build</li>
+                <li>Google Play Store listing & submission</li>
+                <li>Apple iOS App Store listing & submission</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="cta">
+        <a href="mailto:ucsolut011@gmail.com">Schedule a Private Strategy Consultation</a>
+    </div>
+</section>
+
+<!-- FAQ ACCORDION -->
+<section class="section">
+    <h2>Frequently Asked Leadership Questions</h2>
+    <div class="faq-list">
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Is this difficult for our church team to manage?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                No. The system is fully managed on your behalf. Your team focuses entirely on ministry delivery. All technical infrastructure, maintenance, and monitoring is handled professionally so you never need to worry about the backend.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Can members access this on mobile devices?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. The entire system is accessible across desktop, mobile, and tablet devices globally. Members can tune into your radio station, access sermons, and join video prayer sessions from any device, anywhere in the world.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Is podcast distribution automatic?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. Once the system is configured, sermons can be structured and distributed consistently to all major podcast platforms without your team needing to manage each platform manually. The process is streamlined and reliable.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Are video prayer sessions secure?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. All video sessions are private, access-controlled, and structured specifically for pastoral care environments. One-on-one prayer sessions and group meetings are kept secure and confidential.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                How quickly can we launch?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Most ministries can be fully launched within two to three weeks, depending on the package selected and your ministry's readiness. The process is guided and managed from start to finish.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                What happens if something goes wrong with the system?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                All packages include ongoing technical support and system monitoring. Issues are identified and resolved professionally. You will not be left to troubleshoot alone — that is part of the managed infrastructure service.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                Can we upgrade our package as we grow?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. The infrastructure is built to scale. As your ministry grows, you can move from Digital Foundation to Ministry Expansion or Global Ministry Authority at any point. Your existing setup carries forward seamlessly.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFaq(this)">
+                What is included in the mobile application build?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                The Global Ministry Authority package includes a fully custom mobile application built for your ministry, along with professional submission and listing on both the Google Play Store and the Apple iOS App Store. Members can download your ministry's app directly from their device's app store.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- LIMITED INTAKE NOTICE -->
+<section class="section">
+    <div class="content-box" style="text-align:center;">
+        Due to the strategic and managed nature of this infrastructure,
+        we onboard a limited number of ministries per quarter
+        to ensure quality implementation and dedicated support.
+    </div>
+</section>
+
+<footer>
+    Elite Digital Ministry Infrastructure Solutions<br>
+    Contact: ucsolut011@gmail.com
+</footer>
+
+<script>
+function toggleFaq(button) {
+    const item = button.parentElement;
+    const isOpen = item.classList.contains('open');
+
+    // Close all open items
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+    });
+
+    // Open clicked item if it wasn't already open
+    if (!isOpen) {
+        item.classList.add('open');
+    }
+}
+</script>
+
+</body>
+</html>
