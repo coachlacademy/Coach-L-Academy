@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Love & Independence - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+
+  .user-info { display: flex; align-items: center; gap: 15px; }
+
+  .avatar {
+    width: 45px; height: 45px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: bold;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .progress-overview {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .progress-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 20px; border-radius: 12px; text-align: center;
+  }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+
+  .progress-bar {
+    width: 100%; height: 25px; background: #e0e0e0;
+    border-radius: 15px; overflow: hidden; margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 12px 25px; background: white; border: none;
+    border-radius: 10px 10px 0 0; cursor: pointer;
+    font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease;
+  }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+  .module-selector {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    overflow-x: auto; padding-bottom: 10px;
+  }
+
+  .module-btn {
+    padding: 12px 25px; background: white;
+    border: 2px solid #667eea; border-radius: 25px;
+    cursor: pointer; font-size: 1rem; font-weight: 600;
+    color: #667eea; white-space: nowrap; transition: all 0.3s ease;
+  }
+  .module-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border-color: transparent;
+  }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .video-section {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .video-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px; margin-top: 20px;
+  }
+
+  .video-player {
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative; padding-top: 56.25%;
+  }
+
+  .video-placeholder {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  }
+
+  .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(102, 126, 234, 0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+
+  .lesson-content {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+
+  .assessment-section {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .quiz-question {
+    background: #f8f9fa; padding: 20px; border-radius: 12px;
+    margin-bottom: 20px; border-left: 4px solid #667eea;
+  }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-option {
+    padding: 12px 20px; background: white; border: 2px solid #e0e0e0;
+    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+
+  .submit-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; border-radius: 25px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s ease; margin-top: 20px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+  .already-passed-notice {
+    background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+
+  .resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .resource-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+
+  .resource-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem; margin-bottom: 15px;
+  }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+
+  .download-badge {
+    display: inline-block; padding: 5px 12px; background: #4caf50;
+    color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px;
+  }
+
+  .admin-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white; border: none; border-radius: 50px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease;
+  }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+
+  @media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    .video-grid { grid-template-columns: 1fr; }
+    .module-selector { flex-wrap: wrap; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Self-Love &amp; Independence</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Name Input Modal -->
+<div id="nameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px; border-radius:20px; max-width:500px; width:90%; text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Self-Love &amp; Independence</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to get started with this transformative course:</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Start Learning 🚀</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-card">
+        <h3 id="modulesComplete">0/6</h3>
+        <p>Modules Completed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+        <h3 id="lessonsViewed">0/12</h3>
+        <p>Lessons Viewed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+        <h3 id="assessmentsPassed">0/6</h3>
+        <p>Assessments Passed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content', this)">Content</button>
+    <button class="tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment', this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn"        onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn"        onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn"        onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn"        onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn"        onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <!-- Content Tab -->
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('tutorial', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('basic', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <!-- Assessment Tab -->
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <!-- One-on-One Session Section -->
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalized guidance and support.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your specific situation.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera; microphone; fullscreen; display-capture; autoplay"
+          style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'Self-Love & Independence';
+const TOTAL_WEEKS      = 6;
+const STORAGE_PREFIX   = 'coachL_SLI_'; // unique per course
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+
+let completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'completedWeeks') || '[]')
+);
+
+function saveCompletedWeeks() {
+  localStorage.setItem(STORAGE_PREFIX + 'completedWeeks', JSON.stringify([...completedWeeks]));
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.onload = function () {
+  const savedName  = localStorage.getItem('studentName');
+  const savedEmail = localStorage.getItem('studentEmail');
+  if (savedName && savedEmail) {
+    studentInfo.name  = savedName;
+    studentInfo.email = savedEmail;
+    updateUserDisplay();
+  } else {
+    document.getElementById('nameModal').style.display = 'flex';
+  }
+  updateProgress();
+  refreshModuleButtons();
+  const firstIncomplete = [1,2,3,4,5,6].find(w => !completedWeeks.has(w)) || 1;
+  selectModule(firstIncomplete);
+};
+
+// ============================================================
+// USER INFO
+// ============================================================
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function saveUserInfo() {
+  const name  = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  if (!name)                { alert('Please enter your full name.'); return; }
+  if (!email)               { alert('Please enter your email address.'); return; }
+  if (!isValidEmail(email)) {
+    alert('⚠️ "' + email + '" doesn\'t look like a valid email address.\n\nExample: yourname@gmail.com');
+    document.getElementById('studentEmail').focus();
+    return;
+  }
+  studentInfo.name  = name;
+  studentInfo.email = email;
+  localStorage.setItem('studentName', name);
+  localStorage.setItem('studentEmail', email);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateEmail() {
+  const current  = localStorage.getItem('studentEmail') || '';
+  const newEmail = prompt('Update your email address:', current);
+  if (newEmail === null) return;
+  if (!isValidEmail(newEmail.trim())) { alert('⚠️ That doesn\'t look like a valid email. Please try again.'); return; }
+  studentInfo.email = newEmail.trim();
+  localStorage.setItem('studentEmail', newEmail.trim());
+  alert('✅ Email updated to: ' + newEmail.trim());
+}
+
+function updateUserDisplay() {
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = 'Welcome, ' + studentInfo.name + '!';
+}
+
+// ============================================================
+// MODULE BUTTONS
+// ============================================================
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1;
+    btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) {
+      btn.classList.add('completed');
+      btn.textContent = 'Week ' + w + ' ✓';
+    } else {
+      btn.textContent = 'Week ' + w;
+    }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) {
+  currentWeek = week;
+  refreshModuleButtons();
+  updateWeekContent();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+// ============================================================
+// CONTENT RENDERING
+// ============================================================
+function updateWeekContent() {
+  const week = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent      = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent  = 'Tutorial: ' + week.tutorialVideo;
+  document.getElementById('basicTitle').textContent     = 'Basic Learning: ' + week.basicVideo;
+  document.getElementById('lessonContent').innerHTML    = week.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML    = week.resources.map(r => `
+    <div class="resource-card" onclick="downloadResource('${r.file}', '${r.title}')">
+      <div class="resource-icon">${r.icon}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+      <span class="download-badge">📥 Download</span>
+    </div>
+  `).join('');
+  renderAssessment();
+}
+
+// ============================================================
+// ASSESSMENT
+// ============================================================
+function renderAssessment() {
+  const week   = weekData[currentWeek];
+  const passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+
+  if (passed) {
+    html += `
+      <div class="already-passed-notice">
+        <h3>✅ You already passed this week!</h3>
+        <p>Great work! Your score has been recorded. You can review any week's content freely at any time.</p>
+      </div>`;
+  } else {
+    html += `<p style="margin-bottom:30px;color:#666;">Test your understanding of this week's material. You need 70% to pass.</p>`;
+  }
+
+  week.assessment.forEach((q, i) => {
+    html += `
+      <div class="quiz-question">
+        <h4>Question ${i + 1}: ${q.question}</h4>
+        <div class="quiz-options">
+          ${q.options.map((opt, j) => `
+            <label class="quiz-option">
+              <input type="radio" name="q${i}" value="${j}" ${passed ? 'disabled' : ''}>
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>`;
+  });
+
+  if (!passed) html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+  const week      = weekData[currentWeek];
+  let correct     = 0, answers = [], allAnswered = true;
+  week.assessment.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) { allAnswered = false; return; }
+    const userAnswer = parseInt(selected.value);
+    const isCorrect  = userAnswer === q.correct;
+    if (isCorrect) correct++;
+    answers.push({ question: q.question, userAnswer: q.options[userAnswer], correctAnswer: q.options[q.correct], isCorrect });
+  });
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+  const score  = Math.round((correct / week.assessment.length) * 100);
+  const passed = score >= 70;
+  submitToGoogleSheets(currentWeek, score, correct, week.assessment.length, answers, passed);
+  if (passed) {
+    completedWeeks.add(currentWeek);
+    saveCompletedWeeks();
+    updateProgress();
+    refreshModuleButtons();
+    renderAssessment();
+    if (currentWeek < TOTAL_WEEKS) {
+      alert(`🎉 Congratulations! You passed with ${score}%!\n\n${correct}/${week.assessment.length} correct.\n\nContinue to Week ${currentWeek + 1} whenever you're ready.`);
+    } else {
+      alert(`🏆 You've completed the entire course with ${score}%!\n\nYour certificate is being generated and will be emailed to you. 🎓`);
+    }
+  } else {
+    alert(`You scored ${score}% (${correct}/${week.assessment.length} correct).\n\nYou need 70% to pass. Review the material and try again — you've got this!`);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEETS SUBMISSION
+// ============================================================
+function submitToGoogleSheets(week, score, correct, total, answers, passed) {
+  const payload = {
+    secretKey: SECRET_KEY, timestamp: new Date().toLocaleString(),
+    studentName: studentInfo.name, studentEmail: studentInfo.email,
+    courseName: COURSE_NAME, week, score, correct, total,
+    passed: passed ? 'YES' : 'NO', detailedAnswers: JSON.stringify(answers)
+  };
+  fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(() => console.log('✅ Submitted')).catch(err => console.error('❌ Error:', err));
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  all.push({ ...payload, answers });
+  localStorage.setItem('assessmentResults', JSON.stringify(all));
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const done = completedWeeks.size;
+  const pct  = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width       = pct + '%';
+  document.getElementById('progressBar').textContent       = pct + '%';
+  document.getElementById('modulesComplete').textContent   = done + '/' + TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent     = (done * 2) + '/' + (TOTAL_WEEKS * 2);
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function playVideo(type, week) {
+  alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed (YouTube, Vimeo, etc.).`);
+}
+function markComplete(week) {
+  showTab('assessment', document.querySelectorAll('.tab')[2]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function downloadResource(file, title) {
+  fetch('resources/' + file, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) {
+        const a = document.createElement('a');
+        a.href = 'resources/' + file; a.download = file; a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'); }
+    })
+    .catch(() => alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall() {
+  const iframe = document.getElementById('jitsiFrame');
+  const room   = 'coachL-' + (studentInfo.email || 'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display = 'block';
+  document.getElementById('videoCallContainer').scrollIntoView({ behavior: 'smooth' });
+}
+function endVideoCall() {
+  if (confirm('Are you sure you want to end the session?')) {
+    document.getElementById('jitsiFrame').src = '';
+    document.getElementById('videoCallContainer').style.display = 'none';
+  }
+}
+function viewAllResults() {
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!all.length) { alert('No assessment results yet.'); return; }
+  const rows = all.map((r, i) => `
+    <div class="result-card ${r.passed === 'YES' ? 'passed' : 'failed'}">
+      <h2>Submission #${i+1} — ${r.passed === 'YES' ? '✅ PASSED' : '❌ FAILED'}</h2>
+      <p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p>
+      <p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p>
+      <p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p>
+      <div class="details"><h3>Detailed Answers:</h3><table>
+        <tr><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th></tr>
+        ${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}
+      </table></div>
+    </div>`).join('');
+  const win = window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}
+    .result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+    .passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}
+    .details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}
+    table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+    th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}
+  </style></head><body><h1>📊 Results – Coach L Academy</h1>
+  <p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>
+  ${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Self-Love & Independence (6 weeks, 10 questions each)
+// ============================================================
+const weekData = {
+
+  1: {
+    title: "What Is Self-Love — Really?",
+    tutorialVideo: "Self-Love Beyond the Buzzword",
+    basicVideo: "Why Self-Love Is the Foundation of Everything",
+    content: `
+      <h2>Week 1: What Is Self-Love — Really?</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Define self-love in practical, grounded terms</li>
+        <li>Distinguish self-love from selfishness and self-obsession</li>
+        <li>Understand why self-love is the foundation of healthy relationships and independence</li>
+        <li>Begin identifying where self-love is currently absent in your life</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Self-Love Actually Is</h4>
+      <p>Self-love is one of the most used — and most misunderstood — phrases in personal development. It is not bubble baths and positive affirmations, though those can be part of it. At its core, self-love is a committed, active relationship with yourself — the ongoing practice of treating yourself with the same care, honesty, and respect you would offer someone you deeply love.</p>
+      <ul>
+        <li><strong>It is a practice, not a feeling:</strong> Some days you will not feel loving toward yourself. Self-love is what you do on those days anyway.</li>
+        <li><strong>It includes honesty:</strong> Loving yourself means telling yourself the truth — not flattering yourself, but not condemning yourself either.</li>
+        <li><strong>It requires action:</strong> Self-love shows up in the choices you make — what you tolerate, what you pursue, how you rest, how you speak to yourself.</li>
+        <li><strong>It is unconditional:</strong> Not "I will love myself when I lose weight / achieve the goal / am better." It is available now, as you are.</li>
+      </ul>
+      <h4>2. What Self-Love Is Not</h4>
+      <ul>
+        <li><strong>Not selfishness:</strong> Selfishness means taking from others for yourself. Self-love means filling yourself so you can give genuinely.</li>
+        <li><strong>Not narcissism:</strong> Narcissism involves inflated self-importance and lack of empathy. Self-love involves honest self-awareness and the capacity for genuine connection.</li>
+        <li><strong>Not self-indulgence:</strong> Sometimes self-love means doing the hard thing — the difficult conversation, the needed boundary, the uncomfortable change.</li>
+        <li><strong>Not self-satisfaction:</strong> You can love yourself and still want to grow. The two are not in conflict.</li>
+      </ul>
+      <h4>3. Why Self-Love Is the Foundation</h4>
+      <p>Every healthy relationship, every confident decision, every act of genuine generosity flows from a foundation of self-love. Without it:</p>
+      <ul>
+        <li>You seek validation externally — from partners, friends, and strangers — because you cannot provide it for yourself</li>
+        <li>You stay in situations that diminish you because you don't believe you deserve better</li>
+        <li>You give from fear and obligation rather than genuine desire</li>
+        <li>Your sense of worth rises and falls with others' opinions of you</li>
+        <li>You confuse being needed with being loved</li>
+      </ul>
+      <h4>4. The Inner Critic vs. The Loving Inner Voice</h4>
+      <p>Most people have a running internal commentary that is far harsher than anything they would say to a friend. This inner critic is not truth — it is a collection of old messages, absorbed from others who were themselves struggling. Self-love begins with recognising this voice and choosing a different one:</p>
+      <ul>
+        <li><strong>Inner critic:</strong> "You're so stupid. You always mess things up. You're too much. You're not enough."</li>
+        <li><strong>Loving inner voice:</strong> "That was hard. You did your best. What do you need right now? You can try again."</li>
+        <li>The goal is not to silence the critic permanently but to stop letting it make your decisions.</li>
+      </ul>
+      <h4>5. Where Self-Love Is Missing — The Signs</h4>
+      <ul>
+        <li>You apologise constantly, even for things you didn't do</li>
+        <li>You find it easier to name your flaws than your strengths</li>
+        <li>You feel guilty when you rest, receive, or put yourself first</li>
+        <li>You need reassurance from others to feel okay about yourself</li>
+        <li>You tolerate treatment that deep down you know is not acceptable</li>
+        <li>You are much harder on yourself than you would ever be on someone you love</li>
+        <li>You feel like a fraud — as if any success or happiness is borrowed and temporary</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Inner Critic Audit</strong><br>
+      For one day, notice every self-critical thought you have. Write them down without judgment. At the end of the day, read them as if a friend had said them about themselves. What would you tell that friend?</p>
+      <p><strong>Exercise 2: Self-Love Inventory</strong><br>
+      Write your honest answers to: Where in my life am I treating myself with genuine care? Where am I treating myself harshly or neglecting myself? Be specific.</p>
+      <p><strong>Exercise 3: The Letter You Needed</strong><br>
+      Think of a time you were struggling and felt alone or judged. Write the letter you needed to receive then — from someone who loved you unconditionally. Then read it to yourself.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How would you describe your current relationship with yourself — if it were a relationship with another person?</li>
+        <li>What would you do differently today if you truly believed you deserved care and respect?</li>
+        <li>Whose critical voice do you carry inside you — and is that voice actually right about you?</li>
+        <li>What does self-love look like as an action, not a feeling, for you personally?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(1)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'Self-Love Inventory Worksheet',   desc: 'Assess where self-love is and is not present',    file: 'self-love-inventory.pdf' },
+      { icon: '🧠', title: 'Inner Critic Audit Guide',        desc: 'Identify and challenge your self-critical voice', file: 'inner-critic-audit.pdf' },
+      { icon: '💌', title: 'Letter to Yourself Template',     desc: 'Write the letter you most needed to receive',     file: 'letter-template.pdf' },
+      { icon: '📚', title: 'Recommended Reading List',        desc: 'Essential books on self-love and self-worth',     file: 'reading-list.pdf' },
+      { icon: '🎧', title: 'Self-Compassion Meditation',      desc: '10-minute guided self-compassion practice',       file: 'self-compassion-audio.mp3' },
+      { icon: '🆘', title: 'Support Resources',               desc: 'Helplines, therapists, and crisis support',       file: 'support-resources.pdf' }
+    ],
+    assessment: [
+      { question: "What is the most accurate definition of self-love?", options: ["A constant warm feeling toward yourself","A committed, active practice of treating yourself with care, honesty, and respect — regardless of how you feel in the moment","Prioritising your own desires above everyone else's","Believing you are better than other people"], correct: 1 },
+      { question: "How does self-love differ from selfishness?", options: ["They are the same thing","Self-love means filling yourself so you can give genuinely; selfishness means taking from others for yourself","Self-love involves more expensive self-care","Selfishness is healthy in moderation"], correct: 1 },
+      { question: "Why is self-love described as 'unconditional'?", options: ["Because it never requires effort","Because it is available now, as you are — not contingent on achieving goals or changing yourself first","Because it means accepting all your flaws permanently","Because it requires no practice"], correct: 1 },
+      { question: "Which of these is a sign that self-love may be missing?", options: ["You can name your strengths easily","You feel at peace when you rest or receive care","Your sense of worth rises and falls entirely with others' opinions of you","You maintain your standards even under pressure"], correct: 2 },
+      { question: "What is the inner critic?", options: ["A helpful voice that keeps you honest","A collection of old, absorbed messages — often harsher than anything you'd say to someone you love","An accurate reflection of your true character","A sign of healthy self-awareness"], correct: 1 },
+      { question: "Why is self-love considered the foundation of healthy relationships?", options: ["Because you can only love others once you love yourself","Because without it, you seek external validation, stay in diminishing situations, and give from fear rather than genuine desire","Because self-love makes you more attractive","Because it is required before any relationship can start"], correct: 1 },
+      { question: "What distinguishes self-love from narcissism?", options: ["There is no distinction","Self-love involves honest self-awareness and genuine empathy; narcissism involves inflated self-importance and lack of empathy","Narcissism is just stronger self-love","Self-love is always visible; narcissism is hidden"], correct: 1 },
+      { question: "What does it mean that self-love is a practice rather than a feeling?", options: ["You must practise self-care techniques daily","On days when you don't feel loving toward yourself, self-love is what you choose to do anyway","Feelings are not important in self-love","Self-love requires formal training"], correct: 1 },
+      { question: "What is the goal when working with the inner critic?", options: ["To silence it permanently and never hear it again","To stop letting it make your decisions — while recognising it as old messages, not truth","To agree with it and use its feedback constructively","To replace it with constant positive self-talk"], correct: 1 },
+      { question: "Which action best demonstrates self-love in daily life?", options: ["Always choosing your own comfort over others' needs","Tolerating mistreatment patiently","Making choices — about what you tolerate, pursue, and how you rest and speak to yourself — that reflect genuine care for your wellbeing","Telling yourself you are perfect exactly as you are"], correct: 3 }
+    ]
+  },
+
+  2: {
+    title: "Building a Strong Sense of Self",
+    tutorialVideo: "Who Are You — Beyond the Roles You Play?",
+    basicVideo: "Identity, Values, and the Authentic Self",
+    content: `
+      <h2>Week 2: Building a Strong Sense of Self</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what a strong sense of self is and why it matters</li>
+        <li>Identify your core values as the anchor of your identity</li>
+        <li>Distinguish your authentic self from the roles and masks you have adopted</li>
+        <li>Begin the work of living in greater alignment with who you truly are</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What a Strong Sense of Self Means</h4>
+      <p>A strong sense of self means you have a stable, grounded inner knowing of who you are — your values, your preferences, your limits, your worth — that does not collapse when someone criticises you, withdraws their approval, or tries to define you. It is the psychological equivalent of a deep root system: the tree bends in the wind, but the roots hold.</p>
+      <ul>
+        <li>You know what you believe, independent of what others believe</li>
+        <li>You can tolerate disagreement without losing yourself</li>
+        <li>You recover from setbacks without permanently redefining yourself by them</li>
+        <li>Other people's opinions of you are information — not identity</li>
+        <li>You can be in relationships without disappearing into them</li>
+      </ul>
+      <h4>2. Core Values — Your Identity Anchor</h4>
+      <p>Values are the principles that matter most to you — not what you think should matter, or what others have told you matters, but what genuinely guides your choices and brings you a sense of meaning and integrity when honoured:</p>
+      <ul>
+        <li><strong>Examples of values:</strong> honesty, creativity, freedom, loyalty, adventure, justice, family, growth, peace, authenticity, courage, connection</li>
+        <li><strong>Identifying yours:</strong> Think of a time you felt most alive, most yourself. What was present? Think of a time you felt deeply uncomfortable or out of integrity. What was being violated?</li>
+        <li><strong>Living by your values:</strong> When your choices align with your values, you feel centred and congruent. When they don't, something feels wrong — even if you can't name it immediately.</li>
+        <li><strong>Values are not goals:</strong> Goals are achieved and replaced. Values are ongoing orientations — the compass, not the destination.</li>
+      </ul>
+      <h4>3. The Roles We Play vs. The Self Beneath Them</h4>
+      <p>Over a lifetime, we accumulate roles — daughter, partner, employee, caregiver, the responsible one, the funny one, the strong one. These roles are not wrong, but they are not your identity. When we confuse the role with the self:</p>
+      <ul>
+        <li>We feel lost when a role changes or ends (retirement, divorce, children leaving home)</li>
+        <li>We silence the parts of ourselves that don't fit the role</li>
+        <li>We live to meet others' expectations of the role rather than our own truth</li>
+        <li>We lose touch with what we actually want, feel, and need</li>
+      </ul>
+      <h4>4. The Authentic Self</h4>
+      <p>Your authentic self is not a perfect version of you — it is the honest version. The one with preferences, opinions, limits, and desires that exist independently of what anyone else thinks:</p>
+      <ul>
+        <li><strong>Authenticity is not "anything goes":</strong> It is the commitment to showing up as truthfully as possible, which sometimes means acknowledging difficult things about yourself</li>
+        <li><strong>Authenticity requires courage:</strong> Being real in a world that rewards performance takes practice</li>
+        <li><strong>You will not always be liked for it:</strong> And that is one of the deepest forms of self-love — choosing truth over approval</li>
+      </ul>
+      <h4>5. How to Strengthen Your Sense of Self</h4>
+      <ul>
+        <li><strong>Make decisions from your values:</strong> When facing a choice, ask "What would the person I want to be do here?"</li>
+        <li><strong>Spend time alone:</strong> Solitude is where you hear yourself most clearly, beneath the noise of others' expectations</li>
+        <li><strong>Develop your own opinions:</strong> On films, books, ideas, experiences — not what you think you should think, but what you actually think</li>
+        <li><strong>Notice what energises and what depletes you:</strong> These are signposts to your authentic nature</li>
+        <li><strong>Practise disagreeing:</strong> With kindness and respect — but learn to hold a position that differs from those around you</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Values Clarification</strong><br>
+      From the following list, circle your top 10 values, then narrow to your top 5: honesty, creativity, freedom, loyalty, adventure, justice, family, growth, peace, authenticity, courage, connection, independence, fun, security, contribution, spirituality, health, beauty, knowledge. For each of your top 5, write one sentence about how you could honour it more fully this week.</p>
+      <p><strong>Exercise 2: The Role Audit</strong><br>
+      List every role you currently play (parent, partner, colleague, friend, carer, etc.). For each, ask: Does this role reflect who I am, or does it contain me? What part of myself have I suppressed to play this role well?</p>
+      <p><strong>Exercise 3: One Authentic Opinion</strong><br>
+      This week, share one genuine opinion — about a film, a book, an idea, a situation — that you might normally soften, withhold, or adjust to match others. Notice what it feels like to say what you actually think.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Who are you when no one is watching and nothing is expected of you?</li>
+        <li>Which of your values are you currently honouring? Which are you violating or neglecting?</li>
+        <li>What role have you been playing for so long that you've confused it with your identity?</li>
+        <li>What would living more authentically cost you — and is that cost worth it?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(2)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🧭', title: 'Values Clarification Workbook',   desc: 'Discover and anchor your core personal values',   file: 'values-workbook.pdf' },
+      { icon: '🎭', title: 'Role vs Self Worksheet',          desc: 'Separate the roles you play from who you are',    file: 'role-self-worksheet.pdf' },
+      { icon: '📝', title: 'Authentic Self Journal Prompts',  desc: '30 prompts to reconnect with your true self',     file: 'authentic-prompts.pdf' },
+      { icon: '📊', title: 'Identity Strength Assessment',    desc: 'Measure and build your sense of self',            file: 'identity-assessment.pdf' },
+      { icon: '🎧', title: 'Inner Knowing Meditation',        desc: '12-minute practice for self-connection',          file: 'inner-knowing-audio.mp3' },
+      { icon: '📚', title: 'Identity & Authenticity Reading', desc: 'Key texts on the authentic self and values',      file: 'identity-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is a strong sense of self?", options: ["Never being influenced by others","A stable inner knowing of who you are that does not collapse when others criticise or withdraw approval","Being confident at all times","Never changing your mind about anything"], correct: 1 },
+      { question: "What are personal values?", options: ["Goals you want to achieve","Rules other people have set for you","The principles that genuinely guide your choices and bring meaning and integrity when honoured","Opinions about politics and society"], correct: 2 },
+      { question: "What is the difference between values and goals?", options: ["Values are more important than goals","Goals are achieved and replaced; values are ongoing orientations — the compass, not the destination","They are the same thing","Goals are personal; values are shared"], correct: 1 },
+      { question: "What happens when we confuse our roles with our identity?", options: ["We become more stable and grounded","We feel lost when a role changes, silence parts of ourselves to fit the role, and lose touch with what we genuinely want and need","We become better at playing our roles","Nothing significant changes"], correct: 1 },
+      { question: "What does authenticity require?", options: ["Always saying exactly what you think regardless of consequences","Being perfect and consistent at all times","Courage — showing up as truthfully as possible in a world that rewards performance","Agreement with widely accepted values"], correct: 2 },
+      { question: "Why is solitude valuable for building a strong sense of self?", options: ["It prevents loneliness","It is where you hear yourself most clearly, beneath the noise of others' expectations","It makes you more independent from others","It is a form of self-punishment that builds resilience"], correct: 1 },
+      { question: "What does it mean that 'other people's opinions of you are information, not identity'?", options: ["You should ignore all feedback from others","Others' views can inform you but do not define who you are","You should collect others' opinions carefully","Others always know you better than you know yourself"], correct: 1 },
+      { question: "Which of these best describes the authentic self?", options: ["The perfect, fully developed version of yourself","The version that everyone approves of","The honest version — with real preferences, limits, and desires that exist independently of others' approval","The version you present on social media"], correct: 2 },
+      { question: "What is a practical way to develop your own opinions and strengthen your sense of self?", options: ["Always agree with people you respect","Read only one type of content to stay consistent","Reflect honestly on what you actually think about experiences, ideas, and situations — not what you feel you should think","Change your opinion whenever someone challenges it"], correct: 2 },
+      { question: "What does choosing truth over approval demonstrate?", options: ["Arrogance and disregard for others","One of the deepest forms of self-love — the willingness to be real even when it costs you others' good opinion","A lack of social intelligence","Indifference to relationships"], correct: 1 }
+    ]
+  },
+
+  3: {
+    title: "Self-Care as a Daily Practice",
+    tutorialVideo: "Self-Care That Actually Works",
+    basicVideo: "Rethinking Rest, Nourishment, and Pleasure",
+    content: `
+      <h2>Week 3: Self-Care as a Daily Practice</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Redefine self-care beyond surface-level interpretations</li>
+        <li>Understand why self-care is not selfish — it is structural</li>
+        <li>Build a personalised, sustainable self-care practice across all dimensions</li>
+        <li>Identify and dismantle the barriers that stop you from caring for yourself</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Self-Care Really Is</h4>
+      <p>Self-care has been commercialised into a collection of products and treats. In reality, genuine self-care is the ongoing practice of meeting your own needs — physical, emotional, mental, social, and spiritual — so you can function well and live fully. It is not a reward you earn after being productive enough. It is maintenance. It is infrastructure.</p>
+      <ul>
+        <li>Self-care is what you do to sustain yourself, not what you do to recover from neglecting yourself</li>
+        <li>It is proactive, not reactive — prevention rather than crisis management</li>
+        <li>It includes difficult acts: the hard conversation, the limit that needs setting, the appointment you've been avoiding</li>
+        <li>It is deeply personal — what nourishes one person depletes another</li>
+      </ul>
+      <h4>2. The Five Dimensions of Self-Care</h4>
+      <ul>
+        <li><strong>Physical:</strong> Sleep (non-negotiable), nourishment, movement, medical care, rest. Your body is not a vehicle for your productivity — it is where you live.</li>
+        <li><strong>Emotional:</strong> Processing feelings rather than suppressing them. Crying when needed. Journalling. Therapy. Safe relationships where you can be honest.</li>
+        <li><strong>Mental:</strong> Protecting your attention. Limiting draining inputs. Engaging with ideas that interest and challenge you. Knowing when your mind needs rest.</li>
+        <li><strong>Social:</strong> Investing in relationships that genuinely nourish you. Maintaining connections. Allowing yourself to be truly known. Reducing time with people who consistently drain you.</li>
+        <li><strong>Spiritual / Purposeful:</strong> Connection to something larger than yourself — nature, creativity, community, faith, meaning. Whatever gives your life a sense of depth and direction.</li>
+      </ul>
+      <h4>3. The Barriers to Self-Care</h4>
+      <p>Most people know they should care for themselves. The question is why they don't. Common barriers:</p>
+      <ul>
+        <li><strong>Guilt:</strong> "I should be doing something for someone else." Caring for yourself is caring for the relationships that depend on you.</li>
+        <li><strong>Unworthiness:</strong> "I'll rest when I've earned it." You have already earned it — by being alive.</li>
+        <li><strong>Time poverty:</strong> "I don't have time." Often this means: "I haven't yet decided this is a priority." Start with 10 minutes.</li>
+        <li><strong>Unfamiliarity:</strong> If self-care was never modelled, it can feel foreign or indulgent. This is learned — and can be unlearned.</li>
+        <li><strong>Perfectionism:</strong> "If I can't do it properly, I won't do it at all." Imperfect self-care is vastly superior to none.</li>
+      </ul>
+      <h4>4. Sleep — The Non-Negotiable</h4>
+      <p>Of all self-care practices, consistent adequate sleep has the most powerful and evidence-based impact on every aspect of your functioning — emotional regulation, decision-making, immune function, and mental health. Chronic sleep deprivation is not a badge of productivity; it is a health crisis. Protecting your sleep is an act of profound self-love.</p>
+      <h4>5. Pleasure Is Not a Luxury</h4>
+      <p>Many people — particularly those raised to be responsible, productive, or self-sacrificing — have lost permission to simply enjoy their lives. Pleasure, delight, play, and beauty are not frivolous. They are neurologically essential:</p>
+      <ul>
+        <li>Joy activates systems in the brain that support resilience and creativity</li>
+        <li>Play restores perspective that serious work erodes</li>
+        <li>Beauty — in nature, music, art, food — connects you to life beyond the transactional</li>
+        <li>Reclaiming pleasure is an act of resistance against the belief that your worth is measured in your output</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Five-Dimension Audit</strong><br>
+      Rate each dimension of self-care (physical, emotional, mental, social, spiritual) on a scale of 1–10. For your two lowest scores, write one specific action you will take this week.</p>
+      <p><strong>Exercise 2: Barrier Examination</strong><br>
+      Which self-care barrier resonates most for you (guilt, unworthiness, time, unfamiliarity, perfectionism)? Write about where this barrier came from and what it costs you to keep honouring it.</p>
+      <p><strong>Exercise 3: The Pleasure List</strong><br>
+      Write 20 things that bring you genuine pleasure or delight — large and small. Then schedule one from your list into each day this coming week. Not as a reward. As a right.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>In which dimension of self-care are you most neglected — and why?</li>
+        <li>What do you believe would happen if you genuinely prioritised your own care?</li>
+        <li>When did you last feel truly rested? What made that possible?</li>
+        <li>What would you do this week if you truly believed your pleasure mattered?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(3)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📊', title: 'Five-Dimension Self-Care Audit',  desc: 'Assess and plan your full self-care practice',    file: 'selfcare-audit.pdf' },
+      { icon: '😴', title: 'Sleep Hygiene Guide',             desc: 'Evidence-based strategies for restorative sleep', file: 'sleep-guide.pdf' },
+      { icon: '🌸', title: 'Pleasure & Joy Reclamation List', desc: 'Reconnect with what genuinely delights you',      file: 'pleasure-list.pdf' },
+      { icon: '📝', title: 'Self-Care Planning Template',     desc: 'Design a sustainable weekly self-care routine',   file: 'selfcare-planner.pdf' },
+      { icon: '🎧', title: 'Rest & Restoration Audio',        desc: '15-minute guided rest practice',                  file: 'rest-audio.mp3' },
+      { icon: '📚', title: 'Self-Care Science Reading',       desc: 'Research-backed books on rest and wellbeing',     file: 'selfcare-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is genuine self-care, beyond the commercialised version?", options: ["Buying products that make you feel good","Treating yourself occasionally when you've worked hard","The ongoing practice of meeting your own needs across all dimensions so you can function well and live fully","Spending money on experiences rather than things"], correct: 2 },
+      { question: "What does it mean that self-care is 'proactive, not reactive'?", options: ["You care for yourself before others can","Self-care is prevention — sustaining yourself consistently, rather than recovering from periods of neglect","You act before thinking","You anticipate others' needs before your own"], correct: 1 },
+      { question: "Which self-care dimension involves processing feelings, journalling, and safe relationships?", options: ["Physical self-care","Mental self-care","Social self-care","Emotional self-care"], correct: 3 },
+      { question: "What is the most evidence-based self-care practice for overall health and functioning?", options: ["Regular exercise","Daily meditation","Consistent, adequate sleep","A nutritious diet"], correct: 2 },
+      { question: "What does the barrier of 'unworthiness' in self-care sound like?", options: ["'I don't know how to care for myself.'","'I'll rest when I've earned it.'","'Nobody else cares for themselves either.'","'Self-care takes too long.'"], correct: 1 },
+      { question: "Why is pleasure described as 'neurologically essential' rather than a luxury?", options: ["Because it costs less than therapy","Because joy activates brain systems that support resilience and creativity, and play restores perspective serious work erodes","Because it is what others expect","Because productivity requires enjoyment"], correct: 1 },
+      { question: "What is the 'time poverty' barrier to self-care, and what does it often actually mean?", options: ["You genuinely have no time whatsoever","You haven't yet decided that your care is a priority — start with 10 minutes","Your life is objectively too busy for self-care","Time management skills are lacking"], correct: 1 },
+      { question: "Which of these is an example of emotional self-care?", options: ["Going to the gym","Attending a therapy session to process difficult feelings","Spending time in nature","Reading a challenging book"], correct: 1 },
+      { question: "What does 'imperfect self-care is vastly superior to none' address?", options: ["The barrier of guilt","The barrier of time poverty","The barrier of perfectionism — not doing self-care at all because you can't do it perfectly","The barrier of social pressure"], correct: 2 },
+      { question: "What does reclaiming pleasure represent in the context of self-love?", options: ["An act of resistance against the belief that your worth is measured by your output","A way of rewarding yourself for productivity","Indulging in excess after periods of discipline","A temporary break from responsibilities"], correct: 0 }
+    ]
+  },
+
+  4: {
+    title: "Building Confidence from the Inside Out",
+    tutorialVideo: "True Confidence vs. Performed Confidence",
+    basicVideo: "How to Build Unshakeable Self-Belief",
+    content: `
+      <h2>Week 4: Building Confidence from the Inside Out</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the difference between real confidence and performed confidence</li>
+        <li>Identify the specific beliefs and experiences that have eroded your confidence</li>
+        <li>Learn evidence-based strategies for building genuine self-belief</li>
+        <li>Develop the capacity to act despite fear — the heart of real courage</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Real Confidence vs. Performed Confidence</h4>
+      <p>Much of what passes for confidence in public life is performance — a mask that conceals insecurity beneath a layer of bravado, dominance, or constant self-promotion. Real confidence is quieter and far more stable:</p>
+      <ul>
+        <li><strong>Performed confidence:</strong> Needs to be seen; requires constant validation; collapses under genuine criticism; competitive; loud</li>
+        <li><strong>Real confidence:</strong> Does not need an audience; can tolerate failure; is curious rather than defensive when challenged; holds space for others' success without feeling threatened</li>
+        <li>Real confidence is not the absence of self-doubt — it is the willingness to act despite it</li>
+      </ul>
+      <h4>2. Where Confidence Comes From</h4>
+      <p>Confidence is not given — it is built. And it is built from one source above all others: evidence. Specifically, the evidence you gather by doing hard things and surviving them:</p>
+      <ul>
+        <li>Every time you do something difficult, you create evidence that you can handle hard things</li>
+        <li>Every time you honour a commitment to yourself, you strengthen your self-trust</li>
+        <li>Every time you take a small risk and survive it, your nervous system learns that risk is survivable</li>
+        <li>Confidence is built in the doing — not in the thinking, waiting, or preparing</li>
+      </ul>
+      <h4>3. What Erodes Confidence</h4>
+      <ul>
+        <li><strong>Chronic criticism in early life:</strong> Messages absorbed in childhood about being inadequate, wrong, or too much become the lens through which you see yourself</li>
+        <li><strong>Perfectionism:</strong> Setting standards so high that ordinary performance feels like failure</li>
+        <li><strong>Comparison:</strong> Measuring your inside against others' outside — comparing your worst moments to their best presentations</li>
+        <li><strong>Avoidance:</strong> Every time you avoid something difficult, you send yourself the message that you couldn't handle it — which erodes trust in yourself over time</li>
+        <li><strong>Breaking promises to yourself:</strong> When you consistently don't follow through on your own commitments, you stop trusting your word — even to yourself</li>
+      </ul>
+      <h4>4. The Courage Principle — Act First, Feel Later</h4>
+      <p>Most people wait to feel confident before they act. This is backwards. Confidence follows action — it does not precede it. The sequence is:</p>
+      <ul>
+        <li><strong>Step 1 — Action:</strong> Do the difficult thing despite the fear</li>
+        <li><strong>Step 2 — Evidence:</strong> You survived it (even imperfectly)</li>
+        <li><strong>Step 3 — Confidence:</strong> Your nervous system updates its assessment of your capability</li>
+        <li>The feeling of confidence is the result of accumulated evidence — not a prerequisite for starting</li>
+      </ul>
+      <h4>5. Practical Strategies for Building Confidence</h4>
+      <ul>
+        <li><strong>Keep small promises to yourself:</strong> Start with the very small — make your bed, drink your water, take your walk. Every kept promise builds self-trust.</li>
+        <li><strong>The evidence journal:</strong> Write down three things you handled well each day. Tiny counts. Confidence grows by noticing what you are already capable of.</li>
+        <li><strong>Expand your comfort zone incrementally:</strong> You do not need to leap — consistent small steps outside familiarity build confidence more sustainably than dramatic gestures</li>
+        <li><strong>Challenge comparison:</strong> When you notice comparison, redirect: "What is mine to do, regardless of what they are doing?"</li>
+        <li><strong>Reframe failure:</strong> Failure is not evidence of your inadequacy — it is data. Every failure contains information that success cannot give you.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Evidence Inventory</strong><br>
+      Write a list of 20 things you have done in your life that were difficult, scary, or uncertain — and that you did anyway. Include small things. Read the list out loud. This is your evidence of capability.</p>
+      <p><strong>Exercise 2: The One Small Step</strong><br>
+      Identify one thing you have been avoiding because it scares you. Break it down to its smallest possible first step — something you could do in 5 minutes. Do that step this week.</p>
+      <p><strong>Exercise 3: The Promise Kept</strong><br>
+      Make one small commitment to yourself this week — something specific and achievable. Keep it. At the end of the week, notice how it felt to follow through.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is one area of your life where you would like to feel more confident?</li>
+        <li>What messages from your past have most eroded your belief in yourself?</li>
+        <li>What have you been waiting to feel before you act — and what if you acted first?</li>
+        <li>What would you do this week if you knew you could not permanently fail?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(4)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'Evidence Inventory Worksheet',    desc: 'Build your case file of personal capability',      file: 'evidence-inventory.pdf' },
+      { icon: '🏆', title: 'Confidence Building Action Plan', desc: 'Step-by-step guide to expanding your comfort zone', file: 'confidence-plan.pdf' },
+      { icon: '🧠', title: 'Reframing Failure Guide',         desc: 'Turn setbacks into confidence-building data',       file: 'reframing-failure.pdf' },
+      { icon: '📋', title: 'Daily Evidence Journal Template', desc: 'Track what you handle well every day',              file: 'evidence-journal.pdf' },
+      { icon: '🎧', title: 'Courage & Self-Belief Audio',     desc: '10-minute guided confidence practice',              file: 'courage-audio.mp3' },
+      { icon: '📚', title: 'Confidence & Courage Reading',    desc: 'Essential books on building genuine self-belief',   file: 'confidence-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is the key difference between real confidence and performed confidence?", options: ["Real confidence is louder and more visible","Performed confidence needs validation and collapses under criticism; real confidence is quiet, stable, and survives challenge","Real confidence never experiences self-doubt","Performed confidence is always dishonest"], correct: 1 },
+      { question: "What is the primary source from which confidence is built?", options: ["Positive affirmations and self-talk","The compliments and encouragement of others","Evidence — gathered by doing hard things and surviving them","Formal education and achievement"], correct: 2 },
+      { question: "What is the 'Courage Principle' as described in this week's content?", options: ["Feel confident before acting","Act despite fear — confidence follows action; it does not precede it","Courage is the absence of fear","Only act when you are certain of success"], correct: 1 },
+      { question: "How does avoidance erode confidence over time?", options: ["It doesn't — avoidance protects you from failure","Every avoided challenge sends the message that you couldn't handle it, reducing self-trust","Avoidance builds patience and readiness","It only affects confidence in the avoided area"], correct: 1 },
+      { question: "What does 'breaking promises to yourself' do to confidence?", options: ["Nothing significant","It causes guilt but not lasting damage","It erodes self-trust — you stop believing your own word, even to yourself","It motivates you to try harder next time"], correct: 2 },
+      { question: "What is the 'evidence journal' practice?", options: ["Writing down all your failures to learn from them","Recording three things you handled well each day to build an accurate picture of your capability","Journalling your fears each morning","Tracking others' opinions of you"], correct: 1 },
+      { question: "Why is comparison so damaging to confidence?", options: ["It reveals your true standing relative to others","You are comparing your private inside — struggles, doubts, bad moments — with others' curated outside presentation","Comparison is only damaging in competitive situations","It only affects people who are already insecure"], correct: 1 },
+      { question: "What is the most sustainable way to expand your comfort zone?", options: ["One dramatic leap that forces rapid change","Avoiding all discomfort until you feel ready","Consistent small steps outside the familiar — building confidence incrementally through repeated manageable challenges","Reading about others who have expanded their comfort zones"], correct: 3 },
+      { question: "How should failure be reframed in the context of building confidence?", options: ["As evidence of fundamental inadequacy","As something to be avoided at all costs","As data — information that success cannot give you, which informs your next attempt","As a reason to lower your standards"], correct: 2 },
+      { question: "What is the significance of keeping small promises to yourself?", options: ["Small promises are not worth keeping","Every kept promise builds self-trust — the foundation of genuine confidence","Keeping promises to yourself should come after keeping promises to others","Small promises only matter if others witness them"], correct: 1 }
+    ]
+  },
+
+  5: {
+    title: "Freedom from Validation-Seeking",
+    tutorialVideo: "Breaking Free from Others' Opinions",
+    basicVideo: "What Happens When You Stop Needing Approval",
+    content: `
+      <h2>Week 5: Freedom from Validation-Seeking</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the psychology of validation-seeking and where it originates</li>
+        <li>Identify where you are currently dependent on external approval</li>
+        <li>Learn to generate your own validation from within</li>
+        <li>Develop the capacity to make decisions and live your life independent of others' opinions</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Psychology of Validation-Seeking</h4>
+      <p>Every human being has a fundamental need to feel seen, heard, and valued — this is not weakness; it is biology. The problem arises when this need can only be met externally — when your sense of okayness depends entirely on whether others approve of you, affirm you, or reflect you positively.</p>
+      <ul>
+        <li>Validation-seeking is the chronic outsourcing of your own self-assessment to others</li>
+        <li>It often began in childhood, when love and approval were conditional — available when you performed well, behaved correctly, or were what others needed</li>
+        <li>In adult life it shows up as: needing constant reassurance; being unable to make decisions without others' input; devastating sensitivity to criticism; living for likes and external metrics</li>
+        <li>The more you seek validation externally, the more your sense of self erodes — because external approval is never consistent enough to sustain you</li>
+      </ul>
+      <h4>2. The Approval Trap</h4>
+      <p>Seeking approval is a trap because it is never finally satisfying:</p>
+      <ul>
+        <li>You get the approval — and immediately need more</li>
+        <li>You cannot control whether it is given — leaving your wellbeing in others' hands</li>
+        <li>The approval you receive is for the version of you that performed or pleased — not for the real you</li>
+        <li>Every decision made for approval rather than integrity takes you further from yourself</li>
+        <li>The pursuit of universal approval means the sacrifice of any authentic position — because you will inevitably disappoint someone</li>
+      </ul>
+      <h4>3. Internal Validation — How to Generate It</h4>
+      <p>Internal validation means developing the capacity to assess yourself accurately and compassionately from within — without needing the external mirror to tell you who you are:</p>
+      <ul>
+        <li><strong>The self-acknowledgement practice:</strong> At the end of each day, ask yourself "What did I do well today?" and answer honestly — without waiting for someone else to notice</li>
+        <li><strong>Values-based decision-making:</strong> Make decisions by asking "Is this aligned with who I want to be?" rather than "What will people think?"</li>
+        <li><strong>Separating feedback from identity:</strong> "That person didn't like my work" is different from "I am bad at this." Feedback is about a product or behaviour — not your worth</li>
+        <li><strong>The trusted few:</strong> Rather than seeking approval from anyone and everyone, identify 2–3 people whose perspective you genuinely respect — and weigh only those opinions carefully</li>
+      </ul>
+      <h4>4. Handling Criticism Without Collapsing</h4>
+      <p>One of the greatest gifts of internal validation is the ability to receive criticism without it destroying you. A framework for processing criticism well:</p>
+      <ul>
+        <li><strong>Pause:</strong> Don't react immediately — give yourself time to process</li>
+        <li><strong>Consider the source:</strong> Is this person someone whose judgment you respect? Do they know the full picture?</li>
+        <li><strong>Extract the useful:</strong> Is there anything in this feedback that is genuinely useful to you, separate from the delivery?</li>
+        <li><strong>Release the rest:</strong> Their opinion is their own. It is not the final word on who you are.</li>
+        <li><strong>Check your values:</strong> Did you act in alignment with what matters to you? If yes, you can be at peace regardless of others' responses.</li>
+      </ul>
+      <h4>5. Living for Yourself — Practically</h4>
+      <ul>
+        <li>Make at least one decision per day without consulting anyone — and live with it</li>
+        <li>Share something creative or personal without monitoring the response</li>
+        <li>Notice when you are performing for an imaginary audience — and ask what you would do if no one was watching</li>
+        <li>Practise saying "I feel good about that" without needing someone else to confirm it</li>
+        <li>When someone disapproves, practise sitting with the discomfort rather than immediately defending, explaining, or changing course</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Approval Audit</strong><br>
+      List five decisions you made in the last month where others' opinions influenced you more than your own. For each, write what you would have chosen if no one would ever know.</p>
+      <p><strong>Exercise 2: Daily Self-Acknowledgement</strong><br>
+      Every evening this week, write three things you did well — without waiting for anyone to notice. Read them out loud to yourself. This is you, validating you.</p>
+      <p><strong>Exercise 3: The Unseen Action</strong><br>
+      Do one meaningful thing this week that no one will ever know about — a kindness, a creative act, a personal achievement. Notice how it feels to do something valuable for no external audience.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Whose approval do you most depend on — and what does that dependence cost you?</li>
+        <li>What decisions have you made for others' approval that took you away from yourself?</li>
+        <li>What would you create, say, or do if you were completely certain no one would judge you?</li>
+        <li>What would change in your life if your sense of worth came entirely from within?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(5)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🔍', title: 'Approval Audit Worksheet',         desc: 'Map where external validation is running your life',   file: 'approval-audit.pdf' },
+      { icon: '📝', title: 'Self-Acknowledgement Journal',     desc: 'Daily practice for internal validation',               file: 'self-acknowledgement.pdf' },
+      { icon: '💬', title: 'Handling Criticism Framework',     desc: 'Process feedback without it defining you',             file: 'criticism-framework.pdf' },
+      { icon: '🧭', title: 'Values-Based Decision Guide',      desc: 'Make choices aligned with who you are, not who approves', file: 'values-decisions.pdf' },
+      { icon: '🎧', title: 'Inner Authority Meditation',       desc: '12-minute practice for internal grounding and worth',  file: 'inner-authority-audio.mp3' },
+      { icon: '📚', title: 'Validation & Approval Reading',    desc: 'Essential books on freedom from others\' opinions',    file: 'validation-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is validation-seeking, as defined in this week's content?", options: ["The normal human need to feel seen and heard","The chronic outsourcing of your own self-assessment to others — making your okayness dependent on external approval","Seeking feedback to improve your work","Wanting others to acknowledge your achievements"], correct: 1 },
+      { question: "Why is the approval trap described as 'never finally satisfying'?", options: ["Because people are stingy with approval","Because once you receive it, you immediately need more — and you cannot control whether it is given","Because approval comes with conditions","Because it is only available from a few people"], correct: 1 },
+      { question: "What is the core problem with making decisions for approval rather than integrity?", options: ["Others may not approve anyway","Every decision for approval rather than integrity takes you further from yourself","It is inefficient","It creates conflict"], correct: 1 },
+      { question: "What is the 'self-acknowledgement practice'?", options: ["Telling others what you've done well","At the end of each day, honestly answering 'What did I do well today?' without waiting for someone else to notice","Collecting compliments from others","Writing affirmations each morning"], correct: 1 },
+      { question: "What does 'separating feedback from identity' mean?", options: ["Ignoring all critical feedback","Understanding that 'that person didn't like my work' is different from 'I am bad at this' — feedback is about a product or behaviour, not your worth","Giving feedback to others instead","Only accepting positive feedback"], correct: 1 },
+      { question: "What is the 'trusted few' strategy for handling opinions?", options: ["Having a small group of people who always agree with you","Keeping your life private from most people","Rather than seeking approval from anyone and everyone, identifying 2–3 people whose perspective you genuinely respect and weighing only those opinions","Asking a few people before every decision"], correct: 2 },
+      { question: "When receiving criticism, what should you do before reacting?", options: ["Immediately defend yourself","Thank the person regardless of the feedback","Pause — give yourself time to process before responding","Ask others if the criticism is fair"], correct: 2 },
+      { question: "What is the purpose of the 'unseen action' exercise?", options: ["To practise secrecy","To discover the intrinsic value of doing something meaningful independent of any external audience or recognition","To build a habit of selflessness","To keep some activities private from others"], correct: 1 },
+      { question: "How does chronic validation-seeking erode the sense of self?", options: ["It doesn't — external feedback helps you know who you are","Because external approval is never consistent enough to sustain you — and every decision made for approval takes you further from your authentic self","It only affects people who are very sensitive","It erodes confidence but not identity"], correct: 1 },
+      { question: "What is a practical sign that you are living for yourself rather than for others' approval?", options: ["Others consistently approve of your choices","You never share your opinions publicly","You can say 'I feel good about that' without needing someone else to confirm it — and sit with discomfort when someone disapproves","You always know what others think of you"], correct: 2 }
+    ]
+  },
+
+  6: {
+    title: "Independence, Interdependence & Your New Life",
+    tutorialVideo: "The Difference Between Independence and Isolation",
+    basicVideo: "Building a Life You Genuinely Love",
+    content: `
+      <h2>Week 6: Independence, Interdependence & Your New Life</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the difference between independence, isolation, and healthy interdependence</li>
+        <li>Learn how self-love creates the conditions for deeper, more authentic relationships</li>
+        <li>Develop a vision and plan for a life built on your own values and choices</li>
+        <li>Consolidate and carry forward everything you have built in this course</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Independence vs. Isolation — A Crucial Distinction</h4>
+      <p>Emotional independence is not emotional isolation. The goal of this course has never been to become an island — needing no one, feeling nothing, withdrawing from connection. The goal is to become someone who can genuinely connect, because you bring a whole and grounded self to your relationships:</p>
+      <ul>
+        <li><strong>Isolation:</strong> Shutting others out; refusing to need or be needed; using self-sufficiency as armour</li>
+        <li><strong>Independence:</strong> Having a stable sense of self and inner resources that do not collapse when relationships are difficult or absent</li>
+        <li><strong>The difference:</strong> Isolation comes from fear of vulnerability. Independence comes from security within yourself.</li>
+      </ul>
+      <h4>2. Healthy Interdependence — The Real Goal</h4>
+      <p>The healthiest relationships are interdependent — both people bring wholeness, maintain their individual identity, and freely choose to share their lives without losing themselves:</p>
+      <ul>
+        <li>You can need someone without being desperate for them</li>
+        <li>You can love someone without your survival depending on their presence</li>
+        <li>You can ask for help without it costing you your dignity</li>
+        <li>You can be close without merging — separate without being distant</li>
+        <li>Your joy does not require their permission; your grief does not require their fixing</li>
+      </ul>
+      <h4>3. Self-Love Transforms Relationships</h4>
+      <p>When you do this inner work, your relationships change — not because others change, but because you do. Specifically:</p>
+      <ul>
+        <li>You attract different people — those who are drawn to your authenticity rather than your usefulness</li>
+        <li>You tolerate less harm — because your self-worth is no longer dependent on keeping people who hurt you</li>
+        <li>You give more freely — because you give from fullness, not from fear of abandonment</li>
+        <li>You communicate more honestly — because you have less to perform and more to offer</li>
+        <li>You can be alone without it being painful — because your own company is genuinely good</li>
+      </ul>
+      <h4>4. Building a Life You Genuinely Love</h4>
+      <p>A life built on self-love is not necessarily easier than a life built on pleasing others. But it is more honest, more yours, and more worth living. It is built on:</p>
+      <ul>
+        <li><strong>Your values:</strong> Choices aligned with what you actually believe and care about</li>
+        <li><strong>Your genuine desires:</strong> Goals that come from within, not from what you think will earn you love or approval</li>
+        <li><strong>Your own rhythms:</strong> Rest, work, play, and connection in proportions that suit you — not the template imposed by others' expectations</li>
+        <li><strong>Honest relationships:</strong> Connections where you are known — not performed</li>
+        <li><strong>Purposeful contribution:</strong> Giving in ways that align with your values and strengths — not from obligation or fear</li>
+      </ul>
+      <h4>5. The Ongoing Practice</h4>
+      <p>Everything in this course is a practice — not a one-time achievement. There will be weeks when the inner critic is loud, the validation-seeking returns, the self-care disappears. This is not failure. It is the nature of growth in a complex human life. What matters is your ability to notice, return, and continue.</p>
+      <ul>
+        <li>Return to your values when you feel lost</li>
+        <li>Return to your body when you feel scattered</li>
+        <li>Return to self-compassion when you feel ashamed</li>
+        <li>Return to the evidence of your capability when you feel small</li>
+        <li>And return to the simple, radical truth: you were worthy of love and care before you did a single thing to earn it. You remain so now.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: My Life by Design</strong><br>
+      Write a description of your ideal life in 12 months — not a fantasy, but a honest, values-aligned vision. Include: how you spend your time, the relationships you invest in, your work, your self-care, how you feel in your body, and what you have stopped tolerating. Write it in the present tense.</p>
+      <p><strong>Exercise 2: The Self-Love Commitment</strong><br>
+      Write a personal commitment statement — to yourself, from yourself — about the specific ways you will honour yourself going forward. Not resolutions, but commitments grounded in what you now know about yourself.</p>
+      <p><strong>Exercise 3: The Gratitude to Yourself</strong><br>
+      Write a letter of genuine gratitude to yourself — for every difficult thing you have navigated, every brave thing you have done, every time you got back up. This is not flattery. It is honest acknowledgement of what it has taken to get here.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How has your relationship with yourself changed over the course of these six weeks?</li>
+        <li>What is the one thing you now know about yourself that you didn't know — or wouldn't let yourself know — before?</li>
+        <li>What aspect of self-love do you most need to keep practising?</li>
+        <li>What would you tell someone just starting this journey?</li>
+      </ul>
+      <h3>🎉 Congratulations!</h3>
+      <p>You have completed Self-Love &amp; Independence. Six weeks of honest, courageous work on the relationship that underpins everything else you will ever build. You now have a stronger sense of who you are, how to care for yourself, and how to live and love from a place of wholeness rather than need. This is the foundation. Everything else you build from here will be built on something real. Keep going — you are worth every bit of the effort you have invested in yourself.</p>
+      <button class="submit-btn" onclick="markComplete(6)">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      { icon: '📖', title: 'My Life by Design Workbook',       desc: 'Create a values-aligned vision for your future',     file: 'life-design.pdf' },
+      { icon: '💌', title: 'Self-Love Commitment Template',    desc: 'Write your personal commitment to yourself',          file: 'commitment-template.pdf' },
+      { icon: '🤝', title: 'Interdependence vs Codependency',  desc: 'The difference between healthy and unhealthy closeness', file: 'interdependence-guide.pdf' },
+      { icon: '📝', title: 'Ongoing Practice Planner',         desc: 'Sustain your self-love practice week by week',        file: 'practice-planner.pdf' },
+      { icon: '🎧', title: 'New Life Meditation Series',       desc: '7 guided practices for your ongoing journey',         file: 'new-life-audio.mp3' },
+      { icon: '🏆', title: 'Course Completion Certificate',    desc: 'Download your certificate of completion',             file: 'certificate.pdf' }
+    ],
+    assessment: [
+      { question: "What is the difference between emotional independence and emotional isolation?", options: ["They are the same — both involve not needing others","Isolation comes from fear of vulnerability and shuts others out; independence comes from inner security and allows genuine connection","Independence is healthier than interdependence","Isolation is temporary; independence is permanent"], correct: 1 },
+      { question: "What is healthy interdependence?", options: ["Needing others constantly for emotional regulation","Both people bringing wholeness to a relationship — maintaining individual identity while freely choosing to share their lives","Being equally codependent","Keeping relationships at a comfortable distance"], correct: 1 },
+      { question: "How does self-love change your relationships, according to this week's content?", options: ["It makes you less interested in relationships","You attract different people, tolerate less harm, give more freely, and communicate more honestly — because you have less to perform","It causes you to withdraw from difficult relationships","It makes relationships easier because others change"], correct: 1 },
+      { question: "What does 'giving from fullness rather than fear' mean?", options: ["Giving only when you have surplus material resources","Giving generously because you choose to — not from fear of abandonment or loss of approval","Giving after your own needs are completely met","Giving only to those who give back equally"], correct: 1 },
+      { question: "What is a life 'built on self-love' characterised by?", options: ["Ease and absence of difficulty","Choices aligned with your genuine values and desires — more honest, more yours, and more worth living","The approval of everyone important to you","Financial success and external achievement"], correct: 1 },
+      { question: "What should you do when the inner critic returns loudly after weeks of progress?", options: ["Accept it as the truth about yourself","Restart the course from the beginning","Recognise it as a normal part of growth in a complex human life — notice, return to your practice, and continue","Consider that the course didn't work for you"], correct: 2 },
+      { question: "What does 'being alone without it being painful' indicate?", options: ["You no longer need human connection","You have become self-sufficient to an unhealthy degree","Your own company is genuinely good — a sign of a healthy relationship with yourself","You have overcome your need for intimacy"], correct: 2 },
+      { question: "What is the purpose of the 'Life by Design' exercise?", options: ["To write a fantasy about a perfect life","To create an honest, values-aligned vision of your life in 12 months — in the present tense","To make a list of goals to achieve","To compare your current life with an ideal"], correct: 1 },
+      { question: "What is the core truth this course returns to in its final message?", options: ["You must earn your worth through consistent self-improvement","Self-love requires constant effort and vigilance","You were worthy of love and care before you did a single thing to earn it — and you remain so now","Love of self is only possible after healing is complete"], correct: 2 },
+      { question: "What is the most important thing to remember about the practices in this course?", options: ["They must be done perfectly to be effective","They are one-time achievements that once completed, are done","They are ongoing practices — setbacks are normal, and what matters is your ability to notice, return, and continue","They become automatic and require no further attention after six weeks"], correct: 2 }
+    ]
+  }
+
+}; // end weekData
+</script>
+</body>
+</html>
