@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recognizing Codependent Patterns - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+
+  .user-info { display: flex; align-items: center; gap: 15px; }
+
+  .avatar {
+    width: 45px; height: 45px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: bold;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .progress-overview {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .progress-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 20px; border-radius: 12px; text-align: center;
+  }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+
+  .progress-bar {
+    width: 100%; height: 25px; background: #e0e0e0;
+    border-radius: 15px; overflow: hidden; margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 12px 25px; background: white; border: none;
+    border-radius: 10px 10px 0 0; cursor: pointer;
+    font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease;
+  }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+  .module-selector {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    overflow-x: auto; padding-bottom: 10px;
+  }
+
+  .module-btn {
+    padding: 12px 25px; background: white;
+    border: 2px solid #667eea; border-radius: 25px;
+    cursor: pointer; font-size: 1rem; font-weight: 600;
+    color: #667eea; white-space: nowrap; transition: all 0.3s ease;
+  }
+  .module-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border-color: transparent;
+  }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .video-section {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .video-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px; margin-top: 20px;
+  }
+
+  .video-player {
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative; padding-top: 56.25%;
+  }
+
+  .video-placeholder {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  }
+
+  .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(102, 126, 234, 0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+
+  .lesson-content {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+
+  .assessment-section {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .quiz-question {
+    background: #f8f9fa; padding: 20px; border-radius: 12px;
+    margin-bottom: 20px; border-left: 4px solid #667eea;
+  }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-option {
+    padding: 12px 20px; background: white; border: 2px solid #e0e0e0;
+    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+
+  .submit-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; border-radius: 25px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s ease; margin-top: 20px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+  .already-passed-notice {
+    background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+
+  .resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .resource-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+
+  .resource-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem; margin-bottom: 15px;
+  }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+
+  .download-badge {
+    display: inline-block; padding: 5px 12px; background: #4caf50;
+    color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px;
+  }
+
+  .admin-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white; border: none; border-radius: 50px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease;
+  }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+
+  @media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    .video-grid { grid-template-columns: 1fr; }
+    .module-selector { flex-wrap: wrap; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Recognizing Codependent Patterns</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Name Input Modal -->
+<div id="nameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px; border-radius:20px; max-width:500px; width:90%; text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Recognizing Codependent Patterns</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to get started with this transformative course:</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Start Learning 🚀</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-card">
+        <h3 id="modulesComplete">0/6</h3>
+        <p>Modules Completed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+        <h3 id="lessonsViewed">0/12</h3>
+        <p>Lessons Viewed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+        <h3 id="assessmentsPassed">0/6</h3>
+        <p>Assessments Passed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content', this)">Content</button>
+    <button class="tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment', this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn"        onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn"        onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn"        onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn"        onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn"        onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <!-- Content Tab -->
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('tutorial', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('basic', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <!-- Assessment Tab -->
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <!-- One-on-One Session Section -->
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalized guidance and support.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your specific situation.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera; microphone; fullscreen; display-capture; autoplay"
+          style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'Recognizing Codependent Patterns';
+const TOTAL_WEEKS      = 6;
+const STORAGE_PREFIX   = 'coachL_RCP_'; // unique per course — won't clash with others
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+
+let completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'completedWeeks') || '[]')
+);
+
+function saveCompletedWeeks() {
+  localStorage.setItem(STORAGE_PREFIX + 'completedWeeks', JSON.stringify([...completedWeeks]));
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.onload = function () {
+  const savedName  = localStorage.getItem('studentName');
+  const savedEmail = localStorage.getItem('studentEmail');
+  if (savedName && savedEmail) {
+    studentInfo.name  = savedName;
+    studentInfo.email = savedEmail;
+    updateUserDisplay();
+  } else {
+    document.getElementById('nameModal').style.display = 'flex';
+  }
+  updateProgress();
+  refreshModuleButtons();
+  const firstIncomplete = [1,2,3,4,5,6].find(w => !completedWeeks.has(w)) || 1;
+  selectModule(firstIncomplete);
+};
+
+// ============================================================
+// USER INFO
+// ============================================================
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function saveUserInfo() {
+  const name  = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  if (!name)               { alert('Please enter your full name.'); return; }
+  if (!email)              { alert('Please enter your email address.'); return; }
+  if (!isValidEmail(email)) {
+    alert('⚠️ "' + email + '" doesn\'t look like a valid email address.\n\nPlease check it — your certificate and results will be sent here.\n\nExample: yourname@gmail.com');
+    document.getElementById('studentEmail').focus();
+    return;
+  }
+  studentInfo.name  = name;
+  studentInfo.email = email;
+  localStorage.setItem('studentName', name);
+  localStorage.setItem('studentEmail', email);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateEmail() {
+  const current  = localStorage.getItem('studentEmail') || '';
+  const newEmail = prompt('Update your email address:\n(Your results and certificate will be sent here)', current);
+  if (newEmail === null) return;
+  if (!isValidEmail(newEmail.trim())) {
+    alert('⚠️ That doesn\'t look like a valid email address. Please try again.');
+    return;
+  }
+  studentInfo.email = newEmail.trim();
+  localStorage.setItem('studentEmail', newEmail.trim());
+  alert('✅ Email updated to: ' + newEmail.trim());
+}
+
+function updateUserDisplay() {
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = 'Welcome, ' + studentInfo.name + '!';
+}
+
+// ============================================================
+// MODULE BUTTONS
+// ============================================================
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1;
+    btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) {
+      btn.classList.add('completed');
+      btn.textContent = 'Week ' + w + ' ✓';
+    } else {
+      btn.textContent = 'Week ' + w;
+    }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) {
+  currentWeek = week;
+  refreshModuleButtons();
+  updateWeekContent();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+// ============================================================
+// CONTENT RENDERING
+// ============================================================
+function updateWeekContent() {
+  const week = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent      = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent  = 'Tutorial: ' + week.tutorialVideo;
+  document.getElementById('basicTitle').textContent     = 'Basic Learning: ' + week.basicVideo;
+  document.getElementById('lessonContent').innerHTML    = week.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML    = week.resources.map(r => `
+    <div class="resource-card" onclick="downloadResource('${r.file}', '${r.title}')">
+      <div class="resource-icon">${r.icon}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+      <span class="download-badge">📥 Download</span>
+    </div>
+  `).join('');
+  renderAssessment();
+}
+
+// ============================================================
+// ASSESSMENT
+// ============================================================
+function renderAssessment() {
+  const week   = weekData[currentWeek];
+  const passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+
+  if (passed) {
+    html += `
+      <div class="already-passed-notice">
+        <h3>✅ You already passed this week!</h3>
+        <p>Great work! Your score has been recorded. You can review any week's content freely at any time.</p>
+      </div>`;
+  } else {
+    html += `<p style="margin-bottom:30px;color:#666;">Test your understanding of this week's material. You need 70% to pass.</p>`;
+  }
+
+  week.assessment.forEach((q, i) => {
+    html += `
+      <div class="quiz-question">
+        <h4>Question ${i + 1}: ${q.question}</h4>
+        <div class="quiz-options">
+          ${q.options.map((opt, j) => `
+            <label class="quiz-option">
+              <input type="radio" name="q${i}" value="${j}" ${passed ? 'disabled' : ''}>
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>`;
+  });
+
+  if (!passed) html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+
+  const week      = weekData[currentWeek];
+  let correct     = 0;
+  let answers     = [];
+  let allAnswered = true;
+
+  week.assessment.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) { allAnswered = false; return; }
+    const userAnswer = parseInt(selected.value);
+    const isCorrect  = userAnswer === q.correct;
+    if (isCorrect) correct++;
+    answers.push({ question: q.question, userAnswer: q.options[userAnswer], correctAnswer: q.options[q.correct], isCorrect });
+  });
+
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+
+  const score  = Math.round((correct / week.assessment.length) * 100);
+  const passed = score >= 70;
+
+  submitToGoogleSheets(currentWeek, score, correct, week.assessment.length, answers, passed);
+
+  if (passed) {
+    completedWeeks.add(currentWeek);
+    saveCompletedWeeks();
+    updateProgress();
+    refreshModuleButtons();
+    renderAssessment();
+    if (currentWeek < TOTAL_WEEKS) {
+      alert(`🎉 Congratulations! You passed with ${score}%!\n\n${correct}/${week.assessment.length} correct.\n\nContinue to Week ${currentWeek + 1} whenever you're ready.`);
+    } else {
+      alert(`🏆 You've completed the entire course with ${score}%!\n\nYour certificate is being generated and will be emailed to you. 🎓`);
+    }
+  } else {
+    alert(`You scored ${score}% (${correct}/${week.assessment.length} correct).\n\nYou need 70% to pass. Review the material and try again — you've got this!`);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEETS SUBMISSION
+// ============================================================
+function submitToGoogleSheets(week, score, correct, total, answers, passed) {
+  const payload = {
+    secretKey: SECRET_KEY, timestamp: new Date().toLocaleString(),
+    studentName: studentInfo.name, studentEmail: studentInfo.email,
+    courseName: COURSE_NAME, week, score, correct, total,
+    passed: passed ? 'YES' : 'NO',
+    detailedAnswers: JSON.stringify(answers)
+  };
+  fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(() => console.log('✅ Submitted to Google Sheets'))
+    .catch(err => console.error('❌ Error:', err));
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  all.push({ ...payload, answers });
+  localStorage.setItem('assessmentResults', JSON.stringify(all));
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const done = completedWeeks.size;
+  const pct  = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width       = pct + '%';
+  document.getElementById('progressBar').textContent       = pct + '%';
+  document.getElementById('modulesComplete').textContent   = done + '/' + TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent     = (done * 2) + '/' + (TOTAL_WEEKS * 2);
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function playVideo(type, week) {
+  alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed (YouTube, Vimeo, etc.).`);
+}
+
+function markComplete(week) {
+  showTab('assessment', document.querySelectorAll('.tab')[2]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadResource(file, title) {
+  fetch('resources/' + file, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) {
+        const a = document.createElement('a');
+        a.href = 'resources/' + file; a.download = file; a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'); }
+    })
+    .catch(() => alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'));
+}
+
+function startVideoCall() {
+  const iframe = document.getElementById('jitsiFrame');
+  const room   = 'coachL-' + (studentInfo.email || 'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display = 'block';
+  document.getElementById('videoCallContainer').scrollIntoView({ behavior: 'smooth' });
+}
+
+function endVideoCall() {
+  if (confirm('Are you sure you want to end the session?')) {
+    document.getElementById('jitsiFrame').src = '';
+    document.getElementById('videoCallContainer').style.display = 'none';
+  }
+}
+
+function viewAllResults() {
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!all.length) { alert('No assessment results yet.'); return; }
+  const rows = all.map((r, i) => `
+    <div class="result-card ${r.passed === 'YES' ? 'passed' : 'failed'}">
+      <h2>Submission #${i+1} — ${r.passed === 'YES' ? '✅ PASSED' : '❌ FAILED'}</h2>
+      <p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p>
+      <p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p>
+      <p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p>
+      <div class="details"><h3>Detailed Answers:</h3><table>
+        <tr><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th></tr>
+        ${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}
+      </table></div>
+    </div>`).join('');
+  const win = window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}
+    .result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+    .passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}
+    .details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}
+    table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+    th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}
+  </style></head><body><h1>📊 Results – Coach L Academy</h1>
+  <p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>
+  ${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Recognizing Codependent Patterns (6 weeks, 10 questions each)
+// ============================================================
+const weekData = {
+
+  // ─────────────────────────────────────────────────────────
+  1: {
+    title: "What Is Codependency?",
+    tutorialVideo: "Understanding Codependency — The Basics",
+    basicVideo: "Am I Codependent? A Gentle Introduction",
+    content: `
+      <h2>Week 1: What Is Codependency?</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Define codependency in clear, non-shaming terms</li>
+        <li>Understand how codependency develops</li>
+        <li>Distinguish codependency from healthy caring and love</li>
+        <li>Begin recognizing codependent patterns in your own story</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Codependency Really Is</h4>
+      <p>Codependency is a pattern of behaviour in which a person excessively focuses on another's needs, feelings, and problems — often at the expense of their own wellbeing, identity, and inner life. It is not a character flaw. It is a coping strategy that was once helpful, and one you can unlearn.</p>
+      <ul>
+        <li><strong>It is learned, not innate:</strong> Codependency develops in response to your environment, usually in early family life</li>
+        <li><strong>It feels like love:</strong> Many codependent behaviours are expressions of genuine care — but care that has lost its healthy boundaries</li>
+        <li><strong>It is a spectrum:</strong> Most people have some codependent tendencies; they become problematic when they consistently override your own needs</li>
+        <li><strong>It is not weakness:</strong> It took enormous resilience to survive the circumstances that created these patterns</li>
+      </ul>
+      <h4>2. How Codependency Develops</h4>
+      <p>Codependency almost always has roots in childhood and family systems:</p>
+      <ul>
+        <li><strong>Dysfunctional family dynamics:</strong> Growing up with a parent who struggled with addiction, mental illness, chronic illness, or emotional instability</li>
+        <li><strong>Role reversal:</strong> Being parentified — taking on emotional or practical responsibility for a parent or sibling</li>
+        <li><strong>Emotional neglect:</strong> Learning that your feelings and needs were less important than keeping the peace or managing others</li>
+        <li><strong>Inconsistent love:</strong> Receiving affection only when you performed, achieved, or suppressed yourself</li>
+        <li><strong>Trauma and abuse:</strong> Learning hypervigilance — constantly monitoring others' moods to stay safe</li>
+      </ul>
+      <h4>3. Healthy Caring vs. Codependency</h4>
+      <p>The difference is not what you do — it is why you do it and what it costs you:</p>
+      <ul>
+        <li><strong>Healthy caring:</strong> You help from a place of genuine desire; you can also say no; your self-worth is not tied to the outcome</li>
+        <li><strong>Codependent caring:</strong> You help because you feel you must; saying no creates intense guilt or fear; your sense of value depends on being needed</li>
+        <li><strong>Healthy love:</strong> You want good things for someone; you respect their autonomy</li>
+        <li><strong>Codependent love:</strong> You feel responsible for someone's happiness; their pain becomes your emergency</li>
+      </ul>
+      <h4>4. The Core Wounds Beneath Codependency</h4>
+      <ul>
+        <li><strong>"I am not enough unless I am useful."</strong> Worth became conditional on performance or caretaking</li>
+        <li><strong>"My needs don't matter."</strong> Your feelings were dismissed, minimized, or punished</li>
+        <li><strong>"I am responsible for other people's feelings."</strong> You learned to manage others' emotions to survive</li>
+        <li><strong>"Love is earned, not given."</strong> Affection came with conditions</li>
+        <li><strong>"If I am not needed, I will be abandoned."</strong> Fear of abandonment drives compulsive caretaking</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Your Earliest Helper Memory</strong><br>
+      Write about the earliest memory you have of putting someone else's needs before your own. How old were you? What did that feel like? What did it teach you about love and worth?</p>
+      <p><strong>Exercise 2: The Cost Audit</strong><br>
+      Think of one relationship in your life where you consistently give more than you receive. Write down what it costs you — emotionally, physically, in time and energy. Be honest.</p>
+      <p><strong>Exercise 3: Needs Inventory</strong><br>
+      List 10 of your own needs — emotional, physical, social, creative, spiritual. Then circle the ones you currently feel safe to express. Notice the gap.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How did you learn to put others first?</li>
+        <li>What does it feel like when someone doesn't need you?</li>
+        <li>Can you name 5 of your own needs without feeling guilty?</li>
+        <li>Where did the idea that your worth depends on helping others come from?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(1)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📋', title: 'Codependency Self-Assessment',    desc: '30-question inventory to identify patterns',        file: 'codependency-assessment.pdf' },
+      { icon: '📖', title: 'Origins of Codependency Guide',   desc: 'How family systems shape codependent patterns',     file: 'origins-guide.pdf' },
+      { icon: '📝', title: 'Needs Inventory Worksheet',       desc: 'Identify and reconnect with your own needs',        file: 'needs-inventory.pdf' },
+      { icon: '📚', title: 'Recommended Reading List',        desc: 'Top books on codependency recovery',               file: 'reading-list.pdf' },
+      { icon: '🎧', title: 'Grounding Meditation',            desc: '5-minute centering for self-connection',           file: 'grounding-meditation.mp3' },
+      { icon: '🆘', title: 'Support Resources Directory',     desc: 'Helplines, CoDA groups, and crisis support',       file: 'support-resources.pdf' }
+    ],
+    assessment: [
+      { question: "What is codependency at its core?", options: ["A mental illness requiring medication","A pattern of excessively focusing on others' needs at the expense of your own wellbeing","A personality type you are born with","A relationship style that cannot change"], correct: 1 },
+      { question: "Which family experience is most commonly linked to the development of codependency?", options: ["Growing up in a family with too much structure","Being raised by a parent with addiction, mental illness, or emotional instability","Having very high academic expectations","Growing up with siblings"], correct: 1 },
+      { question: "What is 'parentification'?", options: ["A type of strict parenting","A child taking on emotional or practical responsibility for a parent or sibling","A parenting class","A healthy family boundary"], correct: 1 },
+      { question: "What is the key difference between healthy caring and codependent caring?", options: ["Healthy caring involves giving more money","Codependent caring means helping from fear or obligation, not free choice, and ties self-worth to the outcome","There is no difference","Codependent people don't genuinely care"], correct: 1 },
+      { question: "Which statement reflects a core wound of codependency?", options: ["'I deserve love and rest.'","'My needs matter as much as anyone else's.'","'I am not enough unless I am useful.'","'I can say no without guilt.'"], correct: 2 },
+      { question: "Why is codependency described as a coping strategy rather than a flaw?", options: ["Because it is always helpful","Because it was a learned survival response to difficult circumstances","Because it means you are kind","Because experts disagree on its definition"], correct: 1 },
+      { question: "What drives compulsive caretaking in codependency?", options: ["Genuine selflessness","Fear of abandonment and the belief that love must be earned through usefulness","Desire for power","Boredom"], correct: 1 },
+      { question: "What is hypervigilance in the context of codependency?", options: ["Being very organised","Constantly monitoring others' moods to stay safe — a survival skill learned in early life","A meditation practice","Being overly cautious about health"], correct: 1 },
+      { question: "Which of these is a sign of codependency rather than healthy love?", options: ["Wanting good things for someone while respecting their autonomy","Feeling responsible for someone else's happiness and treating their pain as your emergency","Caring for a sick friend while maintaining your own life","Enjoying helping others without feeling obligated"], correct: 1 },
+      { question: "What is the first step in recognizing codependent patterns?", options: ["Blaming the people who caused them","Immediately ending all caretaking behaviors","Honest self-reflection — identifying where and how these patterns show up in your life","Telling everyone about your childhood"], correct: 3 }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  2: {
+    title: "People-Pleasing & Fear of Disapproval",
+    tutorialVideo: "The People-Pleaser's Trap",
+    basicVideo: "Why You Say Yes When You Mean No",
+    content: `
+      <h2>Week 2: People-Pleasing & Fear of Disapproval</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what people-pleasing is and how it forms</li>
+        <li>Recognize people-pleasing behaviours in your daily life</li>
+        <li>Identify the fear of disapproval and where it comes from</li>
+        <li>Begin practising authentic responses over automatic compliance</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Is People-Pleasing?</h4>
+      <p>People-pleasing is the habitual tendency to prioritise others' approval, comfort, and feelings above your own truth. It is not about being kind — it is about fear. The people-pleaser is not freely choosing to give; they are compelled to give in order to avoid a perceived threat — rejection, conflict, anger, or abandonment.</p>
+      <ul>
+        <li>Saying yes when you mean no</li>
+        <li>Over-apologising — even for things you didn't do</li>
+        <li>Editing or softening your opinions to match the room</li>
+        <li>Feeling responsible for others' emotional reactions to your choices</li>
+        <li>Avoiding conflict at all costs — including at the cost of your own truth</li>
+      </ul>
+      <h4>2. The Fear Beneath People-Pleasing</h4>
+      <p>People-pleasing is driven by one or more core fears:</p>
+      <ul>
+        <li><strong>Fear of rejection:</strong> "If I say no or disagree, they will leave or stop liking me."</li>
+        <li><strong>Fear of conflict:</strong> "If I am honest, there will be anger, and I cannot handle that."</li>
+        <li><strong>Fear of being "too much":</strong> "My real feelings and needs will burden or overwhelm others."</li>
+        <li><strong>Fear of unworthiness:</strong> "I am only valuable when I am agreeable and helpful."</li>
+        <li><strong>Fear of punishment:</strong> "If I don't comply, something bad will happen." (Often rooted in early experiences.)</li>
+      </ul>
+      <h4>3. How People-Pleasing Shows Up Day to Day</h4>
+      <ul>
+        <li>Agreeing with opinions you don't hold</li>
+        <li>Smiling and nodding when you're actually hurt or angry</li>
+        <li>Volunteering for things you resent doing</li>
+        <li>Downplaying your achievements to avoid making others uncomfortable</li>
+        <li>Lying (or omitting truth) to avoid disappointing someone</li>
+        <li>Going along with plans you don't want — then resenting it later</li>
+        <li>Feeling anxious if someone seems displeased with you</li>
+        <li>Monitoring others' moods and adjusting yourself accordingly</li>
+        <li>Struggling to ask for help, even when you desperately need it</li>
+      </ul>
+      <h4>4. The Hidden Cost of People-Pleasing</h4>
+      <p>People-pleasing is exhausting because it requires constant self-betrayal:</p>
+      <ul>
+        <li><strong>Resentment:</strong> You give and give, and eventually feel bitter — but can't say so</li>
+        <li><strong>Loss of identity:</strong> When you always match others, you lose track of who you actually are</li>
+        <li><strong>Inauthenticity:</strong> Your relationships are built on a curated version of you, not the real you</li>
+        <li><strong>Burnout:</strong> Suppressing your own feelings and over-giving is physically and emotionally exhausting</li>
+        <li><strong>Rage turned inward:</strong> Unexpressed anger often becomes self-criticism, anxiety, or depression</li>
+      </ul>
+      <h4>5. Reclaiming Authenticity — The First Steps</h4>
+      <ul>
+        <li><strong>Pause before responding:</strong> "Let me think about that and get back to you" is a complete answer</li>
+        <li><strong>Notice the feeling first:</strong> When you're about to auto-agree, check in — what do you actually want?</li>
+        <li><strong>Practice small honesty:</strong> Start with low-stakes situations — choosing a restaurant you actually want, sharing a gentle opinion</li>
+        <li><strong>Separate their feelings from your responsibility:</strong> You can care that someone is disappointed without being responsible for preventing it</li>
+        <li><strong>Tolerating discomfort:</strong> Someone's momentary displeasure will not destroy the relationship or you — even when it feels like it will</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The People-Pleasing Log</strong><br>
+      For one week, write down every time you say yes when you want to say no, or edit yourself to avoid disapproval. Note: the situation, what you did, and how you felt afterward.</p>
+      <p><strong>Exercise 2: The Pause Practice</strong><br>
+      This week, every time someone asks you for something, pause before answering. Take one breath and ask yourself: "What do I actually want?" Then answer — even if you still say yes, make it a conscious choice.</p>
+      <p><strong>Exercise 3: One Small No</strong><br>
+      This week, say no to one request you would normally automatically agree to. It can be small. Notice what happens — in the other person, and in you.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Who in your life do you find hardest to disappoint? Why?</li>
+        <li>What are you afraid would happen if people saw the real you — opinions, limits, needs?</li>
+        <li>Where did you first learn that your approval depended on being agreeable?</li>
+        <li>What have you given up to avoid disappointing others?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(2)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'People-Pleasing Behaviour Log',  desc: 'Track where and when you override yourself',      file: 'people-pleasing-log.pdf' },
+      { icon: '💬', title: 'Scripts for Saying No',          desc: '30 gentle, clear ways to decline requests',       file: 'no-scripts.pdf' },
+      { icon: '🧠', title: 'Fear of Disapproval Guide',      desc: 'Understanding and working through approval fears', file: 'disapproval-guide.pdf' },
+      { icon: '📋', title: 'Authenticity Starter Worksheet', desc: 'Begin speaking your truth in small steps',         file: 'authenticity-worksheet.pdf' },
+      { icon: '🎧', title: 'Self-Worth Affirmations Audio',  desc: 'Daily audio for reclaiming your value',           file: 'self-worth-audio.mp3' },
+      { icon: '📚', title: 'People-Pleasing Reading List',   desc: 'Books on breaking free from approval-seeking',    file: 'reading-list-2.pdf' }
+    ],
+    assessment: [
+      { question: "What is the core driver of people-pleasing?", options: ["Genuine generosity","Fear — of rejection, conflict, abandonment, or punishment","Being a naturally kind person","Wanting to be liked"], correct: 1 },
+      { question: "Which of these is an example of people-pleasing?", options: ["Telling a friend honestly you disagree with them","Choosing the restaurant you actually want","Smiling and nodding when you're actually hurt or angry","Asking for help when you need it"], correct: 2 },
+      { question: "What is a hidden cost of people-pleasing over time?", options: ["Other people like you more","You build deeper, more authentic relationships","Growing resentment and eventual burnout from constant self-betrayal","You become more confident"], correct: 2 },
+      { question: "What does 'loss of identity' mean in the context of people-pleasing?", options: ["Forgetting your name","When you always adapt to others, you lose track of who you actually are","Changing careers","Moving to a new city"], correct: 1 },
+      { question: "What is the first practical step toward reclaiming authenticity?", options: ["Immediately confronting everyone you've been dishonest with","Pausing before responding to check in with what you actually want","Stopping all caregiving immediately","Telling everyone your opinions at all times"], correct: 1 },
+      { question: "Where does the fear of conflict often originate?", options: ["It is a personality trait you are born with","Childhood experiences where conflict led to emotional pain, punishment, or loss of love","Being an introvert","Watching too much television"], correct: 1 },
+      { question: "What is 'tolerating discomfort' in the context of people-pleasing recovery?", options: ["Accepting physical pain","Practicing sitting with someone's momentary displeasure without catastrophising or collapsing","Avoiding difficult situations","Ignoring your own needs"], correct: 1 },
+      { question: "Why do people-pleasers struggle to ask for help?", options: ["They don't need help","They believe their needs are less important than others' and asking risks burdening or losing approval","They are too independent","They prefer to do everything themselves"], correct: 1 },
+      { question: "What does it mean to 'separate their feelings from your responsibility'?", options: ["To stop caring about others entirely","You can care that someone is disappointed without being responsible for preventing their disappointment","To blame others for your feelings","To ignore other people's emotions"], correct: 1 },
+      { question: "What happens to unexpressed anger in people-pleasers?", options: ["It disappears on its own","It is channelled into healthy assertiveness","It often turns inward, becoming self-criticism, anxiety, or depression","It strengthens relationships"], correct: 3 }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  3: {
+    title: "Caretaking, Control & Losing Yourself",
+    tutorialVideo: "The Caretaker's Dilemma",
+    basicVideo: "When Helping Becomes Controlling",
+    content: `
+      <h2>Week 3: Caretaking, Control & Losing Yourself</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the difference between caretaking and genuine caregiving</li>
+        <li>Recognize how caretaking is connected to control</li>
+        <li>Identify how over-focusing on others causes you to lose yourself</li>
+        <li>Begin redirecting attention back to your own inner life</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Caretaking vs. Genuine Caregiving</h4>
+      <p>There is a profound difference between caring for someone and caretaking in the codependent sense:</p>
+      <ul>
+        <li><strong>Genuine caregiving:</strong> You offer support freely; the other person retains their autonomy; you can step back without anxiety; you maintain your own wellbeing</li>
+        <li><strong>Codependent caretaking:</strong> You feel compelled to fix, rescue, or manage; you take on responsibility for outcomes that belong to the other person; stepping back feels dangerous; your sense of stability depends on their state</li>
+        <li><strong>The tell:</strong> Ask yourself — "Am I helping because I want to, or because I'm afraid of what happens if I don't?"</li>
+      </ul>
+      <h4>2. The Hidden Control in Caretaking</h4>
+      <p>Codependent caretaking almost always contains an element of control — and this can be uncomfortable to see. If you manage someone's life, problems, or feelings, you are (consciously or not) trying to control outcomes to reduce your own anxiety.</p>
+      <ul>
+        <li>Giving unsolicited advice because their choices make you anxious</li>
+        <li>Solving problems for others before they've asked</li>
+        <li>Rescuing someone from natural consequences to avoid your own discomfort</li>
+        <li>Managing how someone presents themselves to the world</li>
+        <li>Monitoring and trying to influence someone's mood</li>
+        <li>Feeling resentful when people don't follow your help or improve as expected</li>
+      </ul>
+      <h4>3. Losing Yourself in Another</h4>
+      <p>One of the hallmarks of codependency is enmeshment — the blurring of the boundary between yourself and another person. When you lose yourself:</p>
+      <ul>
+        <li>You don't know what you feel until you know what they feel</li>
+        <li>Their mood sets the emotional tone of your entire day</li>
+        <li>You have no hobbies, interests, or plans that exist independently of them</li>
+        <li>You feel guilty when you enjoy yourself and they are struggling</li>
+        <li>Your opinions shift depending on who you are with</li>
+        <li>You cannot imagine life, or your identity, without this person</li>
+      </ul>
+      <h4>4. The Rescuer Role</h4>
+      <p>Many codependents unconsciously take on the role of Rescuer in the Drama Triangle — a cycle involving a Rescuer, a Victim, and a Persecutor. Understanding this pattern helps you step out of it:</p>
+      <ul>
+        <li><strong>Rescuer:</strong> "I will fix this, save them, solve their problems" — feels needed and valuable</li>
+        <li><strong>Victim:</strong> "I cannot manage without help" — triggers the rescuer's compulsion</li>
+        <li><strong>Persecutor:</strong> "Why won't they just do what I say?" — Rescuers often become persecutors when their help is refused or ineffective</li>
+        <li>The cycle rotates: the Rescuer gives and gives until resentment builds, then moves to Persecutor (blaming), then often to Victim (exhaustion)</li>
+      </ul>
+      <h4>5. Coming Back to Yourself</h4>
+      <ul>
+        <li><strong>Self-focus practice:</strong> Several times daily, pause and ask "What am I feeling right now? What do I need right now?"</li>
+        <li><strong>Separate their story from yours:</strong> Their problem is theirs. Their feelings are theirs. Your job is to tend your own</li>
+        <li><strong>Reclaim your interests:</strong> Name one thing you love that exists completely outside of any relationship</li>
+        <li><strong>Allow natural consequences:</strong> Letting others experience the results of their own choices is not cruel — it is respectful of their autonomy and growth</li>
+        <li><strong>Detachment with love:</strong> You can love someone and not be entangled in their inner world. Love does not require merger</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Rescue Audit</strong><br>
+      Think of three situations where you recently "helped" someone. For each, ask yourself honestly: Was I invited? Was this truly needed? Was I helping their growth, or soothing my own anxiety?</p>
+      <p><strong>Exercise 2: The Identity Map</strong><br>
+      Draw a circle. Write YOUR name in it. Outside the circle, write the names of the people you're most focused on. Inside the circle, list at least 10 things that are yours — feelings, interests, values, dreams — that belong only to you. This is your self.</p>
+      <p><strong>Exercise 3: 24-Hour Self-Check-In</strong><br>
+      Set an alarm every 2 hours for one full day. Each time it goes off, write down: what you are feeling, what you are thinking, and what you need. Notice how unfamiliar this may feel.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Who in your life do you most often feel compelled to rescue?</li>
+        <li>What anxiety are you really trying to manage when you "help"?</li>
+        <li>What would you do with your time and energy if you stopped caretaking?</li>
+        <li>Who are you, apart from your role as a helper?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(3)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📊', title: 'Drama Triangle Explainer',         desc: 'Rescuer, Victim, Persecutor — and how to exit',  file: 'drama-triangle.pdf' },
+      { icon: '📝', title: 'Rescue Audit Worksheet',           desc: 'Examine your helping motivations honestly',      file: 'rescue-audit.pdf' },
+      { icon: '🗺️', title: 'Identity Mapping Guide',          desc: 'Reconnect with who YOU are beyond caretaking',   file: 'identity-mapping.pdf' },
+      { icon: '📋', title: 'Detachment with Love Worksheet',   desc: 'Love fully without losing yourself',             file: 'detachment-worksheet.pdf' },
+      { icon: '🎧', title: 'Inner Self Reconnection Audio',    desc: '12-minute guided return to your inner world',    file: 'inner-self-audio.mp3' },
+      { icon: '📚', title: 'Enmeshment Recovery Reading',      desc: 'Key texts on identity and relationship health',  file: 'enmeshment-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is the key difference between genuine caregiving and codependent caretaking?", options: ["Caregiving costs more time","Caretaking is compelled by fear and ties your stability to the other person's state; caregiving is offered freely","Caregiving is only for professionals","There is no difference"], correct: 1 },
+      { question: "How is control hidden within caretaking?", options: ["It isn't — caretaking is always selfless","Caretakers manage and fix others' problems to reduce their own anxiety about outcomes","Control is only present in abusive relationships","Caretakers consciously manipulate others"], correct: 1 },
+      { question: "What is enmeshment?", options: ["A healthy form of closeness","The blurring of boundaries between yourself and another, so their feelings and state define yours","A type of therapy","A conflict resolution style"], correct: 1 },
+      { question: "Which is a sign you have lost yourself in a relationship?", options: ["You enjoy hobbies independently","You have opinions that remain consistent regardless of who you are with","Your mood for the entire day is set by the other person's emotional state","You feel comfortable spending time alone"], correct: 2 },
+      { question: "In the Drama Triangle, what role do codependents most often initially play?", options: ["Victim","Persecutor","Rescuer","Observer"], correct: 2 },
+      { question: "What does 'detachment with love' mean?", options: ["Ending the relationship","Stopping caring about the person","Loving someone while maintaining your own identity and allowing them their autonomy","Becoming emotionally cold"], correct: 2 },
+      { question: "What does allowing natural consequences involve?", options: ["Being cruel or uncaring","Letting others experience the results of their own choices without rescuing them","Punishing others for mistakes","Refusing to help when asked"], correct: 1 },
+      { question: "Why do Rescuers often become Persecutors in the Drama Triangle?", options: ["They are naturally controlling","When their help is refused or doesn't produce the expected result, unacknowledged resentment turns into blame","They want power","Persecutors have more fun"], correct: 1 },
+      { question: "What is a self-focus practice?", options: ["Being selfish","Ignoring other people's needs","Regularly pausing to ask yourself what you are feeling and needing in the present moment","Keeping a diary about others"], correct: 3 },
+      { question: "What is the most useful question to ask yourself before helping someone?", options: ["'How can I fix this?'","'Am I helping because I want to, or because I'm afraid of what happens if I don't?'","'What do they need?'","'How will they thank me?'"], correct: 1 }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  4: {
+    title: "Low Self-Worth & Shame",
+    tutorialVideo: "The Roots of Codependent Shame",
+    basicVideo: "You Are Enough — Understanding Self-Worth",
+    content: `
+      <h2>Week 4: Low Self-Worth & Shame</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand how low self-worth drives codependent behaviour</li>
+        <li>Distinguish healthy guilt from toxic shame</li>
+        <li>Identify shame-based beliefs you carry</li>
+        <li>Begin building an authentic foundation of self-worth</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Self-Worth and Codependency</h4>
+      <p>At the heart of most codependent patterns is a wound of low self-worth — a deep, often unconscious belief that you are not enough just as you are. This belief drives the compulsion to earn love through giving, fixing, and pleasing.</p>
+      <ul>
+        <li>You give because you believe receiving is a luxury you haven't earned</li>
+        <li>You over-explain and over-apologise because you expect to be found inadequate</li>
+        <li>You cannot tolerate someone else's disappointment because it confirms your worst belief about yourself</li>
+        <li>You stay in situations that harm you because you don't believe you deserve better</li>
+        <li>You measure your value by your usefulness to others</li>
+      </ul>
+      <h4>2. Guilt vs. Shame</h4>
+      <p>Understanding this distinction is transformational:</p>
+      <ul>
+        <li><strong>Guilt:</strong> "I did something bad." — Relates to a specific action. Can motivate repair and growth.</li>
+        <li><strong>Shame:</strong> "I am bad." — Relates to your core identity. Drives hiding, people-pleasing, and self-destruction.</li>
+        <li>Codependents typically live in shame, not guilt. They don't just feel they made a mistake — they feel they are a mistake.</li>
+        <li>Toxic shame is often installed in childhood — through criticism, neglect, abuse, or conditional love.</li>
+      </ul>
+      <h4>3. Common Shame-Based Beliefs in Codependency</h4>
+      <ul>
+        <li>"I am too much" — My needs, feelings, or personality are overwhelming to others</li>
+        <li>"I am not enough" — I am inherently lacking or inadequate</li>
+        <li>"I am unlovable" — If people knew the real me, they would leave</li>
+        <li>"I am a burden" — My presence, needs, and struggles inconvenience others</li>
+        <li>"I don't deserve good things" — Rest, pleasure, or success feels uncomfortable or stolen</li>
+        <li>"My feelings don't matter" — My emotions are an inconvenience or weakness</li>
+      </ul>
+      <h4>4. How Shame Manifests in Behaviour</h4>
+      <ul>
+        <li>Compulsive giving to prove you deserve to take up space</li>
+        <li>Tolerating mistreatment because you expect it</li>
+        <li>Difficulty receiving compliments, help, or gifts</li>
+        <li>Constantly minimising yourself — your achievements, your needs, your pain</li>
+        <li>Catastrophising mistakes and being unable to move on from them</li>
+        <li>Perfectionism as a defence against the shame of being "found out"</li>
+      </ul>
+      <h4>5. Building Authentic Self-Worth</h4>
+      <p>Self-worth cannot be built on what you do for others. It must be grounded in who you are:</p>
+      <ul>
+        <li><strong>Witness your shame without merging with it:</strong> "I am noticing a feeling of shame" rather than "I am shameful"</li>
+        <li><strong>Challenge the original verdict:</strong> Who told you that you were too much, not enough, or unlovable? Were they right? Were they even in a position to judge?</li>
+        <li><strong>Self-compassion practice:</strong> Treat yourself with the gentleness you automatically offer others</li>
+        <li><strong>Receive:</strong> Practice accepting help, compliments, and kindness without deflecting</li>
+        <li><strong>Rest without earning it:</strong> Take one guilt-free rest this week</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Shame Inventory</strong><br>
+      Write down the shame-based beliefs you carry. For each, write: Where did this belief come from? Who taught it to me? Is it actually true?</p>
+      <p><strong>Exercise 2: The Self-Compassion Letter</strong><br>
+      Write a letter to yourself — with the same warmth and understanding you would offer a close friend who was struggling with what you struggle with.</p>
+      <p><strong>Exercise 3: Receiving Practice</strong><br>
+      This week, when someone offers you a compliment, simply say "Thank you." Do not deflect, minimise, or return the compliment immediately. Notice how it feels.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>When was the first time you remember feeling like you were "too much" or "not enough"?</li>
+        <li>What do you believe would happen if you stopped proving your worth through helping?</li>
+        <li>In what ways do you treat yourself more harshly than you would treat a friend?</li>
+        <li>What would it feel like to believe you deserve love simply for existing?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(4)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'Shame Inventory Worksheet',        desc: 'Identify and examine your core shame beliefs',   file: 'shame-inventory.pdf' },
+      { icon: '💝', title: 'Self-Compassion Practice Guide',   desc: 'Build genuine self-worth from the inside out',   file: 'self-compassion.pdf' },
+      { icon: '📋', title: 'Guilt vs Shame Reference Card',    desc: 'Practical guide to telling the difference',      file: 'guilt-vs-shame.pdf' },
+      { icon: '📖', title: 'Inner Critic Workbook',            desc: 'Challenge and transform your inner shame voice', file: 'inner-critic.pdf' },
+      { icon: '🎧', title: 'Self-Worth Meditation',            desc: '15-minute guided meditation for worthiness',     file: 'self-worth-meditation.mp3' },
+      { icon: '📚', title: 'Shame & Recovery Reading List',    desc: 'Foundational texts including Brené Brown',       file: 'shame-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is the core belief beneath most codependent behaviour?", options: ["'I am too helpful'","'I deserve more than others give me'","'I am not enough just as I am — love must be earned'","'Other people always need me'"], correct: 2 },
+      { question: "What is the key distinction between guilt and shame?", options: ["Guilt is worse than shame","Guilt relates to a specific action ('I did something bad'); shame relates to identity ('I am bad')","They are the same thing","Shame motivates change better than guilt"], correct: 1 },
+      { question: "Which shame-based belief is most common in codependency?", options: ["'I am too confident'","'I need to do less for others'","'I am a burden and my needs inconvenience others'","'I set too many boundaries'"], correct: 2 },
+      { question: "How does perfectionism connect to shame in codependency?", options: ["Perfectionists are healthier","Perfectionism is a defence — if I do everything perfectly, I won't be 'found out' as inadequate","Perfectionism is unrelated to shame","Perfectionists have high self-esteem"], correct: 1 },
+      { question: "What does witnessing shame 'without merging with it' mean?", options: ["Ignoring the feeling entirely","Observing 'I am noticing shame' rather than identifying as 'I am shameful'","Discussing shame with others","Writing about shame daily"], correct: 1 },
+      { question: "Why do codependents struggle to receive compliments, help, or gifts?", options: ["They are naturally ungrateful","Deep shame makes receiving feel undeserved or unsafe","They prefer to give","It's a cultural habit"], correct: 1 },
+      { question: "Where does toxic shame typically originate?", options: ["In adulthood after difficult relationships","In childhood through criticism, neglect, abuse, or love that was conditional on performance","From social media","From personal failure"], correct: 1 },
+      { question: "What is the self-compassion practice in recovery?", options: ["Forgiving others before yourself","Treating yourself with the same gentleness and understanding you naturally extend to those you love","Being less critical of your work","Stopping all self-reflection"], correct: 1 },
+      { question: "What does 'measuring your value by your usefulness' mean?", options: ["A healthy work ethic","Believing you are only worthy when you are helping, fixing, or contributing to others","Being a hard worker","Having high productivity"], correct: 1 },
+      { question: "What is the first step in building authentic self-worth?", options: ["Finding a new relationship","Proving your worth through bigger acts of service","Recognizing that your worth is not tied to what you do for others — it is intrinsic to who you are","Waiting until others recognize your value"], correct: 3 }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  5: {
+    title: "Boundaries, Communication & Relationships",
+    tutorialVideo: "Healthy Boundaries in Codependent Relationships",
+    basicVideo: "How to Communicate Your Needs Honestly",
+    content: `
+      <h2>Week 5: Boundaries, Communication & Relationships</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why boundaries are especially difficult for codependents</li>
+        <li>Learn to identify where your boundaries have been eroded</li>
+        <li>Practise communicating needs and limits clearly and kindly</li>
+        <li>Understand the patterns codependents attract and repeat in relationships</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Boundaries Are Hard for Codependents</h4>
+      <p>Codependents often have no model for healthy limits. Many grew up in environments where:</p>
+      <ul>
+        <li>Their boundaries were regularly overridden or ignored</li>
+        <li>Setting a limit was met with anger, guilt, or withdrawal of love</li>
+        <li>They were praised for selflessness and criticised for having needs</li>
+        <li>They learned that love = having no limits with someone</li>
+        <li>Saying no felt dangerous — physically, emotionally, or relationally</li>
+      </ul>
+      <h4>2. Signs Your Boundaries Have Collapsed</h4>
+      <ul>
+        <li>You say yes to things that make you feel terrible</li>
+        <li>You feel responsible for managing others' emotions</li>
+        <li>You share too much too soon, or overshare to create closeness</li>
+        <li>You let people interrupt, use, or disrespect you without speaking up</li>
+        <li>You give until there is nothing left, then collapse in resentment</li>
+        <li>You don't know where your feelings end and others' begin</li>
+        <li>You allow behaviour from others that you know is not acceptable</li>
+      </ul>
+      <h4>3. What Healthy Boundaries Look Like for Codependents</h4>
+      <p>Healthy boundaries are not walls — they are honest definitions of what you will and will not accept in how you are treated:</p>
+      <ul>
+        <li><strong>Internal boundaries:</strong> Limits you set with yourself — "I will not give advice unless asked; I will not take responsibility for this person's choices"</li>
+        <li><strong>Relational boundaries:</strong> What you communicate to others — "I'm not available for calls after 9pm; I'm not comfortable with that; I need space to think before I respond"</li>
+        <li><strong>Emotional boundaries:</strong> Recognising that another person's feelings are theirs — you can care without becoming responsible for solving them</li>
+      </ul>
+      <h4>4. Communicating Needs — The Codependent's Challenge</h4>
+      <p>Codependents often cannot ask for what they need because:</p>
+      <ul>
+        <li>They were taught their needs were too much or unimportant</li>
+        <li>They fear that asking will drive people away</li>
+        <li>They expect others to know without being told — and feel hurt when they don't</li>
+        <li>They frame needs as apologies ("I'm sorry, I was just wondering if maybe...")</li>
+      </ul>
+      <p><strong>Communicating needs directly:</strong></p>
+      <ul>
+        <li>Name it clearly: "I need support right now, not advice."</li>
+        <li>Say it simply: "I'm not available tonight."</li>
+        <li>Drop the apology: "Can you call me back later?" — not "I'm so sorry to ask..."</li>
+        <li>Trust that your needs are valid — you don't have to earn the right to have them</li>
+      </ul>
+      <h4>5. Relationship Patterns Codependents Repeat</h4>
+      <p>Without awareness, codependents tend to recreate familiar patterns:</p>
+      <ul>
+        <li><strong>Attracting those who need rescuing:</strong> Partners, friends, or colleagues who have high needs feel like love</li>
+        <li><strong>Confusing intensity with intimacy:</strong> Drama, chaos, or crisis feels like deep connection</li>
+        <li><strong>Emotional unavailability:</strong> Drawn to partners who are emotionally unavailable — recreating the childhood dynamic</li>
+        <li><strong>Over-giving and under-receiving:</strong> Creating unequal relationships that confirm the belief that they are less deserving</li>
+        <li><strong>The repetition compulsion:</strong> Unconsciously seeking familiar pain in an attempt to finally "get it right" this time</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Boundary Line</strong><br>
+      List five things in your current relationships that you consistently tolerate but don't want to. For each, write the boundary statement you could make: "I'm not willing to..." or "I need..."</p>
+      <p><strong>Exercise 2: Needs Translation</strong><br>
+      Think of three needs you currently have that you haven't expressed. Translate each from an apology into a clear, direct request.</p>
+      <p><strong>Exercise 3: Relationship Pattern Audit</strong><br>
+      Look back at your significant relationships (romantic, friendship, family). What do they have in common? What role did you consistently play?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What happens in your body when you consider saying no to someone close to you?</li>
+        <li>What is the need you most struggle to ask for directly?</li>
+        <li>What patterns show up again and again in your relationships?</li>
+        <li>What would a relationship in which you were truly known and equally valued look like?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(5)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'Boundary Statement Builder',       desc: 'Create your personal limits in every area',      file: 'boundary-builder.pdf' },
+      { icon: '💬', title: 'Needs Communication Scripts',      desc: 'Say what you need clearly and kindly',           file: 'needs-scripts.pdf' },
+      { icon: '🔍', title: 'Relationship Pattern Audit',       desc: 'Identify the patterns you keep repeating',       file: 'pattern-audit.pdf' },
+      { icon: '📋', title: 'Internal Boundaries Worksheet',    desc: 'Set limits with yourself, not just others',      file: 'internal-boundaries.pdf' },
+      { icon: '🎧', title: 'Assertiveness Confidence Audio',   desc: 'Build the inner strength to speak your truth',   file: 'assertiveness-audio.mp3' },
+      { icon: '📚', title: 'Relationship Patterns Reading',    desc: 'Why we repeat what we know — and how to stop',   file: 'relationship-reading.pdf' }
+    ],
+    assessment: [
+      { question: "Why do codependents find it especially difficult to set boundaries?", options: ["They don't care about relationships","Boundaries were dangerous or punished in their early environment, so limits feel threatening","They are too confident","Boundaries are a new concept for everyone"], correct: 1 },
+      { question: "What is an internal boundary in codependency recovery?", options: ["A physical wall","A limit you set with yourself — such as 'I will not take responsibility for this person's choices'","Blocking someone on social media","A boundary you keep private from others"], correct: 1 },
+      { question: "Which of these is a sign that your boundaries have collapsed?", options: ["You can say no without guilt","You feel responsible for managing others' emotions and say yes to things that make you feel terrible","You enjoy helping people","You communicate your needs clearly"], correct: 1 },
+      { question: "Why do codependents often expect people to know their needs without being told?", options: ["They are poor communicators","They believe that if someone truly loves you, they should automatically sense what you need — a belief that creates silent resentment","They don't have needs","They prefer non-verbal communication"], correct: 1 },
+      { question: "What does 'confusing intensity with intimacy' mean in codependent relationships?", options: ["Being very physical in relationships","Mistaking drama, crisis, or chaos for deep emotional connection","Having very strong opinions","Being passionate"], correct: 1 },
+      { question: "What is the 'repetition compulsion' in relationships?", options: ["Repeating affirmations","The unconscious drive to recreate familiar painful patterns, hoping to finally resolve them","Talking about the same topic repeatedly","A type of OCD"], correct: 1 },
+      { question: "How should a codependent in recovery frame a request for support?", options: ["'I'm so sorry to ask, I know this is probably too much...'","'I need support right now, not advice.' — direct, clear, and without apology","Waiting until someone notices they need help","Hinting and hoping others pick up on it"], correct: 1 },
+      { question: "What does a healthy emotional boundary look like?", options: ["Refusing to engage with anyone else's emotions","Recognising that another person's feelings are theirs — you can care without becoming responsible for solving them","Only talking about your own feelings","Avoiding emotional conversations"], correct: 1 },
+      { question: "Why are codependents often attracted to emotionally unavailable partners?", options: ["Emotionally unavailable people are more fun","It recreates the familiar childhood dynamic — and offers the unconscious hope of finally winning love that couldn't be won then","Codependents don't value emotional connection","It is a coincidence"], correct: 1 },
+      { question: "What is the key principle of communicating needs in recovery?", options: ["Always soften requests with extensive apologies","Frame needs as conditions on your help","Trust that your needs are valid — you do not need to earn the right to have them","Ask for very little to avoid burdening others"], correct: 3 }
+    ]
+  },
+
+  // ─────────────────────────────────────────────────────────
+  6: {
+    title: "Recovery, Identity & Building a New Life",
+    tutorialVideo: "Recovering from Codependency — What It Really Looks Like",
+    basicVideo: "Who Are You Without the Role?",
+    content: `
+      <h2>Week 6: Recovery, Identity & Building a New Life</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what codependency recovery truly looks like</li>
+        <li>Begin rebuilding a solid, authentic sense of self</li>
+        <li>Develop a personalised recovery and self-care plan</li>
+        <li>Recognize what healthy, interdependent relationships feel like</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Recovery from Codependency Looks Like</h4>
+      <p>Recovery is not a destination — it is a practice. It does not mean becoming selfish or indifferent. It means becoming honest, boundaried, and genuinely present both with yourself and with others.</p>
+      <ul>
+        <li><strong>Recovery is not linear:</strong> You will have days of clarity and days of relapse into old patterns. Both are part of the process.</li>
+        <li><strong>You will not lose love:</strong> The relationships that matter will grow stronger as you become more authentic. Some that depended on your submission may change or end — and that is information, not failure.</li>
+        <li><strong>It feels unfamiliar:</strong> Prioritising yourself, having boundaries, and receiving care may feel deeply wrong at first. That discomfort is the process working.</li>
+        <li><strong>You will grieve:</strong> You may grieve the years spent over-giving, the relationships that didn't serve you, and the version of yourself that disappeared. This grief is valid and necessary.</li>
+      </ul>
+      <h4>2. Rebuilding Your Identity</h4>
+      <p>Codependency erases the self. Recovery means excavating it — finding out who you are beneath the helper, the fixer, the accommodator:</p>
+      <ul>
+        <li><strong>Values:</strong> What do YOU believe in, independent of any relationship?</li>
+        <li><strong>Preferences:</strong> What do you actually enjoy? What music, food, activities, places bring you alive?</li>
+        <li><strong>Dreams:</strong> What did you want before you became responsible for others' lives?</li>
+        <li><strong>Voice:</strong> What opinions, perspectives, and truths do you hold that you've been silencing?</li>
+        <li><strong>Body:</strong> What does your body need — rest, movement, pleasure, nourishment?</li>
+      </ul>
+      <h4>3. Healthy Interdependence — The Goal</h4>
+      <p>The goal is not independence — it is interdependence. Healthy relationships involve:</p>
+      <ul>
+        <li>Two people who each have their own identity, needs, and inner life</li>
+        <li>Mutual care that flows both ways — not one person giving and one receiving</li>
+        <li>The freedom to need each other without dependency or control</li>
+        <li>Space to disagree, to disappoint each other, and to repair</li>
+        <li>Love that does not require self-erasure</li>
+      </ul>
+      <h4>4. Your Recovery Practice</h4>
+      <p>Recovery from codependency is daily practice. Some pillars of that practice:</p>
+      <ul>
+        <li><strong>Daily self-check-in:</strong> What am I feeling? What do I need? What is mine and what is not mine to carry?</li>
+        <li><strong>CoDA (Codependents Anonymous):</strong> A peer support fellowship with meetings available worldwide and online — free, and enormously powerful</li>
+        <li><strong>Therapy:</strong> Look for a therapist who understands codependency, attachment, and family systems</li>
+        <li><strong>Journaling:</strong> Your inner world needs a place to exist. Write it down.</li>
+        <li><strong>Self-care as non-negotiable:</strong> Sleep, nourishment, movement, play — not as rewards for good behaviour, but as rights</li>
+        <li><strong>Community:</strong> Authentic connection with people who support your growth</li>
+      </ul>
+      <h4>5. You Have Always Been Enough</h4>
+      <p>The patterns you have carried were never about your unworthiness. They were about survival — about learning, in a particular environment, what it took to be safe, loved, and valued. That environment was not the truth about you.</p>
+      <p>You were always enough. You are discovering what that means now. Keep going.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Identity Reclamation List</strong><br>
+      Write 25 things that are true about you — not what you do for others, but who you are. Your values, your quirks, your loves, your history, your dreams. Read it out loud to yourself.</p>
+      <p><strong>Exercise 2: Your Recovery Manifesto</strong><br>
+      Write a one-page personal declaration of the life you are building — what you will no longer accept, what you are reclaiming, and what you are moving toward.</p>
+      <p><strong>Exercise 3: Design Your Recovery Week</strong><br>
+      Design a sample week that includes daily self-check-ins, one act of receiving, one boundary practice, one creative or joyful activity, and one connection with a safe, supportive person.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the most important thing you are taking from this course?</li>
+        <li>What part of yourself are you most excited to reclaim?</li>
+        <li>What does a relationship in which you are fully yourself look like?</li>
+        <li>What would you tell the younger version of you who first developed these patterns?</li>
+      </ul>
+      <h3>🎉 Congratulations!</h3>
+      <p>You have completed Recognizing Codependent Patterns. You have done something profoundly courageous — turned toward the truth of your story with honesty, compassion, and a commitment to grow. The journey continues, and you are equipped for it. You have always deserved to be known, seen, and loved exactly as you are. Now you are beginning to believe it.</p>
+      <button class="submit-btn" onclick="markComplete(6)">Mark as Complete & Get Certificate</button>
+    `,
+    resources: [
+      { icon: '📖', title: 'Recovery Roadmap Guide',           desc: 'What the ongoing journey of recovery looks like', file: 'recovery-roadmap.pdf' },
+      { icon: '📝', title: 'Identity Reclamation Workbook',    desc: 'Discover and document who you truly are',         file: 'identity-workbook.pdf' },
+      { icon: '🤝', title: 'CoDA Meeting Directory',           desc: 'Find Codependents Anonymous meetings near you',   file: 'coda-directory.pdf' },
+      { icon: '💝', title: 'Interdependence vs Codependency',  desc: 'What healthy relationships actually look like',   file: 'interdependence-guide.pdf' },
+      { icon: '🎧', title: 'New Beginnings Meditation Series', desc: '7 meditations for your emerging self',            file: 'new-beginnings-audio.mp3' },
+      { icon: '🏆', title: 'Course Completion Certificate',    desc: 'Download your certificate of completion',         file: 'certificate.pdf' }
+    ],
+    assessment: [
+      { question: "What does recovery from codependency actually involve?", options: ["Becoming completely self-sufficient and independent","An ongoing daily practice of honesty, boundaries, and genuine self-presence — not a fixed destination","Never helping anyone again","Ending all close relationships"], correct: 1 },
+      { question: "What is the difference between independence and interdependence?", options: ["There is no difference","Interdependence is the goal — two people with their own identities who genuinely need and care for each other without control or self-erasure","Independence means never needing others","Interdependence is the same as codependence"], correct: 1 },
+      { question: "Why might early recovery from codependency feel wrong or uncomfortable?", options: ["Because recovery is actually harmful","Because prioritising yourself and having boundaries is so unfamiliar that it triggers the old learned fear responses","Because therapists give bad advice","Because codependency is actually healthy"], correct: 1 },
+      { question: "What is CoDA?", options: ["A type of therapy technique","Codependents Anonymous — a free peer-support fellowship for people recovering from codependent patterns","A medication for codependency","A coaching programme"], correct: 1 },
+      { question: "What grief might someone experience in codependency recovery?", options: ["No grief — recovery is always joyful","Grief for the years spent over-giving, the relationships that didn't serve them, and the self that was lost","Only grief for relationships that ended","Grief only if recovery fails"], correct: 1 },
+      { question: "What does 'rebuilding identity' in recovery involve?", options: ["Adopting someone else's personality","Excavating who you are beneath the roles of helper, fixer, and accommodator — your values, preferences, voice, and dreams","Restarting your life in a new location","Cutting contact with all previous relationships"], correct: 1 },
+      { question: "What does healthy self-care mean in codependency recovery?", options: ["Rewarding yourself only after being productive or helpful","Treating sleep, nourishment, movement, and joy as rights, not rewards for good behaviour","Spending all your time alone","Eliminating all responsibilities"], correct: 1 },
+      { question: "What is a daily self-check-in?", options: ["A medical appointment","A social media review of your day","A practice of regularly pausing to ask: what am I feeling, what do I need, and what is mine versus not mine to carry?","Journaling about other people's behaviour"], correct: 3 },
+      { question: "What does it mean that codependent patterns were 'about survival, not unworthiness'?", options: ["Codependency is always someone else's fault","These patterns were intelligent adaptations to difficult environments — not evidence that you are broken or unworthy","Survival instincts are unhealthy","Codependency only forms in dangerous situations"], correct: 1 },
+      { question: "What is the ultimate message of this course?", options: ["You will never fully recover from codependency","Codependency is a permanent personality trait","You have always been enough — you are now learning to live as if you believe it","You must end all current relationships to heal"], correct: 3 }
+    ]
+  }
+};
+</script>
+</body>
+</html>
