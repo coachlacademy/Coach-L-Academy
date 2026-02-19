@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing After Narcissistic Abuse - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+
+  .user-info { display: flex; align-items: center; gap: 15px; }
+
+  .avatar {
+    width: 45px; height: 45px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: bold;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .progress-overview {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .progress-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 20px; border-radius: 12px; text-align: center;
+  }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+
+  .progress-bar {
+    width: 100%; height: 25px; background: #e0e0e0;
+    border-radius: 15px; overflow: hidden; margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 12px 25px; background: white; border: none;
+    border-radius: 10px 10px 0 0; cursor: pointer;
+    font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease;
+  }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+  .module-selector {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    overflow-x: auto; padding-bottom: 10px;
+  }
+
+  .module-btn {
+    padding: 12px 25px; background: white;
+    border: 2px solid #667eea; border-radius: 25px;
+    cursor: pointer; font-size: 1rem; font-weight: 600;
+    color: #667eea; white-space: nowrap; transition: all 0.3s ease;
+  }
+  .module-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border-color: transparent;
+  }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .video-section {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .video-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px; margin-top: 20px;
+  }
+
+  .video-player {
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative; padding-top: 56.25%;
+  }
+
+  .video-placeholder {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  }
+
+  .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(102, 126, 234, 0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+
+  .lesson-content {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+
+  .assessment-section {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .quiz-question {
+    background: #f8f9fa; padding: 20px; border-radius: 12px;
+    margin-bottom: 20px; border-left: 4px solid #667eea;
+  }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-option {
+    padding: 12px 20px; background: white; border: 2px solid #e0e0e0;
+    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+
+  .submit-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; border-radius: 25px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s ease; margin-top: 20px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+  .already-passed-notice {
+    background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+
+  .resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .resource-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+
+  .resource-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem; margin-bottom: 15px;
+  }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+
+  .download-badge {
+    display: inline-block; padding: 5px 12px; background: #4caf50;
+    color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px;
+  }
+
+  .admin-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white; border: none; border-radius: 50px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease;
+  }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+
+  @media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    .video-grid { grid-template-columns: 1fr; }
+    .module-selector { flex-wrap: wrap; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Healing After Narcissistic Abuse</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Name Input Modal -->
+<div id="nameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px; border-radius:20px; max-width:500px; width:90%; text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Healing After Narcissistic Abuse</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to get started with this transformative course:</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Start Learning 🚀</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-card">
+        <h3 id="modulesComplete">0/6</h3>
+        <p>Modules Completed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+        <h3 id="lessonsViewed">0/12</h3>
+        <p>Lessons Viewed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+        <h3 id="assessmentsPassed">0/6</h3>
+        <p>Assessments Passed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content', this)">Content</button>
+    <button class="tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment', this)">Assessment</button>
+  </div>
+
+  <!-- Week buttons — all always clickable -->
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn"        onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn"        onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn"        onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn"        onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn"        onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <!-- Content Tab -->
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('tutorial', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('basic', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <!-- Assessment Tab -->
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <!-- One-on-One Session Section -->
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalized guidance and support.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your specific situation.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera; microphone; fullscreen; display-capture; autoplay"
+          style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'Healing After Narcissistic Abuse';
+const TOTAL_WEEKS      = 6;
+const STORAGE_PREFIX   = 'coachL_HANA_'; // unique key — won't clash with other courses
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+
+let completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'completedWeeks') || '[]')
+);
+
+function saveCompletedWeeks() {
+  localStorage.setItem(STORAGE_PREFIX + 'completedWeeks', JSON.stringify([...completedWeeks]));
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.onload = function () {
+  const savedName  = localStorage.getItem('studentName');
+  const savedEmail = localStorage.getItem('studentEmail');
+  if (savedName && savedEmail) {
+    studentInfo.name  = savedName;
+    studentInfo.email = savedEmail;
+    updateUserDisplay();
+  } else {
+    document.getElementById('nameModal').style.display = 'flex';
+  }
+  updateProgress();
+  refreshModuleButtons();
+  const firstIncomplete = [1,2,3,4,5,6].find(w => !completedWeeks.has(w)) || 1;
+  selectModule(firstIncomplete);
+};
+
+// ============================================================
+// USER INFO
+// ============================================================
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function saveUserInfo() {
+  const name  = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  if (!name)               { alert('Please enter your full name.'); return; }
+  if (!email)              { alert('Please enter your email address.'); return; }
+  if (!isValidEmail(email)) {
+    alert('⚠️ "' + email + '" doesn\'t look like a valid email address.\n\nExample: yourname@gmail.com');
+    document.getElementById('studentEmail').focus();
+    return;
+  }
+  studentInfo.name  = name;
+  studentInfo.email = email;
+  localStorage.setItem('studentName', name);
+  localStorage.setItem('studentEmail', email);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateEmail() {
+  const current = localStorage.getItem('studentEmail') || '';
+  const newEmail = prompt('Update your email address:\n(Your results and certificate will be sent here)', current);
+  if (newEmail === null) return;
+  if (!isValidEmail(newEmail.trim())) {
+    alert('⚠️ That doesn\'t look like a valid email address. Please try again.');
+    return;
+  }
+  studentInfo.email = newEmail.trim();
+  localStorage.setItem('studentEmail', newEmail.trim());
+  alert('✅ Email updated to: ' + newEmail.trim());
+}
+
+function updateUserDisplay() {
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = 'Welcome, ' + studentInfo.name + '!';
+}
+
+// ============================================================
+// MODULE BUTTONS — all weeks always freely clickable
+// ============================================================
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1;
+    btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) {
+      btn.classList.add('completed');
+      btn.textContent = 'Week ' + w + ' ✓';
+    } else {
+      btn.textContent = 'Week ' + w;
+    }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) {
+  currentWeek = week;
+  refreshModuleButtons();
+  updateWeekContent();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+// ============================================================
+// CONTENT RENDERING
+// ============================================================
+function updateWeekContent() {
+  const week = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent      = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent  = 'Tutorial: ' + week.tutorialVideo;
+  document.getElementById('basicTitle').textContent     = 'Basic Learning: ' + week.basicVideo;
+  document.getElementById('lessonContent').innerHTML    = week.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML    = week.resources.map(r => `
+    <div class="resource-card" onclick="downloadResource('${r.file}', '${r.title}')">
+      <div class="resource-icon">${r.icon}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+      <span class="download-badge">📥 Download</span>
+    </div>
+  `).join('');
+  renderAssessment();
+}
+
+// ============================================================
+// ASSESSMENT RENDERING
+// ============================================================
+function renderAssessment() {
+  const week   = weekData[currentWeek];
+  const passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+
+  if (passed) {
+    html += `
+      <div class="already-passed-notice">
+        <h3>✅ You already passed this week!</h3>
+        <p>Great work! Your score has been recorded. You can review any week's content freely at any time.</p>
+      </div>`;
+  } else {
+    html += `<p style="margin-bottom:30px;color:#666;">Test your understanding of this week's material. You need 70% to pass.</p>`;
+  }
+
+  week.assessment.forEach((q, i) => {
+    html += `
+      <div class="quiz-question">
+        <h4>Question ${i + 1}: ${q.question}</h4>
+        <div class="quiz-options">
+          ${q.options.map((opt, j) => `
+            <label class="quiz-option">
+              <input type="radio" name="q${i}" value="${j}" ${passed ? 'disabled' : ''}>
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>`;
+  });
+
+  if (!passed) {
+    html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  }
+
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+// ============================================================
+// QUIZ SUBMISSION
+// ============================================================
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+
+  const week      = weekData[currentWeek];
+  let correct     = 0;
+  let answers     = [];
+  let allAnswered = true;
+
+  week.assessment.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) { allAnswered = false; return; }
+    const userAnswer = parseInt(selected.value);
+    const isCorrect  = userAnswer === q.correct;
+    if (isCorrect) correct++;
+    answers.push({
+      question:      q.question,
+      userAnswer:    q.options[userAnswer],
+      correctAnswer: q.options[q.correct],
+      isCorrect:     isCorrect
+    });
+  });
+
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+
+  const score  = Math.round((correct / week.assessment.length) * 100);
+  const passed = score >= 70;
+
+  submitToGoogleSheets(currentWeek, score, correct, week.assessment.length, answers, passed);
+
+  if (passed) {
+    completedWeeks.add(currentWeek);
+    saveCompletedWeeks();
+    updateProgress();
+    refreshModuleButtons();
+    renderAssessment();
+    if (currentWeek < TOTAL_WEEKS) {
+      alert(`🎉 Congratulations! You passed with ${score}%!\n\n${correct}/${week.assessment.length} correct.\n\nContinue to Week ${currentWeek + 1} whenever you're ready.`);
+    } else {
+      alert(`🏆 Amazing! You've completed the entire course with ${score}%!\n\nYour certificate is being generated and will be emailed to you. 🎓`);
+    }
+  } else {
+    alert(`You scored ${score}% (${correct}/${week.assessment.length} correct).\n\nYou need 70% to pass. Review the material and try again — you've got this!`);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEETS SUBMISSION
+// ============================================================
+function submitToGoogleSheets(week, score, correct, total, answers, passed) {
+  const payload = {
+    secretKey:       SECRET_KEY,
+    timestamp:       new Date().toLocaleString(),
+    studentName:     studentInfo.name,
+    studentEmail:    studentInfo.email,
+    courseName:      COURSE_NAME,
+    week:            week,
+    score:           score,
+    correct:         correct,
+    total:           total,
+    passed:          passed ? 'YES' : 'NO',
+    detailedAnswers: JSON.stringify(answers)
+  };
+
+  fetch(GOOGLE_SHEET_URL, {
+    method:  'POST',
+    mode:    'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload)
+  })
+  .then(() => {
+    console.log('✅ Results submitted to Google Sheets');
+    if (week === 6 && passed) console.log('🎓 Certificate generated!');
+  })
+  .catch(err => console.error('❌ Submission error:', err));
+
+  const allResults = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  allResults.push({ ...payload, answers });
+  localStorage.setItem('assessmentResults', JSON.stringify(allResults));
+}
+
+// ============================================================
+// PROGRESS UI
+// ============================================================
+function updateProgress() {
+  const done     = completedWeeks.size;
+  const progress = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width       = progress + '%';
+  document.getElementById('progressBar').textContent       = progress + '%';
+  document.getElementById('modulesComplete').textContent   = done + '/' + TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent     = (done * 2) + '/' + (TOTAL_WEEKS * 2);
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function playVideo(type, week) {
+  alert(`Playing ${type} video for Week ${week}.\n\nReplace this with your actual video embed (YouTube, Vimeo, etc.).`);
+}
+
+function markComplete(week) {
+  showTab('assessment', document.querySelectorAll('.tab')[2]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadResource(file, title) {
+  const url = 'resources/' + file;
+  fetch(url, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) {
+        const a = document.createElement('a');
+        a.href = url; a.download = file; a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        alert('✅ Downloaded: ' + title);
+      } else {
+        alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.');
+      }
+    })
+    .catch(() => alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'));
+}
+
+function startVideoCall() {
+  const container = document.getElementById('videoCallContainer');
+  const iframe    = document.getElementById('jitsiFrame');
+  const room      = 'coachL-' + (studentInfo.email || 'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  container.style.display = 'block';
+  container.scrollIntoView({ behavior: 'smooth' });
+}
+
+function endVideoCall() {
+  if (confirm('Are you sure you want to end the session?')) {
+    document.getElementById('jitsiFrame').src = '';
+    document.getElementById('videoCallContainer').style.display = 'none';
+  }
+}
+
+function viewAllResults() {
+  const allResults = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!allResults.length) { alert('No assessment results yet.'); return; }
+
+  const rows = allResults.map((r, i) => `
+    <div class="result-card ${r.passed === 'YES' ? 'passed' : 'failed'}">
+      <h2>Submission #${i+1} — ${r.passed === 'YES' ? '✅ PASSED' : '❌ FAILED'}</h2>
+      <p><strong>Student:</strong> ${r.studentName}</p>
+      <p><strong>Email:</strong> ${r.studentEmail}</p>
+      <p><strong>Course:</strong> ${r.courseName}</p>
+      <p><strong>Week:</strong> ${r.week}</p>
+      <p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p>
+      <p><strong>Date:</strong> ${r.timestamp}</p>
+      <div class="details">
+        <h3>Detailed Answers:</h3>
+        <table>
+          <tr><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th></tr>
+          ${(r.answers || []).map((a, j) => `
+            <tr>
+              <td><strong>Q${j+1}:</strong> ${a.question}</td>
+              <td>${a.userAnswer}</td>
+              <td>${a.correctAnswer}</td>
+              <td class="${a.isCorrect ? 'correct' : 'incorrect'}">${a.isCorrect ? '✓' : '✗'}</td>
+            </tr>`).join('')}
+        </table>
+      </div>
+    </div>`).join('');
+
+  const win = window.open('', 'Results', 'width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results – Coach L Academy</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}
+    h1{color:#667eea;margin-bottom:20px;}
+    .result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+    .passed{border-left:5px solid #4caf50;} .failed{border-left:5px solid #f44336;}
+    .details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}
+    table{width:100%;border-collapse:collapse;margin-top:10px;}
+    th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+    th{background:#667eea;color:#fff;}
+    .correct{color:#4caf50;font-weight:bold;} .incorrect{color:#f44336;font-weight:bold;}
+  </style></head><body>
+  <h1>📊 Assessment Results – Coach L Academy</h1>
+  <p>Total submissions: ${allResults.length}</p>
+  <button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>
+  ${rows}
+  </body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Healing After Narcissistic Abuse — 6 weeks
+// ============================================================
+const weekData = {
+  1: {
+    title: "Understanding What Happened to You",
+    tutorialVideo: "The Reality of Narcissistic Abuse",
+    basicVideo: "Why Healing Starts With Understanding",
+    content: `
+      <h2>Week 1: Understanding What Happened to You</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why naming what happened is the first step to healing</li>
+        <li>Recognize the unique trauma of narcissistic abuse</li>
+        <li>Identify the symptoms of narcissistic abuse syndrome</li>
+        <li>Begin to release self-blame and understand the abuse was not your fault</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Naming It Matters</h4>
+      <p>One of the cruelest aspects of narcissistic abuse is that it often leaves victims unsure whether what happened to them was "really" abuse. The gaslighting, minimization, and covert nature of much of the harm makes survivors question their own experience. Naming it — clearly, directly, without qualification — is where healing begins.</p>
+      <ul>
+        <li>You cannot heal from something you cannot name</li>
+        <li>Naming removes the confusion that kept you trapped</li>
+        <li>It allows you to access the right resources and community</li>
+        <li>It shifts responsibility back where it belongs — to the abuser</li>
+      </ul>
+      <h4>2. The Unique Trauma of Narcissistic Abuse</h4>
+      <p>Narcissistic abuse is different from other forms of trauma in several ways:</p>
+      <ul>
+        <li><strong>It was invisible:</strong> Much of it happened through words, tone, and emotional manipulation — hard to document or explain</li>
+        <li><strong>It was inconsistent:</strong> The intermittent good times made you doubt the bad ones</li>
+        <li><strong>It targeted your identity:</strong> The goal was to make you dependent by destroying your sense of self</li>
+        <li><strong>It used love as a weapon:</strong> The abuse was wrapped in what appeared to be a close relationship</li>
+        <li><strong>Others often didn't see it:</strong> The narcissist's public persona made outsiders disbelieve you</li>
+      </ul>
+      <h4>3. Narcissistic Abuse Syndrome</h4>
+      <p>Many survivors experience a cluster of symptoms that are now recognised as "narcissistic abuse syndrome" or "narcissistic victim syndrome":</p>
+      <ul>
+        <li>Chronic self-doubt and inability to trust your own perceptions</li>
+        <li>Hypervigilance — always waiting for the next attack</li>
+        <li>People-pleasing behavior and difficulty saying no</li>
+        <li>Intense shame and feelings of worthlessness</li>
+        <li>Difficulty making decisions independently</li>
+        <li>Intrusive thoughts about the narcissist</li>
+        <li>Emotional numbness or feeling disconnected from yourself</li>
+        <li>Anxiety, depression, and PTSD-like symptoms</li>
+        <li>Loss of interest in things you once loved</li>
+        <li>Difficulty trusting others in new relationships</li>
+      </ul>
+      <h4>4. It Was Not Your Fault</h4>
+      <p>This is not a platitude — it is a clinical and factual statement. Narcissists target specific qualities in people: empathy, loyalty, a desire to help, and a willingness to give the benefit of the doubt. The very qualities that made you vulnerable are the qualities that make you a good person. The abuse was a calculated strategy, not a response to your failings.</p>
+      <ul>
+        <li>You were chosen because of your strengths, not your weaknesses</li>
+        <li>You could not have "fixed" the relationship — NPD is deeply resistant to change</li>
+        <li>Staying as long as you did reflects trauma bonding, not stupidity</li>
+        <li>Leaving when you did took extraordinary courage</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Name Your Experience</strong><br>
+      Write a paragraph beginning: "What happened to me was..." Don't minimise it. Don't qualify it. Write the truth of your experience as clearly as you can.</p>
+      <p><strong>Exercise 2: Symptom Inventory</strong><br>
+      Go through the narcissistic abuse syndrome list. Tick every symptom you recognise. This is not to overwhelm you — it is to show you that what you are experiencing has a name, and others have walked this path before you.</p>
+      <p><strong>Exercise 3: The Fault List</strong><br>
+      Write down every way you have blamed yourself for the relationship. Then, next to each item, write the truth: what was actually happening from the abuser's side.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What has been hardest about accepting that what happened was abuse?</li>
+        <li>Which symptoms do you recognise most strongly in yourself right now?</li>
+        <li>What would you say to a friend describing your exact situation?</li>
+        <li>What does "it was not your fault" mean to you personally?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(1)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📄', title: 'Narcissistic Abuse Syndrome Guide', desc: 'Recognise and validate your symptoms',         file: 'abuse-syndrome.pdf' },
+      { icon: '📝', title: 'Symptom Inventory Worksheet',       desc: 'Document what you are experiencing',           file: 'symptom-inventory.pdf' },
+      { icon: '💡', title: 'It Was Not Your Fault — Guide',     desc: 'Understanding responsibility and blame',        file: 'not-your-fault.pdf' },
+      { icon: '📚', title: 'Recommended Reading List',          desc: 'Books for early healing stages',                file: 'reading-list.pdf' },
+      { icon: '🎧', title: 'Grounding Meditation',              desc: '5-minute centering and stabilising practice',   file: 'grounding-meditation.mp3' },
+      { icon: '🆘', title: 'Crisis & Support Resources',        desc: 'Hotlines, shelters, and communities',           file: 'support-resources.pdf' }
+    ],
+    assessment: [
+      { question: "Why is naming the abuse the first step to healing?", options: ["It lets you blame the narcissist publicly","You cannot heal from something you cannot name — naming removes confusion and returns responsibility","It is required for legal action","It proves the abuse happened"], correct: 1 },
+      { question: "What makes narcissistic abuse uniquely difficult to recognise?", options: ["It only happens to weak people","It is always obvious and dramatic","Much of it is invisible, inconsistent, and wrapped in what appeared to be love","It always involves physical violence"], correct: 2 },
+      { question: "Which is a symptom of narcissistic abuse syndrome?", options: ["Increased confidence","Hypervigilance and chronic self-doubt","Improved decision-making","Emotional stability"], correct: 1 },
+      { question: "Why do narcissists target empathetic, loyal people?", options: ["Because those people deserve to be abused","Because these qualities can be exploited — you were targeted for your strengths","Because empathetic people are weak","Narcissists don't deliberately target anyone"], correct: 1 },
+      { question: "What does 'the abuse was not your fault' mean clinically?", options: ["You were unlucky","The abuser used calculated strategies regardless of your behaviour — your qualities made you a target, not a cause","You should have left sooner","It means the relationship was equal"], correct: 1 },
+      { question: "What is emotional numbness in the context of narcissistic abuse?", options: ["A sign you have healed","Feeling disconnected from yourself — a trauma response to prolonged stress","Being cold and unfeeling","A choice to stop caring"], correct: 1 },
+      { question: "Why did others often fail to see the abuse?", options: ["Because it didn't happen","Because the narcissist maintained a charming public persona that contradicted private behaviour","Because you didn't report it","Because you exaggerated it"], correct: 1 },
+      { question: "What does hypervigilance feel like in a survivor?", options: ["Feeling relaxed and safe","Always waiting for the next attack, scanning for danger even in safe environments","Being very observant in a healthy way","A form of mindfulness"], correct: 1 },
+      { question: "Why is staying as long as you did not a sign of stupidity?", options: ["Because you enjoyed it","Because trauma bonding creates real neurological and emotional dependency — staying reflects trauma, not weakness","Because you had nowhere to go","It is a sign of weakness"], correct: 1 },
+      { question: "What is the purpose of the Fault List exercise?", options: ["To collect evidence against the narcissist","To write down self-blame and then replace each item with the truth of what was actually happening","To share with a therapist only","To prove you were perfect"], correct: 1 }
+    ]
+  },
+  2: {
+    title: "Processing Grief and Complex Emotions",
+    tutorialVideo: "Grieving a Relationship That Was Never Real",
+    basicVideo: "The Emotional Rollercoaster of Recovery",
+    content: `
+      <h2>Week 2: Processing Grief and Complex Emotions</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why grief after narcissistic abuse is uniquely complex</li>
+        <li>Identify and validate the full range of emotions in recovery</li>
+        <li>Learn healthy tools for processing difficult emotions</li>
+        <li>Understand why anger is a healthy and necessary part of healing</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Complexity of Grief After Narcissistic Abuse</h4>
+      <p>Grief after a narcissistic relationship is unlike ordinary grief. You are mourning multiple losses simultaneously:</p>
+      <ul>
+        <li><strong>The person you thought they were:</strong> The loving, attentive version during love bombing</li>
+        <li><strong>The relationship you hoped for:</strong> The future they promised and you believed in</li>
+        <li><strong>Time lost:</strong> Months or years given to a relationship built on illusion</li>
+        <li><strong>Your former self:</strong> Who you were before the abuse changed you</li>
+        <li><strong>Your confidence and sense of reality:</strong> Both were systematically dismantled</li>
+        <li><strong>Your support network:</strong> If isolation was part of the abuse</li>
+      </ul>
+      <h4>2. The Full Range of Emotions in Recovery</h4>
+      <p>All of these are normal — none of them mean you are weak, broken, or making the wrong choice:</p>
+      <ul>
+        <li><strong>Grief and sadness:</strong> For everything lost</li>
+        <li><strong>Anger:</strong> At what was done to you — this is healthy and necessary</li>
+        <li><strong>Relief:</strong> That it's over — this is also completely valid</li>
+        <li><strong>Guilt:</strong> Often misplaced — conditioned by the abuse</li>
+        <li><strong>Shame:</strong> "How did I not see it?" — common and not deserved</li>
+        <li><strong>Longing:</strong> For the person you thought they were (not who they actually were)</li>
+        <li><strong>Confusion:</strong> About what was real and what was manufactured</li>
+        <li><strong>Fear:</strong> Of the future, of being alone, of trusting again</li>
+        <li><strong>Hope:</strong> That things will improve — hold onto this one</li>
+      </ul>
+      <h4>3. Why Anger is Essential</h4>
+      <p>Many survivors suppress anger because they were trained to. In the relationship, your anger was met with rage, punishment, or guilt-tripping. But anger is information — it tells you that a boundary was violated, that you were treated unjustly. Allowing yourself to feel and express anger (in healthy ways) is not revenge — it is recovery.</p>
+      <ul>
+        <li>Suppressed anger becomes depression</li>
+        <li>Expressed anger (safely) releases trauma from the body</li>
+        <li>Anger confirms that what happened was wrong — and it was</li>
+        <li>It shifts you from victim to survivor</li>
+      </ul>
+      <h4>4. Healthy Tools for Emotional Processing</h4>
+      <ul>
+        <li><strong>Journaling:</strong> Write without censoring. Let it all out on paper.</li>
+        <li><strong>Somatic release:</strong> Physical movement — walking, running, punching a pillow, dancing — releases emotions stored in the body</li>
+        <li><strong>Cry:</strong> Tears are a biological stress-release mechanism. Let them come.</li>
+        <li><strong>Talk:</strong> With a trusted friend, support group, or therapist</li>
+        <li><strong>Creative expression:</strong> Art, music, writing — give shape to what words can't capture</li>
+        <li><strong>Breathwork:</strong> Deep breathing activates the parasympathetic nervous system and calms the body</li>
+        <li><strong>Time in nature:</strong> Natural environments regulate the nervous system</li>
+      </ul>
+      <h4>5. What NOT to Do With Your Emotions</h4>
+      <ul>
+        <li>Don't numb them with alcohol, food, or substances — this delays healing</li>
+        <li>Don't suppress them — they will resurface in harmful ways</li>
+        <li>Don't act them out by contacting the narcissist — this restarts the cycle</li>
+        <li>Don't rush yourself — grief has no deadline</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Loss Inventory</strong><br>
+      Write a detailed list of everything you are grieving from this relationship. Be specific. Acknowledging each loss individually honours your pain.</p>
+      <p><strong>Exercise 2: Unsent Letter</strong><br>
+      Write a letter to the narcissist expressing everything you never could. Say all of it — anger, grief, confusion, everything. You will never send this. It is for you. Then decide whether to keep it or destroy it as a ritual of release.</p>
+      <p><strong>Exercise 3: Body Scan</strong><br>
+      Each morning this week, check in with your body. Where are you holding tension? What emotion lives there? Place a hand there and breathe.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which losses from this relationship feel heaviest right now?</li>
+        <li>What emotion do you find hardest to allow yourself to feel?</li>
+        <li>How did the relationship train you to suppress your emotions?</li>
+        <li>What would it mean to let yourself be fully angry about what happened?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(2)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'Loss Inventory Worksheet',     desc: 'Acknowledge everything you are grieving',      file: 'loss-inventory.pdf' },
+      { icon: '💌', title: 'Unsent Letter Guide',          desc: 'How to write and use an unsent letter',        file: 'unsent-letter.pdf' },
+      { icon: '🔥', title: 'Healthy Anger Release Guide',  desc: 'Safe ways to process and express anger',       file: 'anger-release.pdf' },
+      { icon: '🧘', title: 'Body Scan Practice',           desc: 'Somatic awareness for trauma healing',         file: 'body-scan.pdf' },
+      { icon: '🎧', title: 'Emotional Release Meditation', desc: '15-minute guided grief and release practice',  file: 'emotional-release.mp3' },
+      { icon: '📚', title: 'Grief & Recovery Reading',     desc: 'Books on grief and emotional healing',         file: 'grief-reading.pdf' }
+    ],
+    assessment: [
+      { question: "Why is grief after narcissistic abuse more complex than ordinary grief?", options: ["It isn't — grief is grief","You are mourning multiple simultaneous losses including the person you thought they were, the future promised, and your former self","It is simpler because the relationship was fake","Only grief from death is real"], correct: 1 },
+      { question: "What does longing for the narcissist actually represent?", options: ["Proof you should return","Missing who they actually were","Longing for the person you believed them to be — a manufactured illusion, not the real person","A sign you haven't healed"], correct: 2 },
+      { question: "Why is anger an important and healthy emotion in recovery?", options: ["It's not — anger should be suppressed","Anger confirms a violation occurred and shifts you from victim to survivor; suppressed anger becomes depression","It gives you power over the narcissist","It lets you punish them"], correct: 1 },
+      { question: "What is somatic release?", options: ["A type of medication","Using physical movement or body-based practices to release emotions stored in the body","A talking therapy","A legal process"], correct: 1 },
+      { question: "Why should you not numb emotions with alcohol or substances during recovery?", options: ["It's fine in moderation","It's too expensive","Numbing delays healing — the emotions resurface later in more harmful ways","It worsens physical health only"], correct: 2 },
+      { question: "What is the purpose of the Unsent Letter exercise?", options: ["To eventually send to the narcissist","To express everything you never could, safely, as a tool of emotional release — it is never sent","To give to a therapist","To use in legal proceedings"], correct: 1 },
+      { question: "Which is a healthy tool for processing grief?", options: ["Contacting the narcissist","Journaling without censoring and physical movement","Staying busy and never thinking about it","Pretending you are fine"], correct: 1 },
+      { question: "What does shame in recovery usually sound like?", options: ['"I deserved better"','"How did I not see it? What is wrong with me?"','"I am proud of how long I lasted"','"I knew what was happening all along"'], correct: 1 },
+      { question: "Why is relief a valid emotion after leaving a narcissistic relationship?", options: ["It means you never loved the person","It is not valid — you should only feel sad","You survived something genuinely harmful — relief that it is over is a natural and healthy response","It means you are cold"], correct: 2 },
+      { question: "What does 'grief has no deadline' mean for recovery?", options: ["You will grieve forever","You should rush the process to move forward","There is no fixed timeline — healing moves at its own pace and that is normal","You need to be over it within a year"], correct: 2 }
+    ]
+  },
+  3: {
+    title: "Healing the Nervous System & Body",
+    tutorialVideo: "Trauma Lives in the Body",
+    basicVideo: "Regulating Your Nervous System After Abuse",
+    content: `
+      <h2>Week 3: Healing the Nervous System & Body</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand how narcissistic abuse affects the nervous system and brain</li>
+        <li>Recognise the signs of a dysregulated nervous system in your daily life</li>
+        <li>Learn practical tools for nervous system regulation</li>
+        <li>Build a foundation of physical self-care that supports healing</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. How Abuse Affects the Brain and Nervous System</h4>
+      <p>Chronic exposure to narcissistic abuse creates measurable changes in the brain and body. Understanding this helps you treat yourself with the compassion you deserve — your reactions are not weakness, they are biology.</p>
+      <ul>
+        <li><strong>Amygdala hyperactivation:</strong> The brain's threat-detection centre goes into overdrive, making you hypervigilant</li>
+        <li><strong>Cortisol overload:</strong> Chronic stress hormones shrink the hippocampus (memory and learning) and damage the prefrontal cortex (decision-making)</li>
+        <li><strong>Dopamine disruption:</strong> The intermittent reward cycle of abuse creates addiction-like neurological patterns</li>
+        <li><strong>Nervous system dysregulation:</strong> Stuck in chronic fight, flight, or freeze responses</li>
+      </ul>
+      <h4>2. Signs of a Dysregulated Nervous System</h4>
+      <ul>
+        <li><strong>Fight response:</strong> Irritability, rage, inability to relax, argumentativeness</li>
+        <li><strong>Flight response:</strong> Anxiety, racing thoughts, compulsive busyness, avoidance</li>
+        <li><strong>Freeze response:</strong> Numbness, dissociation, difficulty acting, feeling stuck</li>
+        <li><strong>Fawn response:</strong> Compulsive people-pleasing, inability to say no, prioritising others' comfort over your own</li>
+      </ul>
+      <h4>3. Tools for Nervous System Regulation</h4>
+      <p><strong>Breathwork:</strong></p>
+      <ul>
+        <li><strong>Box breathing:</strong> Inhale 4 counts, hold 4, exhale 4, hold 4 — repeat. Activates the parasympathetic nervous system.</li>
+        <li><strong>Extended exhale:</strong> Inhale 4, exhale 8 — the longer exhale signals safety to the nervous system</li>
+        <li><strong>Physiological sigh:</strong> Double inhale through the nose, long exhale through the mouth — fastest known method to reduce acute stress</li>
+      </ul>
+      <p><strong>Grounding techniques:</strong></p>
+      <ul>
+        <li><strong>5-4-3-2-1:</strong> Name 5 things you see, 4 you hear, 3 you can touch, 2 you smell, 1 you taste — anchors you in the present</li>
+        <li><strong>Cold water:</strong> Splashing cold water on your face activates the dive reflex and slows heart rate</li>
+        <li><strong>Barefoot on earth:</strong> Grounding (earthing) — direct contact with natural surfaces calms the nervous system</li>
+        <li><strong>Weighted blanket:</strong> Deep pressure stimulation activates the parasympathetic response</li>
+      </ul>
+      <p><strong>Movement:</strong></p>
+      <ul>
+        <li>Trauma-sensitive yoga is particularly effective for releasing stored trauma</li>
+        <li>Walking in nature combines movement, fresh air, and natural regulation</li>
+        <li>Dance and shaking literally discharge stress from the muscles</li>
+      </ul>
+      <h4>4. Physical Self-Care as Healing</h4>
+      <p>In a narcissistic relationship, your body's needs were often dismissed or used against you. Reclaiming physical self-care is an act of defiance and healing:</p>
+      <ul>
+        <li><strong>Sleep:</strong> The brain processes trauma during sleep — 7-9 hours is non-negotiable for healing</li>
+        <li><strong>Nutrition:</strong> Chronic stress depletes magnesium, B vitamins, and omega-3s — nourish your body consciously</li>
+        <li><strong>Hydration:</strong> Dehydration worsens anxiety and cognitive fog</li>
+        <li><strong>Sunlight:</strong> Regulates circadian rhythm and boosts serotonin</li>
+        <li><strong>Touch:</strong> Safe, consensual touch (hugs from trusted people, massage) releases oxytocin and supports healing</li>
+      </ul>
+      <h4>5. EMDR and Somatic Therapies</h4>
+      <p>For deeper trauma healing, consider working with a trained professional in:</p>
+      <ul>
+        <li><strong>EMDR (Eye Movement Desensitisation and Reprocessing):</strong> Highly effective for trauma processing</li>
+        <li><strong>Somatic Experiencing:</strong> Body-based trauma therapy developed by Peter Levine</li>
+        <li><strong>Trauma-Focused CBT:</strong> Cognitive approaches adapted for trauma</li>
+        <li><strong>Internal Family Systems (IFS):</strong> Works with inner "parts" affected by trauma</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Nervous System Check-In</strong><br>
+      Three times each day this week, pause and identify which state you are in: fight, flight, freeze, or fawn. Write it down. Awareness is the first step to regulation.</p>
+      <p><strong>Exercise 2: Daily Breathwork</strong><br>
+      Practise box breathing for 5 minutes each morning before you pick up your phone. Notice how your body feels before and after.</p>
+      <p><strong>Exercise 3: Body Care Commitment</strong><br>
+      Choose one physical self-care practice to commit to this week — whether sleep, nutrition, movement, or sunlight. Track it daily.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which nervous system response (fight, flight, freeze, fawn) do you notice most in yourself?</li>
+        <li>How did the relationship affect your physical health?</li>
+        <li>What does your body need most right now?</li>
+        <li>When do you feel safest in your body?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(3)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🧠', title: 'Brain & Trauma Science Guide',   desc: 'How abuse changes the brain — and how it heals', file: 'brain-trauma.pdf' },
+      { icon: '🌬️', title: 'Breathwork Practice Guide',     desc: 'Step-by-step nervous system regulation',         file: 'breathwork.pdf' },
+      { icon: '🧘', title: 'Grounding Techniques Toolkit',  desc: '10 grounding methods for dysregulation',          file: 'grounding-toolkit.pdf' },
+      { icon: '🏃', title: 'Movement & Trauma Guide',       desc: 'Exercise and yoga for trauma release',            file: 'movement-trauma.pdf' },
+      { icon: '🎧', title: 'Nervous System Reset Audio',    desc: '20-minute guided somatic relaxation',             file: 'nervous-system-reset.mp3' },
+      { icon: '📋', title: 'Physical Self-Care Planner',    desc: 'Weekly tracker for body-based healing',           file: 'selfcare-planner.pdf' }
+    ],
+    assessment: [
+      { question: "What happens to the amygdala after chronic narcissistic abuse?", options: ["It shrinks and becomes less reactive","It becomes hyperactivated, keeping you in a constant state of threat-detection","It is unaffected","It improves your emotional regulation"], correct: 1 },
+      { question: "What is the fawn response?", options: ["A freeze response","Becoming aggressive when threatened","Compulsive people-pleasing and inability to say no — prioritising others' comfort to avoid conflict","Running away from danger"], correct: 2 },
+      { question: "What does box breathing do for the nervous system?", options: ["Increases adrenaline","Activates the parasympathetic (rest and digest) nervous system, signalling safety","Makes you more alert","Has no physiological effect"], correct: 1 },
+      { question: "What is the 5-4-3-2-1 technique used for?", options: ["Counting calories","A grounding exercise that anchors you to the present moment through the senses","A breathing technique","Counting days of no contact"], correct: 1 },
+      { question: "Why is sleep especially important in trauma recovery?", options: ["It isn't particularly important","The brain processes and integrates traumatic memories during sleep — it is essential for neurological healing","It just helps you feel less tired","It avoids thinking about the abuse"], correct: 1 },
+      { question: "What is EMDR used for in trauma healing?", options: ["Eye exercises for physical health","Eye Movement Desensitisation and Reprocessing — a highly effective therapy for processing traumatic memories","A meditation practice","A type of medication"], correct: 1 },
+      { question: "How does cortisol overload from chronic stress affect the brain?", options: ["It improves memory","It strengthens decision-making","It can shrink the hippocampus and damage the prefrontal cortex over time","It has no lasting effect"], correct: 2 },
+      { question: "What is somatic experiencing?", options: ["A type of talk therapy","A body-based trauma therapy that works with physical sensations to release stored trauma","An online support group","A medication protocol"], correct: 1 },
+      { question: "Why is physical touch important in healing after narcissistic abuse?", options: ["It isn't — avoid all touch","Safe, consensual touch releases oxytocin and supports nervous system regulation and healing","It creates new trauma bonds","It only helps if the touch comes from a partner"], correct: 1 },
+      { question: "Which nutrients are most depleted by chronic stress?", options: ["Vitamin C and iron","Magnesium, B vitamins, and omega-3 fatty acids","Calcium and vitamin D","Zinc and potassium"], correct: 1 }
+    ]
+  },
+  4: {
+    title: "Rebuilding Self-Worth and Identity",
+    tutorialVideo: "Who Are You Without the Narcissist?",
+    basicVideo: "Reclaiming Your Sense of Self",
+    content: `
+      <h2>Week 4: Rebuilding Self-Worth and Identity</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand how narcissistic abuse erodes identity and self-worth</li>
+        <li>Identify what you value, believe, and desire — independent of anyone else</li>
+        <li>Begin the process of rebuilding a strong, authentic self</li>
+        <li>Develop practices that reinforce your inherent worth</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. How Narcissistic Abuse Erodes Identity</h4>
+      <p>One of the most insidious effects of narcissistic abuse is the systematic erosion of your sense of self. Over time, through constant criticism, gaslighting, and control, you may have lost touch with who you are — your preferences, your values, your voice.</p>
+      <ul>
+        <li>Gaslighting made you distrust your perceptions and instincts</li>
+        <li>Constant criticism replaced your self-assessment with their narrative</li>
+        <li>Isolation removed the mirrors that reflected your true self back to you</li>
+        <li>People-pleasing conditioning made your needs feel unimportant</li>
+        <li>The relationship became your identity — losing it feels like losing yourself</li>
+      </ul>
+      <h4>2. The Difference Between Self-Esteem and Self-Worth</h4>
+      <ul>
+        <li><strong>Self-esteem</strong> is conditional — it fluctuates based on performance, appearance, and approval from others. Narcissists target self-esteem.</li>
+        <li><strong>Self-worth</strong> is unconditional — it is the bedrock belief that you have inherent value as a human being, independent of what you do or what others think.</li>
+        <li>Healing involves moving from conditional self-esteem to unconditional self-worth.</li>
+      </ul>
+      <h4>3. Rediscovering Who You Are</h4>
+      <p>Ask yourself:</p>
+      <ul>
+        <li>What did I love before this relationship?</li>
+        <li>What music did I listen to? What books did I read?</li>
+        <li>What were my ambitions and dreams?</li>
+        <li>What made me laugh?</li>
+        <li>What are my values — not the relationship's values — mine?</li>
+        <li>Who were my friends before isolation?</li>
+        <li>What did I believe about myself and the world before the abuse?</li>
+      </ul>
+      <h4>4. Practices for Rebuilding Self-Worth</h4>
+      <ul>
+        <li><strong>Keep promises to yourself:</strong> Every time you follow through on a commitment you made to yourself, you rebuild self-trust</li>
+        <li><strong>Celebrate small wins:</strong> Got out of bed, made a meal, sent a message — these count</li>
+        <li><strong>Positive self-talk audit:</strong> Notice the voice in your head. Is it yours, or is it theirs? Challenge criticism that sounds like the narcissist</li>
+        <li><strong>Daily affirmations:</strong> "I am worthy of love. I am enough. My needs matter."</li>
+        <li><strong>Spend time alone pleasurably:</strong> Learn to enjoy your own company — it rebuilds self-reliance</li>
+        <li><strong>Pursue something for no reason except that you enjoy it:</strong> No productivity requirement. Just joy.</li>
+        <li><strong>Dress for yourself:</strong> Wear what makes you feel good, not what someone else approved</li>
+      </ul>
+      <h4>5. Challenging the Narcissist's Narrative</h4>
+      <p>You likely carry a set of beliefs about yourself that were installed by the narcissist:</p>
+      <ul>
+        <li>"You're too sensitive" → I have appropriate emotional responses to harmful behaviour</li>
+        <li>"Nobody else would put up with you" → I am worthy of healthy, loving relationships</li>
+        <li>"You're lucky to have me" → I deserved respect, not exploitation</li>
+        <li>"You're always overreacting" → My reactions were responses to real events</li>
+        <li>"You'll never cope alone" → I am more capable than I was told</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Values Excavation</strong><br>
+      List 20 values (honesty, creativity, adventure, peace, family, etc.) and circle the 5 that feel most deeply yours. These are your compass.</p>
+      <p><strong>Exercise 2: Identity Timeline</strong><br>
+      Draw a timeline of your life and mark the moments when you felt most fully yourself. What were you doing? Who were you with? What does this tell you about who you are?</p>
+      <p><strong>Exercise 3: Narrative Rewrite</strong><br>
+      Write down 5 things the narcissist told you about yourself. Next to each, write the truth. Keep this list where you can see it daily.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>When did you last feel fully like yourself?</li>
+        <li>What parts of your identity were most suppressed in the relationship?</li>
+        <li>What is one thing you would do this week purely for your own enjoyment?</li>
+        <li>What would you say to someone who told you the things about yourself that the narcissist told you?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(4)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🪞', title: 'Identity Rediscovery Guide',   desc: 'Who are you, independent of anyone else?',    file: 'identity-rediscovery.pdf' },
+      { icon: '💎', title: 'Self-Worth Building Workbook', desc: 'Practices to rebuild unconditional self-worth', file: 'selfworth-workbook.pdf' },
+      { icon: '📝', title: 'Values Excavation Worksheet',  desc: 'Discover and clarify your core values',        file: 'values-worksheet.pdf' },
+      { icon: '💬', title: 'Narrative Rewrite Guide',      desc: 'Challenge the lies you were told about yourself', file: 'narrative-rewrite.pdf' },
+      { icon: '🎧', title: 'Self-Worth Affirmations Audio',desc: 'Daily affirmations for rebuilding worth',       file: 'affirmations.mp3' },
+      { icon: '📚', title: 'Identity & Recovery Reading',  desc: 'Books on self-worth and recovery',             file: 'identity-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is the key difference between self-esteem and self-worth?", options: ["They are the same thing","Self-esteem is conditional and fluctuates; self-worth is the unconditional belief in your inherent value as a human being","Self-worth depends on what others think","Self-esteem is more important for healing"], correct: 1 },
+      { question: "How does gaslighting contribute to identity erosion?", options: ["It doesn't affect identity","It makes you distrust your own perceptions and instincts, removing the ability to self-assess accurately","It only affects memory","It makes you more confident"], correct: 1 },
+      { question: "What does 'keeping promises to yourself' rebuild?", options: ["Trust in others","Self-trust — every follow-through on a commitment to yourself reinforces your reliability to yourself","Confidence in relationships","Nothing significant"], correct: 1 },
+      { question: "What is the purpose of a daily affirmations practice?", options: ["To convince yourself of things that aren't true","To consistently reinforce unconditional self-worth at a neurological level — repeated positive statements reshape self-perception","To impress others","To avoid therapy"], correct: 1 },
+      { question: "Why does isolation contribute to identity loss?", options: ["It doesn't","Isolation removes the people who reflect your authentic self back to you, leaving only the narcissist's distorted view","It gives you time to think","It is always healthy"], correct: 1 },
+      { question: "What does 'you'll never cope alone' represent in terms of abuse?", options: ["A factual concern","A deliberately installed belief designed to create dependency and prevent you from leaving","Genuine care for your wellbeing","A prediction that came true"], correct: 1 },
+      { question: "What is a 'values excavation' exercise designed to do?", options: ["Help you criticise the narcissist's values","Clarify your own core values — the deep beliefs that form your compass, independent of anyone else","Document the relationship's problems","Prepare for legal proceedings"], correct: 1 },
+      { question: "What does spending time alone pleasurably rebuild?", options: ["Introversion","Nothing — socialising is always better","Self-reliance and the ability to enjoy your own company — essential for healthy independence","Avoidance patterns"], correct: 2 },
+      { question: "When the inner critical voice sounds like the narcissist, what should you do?", options: ["Accept it as truth","Recognise it as an installed narrative, not your own voice, and actively challenge and replace it","Ignore all inner thoughts","Discuss it only with a therapist"], correct: 1 },
+      { question: "What does the Narrative Rewrite exercise involve?", options: ["Writing a new version of events to tell others","Listing things the narcissist said about you and writing the truth next to each — actively replacing their narrative with reality","Rewriting your life story from scratch","Rewriting the relationship to make it positive"], correct: 1 }
+    ]
+  },
+  5: {
+    title: "Rebuilding Trust and Healthy Connections",
+    tutorialVideo: "Learning to Trust Again",
+    basicVideo: "What Healthy Relationships Actually Feel Like",
+    content: `
+      <h2>Week 5: Rebuilding Trust and Healthy Connections</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why trust is so deeply affected by narcissistic abuse</li>
+        <li>Learn to rebuild trust in yourself first</li>
+        <li>Identify the green flags and red flags in new relationships</li>
+        <li>Develop a healthy, boundaried approach to forming new connections</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Trust is Shattered</h4>
+      <p>Narcissistic abuse specifically targets your trust — in the abuser, in others, and most devastatingly, in yourself. By the end of the relationship, many survivors don't trust their own perceptions, instincts, or judgement. This is by design.</p>
+      <ul>
+        <li>Gaslighting dismantled your trust in your own reality</li>
+        <li>Betrayal by someone who claimed to love you makes all love suspect</li>
+        <li>Flying monkeys (those who took the narcissist's side) eroded trust in community</li>
+        <li>Your own choices during the relationship may feel like evidence of poor judgement</li>
+      </ul>
+      <h4>2. Rebuilding Trust in Yourself First</h4>
+      <p>This is the foundation. Until you trust yourself, you cannot reliably assess others:</p>
+      <ul>
+        <li><strong>Listen to your body:</strong> Physical discomfort around certain people or situations is information, not overreaction</li>
+        <li><strong>Honour your feelings:</strong> If something feels wrong, take it seriously rather than talking yourself out of it</li>
+        <li><strong>Make small decisions and follow through:</strong> Every decision you make and honour rebuilds self-trust</li>
+        <li><strong>Trust your anger:</strong> Anger tells you when something is wrong — it is a reliable signal</li>
+        <li><strong>Validate your memories:</strong> What you remember happened. Your perception is not the problem.</li>
+      </ul>
+      <h4>3. Trusting Others Again — A Gradual Process</h4>
+      <p>Trust in others is not given freely at first — it is earned incrementally, through consistent behaviour over time:</p>
+      <ul>
+        <li>Start with low-stakes trust: share something small, observe the response</li>
+        <li>Look for consistency between words and actions over time</li>
+        <li>Notice how they respond to your "no" — do they respect it?</li>
+        <li>Observe how they treat others, especially service staff or people who can't benefit them</li>
+        <li>Notice how you feel after spending time with them — energised or drained?</li>
+        <li>Allow trust to develop slowly — rushing it is how it gets manipulated</li>
+      </ul>
+      <h4>4. Green Flags in Healthy Relationships</h4>
+      <ul>
+        <li>They respect your "no" without negotiation, guilt, or manipulation</li>
+        <li>Their behaviour is consistent whether you are watching or not</li>
+        <li>They encourage your independence and other relationships</li>
+        <li>They take accountability for mistakes without excessive self-flagellation or turning it into your fault</li>
+        <li>They are curious about you — genuinely interested, not performing interest</li>
+        <li>Conflict is handled with respect — raised voices and contempt are absent</li>
+        <li>They celebrate your success without envy or competition</li>
+        <li>You feel safe being imperfect around them</li>
+      </ul>
+      <h4>5. Red Flags to Never Ignore Again</h4>
+      <ul>
+        <li>Love bombing — intensity that feels too much too soon</li>
+        <li>Jealousy or possessiveness framed as love or care</li>
+        <li>Dismissing your feelings or telling you how you should feel</li>
+        <li>Blaming all previous relationships entirely on exes</li>
+        <li>Making you feel guilty for having other people in your life</li>
+        <li>Inconsistency — words not matching actions</li>
+        <li>Discomfort when you set a boundary</li>
+        <li>Moving unusually fast — "I've never met anyone like you"</li>
+      </ul>
+      <h4>6. Reconnecting with Your Support Network</h4>
+      <p>If isolation was part of your abuse, rebuilding connections may feel daunting:</p>
+      <ul>
+        <li>Start small — one message, one coffee, one call</li>
+        <li>You don't have to explain everything immediately</li>
+        <li>The people who care about you will mostly be relieved to hear from you</li>
+        <li>Consider joining a survivor support group — being with people who truly understand is powerful</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Trust Inventory</strong><br>
+      List 5 people currently in your life. For each, rate your level of trust (1-10) and write one reason why. Notice what the trustworthy ones have in common.</p>
+      <p><strong>Exercise 2: Body Trust Journal</strong><br>
+      Each day this week, note one moment when your body gave you information — a gut feeling, tension, relaxation. Write what happened and what the feeling was telling you.</p>
+      <p><strong>Exercise 3: Reconnection</strong><br>
+      Identify one person you lost touch with during the relationship. Write them a message this week — it can be brief and simple.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>When did you stop trusting your own instincts?</li>
+        <li>What does a trustworthy person look like in action — specifically?</li>
+        <li>What are your biggest fears about trusting again?</li>
+        <li>What did the green flags in healthy relationships feel like, compared to the red flags?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(5)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🤝', title: 'Rebuilding Trust Guide',         desc: 'A step-by-step framework for trusting again',  file: 'trust-guide.pdf' },
+      { icon: '🚩', title: 'Red & Green Flags Reference',    desc: 'Printable guide for healthy vs toxic signals',  file: 'flags-reference.pdf' },
+      { icon: '📝', title: 'Trust Inventory Worksheet',      desc: 'Assess and build your current trust landscape', file: 'trust-inventory.pdf' },
+      { icon: '👥', title: 'Support Group Directory',        desc: 'Narcissistic abuse survivor groups near you',   file: 'support-groups.pdf' },
+      { icon: '🎧', title: 'Trust Your Instincts Audio',     desc: 'Guided meditation for rebuilding inner trust',  file: 'trust-instincts.mp3' },
+      { icon: '📚', title: 'Healthy Relationships Reading',  desc: 'Books on building safe, loving connections',    file: 'relationships-reading.pdf' }
+    ],
+    assessment: [
+      { question: "Why does narcissistic abuse shatter self-trust specifically?", options: ["It doesn't affect self-trust","Gaslighting deliberately dismantles your trust in your own perceptions, making you dependent on the abuser's version of reality","Self-trust is different from relationship trust","Only physical abuse affects self-trust"], correct: 1 },
+      { question: "What does 'listening to your body' mean in the context of rebuilding trust?", options: ["Trusting physical illness as a sign","Recognising physical signals like discomfort or tension around people or situations as reliable information, not overreaction","Choosing activities based on physical fitness","Trusting medical advice"], correct: 1 },
+      { question: "How should trust in new people be extended after narcissistic abuse?", options: ["All at once — trust everyone fully until proven wrong","Not at all — never trust again","Gradually, incrementally, through consistent evidence of behaviour over time","Immediately, to prove you have healed"], correct: 2 },
+      { question: "What is a green flag in a new relationship?", options: ["They move quickly because they feel so certain about you","They are always watching your behaviour","They take accountability for mistakes without turning them into your fault","They feel jealous because they love you so much"], correct: 2 },
+      { question: "What does 'love bombing' as a red flag look like?", options: ["Being kind and attentive","Consistent, steady affection over months","Intensity that feels too much too soon — excessive gifts, declarations, and attention before genuine connection exists","Wanting to spend a lot of time together early on"], correct: 2 },
+      { question: "Why is making small decisions and following through important for self-trust?", options: ["It builds a positive habit","Every time you keep a promise to yourself, you provide yourself with evidence that you are reliable and capable — it rebuilds self-trust neurologically","It demonstrates responsibility to others","It has no effect on trust"], correct: 1 },
+      { question: "What does a healthy person's response to 'no' look like?", options: ["They negotiate until you agree","They guilt-trip you","They respect the boundary without manipulation, excessive apology, or resentment","They become cold and distant"], correct: 2 },
+      { question: "Why is blaming all past relationships entirely on exes a red flag?", options: ["It isn't — some people have genuinely had all bad relationships","It may indicate inability to take accountability and a pattern of projecting responsibility onto others","It shows self-awareness","It proves they have been unlucky"], correct: 1 },
+      { question: "What is the best first step to reconnect with people lost during isolation?", options: ["Immediately explain everything that happened","Write a lengthy apology","Send a simple, brief message — 'I've missed you. Can we catch up?'","Wait until you have fully healed before reaching out"], correct: 2 },
+      { question: "How do you feel after spending time with someone you can genuinely trust?", options: ["Anxious and hypervigilant","Energised, calm, and like yourself — not drained, confused, or diminished","Always exhausted — real connection takes work","Obligated to reciprocate immediately"], correct: 1 }
+    ]
+  },
+  6: {
+    title: "Post-Traumatic Growth and Your New Life",
+    tutorialVideo: "Growing Through What You Went Through",
+    basicVideo: "Building the Life You Deserve",
+    content: `
+      <h2>Week 6: Post-Traumatic Growth and Your New Life</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the concept of post-traumatic growth and how it applies to you</li>
+        <li>Recognise the strengths you have developed through surviving this experience</li>
+        <li>Create a concrete vision for your future</li>
+        <li>Build a sustainable, ongoing healing and thriving plan</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What is Post-Traumatic Growth?</h4>
+      <p>Post-traumatic growth (PTG) is a well-documented psychological phenomenon: positive psychological change that emerges as a result of the struggle with highly challenging life circumstances. It doesn't mean the trauma was worth it. It means that despite it — and because of what you chose to do with it — you can grow in ways you might not have otherwise.</p>
+      <ul>
+        <li>Research by Tedeschi and Calhoun identifies five key areas of PTG</li>
+        <li>It co-exists with pain — you can grow and still grieve</li>
+        <li>It is not a requirement — it is a possibility available to you</li>
+        <li>It is not the same as "everything happens for a reason" — the trauma was not necessary. Your growth is your achievement, not the abuse's gift.</li>
+      </ul>
+      <h4>2. The Five Domains of Post-Traumatic Growth</h4>
+      <ul>
+        <li><strong>Personal strength:</strong> "I discovered I am stronger than I thought"</li>
+        <li><strong>New possibilities:</strong> "I now see doors and paths I wouldn't have considered before"</li>
+        <li><strong>Relating to others:</strong> "I have deeper compassion and more authentic relationships"</li>
+        <li><strong>Appreciation of life:</strong> "I notice and value things I previously took for granted"</li>
+        <li><strong>Spiritual or existential change:</strong> "My understanding of what matters has fundamentally shifted"</li>
+      </ul>
+      <h4>3. Strengths You Have Developed</h4>
+      <p>Surviving narcissistic abuse develops real, lasting qualities — even when it doesn't feel like it:</p>
+      <ul>
+        <li><strong>Resilience:</strong> You endured something genuinely difficult and are still here</li>
+        <li><strong>Empathy:</strong> Your capacity to understand others' pain has deepened</li>
+        <li><strong>Clarity:</strong> You can now identify red flags that most people miss</li>
+        <li><strong>Boundaries:</strong> You understand their value in a way you never did before</li>
+        <li><strong>Self-knowledge:</strong> The process of recovery has forced profound self-examination</li>
+        <li><strong>Authenticity:</strong> Having lost the false version of yourself, you now have the chance to build the real one</li>
+        <li><strong>Courage:</strong> Leaving, rebuilding, and continuing — all of it took courage</li>
+      </ul>
+      <h4>4. Creating Your Life Vision</h4>
+      <p>Not a vague wish — a specific, felt, detailed picture of the life you are building:</p>
+      <ul>
+        <li>Where are you living, and what does your home feel like?</li>
+        <li>What relationships fill your life — and what do they feel like?</li>
+        <li>What work are you doing, and does it feel meaningful?</li>
+        <li>How do you spend your mornings?</li>
+        <li>How does your body feel?</li>
+        <li>What does your inner voice sound like?</li>
+        <li>What are you no longer tolerating?</li>
+        <li>What have you created that you are proud of?</li>
+      </ul>
+      <h4>5. Your Ongoing Healing Plan</h4>
+      <p>Healing doesn't end with this course. Build a sustainable, ongoing plan:</p>
+      <ul>
+        <li><strong>Therapy:</strong> If you haven't started, now is a great time. Look for a trauma-informed specialist.</li>
+        <li><strong>Support community:</strong> Stay connected to others who understand</li>
+        <li><strong>Continued learning:</strong> Read, listen, and grow in your understanding</li>
+        <li><strong>Daily practices:</strong> Breathwork, journaling, movement, connection</li>
+        <li><strong>Service:</strong> When you are ready, your story and understanding can help others</li>
+        <li><strong>Self-compassion:</strong> On the hard days, treat yourself as you would a beloved friend</li>
+        <li><strong>Celebrate milestones:</strong> Mark your progress — no contact anniversaries, therapy breakthroughs, moments of genuine peace</li>
+      </ul>
+      <h4>6. A Final Word</h4>
+      <p>You came into this course carrying something very heavy. Whatever stage of healing you are in, the fact that you sought knowledge, faced the truth, and did this work says something profound about who you are. You did not become a survivor by accident. You made choices — to learn, to face it, to grow. That is yours. No one can take it from you. Your new life is not waiting somewhere in the future. It is being built right now, in every choice you make that honours who you truly are.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Strength Inventory</strong><br>
+      Write a list of at least 10 qualities and strengths you have developed or deepened through this experience. Read it when you doubt yourself.</p>
+      <p><strong>Exercise 2: Life Vision Letter</strong><br>
+      Write a detailed letter from your future self — one year from now. Describe your life in specific, sensory detail. What do you see, feel, hear? What are you proud of?</p>
+      <p><strong>Exercise 3: Healing Plan</strong><br>
+      Write your ongoing healing plan: weekly therapy or support group, daily practices, books to read, milestones to celebrate, and one person who will keep you accountable.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>In what ways have you already grown through this experience?</li>
+        <li>What quality in yourself are you most proud of right now?</li>
+        <li>What does your life look like in one year, if you keep going?</li>
+        <li>What is the most important thing you have learned from this course?</li>
+      </ul>
+      <h3>🎉 Congratulations!</h3>
+      <p>You have completed Healing After Narcissistic Abuse. The work you have done in these six weeks is extraordinary. Healing is not a destination — it is a direction. And you are moving in the right one. You deserve every good thing that is coming. Keep going.</p>
+      <button class="submit-btn" onclick="markComplete(6)">Mark as Complete & Get Certificate</button>
+    `,
+    resources: [
+      { icon: '🌱', title: 'Post-Traumatic Growth Guide',   desc: 'Understanding and cultivating PTG after abuse',   file: 'ptg-guide.pdf' },
+      { icon: '💪', title: 'Strength Inventory Worksheet',  desc: 'Identify the strengths you have developed',       file: 'strength-inventory.pdf' },
+      { icon: '🌟', title: 'Life Vision Workbook',          desc: 'Build a detailed, felt vision for your future',   file: 'life-vision.pdf' },
+      { icon: '📋', title: 'Ongoing Healing Plan Template', desc: 'A sustainable plan for continued growth',          file: 'healing-plan.pdf' },
+      { icon: '🎧', title: 'New Chapter Meditation Series', desc: '7 guided meditations for your new beginning',     file: 'new-chapter.mp3' },
+      { icon: '🏆', title: 'Course Certificate',            desc: 'Download your completion certificate',            file: 'certificate.pdf' }
+    ],
+    assessment: [
+      { question: "What is post-traumatic growth (PTG)?", options: ["Pretending the trauma didn't happen","Positive psychological change that can emerge from the struggle with highly challenging life experiences","A sign that the trauma was not serious","Forgetting the past completely"], correct: 1 },
+      { question: "Which is NOT one of the five domains of post-traumatic growth?", options: ["Personal strength","New possibilities","Revenge and justice","Appreciation of life"], correct: 2 },
+      { question: "What does 'PTG co-exists with pain' mean?", options: ["You must be in pain to grow","You can experience meaningful growth and still grieve — the two are not mutually exclusive","The growth eliminates the pain","Pain is required for growth"], correct: 1 },
+      { question: "What strength does surviving narcissistic abuse specifically develop?", options: ["Blind trust in others","The ability to identify red flags and manipulation patterns that most people miss","Avoidance of all relationships","Complete emotional independence"], correct: 1 },
+      { question: "What is important to clarify about post-traumatic growth?", options: ["It means the trauma was necessary and worth it","It means everything happens for a reason","The trauma was not necessary — your growth is your achievement, not the abuse's gift","Only some people are capable of PTG"], correct: 2 },
+      { question: "What is the purpose of the Life Vision Letter exercise?", options: ["To list your complaints about the past","To create a specific, sensory, detailed picture of the life you are actively building — as if it has already happened","To compare yourself to others","To plan the next relationship"], correct: 1 },
+      { question: "Why is 'service' listed as part of the ongoing healing plan?", options: ["Because you owe it to others","When you are ready, sharing your story and understanding can help others on the same path — and deepens your own healing","It is required to receive a certificate","It is the most important part of healing"], correct: 1 },
+      { question: "What does 'appreciation of life' look like as a domain of PTG?", options: ["Feeling grateful for the abuse","Noticing and valuing things previously taken for granted — small joys carry more meaning","Always being positive","Performing gratitude for others"], correct: 1 },
+      { question: "What is self-compassion on the hard days?", options: ["Giving up on healing","Treating yourself with the same kindness and understanding you would offer a beloved friend going through the same thing","Feeling sorry for yourself","Avoiding difficult emotions"], correct: 1 },
+      { question: "What is the key message at the end of the course?", options: ["Healing is complete after 6 weeks","You should be fully healed now","Healing is a direction, not a destination — you are already moving in the right one, and your new life is being built now in every choice you make","The course is just the beginning and you still have far to go"], correct: 2 }
+    ]
+  }
+};
+</script>
+</body>
+</html>
