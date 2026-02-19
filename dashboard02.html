@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breaking Free from Toxic Relationships - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+
+  .user-info { display: flex; align-items: center; gap: 15px; }
+
+  .avatar {
+    width: 45px; height: 45px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: bold;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .progress-overview {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .progress-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 20px; border-radius: 12px; text-align: center;
+  }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+
+  .progress-bar {
+    width: 100%; height: 25px; background: #e0e0e0;
+    border-radius: 15px; overflow: hidden; margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 12px 25px; background: white; border: none;
+    border-radius: 10px 10px 0 0; cursor: pointer;
+    font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease;
+  }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+  .module-selector {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    overflow-x: auto; padding-bottom: 10px;
+  }
+
+  .module-btn {
+    padding: 12px 25px; background: white;
+    border: 2px solid #667eea; border-radius: 25px;
+    cursor: pointer; font-size: 1rem; font-weight: 600;
+    color: #667eea; white-space: nowrap; transition: all 0.3s ease;
+  }
+  .module-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border-color: transparent;
+  }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .video-section {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .video-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px; margin-top: 20px;
+  }
+
+  .video-player {
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative; padding-top: 56.25%;
+  }
+
+  .video-placeholder {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  }
+
+  .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(102, 126, 234, 0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+
+  .lesson-content {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+
+  .assessment-section {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .quiz-question {
+    background: #f8f9fa; padding: 20px; border-radius: 12px;
+    margin-bottom: 20px; border-left: 4px solid #667eea;
+  }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-option {
+    padding: 12px 20px; background: white; border: 2px solid #e0e0e0;
+    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+
+  .submit-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; border-radius: 25px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s ease; margin-top: 20px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+  .already-passed-notice {
+    background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+
+  .resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .resource-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+
+  .resource-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem; margin-bottom: 15px;
+  }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+
+  .download-badge {
+    display: inline-block; padding: 5px 12px; background: #4caf50;
+    color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px;
+  }
+
+  .admin-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white; border: none; border-radius: 50px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease;
+  }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+
+  @media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    .video-grid { grid-template-columns: 1fr; }
+    .module-selector { flex-wrap: wrap; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Breaking Free from Toxic Relationships</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Name Input Modal -->
+<div id="nameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px; border-radius:20px; max-width:500px; width:90%; text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Breaking Free from Toxic Relationships</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to get started with this transformative course:</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Start Learning 🚀</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-card">
+        <h3 id="modulesComplete">0/6</h3>
+        <p>Modules Completed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+        <h3 id="lessonsViewed">0/12</h3>
+        <p>Lessons Viewed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+        <h3 id="assessmentsPassed">0/6</h3>
+        <p>Assessments Passed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content', this)">Content</button>
+    <button class="tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment', this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn"        onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn"        onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn"        onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn"        onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn"        onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <!-- Content Tab -->
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('tutorial', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('basic', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <!-- Assessment Tab -->
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <!-- One-on-One Session Section -->
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalized guidance and support.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your specific situation.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera; microphone; fullscreen; display-capture; autoplay"
+          style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'Breaking Free from Toxic Relationships';
+const TOTAL_WEEKS      = 6;
+const STORAGE_PREFIX   = 'coachL_BFTR_'; // unique key — won't clash with other courses
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+
+let completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'completedWeeks') || '[]')
+);
+
+function saveCompletedWeeks() {
+  localStorage.setItem(STORAGE_PREFIX + 'completedWeeks', JSON.stringify([...completedWeeks]));
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.onload = function () {
+  const savedName  = localStorage.getItem('studentName');
+  const savedEmail = localStorage.getItem('studentEmail');
+  if (savedName && savedEmail) {
+    studentInfo.name  = savedName;
+    studentInfo.email = savedEmail;
+    updateUserDisplay();
+  } else {
+    document.getElementById('nameModal').style.display = 'flex';
+  }
+  updateProgress();
+  refreshModuleButtons();
+  const firstIncomplete = [1,2,3,4,5,6].find(w => !completedWeeks.has(w)) || 1;
+  selectModule(firstIncomplete);
+};
+
+// ============================================================
+// USER INFO
+// ============================================================
+function saveUserInfo() {
+  const name  = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  if (!name || !email)      { alert('Please enter both your name and email.'); return; }
+  if (!email.includes('@')) { alert('Please enter a valid email address.');    return; }
+  studentInfo.name  = name;
+  studentInfo.email = email;
+  localStorage.setItem('studentName', name);
+  localStorage.setItem('studentEmail', email);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateUserDisplay() {
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = 'Welcome, ' + studentInfo.name + '!';
+}
+
+// ============================================================
+// MODULE BUTTONS — all weeks always freely clickable
+// ============================================================
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1;
+    btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) {
+      btn.classList.add('completed');
+      btn.textContent = 'Week ' + w + ' ✓';
+    } else {
+      btn.textContent = 'Week ' + w;
+    }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) {
+  currentWeek = week;
+  refreshModuleButtons();
+  updateWeekContent();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+// ============================================================
+// CONTENT RENDERING
+// ============================================================
+function updateWeekContent() {
+  const week = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent     = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent = 'Tutorial: ' + week.tutorialVideo;
+  document.getElementById('basicTitle').textContent    = 'Basic Learning: ' + week.basicVideo;
+  document.getElementById('lessonContent').innerHTML   = week.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML = week.resources.map(r => `
+    <div class="resource-card" onclick="downloadResource('${r.file}', '${r.title}')">
+      <div class="resource-icon">${r.icon}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+      <span class="download-badge">📥 Download</span>
+    </div>
+  `).join('');
+  renderAssessment();
+}
+
+// ============================================================
+// ASSESSMENT
+// ============================================================
+function renderAssessment() {
+  const week   = weekData[currentWeek];
+  const passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+
+  if (passed) {
+    html += `
+      <div class="already-passed-notice">
+        <h3>✅ You already passed this week!</h3>
+        <p>Great work! Your score has been recorded. You can review any week's content freely at any time.</p>
+      </div>`;
+  } else {
+    html += `<p style="margin-bottom:30px;color:#666;">Test your understanding of this week's material. You need 70% to pass.</p>`;
+  }
+
+  week.assessment.forEach((q, i) => {
+    html += `
+      <div class="quiz-question">
+        <h4>Question ${i + 1}: ${q.question}</h4>
+        <div class="quiz-options">
+          ${q.options.map((opt, j) => `
+            <label class="quiz-option">
+              <input type="radio" name="q${i}" value="${j}" ${passed ? 'disabled' : ''}>
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>`;
+  });
+
+  if (!passed) html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+
+  const week      = weekData[currentWeek];
+  let correct     = 0;
+  let answers     = [];
+  let allAnswered = true;
+
+  week.assessment.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) { allAnswered = false; return; }
+    const userAnswer = parseInt(selected.value);
+    const isCorrect  = userAnswer === q.correct;
+    if (isCorrect) correct++;
+    answers.push({ question: q.question, userAnswer: q.options[userAnswer], correctAnswer: q.options[q.correct], isCorrect });
+  });
+
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+
+  const score  = Math.round((correct / week.assessment.length) * 100);
+  const passed = score >= 70;
+
+  submitToGoogleSheets(currentWeek, score, correct, week.assessment.length, answers, passed);
+
+  if (passed) {
+    completedWeeks.add(currentWeek);
+    saveCompletedWeeks();
+    updateProgress();
+    refreshModuleButtons();
+    renderAssessment();
+    if (currentWeek < TOTAL_WEEKS) {
+      alert(`🎉 Congratulations! You passed with ${score}%!\n\n${correct}/${week.assessment.length} correct.\n\nContinue to Week ${currentWeek + 1} whenever you're ready.`);
+    } else {
+      alert(`🏆 You've completed the entire course with ${score}%!\n\nYour certificate is being generated and will be emailed to you. 🎓`);
+    }
+  } else {
+    alert(`You scored ${score}% (${correct}/${week.assessment.length} correct).\n\nYou need 70% to pass. Review the material and try again — you've got this!`);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEETS SUBMISSION
+// ============================================================
+function submitToGoogleSheets(week, score, correct, total, answers, passed) {
+  const payload = {
+    secretKey: SECRET_KEY, timestamp: new Date().toLocaleString(),
+    studentName: studentInfo.name, studentEmail: studentInfo.email,
+    courseName: COURSE_NAME, week, score, correct, total,
+    passed: passed ? 'YES' : 'NO',
+    detailedAnswers: JSON.stringify(answers)
+  };
+  fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(() => console.log('✅ Submitted to Google Sheets'))
+    .catch(err => console.error('❌ Error:', err));
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  all.push({ ...payload, answers });
+  localStorage.setItem('assessmentResults', JSON.stringify(all));
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const done = completedWeeks.size;
+  const pct  = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width       = pct + '%';
+  document.getElementById('progressBar').textContent       = pct + '%';
+  document.getElementById('modulesComplete').textContent   = done + '/' + TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent     = (done * 2) + '/' + (TOTAL_WEEKS * 2);
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function playVideo(type, week) {
+  alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed (YouTube, Vimeo, etc.).`);
+}
+
+function markComplete(week) {
+  showTab('assessment', document.querySelectorAll('.tab')[2]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadResource(file, title) {
+  fetch('resources/' + file, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) {
+        const a = document.createElement('a');
+        a.href = 'resources/' + file; a.download = file; a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'); }
+    })
+    .catch(() => alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'));
+}
+
+function startVideoCall() {
+  const iframe = document.getElementById('jitsiFrame');
+  const room   = 'coachL-' + (studentInfo.email || 'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display = 'block';
+  document.getElementById('videoCallContainer').scrollIntoView({ behavior: 'smooth' });
+}
+
+function endVideoCall() {
+  if (confirm('Are you sure you want to end the session?')) {
+    document.getElementById('jitsiFrame').src = '';
+    document.getElementById('videoCallContainer').style.display = 'none';
+  }
+}
+
+function viewAllResults() {
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!all.length) { alert('No assessment results yet.'); return; }
+  const rows = all.map((r, i) => `
+    <div class="result-card ${r.passed === 'YES' ? 'passed' : 'failed'}">
+      <h2>Submission #${i+1} — ${r.passed === 'YES' ? '✅ PASSED' : '❌ FAILED'}</h2>
+      <p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p>
+      <p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p>
+      <p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p>
+      <div class="details"><h3>Detailed Answers:</h3><table>
+        <tr><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th></tr>
+        ${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}
+      </table></div>
+    </div>`).join('');
+  const win = window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}
+    .result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+    .passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}
+    .details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}
+    table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+    th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}
+  </style></head><body><h1>📊 Results – Coach L Academy</h1>
+  <p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>
+  ${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Breaking Free from Toxic Relationships
+// ============================================================
+const weekData = {
+  1: {
+    title: "Recognizing Toxicity",
+    tutorialVideo: "Identifying Toxic Relationship Patterns",
+    basicVideo: "What Makes a Relationship Toxic?",
+    content: `
+      <h2>Week 1: Recognizing Toxicity</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Define what makes a relationship toxic</li>
+        <li>Identify the most common toxic patterns and behaviors</li>
+        <li>Understand how toxicity escalates over time</li>
+        <li>Recognize the emotional and physical toll toxic relationships take</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Is a Toxic Relationship?</h4>
+      <p>A toxic relationship is one that consistently leaves you feeling drained, diminished, unsafe, or confused. Toxicity is not always obvious — it often builds gradually, making it hard to see until you're deep inside it.</p>
+      <ul>
+        <li><strong>It's not just conflict:</strong> All relationships have conflict. Toxicity is about consistent patterns of harm, disrespect, or control.</li>
+        <li><strong>It's not always dramatic:</strong> Some toxic relationships are quiet — subtle put-downs, passive aggression, emotional withdrawal.</li>
+        <li><strong>It's about patterns:</strong> One bad day is human. Repeated behavior that harms you is a pattern worth examining.</li>
+      </ul>
+      <h4>2. Common Toxic Patterns</h4>
+      <ul>
+        <li><strong>Constant Criticism:</strong> Nothing you do is ever good enough; your efforts are minimized or mocked</li>
+        <li><strong>Control & Manipulation:</strong> Controlling who you see, what you wear, how you spend your money</li>
+        <li><strong>Emotional Volatility:</strong> Unpredictable moods that keep you walking on eggshells</li>
+        <li><strong>Dishonesty & Deception:</strong> Chronic lying, half-truths, or hiding information</li>
+        <li><strong>Blame-Shifting:</strong> Everything is always your fault; they take no accountability</li>
+        <li><strong>Jealousy & Possessiveness:</strong> Framed as love, but actually about control</li>
+        <li><strong>Isolation:</strong> Gradually cutting you off from friends, family, and support systems</li>
+        <li><strong>Stonewalling:</strong> Shutting down, refusing to communicate during conflict</li>
+        <li><strong>Contempt:</strong> Eye-rolling, mocking, name-calling, or treating you with disdain</li>
+        <li><strong>Intimidation:</strong> Using anger, threats, or body language to create fear</li>
+      </ul>
+      <h4>3. How Toxicity Escalates</h4>
+      <p>Toxic relationships rarely start at full intensity. The pattern typically follows a predictable path:</p>
+      <ul>
+        <li><strong>Phase 1 — Idealization:</strong> Everything feels perfect; you feel deeply seen and loved</li>
+        <li><strong>Phase 2 — Small cracks:</strong> Minor criticisms or controlling behaviors appear; you rationalize them</li>
+        <li><strong>Phase 3 — Normalization:</strong> The harmful behaviors become "normal"; your standards shift</li>
+        <li><strong>Phase 4 — Escalation:</strong> The harmful behaviors increase in frequency and intensity</li>
+        <li><strong>Phase 5 — Entrenchment:</strong> You feel stuck, afraid, or too depleted to leave</li>
+      </ul>
+      <h4>4. The Toll Toxicity Takes</h4>
+      <p><strong>Emotional impact:</strong></p>
+      <ul>
+        <li>Chronic self-doubt and second-guessing</li>
+        <li>Anxiety, depression, and hypervigilance</li>
+        <li>Loss of identity and sense of self</li>
+        <li>Shame, guilt, and feeling responsible for the other person's emotions</li>
+      </ul>
+      <p><strong>Physical impact:</strong></p>
+      <ul>
+        <li>Sleep disturbances and fatigue</li>
+        <li>Headaches, stomach issues, and other stress-related symptoms</li>
+        <li>Weakened immune system</li>
+        <li>Chronic tension in the body</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Relationship Audit</strong><br>
+      Write down 10 things this relationship consistently makes you feel. Are more positive or negative? Be brutally honest with yourself.</p>
+      <p><strong>Exercise 2: Pattern Log</strong><br>
+      For one week, note every interaction that leaves you feeling bad. Don't judge it — just document it. Look for recurring themes at the end of the week.</p>
+      <p><strong>Exercise 3: The Friend Test</strong><br>
+      Describe your relationship to yourself as if you were hearing a friend describe it to you. What advice would you give that friend?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How do you feel about yourself inside this relationship compared to outside it?</li>
+        <li>What behaviors have you normalized that you once would have found unacceptable?</li>
+        <li>When did the relationship start to feel different from how it began?</li>
+        <li>What do you most fear about acknowledging the toxicity?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(1)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📋', title: 'Toxic Relationship Checklist',  desc: 'Identify toxic patterns in your relationship',    file: 'toxic-checklist.pdf' },
+      { icon: '📝', title: 'Relationship Audit Worksheet',  desc: 'Honest evaluation of your relationship dynamics', file: 'relationship-audit.pdf' },
+      { icon: '📊', title: 'Toxicity Escalation Chart',     desc: 'Visual guide to how toxicity progresses',         file: 'escalation-chart.pdf' },
+      { icon: '📚', title: 'Recommended Reading List',      desc: 'Books on toxic relationships and recovery',        file: 'reading-list.pdf' },
+      { icon: '🎧', title: 'Grounding Meditation',          desc: '5-minute centering exercise',                     file: 'grounding-meditation.mp3' },
+      { icon: '🆘', title: 'Emergency Resources',           desc: 'Crisis hotlines and support services',            file: 'emergency-resources.pdf' }
+    ],
+    assessment: [
+      { question: "What best defines a toxic relationship?", options: ["Any relationship with conflict","A relationship that consistently drains, diminishes, or harms you","A relationship where partners disagree","Any relationship that ends badly"], correct: 1 },
+      { question: "Which of these is a common toxic pattern?", options: ["Open communication","Isolation from friends and family","Celebrating each other's success","Healthy disagreements"], correct: 1 },
+      { question: "How does toxicity typically enter a relationship?", options: ["All at once, dramatically","Gradually, starting with small cracks after an idealization phase","Only in long-term relationships","Only when both people are toxic"], correct: 1 },
+      { question: "What is 'blame-shifting'?", options: ["Taking full accountability","Sharing responsibility for problems","Always making conflict the other person's fault","A healthy conflict resolution technique"], correct: 2 },
+      { question: "Which physical symptom can be caused by a toxic relationship?", options: ["Improved sleep","Increased energy","Sleep disturbances and chronic stress symptoms","Better appetite"], correct: 2 },
+      { question: "What is stonewalling?", options: ["A boundary-setting technique","Physically leaving the home","Refusing to communicate and shutting down during conflict","Confronting a partner directly"], correct: 2 },
+      { question: "What is the 'normalization' phase of toxicity?", options: ["When the relationship begins","When harmful behaviors become accepted as normal","When you seek help","When the relationship ends"], correct: 1 },
+      { question: "Why is the 'friend test' exercise useful?", options: ["It lets you blame others","It helps you see your situation with outside perspective and compassion","It proves your partner is wrong","It helps you write better journal entries"], correct: 1 },
+      { question: "What emotion is jealousy in toxic relationships usually masking?", options: ["Love","Control and possessiveness","Admiration","Respect"], correct: 1 },
+      { question: "What is the first step in breaking free from a toxic relationship?", options: ["Immediately ending it","Recognizing and acknowledging the toxic patterns","Telling everyone about it","Waiting for them to change"], correct: 1 }
+    ]
+  },
+  2: {
+    title: "Safety Planning",
+    tutorialVideo: "Creating Your Personal Safety Plan",
+    basicVideo: "Why Safety Planning Matters",
+    content: `
+      <h2>Week 2: Safety Planning</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why safety planning is essential before leaving</li>
+        <li>Identify the practical steps of a comprehensive safety plan</li>
+        <li>Learn how to protect yourself financially and legally</li>
+        <li>Build a trusted support network</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Safety Planning Comes Before Action</h4>
+      <p>Leaving a toxic relationship — especially one with controlling or volatile behavior — is statistically the most dangerous time. A safety plan protects you physically, emotionally, financially, and legally. It transforms a reactive exit into a strategic, empowered one.</p>
+      <ul>
+        <li>Reduces the risk of harm during and after leaving</li>
+        <li>Ensures you have the resources you need when you need them</li>
+        <li>Protects your children, pets, and assets</li>
+        <li>Prevents the panic and vulnerability of an unplanned exit</li>
+      </ul>
+      <h4>2. Personal Safety Checklist</h4>
+      <p><strong>Documents to secure (originals or copies):</strong></p>
+      <ul>
+        <li>Passport and ID documents</li>
+        <li>Birth certificates (yours and children's)</li>
+        <li>Social security / national ID numbers</li>
+        <li>Marriage/divorce certificates</li>
+        <li>Bank account details and recent statements</li>
+        <li>Property and vehicle documents</li>
+        <li>Medical records and prescriptions</li>
+        <li>Insurance policies</li>
+      </ul>
+      <p><strong>Emergency bag to prepare:</strong></p>
+      <ul>
+        <li>Cash (enough for 2 weeks of basic expenses)</li>
+        <li>Copies of key documents</li>
+        <li>Phone charger and a prepaid phone if possible</li>
+        <li>Basic medication and toiletries</li>
+        <li>A change of clothes</li>
+        <li>Important contact numbers written on paper (not just your phone)</li>
+      </ul>
+      <h4>3. Financial Safety</h4>
+      <ul>
+        <li>Open a bank account in your name only, at a bank your partner doesn't use</li>
+        <li>Start setting aside small amounts of cash if possible</li>
+        <li>Get copies of all joint financial statements</li>
+        <li>Know your credit score and what joint debts exist</li>
+        <li>Remove your partner as a beneficiary on life insurance/retirement accounts (after leaving)</li>
+        <li>Consult a financial advisor if shared assets are complex</li>
+      </ul>
+      <h4>4. Digital Safety</h4>
+      <ul>
+        <li>Change passwords on all personal accounts (email, banking, social media)</li>
+        <li>Use a new email address your partner doesn't know about for planning</li>
+        <li>Check your phone and car for tracking apps or devices</li>
+        <li>Clear your browser history after researching resources</li>
+        <li>Use a private/incognito browser when possible</li>
+        <li>Review privacy settings on all social media</li>
+      </ul>
+      <h4>5. Building Your Support Network</h4>
+      <ul>
+        <li>Identify 3–5 trusted people who know your situation</li>
+        <li>Tell at least one person your full safety plan</li>
+        <li>Identify a safe place you can go at any hour</li>
+        <li>Research local domestic violence shelters and hotlines</li>
+        <li>Consider a therapist or counselor as part of your support</li>
+        <li>Connect with support groups (in-person or online)</li>
+      </ul>
+      <h4>6. Legal Protections</h4>
+      <ul>
+        <li>Research restraining/protection orders in your area</li>
+        <li>Document incidents of abuse with dates, descriptions, and evidence</li>
+        <li>Consult a lawyer about your rights (many offer free consultations)</li>
+        <li>Understand custody laws if children are involved</li>
+        <li>Know how to contact police and what to say if you feel threatened</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Document Inventory</strong><br>
+      Go through the document checklist and tick off what you have. For anything missing, make a plan to get a copy this week.</p>
+      <p><strong>Exercise 2: Emergency Bag</strong><br>
+      Start assembling your emergency bag this week. Keep it somewhere accessible but hidden — with a trusted friend is ideal.</p>
+      <p><strong>Exercise 3: Support Map</strong><br>
+      Draw a circle with yourself at the center. In the next ring, write names of people you fully trust. In the outer ring, write helpful resources (shelters, hotlines, lawyers). This is your support map.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What would you need to leave safely tomorrow if you had to?</li>
+        <li>Who are the 3 people you trust most with your safety?</li>
+        <li>What financial resources do you currently have access to independently?</li>
+        <li>What feels most scary about the practical side of leaving?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(2)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📋', title: 'Safety Plan Template',      desc: 'Step-by-step personal safety planning guide', file: 'safety-plan-template.pdf' },
+      { icon: '💰', title: 'Financial Safety Guide',    desc: 'Protecting your money and assets',             file: 'financial-safety.pdf' },
+      { icon: '🔒', title: 'Digital Safety Checklist',  desc: 'Secure your devices and online accounts',      file: 'digital-safety.pdf' },
+      { icon: '⚖️', title: 'Legal Rights Overview',    desc: 'Know your rights — protection orders & more',  file: 'legal-rights.pdf' },
+      { icon: '📞', title: 'Emergency Contacts',        desc: 'Shelters, hotlines, and crisis support',       file: 'emergency-contacts.pdf' },
+      { icon: '🎧', title: 'Calm & Clarity Meditation', desc: '10-minute guided calm for planning',           file: 'calm-meditation.mp3' }
+    ],
+    assessment: [
+      { question: "Why is safety planning important before leaving a toxic relationship?", options: ["It's not necessary if the relationship isn't physically violent","It reduces risk, ensures resources, and transforms a reactive exit into a strategic one","It's only for people with children","It's just a formality"], correct: 1 },
+      { question: "Which of these should be in an emergency bag?", options: ["Luxury items and sentimental objects","Cash, copies of key documents, medication, and phone charger","All your clothing","Your partner's belongings"], correct: 1 },
+      { question: "What is the safest place to open a new bank account?", options: ["At the same bank your partner uses","At a bank your partner doesn't use, in your name only","In a joint account","Online only"], correct: 1 },
+      { question: "What digital safety step is most important?", options: ["Posting about your plans on social media","Checking your devices for tracking apps and changing all passwords","Buying a new phone immediately","Deleting your social media"], correct: 1 },
+      { question: "How many trusted people should ideally know your full safety plan?", options: ["No one","At least one trusted person","Everyone you know","Only your employer"], correct: 1 },
+      { question: "What should you do with important documents before leaving?", options: ["Leave them behind","Secure originals or make copies and store them safely","Give them to your partner","Destroy them"], correct: 1 },
+      { question: "Why should you document incidents of abuse?", options: ["To share on social media","To provide evidence if legal protection is needed","To confront your partner","It's not useful"], correct: 1 },
+      { question: "What is a support map?", options: ["A physical map of safe locations","A visual tool showing your trusted people and available resources","A GPS tracking system","A list of your partner's weaknesses"], correct: 1 },
+      { question: "When should you remove your partner as a beneficiary on accounts?", options: ["Before leaving","After leaving and once you are safe","Never","Immediately in the relationship"], correct: 1 },
+      { question: "What is the purpose of using an incognito browser while planning?", options: ["To access illegal content","To prevent your browsing history from being seen by your partner","To shop anonymously","To hide from the government"], correct: 1 }
+    ]
+  },
+  3: {
+    title: "Building Boundaries",
+    tutorialVideo: "Setting Boundaries That Stick",
+    basicVideo: "Why Boundaries Are Not Selfish",
+    content: `
+      <h2>Week 3: Building Boundaries</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what boundaries are and why they matter in toxic relationships</li>
+        <li>Identify where your boundaries have been eroded</li>
+        <li>Learn how to communicate and enforce boundaries under pressure</li>
+        <li>Prepare for resistance and manipulation when boundaries are set</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Boundaries Really Are</h4>
+      <p>Boundaries are not walls to keep people out — they are guidelines that define how you need to be treated in order to feel safe, respected, and valued. In toxic relationships, boundaries have often been systematically dismantled.</p>
+      <ul>
+        <li><strong>Physical boundaries:</strong> Your body, personal space, and physical safety</li>
+        <li><strong>Emotional boundaries:</strong> Your feelings, emotional energy, and mental wellbeing</li>
+        <li><strong>Time boundaries:</strong> How you spend your time and with whom</li>
+        <li><strong>Financial boundaries:</strong> Your money, earnings, and financial decisions</li>
+        <li><strong>Digital boundaries:</strong> Privacy of your phone, email, and accounts</li>
+        <li><strong>Sexual boundaries:</strong> What you consent to and what you don't</li>
+      </ul>
+      <h4>2. Signs Your Boundaries Have Been Eroded</h4>
+      <ul>
+        <li>You feel guilty saying no</li>
+        <li>You frequently do things you don't want to do to keep the peace</li>
+        <li>You've given up hobbies, friends, or interests to accommodate them</li>
+        <li>You don't feel safe expressing your true opinions</li>
+        <li>You've lost track of your own needs and preferences</li>
+        <li>You apologize constantly, even when you've done nothing wrong</li>
+        <li>Your partner has access to your phone, email, or finances without your genuine consent</li>
+      </ul>
+      <h4>3. How to Set Boundaries in a Toxic Relationship</h4>
+      <p>Setting boundaries with a toxic person is different from setting them with a healthy partner. You are not setting them to fix the relationship — you are setting them to protect yourself while you plan your next steps.</p>
+      <p><strong>The boundary formula:</strong></p>
+      <ul>
+        <li><strong>State the boundary clearly:</strong> "I will not be spoken to that way."</li>
+        <li><strong>State the consequence:</strong> "If you continue, I will leave the room."</li>
+        <li><strong>Follow through every time.</strong> A boundary you don't enforce is not a boundary — it's a preference they know they can ignore.</li>
+      </ul>
+      <h4>4. What to Expect When You Set Boundaries</h4>
+      <p>A toxic person will not welcome boundaries. Expect:</p>
+      <ul>
+        <li><strong>Rage:</strong> Anger that you'd "dare" to limit their access to you</li>
+        <li><strong>Guilt trips:</strong> "After everything I've done for you..."</li>
+        <li><strong>Love bombing:</strong> Sudden affection to soften you into dropping the boundary</li>
+        <li><strong>DARVO:</strong> Deny, Attack, Reverse Victim and Offender — they become the victim</li>
+        <li><strong>Testing:</strong> Repeatedly pushing to see if your boundary is real</li>
+        <li><strong>Silent treatment:</strong> Punishment for having needs</li>
+      </ul>
+      <h4>5. The No JADE Rule</h4>
+      <p>When setting boundaries with a toxic person, do not JADE — Don't Justify, Argue, Defend, or Explain. The more you explain yourself, the more material you give them to argue with.</p>
+      <ul>
+        <li>Instead of: "I need space because you always criticize me and it makes me feel..."</li>
+        <li>Try: "I need space. I'll talk with you later."</li>
+        <li>Short, clear, calm. Then follow through.</li>
+      </ul>
+      <h4>6. Interim Boundaries While You Plan to Leave</h4>
+      <ul>
+        <li>Stop sharing personal information they might use against you</li>
+        <li>Reduce emotional engagement — practice the Grey Rock method</li>
+        <li>Reclaim small decisions as your own (what to eat, what to wear, who to call)</li>
+        <li>Protect your private communications and plans</li>
+        <li>Re-establish contact with people they've isolated you from</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Boundary Inventory</strong><br>
+      Write down 5 boundaries you need that aren't currently respected. For each, write the clear statement and consequence you'll use.</p>
+      <p><strong>Exercise 2: Practice Out Loud</strong><br>
+      Stand in front of a mirror and practice saying your boundaries out loud. Notice how it feels. Repeat until it feels natural.</p>
+      <p><strong>Exercise 3: Reclaim One Thing</strong><br>
+      This week, reclaim one small decision that belongs to you. Make it without asking permission or apologizing. Notice how it feels.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which of your boundaries has been most consistently violated?</li>
+        <li>What do you fear will happen if you enforce a boundary?</li>
+        <li>How would your life look different if your boundaries were respected?</li>
+        <li>What's one boundary you can start enforcing this week?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(3)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'Boundary Inventory Worksheet', desc: 'Identify and plan your personal boundaries',  file: 'boundary-inventory.pdf' },
+      { icon: '💬', title: 'Boundary Scripts',             desc: '40 ready-to-use boundary statements',          file: 'boundary-scripts.pdf' },
+      { icon: '🛡️', title: 'Grey Rock Method Guide',      desc: 'Minimize engagement without escalating',       file: 'grey-rock.pdf' },
+      { icon: '📋', title: 'No JADE Reference Card',       desc: 'Pocket guide to holding firm without arguing', file: 'no-jade-card.pdf' },
+      { icon: '🎧', title: 'Confidence Audio',             desc: 'Build the resolve to hold your boundaries',    file: 'confidence-audio.mp3' },
+      { icon: '📚', title: 'Boundaries Reading List',      desc: 'Top books on boundaries and self-protection',  file: 'boundaries-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What are boundaries, at their core?", options: ["Walls that keep everyone out","Guidelines defining how you need to be treated to feel safe and respected","Rules you impose on your partner","A confrontational tactic"], correct: 1 },
+      { question: "Which is a sign your boundaries have been eroded?", options: ["You confidently express your opinions","You feel guilty saying no and frequently do things you don't want to","You spend time with friends freely","You control your own finances easily"], correct: 1 },
+      { question: "What is the No JADE rule?", options: ["A communication style for couples therapy","Don't Justify, Argue, Defend, or Explain when setting boundaries","A method of documenting abuse","A legal term"], correct: 1 },
+      { question: "What should you expect when you first set boundaries with a toxic person?", options: ["Immediate respect and compliance","Resistance, testing, guilt trips, and possibly rage","Gratitude and appreciation","No reaction at all"], correct: 1 },
+      { question: "What is DARVO?", options: ["A boundary-setting technique","Deny, Attack, Reverse Victim and Offender — making themselves the victim","A conflict resolution method","A type of therapy"], correct: 1 },
+      { question: "Why is following through on consequences so important?", options: ["It punishes the other person","A boundary you don't enforce teaches them it can be ignored","It ends the relationship faster","It proves you're serious"], correct: 1 },
+      { question: "What is the Grey Rock method?", options: ["Becoming physically invisible","Being unresponsive and boring to reduce engagement with a toxic person","A type of meditation","A legal strategy"], correct: 1 },
+      { question: "Which is an example of an interim boundary while planning to leave?", options: ["Sharing your exit plans with your partner","Stopping sharing personal information they might use against you","Giving them access to all your accounts","Spending more time with them"], correct: 1 },
+      { question: "Why is it important to keep boundary statements short?", options: ["To be rude","The more you explain, the more material you give them to argue with","Short statements are more legal","It saves time"], correct: 1 },
+      { question: "What does reclaiming small decisions achieve?", options: ["Nothing significant","It begins rebuilding your sense of autonomy and self-trust","It angers your partner unnecessarily","It delays leaving"], correct: 1 }
+    ]
+  },
+  4: {
+    title: "Gathering Resources",
+    tutorialVideo: "Building Your Support System",
+    basicVideo: "Finding Help: Resources Available to You",
+    content: `
+      <h2>Week 4: Gathering Resources</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Identify the types of resources available to you</li>
+        <li>Build a practical, personal resource plan</li>
+        <li>Reconnect with people and communities that support you</li>
+        <li>Understand professional services that can help</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Resources Matter</h4>
+      <p>One of the most powerful tools of control in a toxic relationship is isolation — cutting you off from the people and resources that would support your independence. Reclaiming those resources is an act of liberation.</p>
+      <ul>
+        <li>Resources restore your options and choices</li>
+        <li>They reduce the fear that keeps you stuck</li>
+        <li>They create a safety net beneath your exit</li>
+        <li>They remind you that you are not alone</li>
+      </ul>
+      <h4>2. Types of Resources</h4>
+      <p><strong>People resources:</strong></p>
+      <ul>
+        <li>Trusted friends and family who believe you</li>
+        <li>A therapist or counselor specializing in abuse or trauma</li>
+        <li>Support groups (in-person and online)</li>
+        <li>A life coach (like Coach L!) experienced in toxic relationship recovery</li>
+        <li>A mentor or spiritual leader if faith is important to you</li>
+      </ul>
+      <p><strong>Practical resources:</strong></p>
+      <ul>
+        <li>Domestic violence shelters and hotlines</li>
+        <li>Legal aid and free legal consultations</li>
+        <li>Housing assistance and emergency accommodation</li>
+        <li>Financial assistance programs</li>
+        <li>Employment support if you need income independence</li>
+        <li>Childcare resources if children are involved</li>
+      </ul>
+      <p><strong>Information resources:</strong></p>
+      <ul>
+        <li>Books and podcasts on toxic relationship recovery</li>
+        <li>Online communities for survivors</li>
+        <li>Educational content on trauma, boundaries, and healing</li>
+        <li>Local government services and social work departments</li>
+      </ul>
+      <h4>3. Reconnecting With Your Support Network</h4>
+      <p>Isolation is a deliberate tactic. The people you've drifted from because of this relationship are likely still there. Reconnecting can feel scary — you may feel shame, or worry that too much time has passed. It hasn't.</p>
+      <ul>
+        <li>Start small — one message, one coffee, one call</li>
+        <li>You don't have to explain everything at once</li>
+        <li>Most people who care about you will be relieved to hear from you</li>
+        <li>Be selective — reconnect with those who will support, not judge</li>
+      </ul>
+      <h4>4. Working With Professionals</h4>
+      <p><strong>Therapist/Counselor:</strong></p>
+      <ul>
+        <li>Look for someone who specializes in trauma or relationship abuse</li>
+        <li>Many offer sliding-scale fees or accept insurance</li>
+        <li>Online therapy is a private option if in-person isn't safe</li>
+      </ul>
+      <p><strong>Legal Advisor:</strong></p>
+      <ul>
+        <li>Many family law attorneys offer a free first consultation</li>
+        <li>Legal aid societies provide free help for those who qualify</li>
+        <li>Know your rights around property, custody, and protection orders</li>
+      </ul>
+      <h4>5. Your Resource Plan</h4>
+      <p>A resource plan is simply a list of who and what you can call on. It has three categories:</p>
+      <ul>
+        <li><strong>Immediate:</strong> People/services you can contact today if needed</li>
+        <li><strong>Short-term:</strong> Help you'll need in the weeks after leaving</li>
+        <li><strong>Long-term:</strong> Ongoing support for healing and rebuilding</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Resource Audit</strong><br>
+      List every resource currently available to you under the categories: people, practical, and information. Identify the gaps.</p>
+      <p><strong>Exercise 2: Reconnection Message</strong><br>
+      Write (but don't necessarily send yet) a reconnection message to one person you've lost touch with. Keep it simple: "I've missed you. Can we catch up?"</p>
+      <p><strong>Exercise 3: Resource Plan</strong><br>
+      Create your three-column resource plan: Immediate, Short-term, Long-term. Keep it somewhere safe and accessible.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Who are the people in your life you can most trust right now?</li>
+        <li>What practical resources feel most out of reach, and why?</li>
+        <li>What has isolation cost you in terms of relationships and support?</li>
+        <li>What's one resource you can activate or reconnect with this week?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(4)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📋', title: 'Resource Planning Template',    desc: 'Build your immediate, short and long-term plan', file: 'resource-plan.pdf' },
+      { icon: '📞', title: 'Support Directory',             desc: 'Hotlines, shelters, and services near you',      file: 'support-directory.pdf' },
+      { icon: '⚖️', title: 'Legal Aid Guide',              desc: 'Free and low-cost legal resources',               file: 'legal-aid.pdf' },
+      { icon: '💼', title: 'Financial Independence Starter',desc: 'Steps to financial independence after leaving',   file: 'financial-independence.pdf' },
+      { icon: '🤝', title: 'Support Group Directory',       desc: 'Local and online support groups',                 file: 'support-groups.pdf' },
+      { icon: '🎧', title: 'You Are Not Alone Audio',       desc: 'Guided affirmations for strength',                file: 'affirmations-audio.mp3' }
+    ],
+    assessment: [
+      { question: "Why does isolation make leaving harder?", options: ["It doesn't affect leaving","It cuts you off from the people and resources that support your independence","It makes you more independent","It improves the relationship"], correct: 1 },
+      { question: "Which is a 'people resource'?", options: ["A legal document","A therapist specializing in trauma","A bank account","An emergency bag"], correct: 1 },
+      { question: "What is a resource plan?", options: ["A budget for new furniture","A structured list of immediate, short-term, and long-term support available to you","A legal strategy","A list of your partner's failings"], correct: 1 },
+      { question: "How should you begin reconnecting with people you've lost touch with?", options: ["With a detailed explanation of everything that happened","Small — one message, one call, one coffee","Wait until you've left first","Only after legal proceedings are complete"], correct: 1 },
+      { question: "What type of therapist is most helpful for toxic relationship recovery?", options: ["Any therapist","One specializing in trauma or relationship abuse","A couples therapist with your partner","A career counselor"], correct: 1 },
+      { question: "Which is an example of a practical resource?", options: ["A podcast about relationships","A journal","A domestic violence shelter or housing assistance program","A self-help book"], correct: 2 },
+      { question: "Why might people you've been isolated from still be available to support you?", options: ["They don't care anymore","Most people who care about you will be relieved to hear from you","Time erases relationships permanently","They've moved on"], correct: 1 },
+      { question: "What is a sliding-scale fee in therapy?", options: ["A fee that increases every month","A fee adjusted based on your income to make therapy more accessible","A hidden charge","A government subsidy"], correct: 1 },
+      { question: "What does gathering resources primarily restore?", options: ["The toxic relationship","Your options, choices, and sense that you are not alone","Your partner's confidence","Financial wealth"], correct: 1 },
+      { question: "What is 'legal aid'?", options: ["Expensive legal advice","Free or low-cost legal services for those who qualify","A government fine","A court order"], correct: 1 }
+    ]
+  },
+  5: {
+    title: "Taking Action",
+    tutorialVideo: "Executing Your Exit Strategy",
+    basicVideo: "The Day You Leave: What to Expect",
+    content: `
+      <h2>Week 5: Taking Action</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Move from planning to decisive action</li>
+        <li>Understand the different exit methods and choose what's right for you</li>
+        <li>Prepare emotionally and practically for the exit</li>
+        <li>Know how to handle the immediate aftermath</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. You Are Ready</h4>
+      <p>There is rarely a "perfect" moment to leave. If you have done the work of the past four weeks — recognizing the toxicity, planning your safety, building boundaries, and gathering resources — you are more prepared than most people who leave. Waiting for certainty can keep you stuck indefinitely. Action creates clarity.</p>
+      <h4>2. Choosing Your Exit Method</h4>
+      <p>There is no single right way to leave. Choose based on your safety, circumstances, and the nature of the relationship:</p>
+      <ul>
+        <li><strong>Direct conversation:</strong> Only if you feel physically safe. Keep it brief and avoid lengthy explanation (no JADE). "This relationship isn't working for me. I'm leaving." Then leave.</li>
+        <li><strong>Written message or letter:</strong> State your decision clearly and without detail. Block immediately after sending. This works well if direct contact isn't safe or productive.</li>
+        <li><strong>Silent exit:</strong> If there is any risk of violence or severe retaliation, leave when they are not present, without warning. Your safety always comes first.</li>
+        <li><strong>Structured legal exit:</strong> If property, custody, or finances are complex, work with a lawyer to create a formal separation process.</li>
+      </ul>
+      <h4>3. What NOT to Do When Leaving</h4>
+      <ul>
+        <li>Don't seek closure from them — closure comes from within</li>
+        <li>Don't explain your reasons in detail — it gives them material to argue and manipulate</li>
+        <li>Don't make multiple attempts — each re-engagement gives them another chance to pull you back</li>
+        <li>Don't believe promises to change at the point of leaving — it's a control tactic</li>
+        <li>Don't do it in isolation — have support in place before you act</li>
+      </ul>
+      <h4>4. Going No Contact</h4>
+      <p>No contact (NC) is the most effective tool for breaking the trauma bond and starting to heal. It means:</p>
+      <ul>
+        <li>No calls, texts, or emails</li>
+        <li>Blocking on all social media platforms</li>
+        <li>No checking their profile or asking others about them</li>
+        <li>No "just one last conversation"</li>
+        <li>Blocking their number and email if needed</li>
+      </ul>
+      <p>If you share children or property and need limited contact, use written communication only (text or email), keep it strictly about logistics, and use the Grey Rock method exclusively.</p>
+      <h4>5. The First 72 Hours</h4>
+      <p>The first three days are often the most intense. Prepare for:</p>
+      <ul>
+        <li><strong>Emotional waves:</strong> Grief, relief, fear, guilt, and even longing — all normal</li>
+        <li><strong>Hoovering attempts:</strong> Calls, messages, or showing up — do not respond</li>
+        <li><strong>Self-doubt:</strong> "Did I do the right thing?" — Yes. You did.</li>
+        <li><strong>Physical symptoms:</strong> Shakiness, sleep disruption, appetite changes — your nervous system is recalibrating</li>
+      </ul>
+      <p>Have your support person on standby. Plan for how you'll spend the first 72 hours — activities, people, and safe places.</p>
+      <h4>6. Anticipating Their Response</h4>
+      <ul>
+        <li><strong>Begging and promises:</strong> "I'll change. I'll get help." Do not engage.</li>
+        <li><strong>Threats:</strong> Take these seriously; document them and contact authorities if needed</li>
+        <li><strong>Smear campaigns:</strong> They may tell others their version. Your real people will know the truth.</li>
+        <li><strong>New supply:</strong> They may quickly move on to someone else. This is not a reflection of your worth.</li>
+        <li><strong>Flying monkeys:</strong> Mutual contacts used to deliver messages. Tell your real supporters not to relay information.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Exit Script</strong><br>
+      Write out exactly what you will say or send when you leave. Keep it under 3 sentences. Practice it until it's committed to memory.</p>
+      <p><strong>Exercise 2: First 72 Hours Plan</strong><br>
+      Write a detailed plan for your first 72 hours after leaving. Where will you be? Who will you call? What will you do each day?</p>
+      <p><strong>Exercise 3: No Contact Commitment</strong><br>
+      Write a letter to yourself — from your future self — about why no contact is essential. Read it whenever you're tempted to reach out.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is your biggest fear about the actual moment of leaving?</li>
+        <li>What exit method feels safest for your specific situation?</li>
+        <li>Who will you call immediately after?</li>
+        <li>What will you tell yourself when the self-doubt comes?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(5)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📝', title: 'Exit Script Templates',         desc: 'Word-for-word guides for different exit methods', file: 'exit-scripts.pdf' },
+      { icon: '📋', title: 'First 72 Hours Planner',        desc: 'Hour-by-hour guide for your first days of freedom', file: '72-hour-planner.pdf' },
+      { icon: '🚫', title: 'No Contact Guide',              desc: 'How to implement and maintain no contact',          file: 'no-contact-guide.pdf' },
+      { icon: '🛡️', title: 'Handling Their Response Guide', desc: 'Prepare for hoovering, threats, and flying monkeys', file: 'their-response.pdf' },
+      { icon: '💪', title: 'Strength & Resolve Audio',      desc: 'Guided affirmations for your exit day',             file: 'strength-audio.mp3' },
+      { icon: '📞', title: 'Crisis Support Numbers',        desc: 'Immediate help if you need it',                     file: 'crisis-support.pdf' }
+    ],
+    assessment: [
+      { question: "What does 'action creates clarity' mean in the context of leaving?", options: ["You should rush your decision","Waiting for a perfect moment keeps you stuck; moving forward brings understanding","Act without thinking","Clarity always comes before action"], correct: 1 },
+      { question: "When is a silent exit the safest option?", options: ["Always","When you feel like it","When there is risk of violence or severe retaliation","When you have children"], correct: 2 },
+      { question: "Why should you NOT seek closure from your toxic partner?", options: ["It's disrespectful","Closure comes from within; engaging gives them more opportunity to manipulate","It takes too long","It's illegal"], correct: 1 },
+      { question: "What is no contact?", options: ["Limited communication via text only","Complete cessation of all communication and social media contact","Talking through a mediator","Reducing contact gradually"], correct: 1 },
+      { question: "What emotional experiences are normal in the first 72 hours?", options: ["Only relief and happiness","Grief, relief, fear, guilt, and longing — all are normal","Only sadness","Nothing — you should feel fine"], correct: 1 },
+      { question: "What should you do if they make threats after you leave?", options: ["Respond to clarify","Ignore all of it","Document the threats and contact authorities if needed","Meet them in person"], correct: 2 },
+      { question: "What are 'flying monkeys'?", options: ["A type of therapy","Mutual contacts used by your ex-partner to deliver messages and information","Online harassment","Wildlife"], correct: 1 },
+      { question: "Why is it important to have a First 72 Hours Plan?", options: ["To prove you planned ahead","It reduces vulnerability and ensures you have structure and support during the most intense period","It satisfies legal requirements","To share with your partner"], correct: 1 },
+      { question: "If they quickly move on to someone new, what does this mean?", options: ["They loved you more than the new person","It reflects the fact that they seek supply, not genuine connection — it is not a reflection of your worth","You should reconsider leaving","You should warn the new person immediately"], correct: 1 },
+      { question: "What is the most effective tool for breaking the trauma bond?", options: ["Couples therapy","Slowly reducing contact","No contact","Staying friends"], correct: 2 }
+    ]
+  },
+  6: {
+    title: "Moving Forward",
+    tutorialVideo: "Rebuilding Your Life After a Toxic Relationship",
+    basicVideo: "Reclaiming Your Power and Purpose",
+    content: `
+      <h2>Week 6: Moving Forward</h2>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand that moving forward is a process, not an event</li>
+        <li>Learn practical strategies for rebuilding your identity and life</li>
+        <li>Develop healthy new routines and habits</li>
+        <li>Recognize the warning signs to protect future relationships</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Moving Forward Actually Looks Like</h4>
+      <p>Moving forward after a toxic relationship is rarely linear. Some days will feel like freedom. Others will feel like grief. Both are right. Both are part of healing.</p>
+      <ul>
+        <li>Healing is not forgetting — it's integrating the experience so it no longer controls you</li>
+        <li>You may still grieve the relationship you wished it had been (not the one it was)</li>
+        <li>Progress is measured in months and years, not days</li>
+        <li>Setbacks are part of the process — they don't erase your progress</li>
+      </ul>
+      <h4>2. Rebuilding Your Identity</h4>
+      <p>Toxic relationships often strip away your sense of self. Rebuilding means rediscovering who you are when no one is diminishing you.</p>
+      <ul>
+        <li><strong>Revisit who you were before:</strong> What did you love? What were your dreams?</li>
+        <li><strong>Explore what was suppressed:</strong> Interests, friendships, goals that were discouraged</li>
+        <li><strong>Ask new questions:</strong> "Who do I want to be now?" — not "Who was I?"</li>
+        <li><strong>Practice making choices:</strong> Small, daily decisions rebuild your trust in yourself</li>
+        <li><strong>Celebrate who you are:</strong> You survived. That takes extraordinary strength.</li>
+      </ul>
+      <h4>3. Building Healthy New Routines</h4>
+      <ul>
+        <li><strong>Physical health:</strong> Move your body daily — walks, yoga, dancing, sport. Your body holds trauma; movement helps release it.</li>
+        <li><strong>Sleep:</strong> Prioritize consistent sleep. Your nervous system is healing.</li>
+        <li><strong>Nutrition:</strong> Nourish your body. Stress depletes vital nutrients.</li>
+        <li><strong>Mindfulness:</strong> A daily practice of even 5 minutes of quiet, intentional breathing.</li>
+        <li><strong>Social connection:</strong> Schedule regular time with safe, supportive people.</li>
+        <li><strong>Creative expression:</strong> Journaling, art, music, cooking — anything that lets you express what words can't.</li>
+      </ul>
+      <h4>4. Protecting Future Relationships</h4>
+      <p>Recovery is also about building the awareness to protect yourself from repeating the pattern.</p>
+      <p><strong>Red flags to never ignore again:</strong></p>
+      <ul>
+        <li>Love bombing — intensity too fast, too soon</li>
+        <li>Jealousy framed as love</li>
+        <li>Isolation from your support network</li>
+        <li>Dismissing your feelings or needs</li>
+        <li>Blaming all past relationship failures on exes</li>
+        <li>Inconsistency between words and actions</li>
+        <li>Disrespect when you say no</li>
+      </ul>
+      <p><strong>Green flags that signal health:</strong></p>
+      <ul>
+        <li>Consistent, predictable kindness over time</li>
+        <li>Genuine interest in your wellbeing</li>
+        <li>Respects your no without negotiation</li>
+        <li>Encourages your independence and friendships</li>
+        <li>Takes accountability for mistakes</li>
+        <li>Actions match words consistently</li>
+      </ul>
+      <h4>5. Your New Life Vision</h4>
+      <p>Begin to envision what a life beyond toxicity looks like for you. Not a vague wish — a specific, felt vision:</p>
+      <ul>
+        <li>Where are you living?</li>
+        <li>How do you spend your mornings?</li>
+        <li>Who are you spending your time with?</li>
+        <li>What are you working toward?</li>
+        <li>How do you feel in your body?</li>
+        <li>What does your inner voice sound like?</li>
+      </ul>
+      <h4>6. You Have Already Begun</h4>
+      <p>By completing this course, you have done something remarkable. You chose to learn, to plan, to prepare, and to grow — even while still in the difficulty. That is not small. That is the beginning of your freedom.</p>
+      <p>You are not what was done to you. You are what you choose to do next.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Future Self Letter</strong><br>
+      Write a letter to yourself one year from now. Describe your life in detail — where you are, how you feel, what you've accomplished. Write it as if it has already happened.</p>
+      <p><strong>Exercise 2: New Routine Design</strong><br>
+      Design your ideal weekly routine. Include movement, nutrition, connection, creativity, and rest. Make it realistic and start with even 20% of it this week.</p>
+      <p><strong>Exercise 3: Identity Rediscovery List</strong><br>
+      List 20 things you love, value, or are curious about — independent of anyone else. Put it somewhere you can see it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What part of yourself are you most excited to rediscover?</li>
+        <li>What new routine will most support your healing?</li>
+        <li>What red flags will you never dismiss again?</li>
+        <li>What does freedom mean to you, in your own words?</li>
+      </ul>
+      <h3>🎉 Congratulations!</h3>
+      <p>You have completed Breaking Free from Toxic Relationships. You now have the tools, awareness, and plan to reclaim your life and your power. The journey continues — and you are ready for it. Keep going. You deserve everything good that is coming to you.</p>
+      <button class="submit-btn" onclick="markComplete(6)">Mark as Complete & Get Certificate</button>
+    `,
+    resources: [
+      { icon: '📖', title: 'Healing Timeline Guide',         desc: 'What to expect in the months after leaving',     file: 'healing-timeline.pdf' },
+      { icon: '💝', title: 'Self-Care & Routine Workbook',   desc: 'Build your post-relationship wellness plan',      file: 'selfcare-workbook.pdf' },
+      { icon: '🚩', title: 'Red & Green Flags Reference',    desc: 'Printable guide for future relationship health',  file: 'flags-reference.pdf' },
+      { icon: '📝', title: 'Identity Rediscovery Journal',   desc: 'Guided prompts to reconnect with yourself',       file: 'identity-journal.pdf' },
+      { icon: '🎧', title: 'New Beginnings Meditation',      desc: '7 meditations for your new chapter',              file: 'new-beginnings-audio.mp3' },
+      { icon: '🏆', title: 'Course Certificate',             desc: 'Download your completion certificate',            file: 'certificate.pdf' }
+    ],
+    assessment: [
+      { question: "What does 'healing is not linear' mean?", options: ["You will feel better every single day","Progress and setbacks alternate — both are part of healing","Healing happens in a straight line","You will feel the same every day"], correct: 1 },
+      { question: "What does rebuilding identity after a toxic relationship involve?", options: ["Becoming exactly who you were before","Rediscovering what you love and who you want to be, free from diminishment","Copying someone else's life","Forgetting the past entirely"], correct: 1 },
+      { question: "Why is physical movement important in recovery?", options: ["To look better for a new partner","The body holds trauma; movement helps release it","It distracts you from emotions","It's not particularly important"], correct: 1 },
+      { question: "Which is a red flag in a future relationship?", options: ["Consistent kindness over time","Respecting your no without negotiation","Encouraging your independence","Love bombing — intensity too fast, too soon"], correct: 3 },
+      { question: "What is a green flag in a healthy relationship?", options: ["Jealousy framed as love","Blaming all past relationships on exes","Takes accountability for mistakes and actions match words","Isolating you from friends"], correct: 2 },
+      { question: "What does grieving the relationship you 'wished it had been' mean?", options: ["Missing the toxic person","Mourning the potential and the illusion, not the actual harmful reality","Regretting leaving","Wanting to return"], correct: 1 },
+      { question: "What is the purpose of the Future Self Letter exercise?", options: ["To impress others","To create a specific, felt vision of the life you are building","To list your partner's failings","To apply for financial assistance"], correct: 1 },
+      { question: "What does 'you are not what was done to you' mean?", options: ["Denial of what happened","Your identity and worth are defined by your choices, not by the abuse you experienced","You should forget the past","The abuse didn't affect you"], correct: 1 },
+      { question: "How should setbacks in healing be viewed?", options: ["As failure","As proof you can't heal","As a normal part of the process that don't erase your progress","As a sign you should return to the relationship"], correct: 2 },
+      { question: "What is the most important thing to remember about your future?", options: ["It will be easy","You deserve good things and the choices you make now shape what comes next","It depends entirely on finding a new relationship","Healing takes exactly 6 months"], correct: 1 }
+    ]
+  }
+};
+</script>
+</body>
+</html>
