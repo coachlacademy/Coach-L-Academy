@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trauma-Informed Healing - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+
+  .user-info { display: flex; align-items: center; gap: 15px; }
+
+  .avatar {
+    width: 45px; height: 45px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: bold;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .progress-overview {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .progress-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 20px; border-radius: 12px; text-align: center;
+  }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+
+  .progress-bar {
+    width: 100%; height: 25px; background: #e0e0e0;
+    border-radius: 15px; overflow: hidden; margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 12px 25px; background: white; border: none;
+    border-radius: 10px 10px 0 0; cursor: pointer;
+    font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease;
+  }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+  .module-selector {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    overflow-x: auto; padding-bottom: 10px;
+  }
+
+  .module-btn {
+    padding: 12px 25px; background: white;
+    border: 2px solid #667eea; border-radius: 25px;
+    cursor: pointer; font-size: 1rem; font-weight: 600;
+    color: #667eea; white-space: nowrap; transition: all 0.3s ease;
+  }
+  .module-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border-color: transparent;
+  }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .video-section {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .video-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px; margin-top: 20px;
+  }
+
+  .video-player {
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative; padding-top: 56.25%;
+  }
+
+  .video-placeholder {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  }
+
+  .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(102, 126, 234, 0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+
+  .lesson-content {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+
+  .assessment-section {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .quiz-question {
+    background: #f8f9fa; padding: 20px; border-radius: 12px;
+    margin-bottom: 20px; border-left: 4px solid #667eea;
+  }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-option {
+    padding: 12px 20px; background: white; border: 2px solid #e0e0e0;
+    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+
+  .submit-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; border-radius: 25px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s ease; margin-top: 20px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+  .already-passed-notice {
+    background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+
+  /* Trauma-informed safety banner */
+  .safety-banner {
+    background: linear-gradient(135deg, #e8f5e9 0%, #f3e5f5 100%);
+    border: 2px solid #764ba2; border-radius: 12px;
+    padding: 20px; margin-bottom: 25px;
+  }
+  .safety-banner h4 { color: #764ba2; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .safety-banner a { color: #667eea; text-decoration: underline; }
+
+  .resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .resource-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+
+  .resource-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem; margin-bottom: 15px;
+  }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+
+  .download-badge {
+    display: inline-block; padding: 5px 12px; background: #4caf50;
+    color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px;
+  }
+
+  .admin-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white; border: none; border-radius: 50px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease;
+  }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+
+  @media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    .video-grid { grid-template-columns: 1fr; }
+    .module-selector { flex-wrap: wrap; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Trauma-Informed Healing</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Name Input Modal -->
+<div id="nameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px; border-radius:20px; max-width:500px; width:90%; text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Trauma-Informed Healing</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to get started with this course:</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Begin Your Healing Journey 🌿</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Permanent Safety Banner -->
+  <div class="safety-banner">
+    <h4>🌿 A Safe Space — Always At Your Own Pace</h4>
+    <p>This course addresses trauma, which means some material may feel intense or bring up difficult emotions. You are always in control of your pace. Take breaks whenever needed. If you are in crisis or need immediate support, please contact the <strong>Crisis Line</strong> (📞 0800 12 13 14) or call <strong>0800 567 567 Suicide &amp; Crisis Lifeline</strong>. This course is educational and supportive — it is not a substitute for professional therapy. If you are working with a therapist, this course complements that work beautifully.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-card">
+        <h3 id="modulesComplete">0/6</h3>
+        <p>Modules Completed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+        <h3 id="lessonsViewed">0/12</h3>
+        <p>Lessons Viewed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+        <h3 id="assessmentsPassed">0/6</h3>
+        <p>Assessments Passed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content', this)">Content</button>
+    <button class="tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment', this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn"        onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn"        onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn"        onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn"        onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn"        onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <!-- Content Tab -->
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('tutorial', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('basic', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <!-- Assessment Tab -->
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <!-- One-on-One Session Section -->
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalized guidance and support.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your specific situation.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera; microphone; fullscreen; display-capture; autoplay"
+          style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'Trauma-Informed Healing';
+const TOTAL_WEEKS      = 6;
+const STORAGE_PREFIX   = 'coachL_TIH_'; // unique per course
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+
+let completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'completedWeeks') || '[]')
+);
+
+function saveCompletedWeeks() {
+  localStorage.setItem(STORAGE_PREFIX + 'completedWeeks', JSON.stringify([...completedWeeks]));
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.onload = function () {
+  const savedName  = localStorage.getItem('studentName');
+  const savedEmail = localStorage.getItem('studentEmail');
+  if (savedName && savedEmail) {
+    studentInfo.name  = savedName;
+    studentInfo.email = savedEmail;
+    updateUserDisplay();
+  } else {
+    document.getElementById('nameModal').style.display = 'flex';
+  }
+  updateProgress();
+  refreshModuleButtons();
+  const firstIncomplete = [1,2,3,4,5,6].find(w => !completedWeeks.has(w)) || 1;
+  selectModule(firstIncomplete);
+};
+
+// ============================================================
+// USER INFO
+// ============================================================
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function saveUserInfo() {
+  const name  = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  if (!name)                { alert('Please enter your full name.'); return; }
+  if (!email)               { alert('Please enter your email address.'); return; }
+  if (!isValidEmail(email)) {
+    alert('⚠️ "' + email + '" doesn\'t look like a valid email address.\n\nExample: yourname@gmail.com');
+    document.getElementById('studentEmail').focus();
+    return;
+  }
+  studentInfo.name  = name;
+  studentInfo.email = email;
+  localStorage.setItem('studentName', name);
+  localStorage.setItem('studentEmail', email);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateEmail() {
+  const current  = localStorage.getItem('studentEmail') || '';
+  const newEmail = prompt('Update your email address:', current);
+  if (newEmail === null) return;
+  if (!isValidEmail(newEmail.trim())) { alert('⚠️ That doesn\'t look like a valid email. Please try again.'); return; }
+  studentInfo.email = newEmail.trim();
+  localStorage.setItem('studentEmail', newEmail.trim());
+  alert('✅ Email updated to: ' + newEmail.trim());
+}
+
+function updateUserDisplay() {
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = 'Welcome, ' + studentInfo.name + '!';
+}
+
+// ============================================================
+// MODULE BUTTONS
+// ============================================================
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1;
+    btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) {
+      btn.classList.add('completed');
+      btn.textContent = 'Week ' + w + ' ✓';
+    } else {
+      btn.textContent = 'Week ' + w;
+    }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) {
+  currentWeek = week;
+  refreshModuleButtons();
+  updateWeekContent();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+// ============================================================
+// CONTENT RENDERING
+// ============================================================
+function updateWeekContent() {
+  const week = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent      = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent  = 'Tutorial: ' + week.tutorialVideo;
+  document.getElementById('basicTitle').textContent     = 'Basic Learning: ' + week.basicVideo;
+  document.getElementById('lessonContent').innerHTML    = week.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML    = week.resources.map(r => `
+    <div class="resource-card" onclick="downloadResource('${r.file}', '${r.title}')">
+      <div class="resource-icon">${r.icon}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+      <span class="download-badge">📥 Download</span>
+    </div>
+  `).join('');
+  renderAssessment();
+}
+
+// ============================================================
+// ASSESSMENT
+// ============================================================
+function renderAssessment() {
+  const week   = weekData[currentWeek];
+  const passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+
+  if (passed) {
+    html += `
+      <div class="already-passed-notice">
+        <h3>✅ You already passed this week!</h3>
+        <p>Great work! Your score has been recorded. You can review any week's content freely at any time.</p>
+      </div>`;
+  } else {
+    html += `<p style="margin-bottom:30px;color:#666;">Test your understanding of this week's material. You need 70% to pass.</p>`;
+  }
+
+  week.assessment.forEach((q, i) => {
+    html += `
+      <div class="quiz-question">
+        <h4>Question ${i + 1}: ${q.question}</h4>
+        <div class="quiz-options">
+          ${q.options.map((opt, j) => `
+            <label class="quiz-option">
+              <input type="radio" name="q${i}" value="${j}" ${passed ? 'disabled' : ''}>
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>`;
+  });
+
+  if (!passed) html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+  const week      = weekData[currentWeek];
+  let correct     = 0, answers = [], allAnswered = true;
+  week.assessment.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) { allAnswered = false; return; }
+    const userAnswer = parseInt(selected.value);
+    const isCorrect  = userAnswer === q.correct;
+    if (isCorrect) correct++;
+    answers.push({ question: q.question, userAnswer: q.options[userAnswer], correctAnswer: q.options[q.correct], isCorrect });
+  });
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+  const score  = Math.round((correct / week.assessment.length) * 100);
+  const passed = score >= 70;
+  submitToGoogleSheets(currentWeek, score, correct, week.assessment.length, answers, passed);
+  if (passed) {
+    completedWeeks.add(currentWeek);
+    saveCompletedWeeks();
+    updateProgress();
+    refreshModuleButtons();
+    renderAssessment();
+    if (currentWeek < TOTAL_WEEKS) {
+      alert(`🎉 Congratulations! You passed with ${score}%!\n\n${correct}/${week.assessment.length} correct.\n\nContinue to Week ${currentWeek + 1} whenever you're ready.`);
+    } else {
+      alert(`🏆 You've completed the entire course with ${score}%!\n\nYour certificate is being generated and will be emailed to you. 🎓`);
+    }
+  } else {
+    alert(`You scored ${score}% (${correct}/${week.assessment.length} correct).\n\nYou need 70% to pass. Review the material and try again — you've got this!`);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEETS SUBMISSION
+// ============================================================
+function submitToGoogleSheets(week, score, correct, total, answers, passed) {
+  const payload = {
+    secretKey: SECRET_KEY, timestamp: new Date().toLocaleString(),
+    studentName: studentInfo.name, studentEmail: studentInfo.email,
+    courseName: COURSE_NAME, week, score, correct, total,
+    passed: passed ? 'YES' : 'NO', detailedAnswers: JSON.stringify(answers)
+  };
+  fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(() => console.log('✅ Submitted')).catch(err => console.error('❌ Error:', err));
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  all.push({ ...payload, answers });
+  localStorage.setItem('assessmentResults', JSON.stringify(all));
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const done = completedWeeks.size;
+  const pct  = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width       = pct + '%';
+  document.getElementById('progressBar').textContent       = pct + '%';
+  document.getElementById('modulesComplete').textContent   = done + '/' + TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent     = (done * 2) + '/' + (TOTAL_WEEKS * 2);
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function playVideo(type, week) {
+  alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed (YouTube, Vimeo, etc.).`);
+}
+function markComplete(week) {
+  showTab('assessment', document.querySelectorAll('.tab')[2]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function downloadResource(file, title) {
+  fetch('resources/' + file, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) {
+        const a = document.createElement('a');
+        a.href = 'resources/' + file; a.download = file; a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'); }
+    })
+    .catch(() => alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall() {
+  const iframe = document.getElementById('jitsiFrame');
+  const room   = 'coachL-' + (studentInfo.email || 'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display = 'block';
+  document.getElementById('videoCallContainer').scrollIntoView({ behavior: 'smooth' });
+}
+function endVideoCall() {
+  if (confirm('Are you sure you want to end the session?')) {
+    document.getElementById('jitsiFrame').src = '';
+    document.getElementById('videoCallContainer').style.display = 'none';
+  }
+}
+function viewAllResults() {
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!all.length) { alert('No assessment results yet.'); return; }
+  const rows = all.map((r, i) => `
+    <div class="result-card ${r.passed === 'YES' ? 'passed' : 'failed'}">
+      <h2>Submission #${i+1} — ${r.passed === 'YES' ? '✅ PASSED' : '❌ FAILED'}</h2>
+      <p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p>
+      <p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p>
+      <p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p>
+      <div class="details"><h3>Detailed Answers:</h3><table>
+        <tr><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th></tr>
+        ${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}
+      </table></div>
+    </div>`).join('');
+  const win = window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}
+    .result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+    .passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}
+    .details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}
+    table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+    th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}
+  </style></head><body><h1>📊 Results – Coach L Academy</h1>
+  <p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>
+  ${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Trauma-Informed Healing (6 weeks, 10 questions each)
+// ============================================================
+const weekData = {
+
+  1: {
+    title: "Understanding Trauma — What It Is and What It Does",
+    tutorialVideo: "What Trauma Really Is (And Isn't)",
+    basicVideo: "How Trauma Lives in the Body and Mind",
+    content: `
+      <h2>Week 1: Understanding Trauma — What It Is and What It Does</h2>
+      <div class="safety-banner">
+        <h4>🌿 A Gentle Reminder</h4>
+        <p>This week introduces trauma concepts that may feel personal or activating. You are encouraged to go at your own pace, take breaks, and reach out for support if needed. You do not have to revisit painful memories to benefit from this material.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what trauma is — and challenge common misconceptions</li>
+        <li>Recognise the wide spectrum of traumatic experiences</li>
+        <li>Understand how trauma affects the brain, body, and nervous system</li>
+        <li>Begin approaching your own history with curiosity rather than shame</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Trauma Is — A Broader Definition</h4>
+      <p>Trauma is not defined by what happened — it is defined by what happened inside you in response to it. Two people can experience the same event and be affected entirely differently. Trauma occurs when an experience overwhelms your nervous system's capacity to process and integrate it. The result is that the experience remains stored in the body and mind in an unresolved, incomplete way.</p>
+      <ul>
+        <li><strong>Big-T Trauma:</strong> Events commonly recognised as traumatic — abuse, assault, accidents, disasters, war, loss, life-threatening illness</li>
+        <li><strong>Small-t Trauma:</strong> Events that may seem less dramatic but are equally impactful — chronic emotional neglect, repeated humiliation, ongoing instability, loss of a relationship, being consistently unseen or unheard</li>
+        <li><strong>Developmental Trauma:</strong> Experiences in childhood that disrupted the development of a safe, secure sense of self — including emotional unavailability of caregivers, inconsistency, criticism, or the absence of warmth</li>
+        <li><strong>Complex Trauma (C-PTSD):</strong> The result of repeated, prolonged traumatic experiences — often in the context of relationships where escape was not possible (e.g. abusive households, chronic neglect)</li>
+        <li>The size of the event does not determine the depth of the wound. Your response is valid regardless of how it compares to others.</li>
+      </ul>
+      <h4>2. How Trauma Affects the Brain</h4>
+      <p>Understanding what trauma does neurologically helps de-shame the experience. Your responses are not weaknesses — they are your nervous system doing exactly what it was designed to do:</p>
+      <ul>
+        <li><strong>The amygdala (threat detector):</strong> Trauma sensitises the amygdala, making it quicker to detect danger — including in situations that are not actually dangerous. This is the neurological basis of triggers.</li>
+        <li><strong>The prefrontal cortex (rational thinking):</strong> Under perceived threat, blood flow is redirected away from the prefrontal cortex. This is why, when triggered, you may struggle to think clearly, reason, or regulate your emotions. It is not weakness — it is neurobiology.</li>
+        <li><strong>The hippocampus (memory):</strong> Trauma disrupts normal memory encoding. Traumatic memories are often stored as fragments — sensory impressions, emotions, body sensations — rather than coherent narratives. This is why trauma doesn't always present as a clear story.</li>
+        <li><strong>Neuroplasticity — the good news:</strong> The brain can change. With consistent, compassionate practice, new neural pathways can be built. Healing is not just psychological — it is physiological.</li>
+      </ul>
+      <h4>3. The Nervous System and Trauma — Fight, Flight, Freeze, Fawn</h4>
+      <p>The autonomic nervous system has four primary responses to perceived threat. In trauma, these become chronic patterns rather than temporary responses:</p>
+      <ul>
+        <li><strong>Fight:</strong> Anger, confrontation, defensiveness — an attempt to overpower the threat</li>
+        <li><strong>Flight:</strong> Avoidance, escapism, busyness, running away — an attempt to escape the threat</li>
+        <li><strong>Freeze:</strong> Numbness, dissociation, shutting down — an attempt to disappear from the threat</li>
+        <li><strong>Fawn:</strong> People-pleasing, excessive compliance, appeasing — an attempt to neutralise the threat by becoming what others need</li>
+        <li>None of these responses is wrong or weak. They were adaptations that helped you survive. The healing work is in gently updating your nervous system's assessment of current safety.</li>
+      </ul>
+      <h4>4. Common Signs That Trauma May Be Present</h4>
+      <ul>
+        <li>Feeling chronically unsafe, anxious, or on alert — even when circumstances are stable</li>
+        <li>Difficulty trusting others or forming close relationships</li>
+        <li>Emotional numbness or difficulty identifying your own feelings</li>
+        <li>Flashbacks, intrusive memories, or being suddenly "transported" to past events by sensory triggers</li>
+        <li>Shame, self-blame, or a persistent sense that something is fundamentally wrong with you</li>
+        <li>Difficulty sleeping, concentrating, or feeling present in the current moment</li>
+        <li>Reactions that feel disproportionate to present circumstances — but make complete sense in the context of the past</li>
+      </ul>
+      <h4>5. Approaching Your History with Compassion</h4>
+      <p>One of the most important shifts this course invites is moving from shame toward curiosity. Instead of "What is wrong with me?" — "What happened to me, and how did I adapt?" Your symptoms are not pathology. They are intelligence. They are your psyche and body telling you that something happened that deserves care and attention.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Grounding Practice — 5-4-3-2-1</strong><br>
+      When you feel activated or overwhelmed at any point in this course, use this grounding technique: Name 5 things you can see. 4 things you can physically feel (your feet on the floor, the chair beneath you). 3 things you can hear. 2 things you can smell or like the smell of. 1 thing you can taste. This brings your awareness back to the present moment and signals safety to your nervous system.</p>
+      <p><strong>Exercise 2: Curiosity Journal</strong><br>
+      Without pressure to go deep, write a short response to: "One way my body or behaviour has tried to protect me is..." Approach it as a curious observer rather than a judge.</p>
+      <p><strong>Exercise 3: Identify Your Nervous System Pattern</strong><br>
+      Reflect on which survival response (fight, flight, freeze, fawn) you most recognise in yourself under stress. Write one situation where you noticed this pattern recently. No judgment — just noticing.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Has learning about the neuroscience of trauma changed how you see any of your own responses or behaviours?</li>
+        <li>Which of the trauma types (Big-T, Small-t, developmental, complex) resonates with your experience?</li>
+        <li>What would it mean to replace "What is wrong with me?" with "What happened to me?"</li>
+        <li>What is one thing your nervous system has done that you can now understand as protection rather than pathology?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(1)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🧠', title: 'Trauma Types Explained',            desc: 'Big-T, small-t, developmental and complex trauma',    file: 'trauma-types.pdf' },
+      { icon: '🌿', title: 'Grounding Techniques Guide',        desc: '10 somatic grounding practices for when activated',   file: 'grounding-techniques.pdf' },
+      { icon: '📊', title: 'Nervous System Response Chart',     desc: 'Fight, flight, freeze, fawn — understanding your patterns', file: 'nervous-system-chart.pdf' },
+      { icon: '📝', title: 'Curiosity Journal Prompts',         desc: 'Gentle prompts for approaching your history',         file: 'curiosity-journal.pdf' },
+      { icon: '🎧', title: 'Safety & Grounding Meditation',     desc: '12-minute guided grounding practice',                 file: 'grounding-audio.mp3' },
+      { icon: '🆘', title: 'Crisis Support Resources',          desc: 'Helplines, therapists, and crisis support worldwide', file: 'crisis-resources.pdf' }
+    ],
+    assessment: [
+      { question: "How is trauma defined in a trauma-informed approach?", options: ["By the severity of the event that caused it","By what happened inside the person in response — when an experience overwhelms the nervous system's capacity to process and integrate it","By whether the person received a clinical diagnosis","By whether others agree the event was serious enough"], correct: 1 },
+      { question: "What is 'small-t' trauma?", options: ["Trauma that only affects children","Events that may seem less dramatic but are equally impactful — such as chronic emotional neglect, repeated humiliation, or being consistently unseen","Minor physical injuries","Trauma that only lasts a short time"], correct: 1 },
+      { question: "What does trauma do to the amygdala?", options: ["It reduces its sensitivity, making you less reactive","It sensitises it, making it quicker to detect danger — including in situations that are not actually dangerous","It permanently damages it","It has no effect on the amygdala"], correct: 1 },
+      { question: "Why does the ability to think clearly decrease when you are triggered?", options: ["Because trauma has permanently reduced your intelligence","Because under perceived threat, blood flow is redirected away from the prefrontal cortex","Because you are choosing not to think rationally","Because memory loss is a symptom of all trauma"], correct: 1 },
+      { question: "What is the 'fawn' trauma response?", options: ["Shutting down and becoming emotionally numb","Running away from the threatening situation","Becoming angry and confrontational","People-pleasing, excessive compliance, and appeasing — an attempt to neutralise threat by becoming what others need"], correct: 3 },
+      { question: "Why are traumatic memories often stored as fragments rather than coherent narratives?", options: ["Because the person is deliberately suppressing them","Because trauma disrupts normal memory encoding in the hippocampus","Because the brain deletes traumatic memories over time","Because they are not real memories"], correct: 1 },
+      { question: "What does neuroplasticity mean for trauma healing?", options: ["The brain cannot change once trauma has occurred","Healing is impossible without medication","The brain can change — with consistent, compassionate practice, new neural pathways can be built, making healing physiological as well as psychological","Trauma only exists in the mind, not the body"], correct: 2 },
+      { question: "What does developmental trauma refer to?", options: ["Trauma that only occurs in adolescence","Experiences in childhood that disrupted the development of a safe, secure sense of self — including emotional neglect, inconsistency, and absence of warmth","Trauma caused by developmental delays","Physical developmental injuries"], correct: 1 },
+      { question: "What is the key shift this course invites in how you approach your history?", options: ["From shame to pride","From curiosity to certainty","From 'What is wrong with me?' to 'What happened to me, and how did I adapt?'","From past to future"], correct: 2 },
+      { question: "What does it mean that trauma symptoms are described as 'intelligence' rather than pathology?", options: ["That trauma makes you smarter","That symptoms are signs of weakness masquerading as strength","That your responses are adaptive signals — your psyche and body communicating that something happened that deserves care and attention","That all trauma symptoms eventually become useful skills"], correct: 2 }
+    ]
+  },
+
+  2: {
+    title: "The Body Keeps the Score — Somatic Healing",
+    tutorialVideo: "Why Your Body Holds Trauma",
+    basicVideo: "Introduction to Somatic Healing Practices",
+    content: `
+      <h2>Week 2: The Body Keeps the Score — Somatic Healing</h2>
+      <div class="safety-banner">
+        <h4>🌿 Body-Based Work — Go Gently</h4>
+        <p>Somatic practices involve bringing attention to physical sensations. For some people, this can feel activating. You are always in control — if any exercise feels too intense, pause, use your grounding practice from Week 1, and return when ready. You never have to push through discomfort to heal.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why trauma is stored in the body — not just the mind</li>
+        <li>Learn foundational somatic (body-based) healing practices</li>
+        <li>Develop the skill of tracking body sensations with curiosity and safety</li>
+        <li>Begin building a daily practice of body-based self-regulation</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Trauma Lives in the Body</h4>
+      <p>One of the most important shifts in trauma understanding over the past thirty years is the recognition that trauma is not primarily a cognitive event — it is a somatic (body-based) one. The phrase "the body keeps the score" (popularised by psychiatrist Bessel van der Kolk) captures a central truth: unprocessed trauma is stored as physical tension, activation, and sensation in the body — not just as thoughts or memories.</p>
+      <ul>
+        <li>When the nervous system is overwhelmed, the body freezes the incomplete survival response — the energy mobilised to fight or flee but never discharged</li>
+        <li>This undischarged energy remains in the body as chronic tension, numbness, pain, or activation</li>
+        <li>This is why talk therapy alone is often insufficient for deep trauma healing — you cannot think your way out of a body-based experience</li>
+        <li>Somatic healing works with the body directly to safely complete and discharge what was interrupted</li>
+      </ul>
+      <h4>2. What Somatic Healing Is</h4>
+      <p>Somatic healing (from the Greek soma — body) is any therapeutic approach that works through body awareness and sensation to process and release stored trauma. It includes:</p>
+      <ul>
+        <li><strong>Somatic Experiencing (SE):</strong> Developed by Peter Levine, this approach tracks body sensations to gently titrate (process in small, manageable doses) and discharge traumatic activation</li>
+        <li><strong>Sensorimotor Psychotherapy:</strong> Integrates body movement and posture with emotional and cognitive processing</li>
+        <li><strong>EMDR (Eye Movement Desensitisation and Reprocessing):</strong> Uses bilateral stimulation (eye movements, tapping) to facilitate reprocessing of traumatic memories — available from trained therapists</li>
+        <li><strong>Trauma-sensitive yoga and movement:</strong> Uses gentle movement to restore agency, embodiment, and nervous system regulation</li>
+        <li>The common thread: they all work with the body's own intelligence to restore a sense of safety from within</li>
+      </ul>
+      <h4>3. Pendulation — The Core of Somatic Healing</h4>
+      <p>A foundational principle of somatic healing is pendulation — the gentle oscillation between sensations of activation (difficulty, discomfort) and sensations of resource (ease, safety, pleasure). Healing does not require sitting in the pain. It requires learning to move between difficulty and relief — gradually building the capacity to tolerate more of both. Think of it like building a muscle: you don't lift the heaviest weight immediately; you start with what is manageable and build capacity over time.</p>
+      <h4>4. Titration — Healing in Small Doses</h4>
+      <p>Titration means approaching traumatic material in very small, manageable doses — rather than diving into the full intensity of the experience. This is the opposite of the outdated "catharsis" model, which believed healing required re-experiencing trauma at full intensity. Modern trauma science shows that titration is far safer and more effective:</p>
+      <ul>
+        <li>Touch the edge of a difficult sensation — then return to resource</li>
+        <li>Expand your window of tolerance gradually over time</li>
+        <li>Never push past what feels manageable — the nervous system heals through safety, not through force</li>
+      </ul>
+      <h4>5. Practical Somatic Practices</h4>
+      <ul>
+        <li><strong>Body Scan:</strong> Lie down or sit comfortably. Slowly move your awareness through your body from feet to head, noticing sensations without trying to change them. Tension, warmth, tingling, numbness — just observe.</li>
+        <li><strong>Orienting:</strong> Slowly look around the room, letting your eyes rest on something pleasant or neutral. This signals to your nervous system that the current environment is safe.</li>
+        <li><strong>Shaking and trembling:</strong> Animals naturally discharge traumatic activation through physical trembling. Gentle, voluntary shaking — particularly of the legs and hips — can help discharge accumulated stress from the body.</li>
+        <li><strong>Somatic resource:</strong> Recall a memory or experience that carries a sense of safety, warmth, or pleasure. Notice where you feel this in your body. This is your somatic resource — a place to return to when activation becomes too intense.</li>
+        <li><strong>Slow, extended exhale:</strong> The exhale activates the parasympathetic nervous system (rest and digest). A 4-count inhale followed by an 8-count exhale is one of the fastest ways to shift from a state of activation to a state of regulation.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Body Scan Practice</strong><br>
+      Set aside 10 quiet minutes. Lie down if comfortable. Slowly move your awareness through your body, spending 30 seconds in each area — feet, calves, knees, thighs, hips, abdomen, chest, hands, arms, shoulders, neck, face. Simply notice what is present without trying to change it. After completing the scan, write two or three words about what you noticed.</p>
+      <p><strong>Exercise 2: Finding Your Somatic Resource</strong><br>
+      Bring to mind a memory, place, person, or experience that carries genuine warmth, safety, or pleasure — even a small one. Notice where you feel this in your body. What does it feel like? Warmth? Expansion? Tingling? Softening? Spend two minutes with this sensation. This is your anchor — return to it whenever you feel activated.</p>
+      <p><strong>Exercise 3: The Extended Exhale</strong><br>
+      Practise this daily for one week: Breathe in through the nose for 4 counts. Breathe out slowly through the mouth for 8 counts. Repeat 5 times. Notice the shift in your body. This is your portable nervous system regulator.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Where in your body do you most often carry tension, activation, or discomfort? What might that area be holding?</li>
+        <li>What somatic resource (place, memory, sensation of safety) can you identify that you can return to when activated?</li>
+        <li>How does the concept of titration change your understanding of what healing should feel like?</li>
+        <li>Has your relationship with your body been affected by what you've experienced? In what ways?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(2)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🧘', title: 'Body Scan Practice Guide',          desc: 'Step-by-step somatic body awareness practice',        file: 'body-scan-guide.pdf' },
+      { icon: '🌊', title: 'Pendulation & Titration Explained', desc: 'Core concepts in somatic trauma healing',              file: 'pendulation-guide.pdf' },
+      { icon: '💨', title: 'Breathwork for Regulation',         desc: 'Extended exhale and nervous system regulation',        file: 'breathwork-guide.pdf' },
+      { icon: '📝', title: 'Somatic Resource Journal',          desc: 'Identify and anchor your body-based safety',           file: 'somatic-resource.pdf' },
+      { icon: '🎧', title: 'Somatic Healing Meditation',        desc: '15-minute guided body awareness practice',             file: 'somatic-audio.mp3' },
+      { icon: '📚', title: 'Somatic Healing Reading List',      desc: 'Key books on body-based trauma healing',               file: 'somatic-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What does 'the body keeps the score' mean in the context of trauma?", options: ["The body records trauma events in a way you can consciously access","Unprocessed trauma is stored as physical tension, activation, and sensation in the body — not just as thoughts or memories","The body eventually heals itself without intervention","Physical symptoms of trauma always present as pain"], correct: 1 },
+      { question: "Why is talk therapy alone often insufficient for deep trauma healing?", options: ["Because therapists are not well trained","Because trauma is primarily a body-based experience — and you cannot think your way out of a somatic process","Because talk therapy is too expensive","Because words cannot describe traumatic experiences accurately"], correct: 1 },
+      { question: "What is pendulation in somatic healing?", options: ["A breathing technique","The gentle oscillation between sensations of activation (difficulty) and sensations of resource (ease and safety) during the healing process","A type of eye movement therapy","A form of physical exercise for trauma release"], correct: 1 },
+      { question: "What is titration in trauma healing?", options: ["Measuring the amount of therapy needed","Taking medication in correct doses","Approaching traumatic material in very small, manageable doses — rather than at full intensity — to build tolerance gradually","A type of blood test for trauma markers"], correct: 2 },
+      { question: "What does the extended exhale (longer out-breath) do physiologically?", options: ["Activates the sympathetic nervous system, increasing alertness","Activates the parasympathetic nervous system (rest and digest), shifting the body from activation toward regulation","Increases heart rate","Has no physiological effect"], correct: 1 },
+      { question: "What is the purpose of the 'orienting' somatic practice?", options: ["To assess for danger in the environment","To slowly look around the room, letting eyes rest on something neutral or pleasant — signalling to the nervous system that the current environment is safe","To improve eyesight","To practise mindfulness of visual objects"], correct: 1 },
+      { question: "What is a 'somatic resource'?", options: ["A therapist who specialises in somatic work","A body-based anchor — a memory, place, or sensation that carries genuine warmth or safety, which you return to when activation becomes intense","A physical supplement for trauma recovery","A type of therapeutic equipment"], correct: 1 },
+      { question: "Why does modern trauma science prefer titration over catharsis (re-experiencing at full intensity)?", options: ["Because catharsis is too emotional","Because titration is faster","Because the nervous system heals through safety, not through force — titration is safer and more effective than flooding the system","Because catharsis is only available in clinical settings"], correct: 2 },
+      { question: "Why might voluntary shaking or trembling support trauma healing?", options: ["It is a form of exercise that builds resilience","Animals naturally discharge traumatic activation through physical trembling — gentle voluntary shaking may help discharge accumulated stress from the body","It distracts from traumatic thoughts","It strengthens the muscles that hold tension"], correct: 1 },
+      { question: "What is Somatic Experiencing (SE)?", options: ["A form of meditation that ignores the body","A pharmaceutical approach to trauma","An approach developed by Peter Levine that tracks body sensations to gently titrate and discharge traumatic activation","A type of physical therapy for injury recovery"], correct: 2 }
+    ]
+  },
+
+  3: {
+    title: "Emotional Regulation — Working with Difficult Feelings",
+    tutorialVideo: "What Emotional Regulation Actually Means",
+    basicVideo: "Practical Tools for Navigating Intense Emotions",
+    content: `
+      <h2>Week 3: Emotional Regulation — Working with Difficult Feelings</h2>
+      <div class="safety-banner">
+        <h4>🌿 Emotions as Information</h4>
+        <p>This week explores difficult emotions including grief, anger, shame, and fear. Take this material at your own pace. You are not required to process everything at once. If you feel overwhelmed, use your grounding and somatic resource practices before continuing.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what emotional regulation is — and what it is not</li>
+        <li>Learn why trauma dysregulates the emotional system</li>
+        <li>Develop practical tools for working with grief, anger, shame, and fear</li>
+        <li>Build the skill of sitting with difficult emotions without suppressing or being overwhelmed by them</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Emotional Regulation Is — and What It Isn't</h4>
+      <p>Emotional regulation does not mean controlling, suppressing, or eliminating difficult emotions. It means developing the capacity to experience difficult emotions fully — without being overwhelmed by them, without acting on them destructively, and without shutting them down. The goal is not to feel less. It is to feel safely.</p>
+      <ul>
+        <li><strong>Under-regulation:</strong> Emotions flood you — you feel overwhelmed, reactive, out of control, unable to think clearly when emotionally activated</li>
+        <li><strong>Over-regulation:</strong> Emotions are suppressed — you feel numb, cut off, unable to access your feelings even when it would be appropriate and healthy to do so</li>
+        <li><strong>Regulation:</strong> The middle ground — you can experience the full range of emotions, stay present with them, and respond thoughtfully rather than react automatically</li>
+      </ul>
+      <h4>2. The Window of Tolerance</h4>
+      <p>The Window of Tolerance, developed by psychiatrist Dan Siegel, describes the optimal zone of nervous system arousal in which you can function, process, and integrate experience. Within this window, you are able to feel your emotions without being overwhelmed or shut down. Trauma shrinks this window significantly:</p>
+      <ul>
+        <li><strong>Hyperarousal (above the window):</strong> Anxiety, panic, rage, hypervigilance, intrusive thoughts — the nervous system is in overdrive</li>
+        <li><strong>Hypoarousal (below the window):</strong> Numbness, dissociation, depression, shutting down, feeling absent — the nervous system has collapsed into withdrawal</li>
+        <li><strong>The healing goal:</strong> Gradually expand the Window of Tolerance — increasing your capacity to stay present with difficult experience without tipping into hyper- or hypoarousal</li>
+        <li>Every time you successfully stay with a difficult emotion without suppressing or being overwhelmed, you expand your window</li>
+      </ul>
+      <h4>3. Working with Specific Difficult Emotions</h4>
+      <p><strong>Grief:</strong> Grief is the natural response to loss — of people, relationships, versions of yourself, possibilities, childhoods you deserved but didn't have. Grief that was never allowed expression becomes stored in the body as chronic heaviness or depression. Allowing grief to move — through tears, through expression, through ritual — is not weakness. It is the body completing what it needs to complete.</p>
+      <p><strong>Anger:</strong> Anger is a signal that a boundary has been violated or a need has been unmet. In trauma survivors, anger is often either suppressed entirely (because it felt dangerous to express) or expresses disproportionately (because accumulated anger has no other outlet). Healthy anger is directional — it tells you something important and motivates protective action.</p>
+      <p><strong>Shame:</strong> Shame is one of the most common and debilitating legacies of trauma. Unlike guilt (which is about what you did), shame is about who you are — "I am bad, wrong, unworthy, broken." Shame thrives in silence and isolation. Its antidote is compassion and connection — being met with understanding rather than judgment for the most difficult parts of yourself.</p>
+      <p><strong>Fear:</strong> Fear in trauma survivors is often a present-tense response to a past threat. Your nervous system has not yet learned that the danger has passed. Healing involves gradually helping your system distinguish past from present — through grounding, safety-building, and repeated experiences of being okay.</p>
+      <h4>4. Practical Regulation Tools</h4>
+      <ul>
+        <li><strong>TIPP skills (from DBT):</strong> Temperature (cold water on face activates the dive reflex, rapidly reducing heart rate), Intense exercise (discharges adrenaline), Paced breathing (extended exhale), Progressive muscle relaxation</li>
+        <li><strong>The RAIN practice (from mindfulness-based approaches):</strong> Recognise the emotion. Allow it to be there without pushing it away. Investigate with gentle curiosity — where do you feel it in your body? What is it saying? Nurture yourself with compassion.</li>
+        <li><strong>Emotion naming:</strong> Research shows that naming an emotion (affect labelling) reduces its intensity. Simply saying or writing "I feel angry" or "this is grief" engages the prefrontal cortex and reduces amygdala activation.</li>
+        <li><strong>Contain and return:</strong> If an emotion is too intense to process in the moment, visualise placing it in a container — a box, a safe, a chest — and return to it deliberately when you have support and time. This is not suppression; it is pacing.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The RAIN Practice</strong><br>
+      Choose one difficult emotion that is currently present in your life — even a mild one. Sit with it for 5–10 minutes using RAIN: Recognise what you're feeling. Allow it to be there. Investigate with curiosity — where is it in your body? What does it need? Nurture yourself with a hand on your heart and a compassionate response to what you find.</p>
+      <p><strong>Exercise 2: Emotion Naming Journal</strong><br>
+      For three days, check in with yourself three times a day and write a single sentence naming your emotional state: "Right now I feel ____." Aim for specificity — not just "bad" or "fine" but words like: anxious, sad, irritable, numb, tender, restless, heavy, hopeful. Notice how naming affects the feeling.</p>
+      <p><strong>Exercise 3: Expanding Your Window</strong><br>
+      Identify one emotion you tend to suppress or avoid. Set a timer for 3 minutes. Allow yourself to feel it — not to analyse it or fix it, just to feel it while keeping one hand on your heart. When the timer ends, use your extended exhale to return to regulation. You just expanded your window.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which emotion is hardest for you to allow — and what do you fear would happen if you let yourself feel it fully?</li>
+        <li>Do you tend more toward under-regulation (being flooded) or over-regulation (numbness)?</li>
+        <li>What messages did you receive in childhood about the acceptability of emotions?</li>
+        <li>What would it mean to treat your most difficult emotions as messengers rather than problems to be solved?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(3)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📊', title: 'Window of Tolerance Chart',        desc: 'Understand hyper and hypoarousal in your nervous system', file: 'window-tolerance.pdf' },
+      { icon: '🌧', title: 'The RAIN Practice Guide',          desc: 'Step-by-step mindful emotion processing technique',    file: 'rain-practice.pdf' },
+      { icon: '😤', title: 'Working with Anger Safely',        desc: 'Healthy expression and direction of anger',             file: 'anger-guide.pdf' },
+      { icon: '💔', title: 'Grief Processing Workbook',        desc: 'Allowing and honouring grief through expression',       file: 'grief-workbook.pdf' },
+      { icon: '🎧', title: 'Emotion Regulation Meditation',    desc: '14-minute RAIN-based guided practice',                  file: 'emotion-regulation-audio.mp3' },
+      { icon: '📚', title: 'Emotional Regulation Reading',     desc: 'Key texts on emotions, the body, and healing',          file: 'emotion-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What does emotional regulation mean in a trauma-informed context?", options: ["Eliminating difficult emotions as quickly as possible","Controlling your emotional reactions so others are not affected","Developing the capacity to experience difficult emotions fully — without being overwhelmed, without acting destructively, and without shutting down","Expressing every emotion immediately and fully"], correct: 2 },
+      { question: "What does 'hyperarousal' look like in terms of the Window of Tolerance?", options: ["Numbness, dissociation, and shutting down","The optimal zone where processing is possible","Anxiety, panic, rage, and hypervigilance — the nervous system in overdrive","Calm, focused awareness"], correct: 0 },
+      { question: "What is hypoarousal?", options: ["Extreme anxiety and activation","The optimal zone of emotional processing","Numbness, dissociation, depression, and withdrawal — the nervous system collapsed into shutdown","Healthy emotional expression"], correct: 2 },
+      { question: "What is the healing goal regarding the Window of Tolerance?", options: ["To eliminate the window by becoming emotionally neutral","Gradually expand the window — increasing the capacity to stay present with difficult experience without tipping into hyper- or hypoarousal","To stay in the window by avoiding all triggering situations","To reduce the window to prevent overwhelming emotions"], correct: 1 },
+      { question: "How does shame differ from guilt?", options: ["They are the same emotion","Guilt is about what you did; shame is about who you are — 'I am bad, wrong, or broken'","Shame is less damaging than guilt","Guilt is longer-lasting than shame"], correct: 1 },
+      { question: "What is the RAIN practice?", options: ["A breathing technique","A journalling method","Recognise, Allow, Investigate, Nurture — a mindfulness-based approach to working with difficult emotions","A somatic movement practice"], correct: 2 },
+      { question: "What does research show about the practice of naming emotions?", options: ["It makes emotions more intense","It has no effect on the emotional experience","Naming an emotion (affect labelling) reduces its intensity by engaging the prefrontal cortex and reducing amygdala activation","It only works for positive emotions"], correct: 2 },
+      { question: "What is anger's function as an emotion in a trauma-informed view?", options: ["It is always a sign of unresolved trauma","It is a destructive emotion that should be suppressed","It is a signal that a boundary has been violated or a need has gone unmet — directional information that motivates protective action","It is only appropriate in immediate danger"], correct: 2 },
+      { question: "What is the 'contain and return' technique?", options: ["Suppressing emotions permanently","Avoiding difficult emotions by staying busy","Temporarily placing an emotion in a mental container to be returned to deliberately when you have time and support — pacing rather than suppression","A breathing technique for acute anxiety"], correct: 2 },
+      { question: "Why does grief that was never expressed become stored in the body?", options: ["Because the body has no way to process emotions","Because grief requires physical expression to complete its natural cycle — suppressed grief has no other outlet and becomes stored as chronic heaviness","Because grief is fundamentally a physical illness","Because unexpressed emotions are transferred to the subconscious"], correct: 1 }
+    ]
+  },
+
+  4: {
+    title: "Healing Attachment Wounds — Relationships After Trauma",
+    tutorialVideo: "How Trauma Shapes the Way You Love",
+    basicVideo: "Attachment Styles and the Path to Secure Connection",
+    content: `
+      <h2>Week 4: Healing Attachment Wounds — Relationships After Trauma</h2>
+      <div class="safety-banner">
+        <h4>🌿 Relational Healing Is Possible</h4>
+        <p>This week explores how early attachment experiences shape adult relationships. This material may touch on painful relational histories. Be gentle with yourself. The aim is understanding, not blame — of yourself or your caregivers. Healing attachment wounds is entirely possible, and this week begins that work.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand attachment theory and the four primary attachment styles</li>
+        <li>Identify how early attachment experiences shape adult relationship patterns</li>
+        <li>Understand how trauma wounds manifest in relationships</li>
+        <li>Begin the work of building earned secure attachment</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Attachment Theory — The Foundation</h4>
+      <p>Attachment theory, originally developed by John Bowlby and expanded by Mary Ainsworth, proposes that human beings are biologically wired to seek proximity to a caregiver for safety and comfort — particularly in times of threat. How that caregiver responds to our needs in early childhood creates an internal working model: a blueprint for relationships, for what to expect from others, and for how worthy of care and connection we are.</p>
+      <ul>
+        <li>This blueprint is not fixed or deterministic — it is a template that can be updated through new relational experiences</li>
+        <li>Trauma, particularly in the context of early caregiving relationships, creates an attachment wound — a disruption in the development of a secure internal working model</li>
+        <li>The attachment system is designed for co-regulation: the nervous system of the child is literally regulated by the nervous system of the caregiver. When the caregiver is unavailable, inconsistent, frightening, or absent, the child's developing regulatory system is left without its scaffold.</li>
+      </ul>
+      <h4>2. The Four Attachment Styles</h4>
+      <p><strong>Secure Attachment:</strong> The caregiver was reliably available, responsive, and comforting. The child learns: "I am worthy of care. Others can be trusted. Relationships are safe." In adulthood: comfortable with intimacy and independence; can self-regulate and co-regulate; tolerates relational stress without panic.</p>
+      <p><strong>Anxious (Preoccupied) Attachment:</strong> The caregiver was inconsistently available — sometimes warm and present, sometimes absent or preoccupied. The child learns: "I have to work hard for love. I never quite know if I'm safe." In adulthood: fear of abandonment; hypervigilance to relational signals; needs frequent reassurance; struggles to self-soothe; relationships feel all-consuming.</p>
+      <p><strong>Avoidant (Dismissive) Attachment:</strong> The caregiver was consistently emotionally unavailable or rejected emotional bids. The child learns: "I don't need others. Depending on people is dangerous." In adulthood: emotional self-sufficiency as armour; discomfort with intimacy; difficulty accessing or expressing feelings; may appear cold or withdrawn in relationships.</p>
+      <p><strong>Disorganised (Fearful) Attachment:</strong> The caregiver was the source of both comfort and fear — through abuse, severe neglect, or frightening behaviour. The child faces an unresolvable dilemma: the person they need for safety is also the source of threat. In adulthood: simultaneous craving and fear of closeness; difficulty trusting; chaotic relational patterns; may dissociate in intimate situations.</p>
+      <h4>3. Trauma Wounds in Adult Relationships</h4>
+      <p>Attachment wounds manifest in adult relationships in recognisable patterns:</p>
+      <ul>
+        <li><strong>Repetition compulsion:</strong> Unconsciously recreating familiar relational dynamics — even painful ones — because familiarity registers as safety</li>
+        <li><strong>Hypervigilance in relationships:</strong> Constantly scanning for signs of abandonment, rejection, or betrayal</li>
+        <li><strong>Difficulty with trust:</strong> Either trusting too quickly (with the wrong people) or not at all</li>
+        <li><strong>Self-abandonment:</strong> Losing yourself in relationships to secure attachment or avoid conflict</li>
+        <li><strong>Push-pull dynamics:</strong> Simultaneously craving closeness and feeling threatened by it</li>
+        <li><strong>Triggered reactions:</strong> Your partner's tone, facial expression, or silence can activate a response that has nothing to do with them and everything to do with the past</li>
+      </ul>
+      <h4>4. Earned Secure Attachment — It Is Available to Everyone</h4>
+      <p>Crucially, research shows that secure attachment is not only available to those who experienced it in childhood. Earned secure attachment is developed through:</p>
+      <ul>
+        <li><strong>Therapy:</strong> Particularly attachment-focused therapy, where a consistent, attuned therapeutic relationship repairs the internal working model</li>
+        <li><strong>Healing relationships:</strong> Relationships with partners, friends, or mentors who are reliably available, consistent, and responsive — who provide the reparative experience the early environment didn't</li>
+        <li><strong>Internal reparenting:</strong> Developing the capacity to provide for yourself what was not provided — consistency, warmth, attunement, and the understanding that your needs are legitimate</li>
+        <li><strong>Secure attachment to self:</strong> Learning to be a reliable, compassionate presence to yourself — the foundation from which secure connection with others becomes possible</li>
+      </ul>
+      <h4>5. Working with Relational Triggers</h4>
+      <p>When you are triggered in a relationship — when a present interaction activates a past wound — the most important tool is the ability to pause and name what is happening:</p>
+      <ul>
+        <li>"Is this a present-moment issue — or is this past pain being activated by a present trigger?"</li>
+        <li>Return to your body using grounding or somatic resource practices before responding</li>
+        <li>Distinguish between the person in front of you and the figures from your past</li>
+        <li>Communicate your experience with vulnerability rather than defensiveness: "When you [X], I felt [Y]" — rather than "You always / you never"</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Attachment Style Reflection</strong><br>
+      Read the descriptions of each attachment style. Write honestly about which style most resonates with your adult relationship patterns — or which combination. Describe two or three ways your attachment style shows up in your most significant relationships.</p>
+      <p><strong>Exercise 2: The Reparative Letter</strong><br>
+      Write a letter to your younger self at a time when your attachment needs were not being met. Tell them: what you now know, what they deserved, and what you can now provide for yourself that was not provided then.</p>
+      <p><strong>Exercise 3: Trigger Mapping</strong><br>
+      Identify one recent relational trigger — a moment when you reacted strongly in a relationship. Write: What happened? What did you feel? What past experience does this connect to? What did you need in that moment?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How would you describe your attachment style — and how has it shaped your most significant adult relationships?</li>
+        <li>What relational patterns do you keep repeating — and what need might be driving the repetition?</li>
+        <li>What does earned secure attachment look like for you — and what would it require?</li>
+        <li>What would it mean to be a more reliable, attuned presence for yourself?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(4)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '💑', title: 'Attachment Styles Assessment',      desc: 'Identify your attachment patterns in relationships',   file: 'attachment-assessment.pdf' },
+      { icon: '🧩', title: 'Trigger Mapping Worksheet',         desc: 'Trace relational reactions to their root wounds',      file: 'trigger-mapping.pdf' },
+      { icon: '💌', title: 'Reparative Letter Template',        desc: 'Write to your younger self with what they needed',     file: 'reparative-letter.pdf' },
+      { icon: '🤝', title: 'Earned Secure Attachment Guide',    desc: 'How to build security in adult relationships',         file: 'earned-security.pdf' },
+      { icon: '🎧', title: 'Inner Child Healing Meditation',    desc: '16-minute guided reparenting practice',                file: 'inner-child-audio.mp3' },
+      { icon: '📚', title: 'Attachment & Healing Reading',      desc: 'Essential texts on attachment theory and relationships',file: 'attachment-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is an 'internal working model' in attachment theory?", options: ["A psychological test for relationship health","A blueprint created by early caregiver responses — for what to expect from relationships, and for how worthy of care you are","A model for healthy communication in relationships","A cognitive tool for solving relationship problems"], correct: 1 },
+      { question: "What characterises anxious (preoccupied) attachment in adulthood?", options: ["Emotional self-sufficiency and discomfort with intimacy","Fear of abandonment, hypervigilance to relational signals, and needing frequent reassurance","Calm, comfortable relationships with appropriate independence","Complete avoidance of close relationships"], correct: 1 },
+      { question: "What is the core dilemma in disorganised (fearful) attachment?", options: ["Not knowing whether to trust a new partner","Having too many close relationships at once","The caregiver was simultaneously the source of comfort and of fear — creating an unresolvable approach-avoidance conflict","Being unable to form any attachments"], correct: 2 },
+      { question: "What is 'repetition compulsion' in the context of attachment wounds?", options: ["The tendency to repeat relaxation exercises","Unconsciously recreating familiar relational dynamics — even painful ones — because familiarity registers as safety","Compulsive behaviour related to relationships","Deliberately repeating positive relationship patterns"], correct: 1 },
+      { question: "What does 'earned secure attachment' mean?", options: ["Secure attachment that must be earned through good behaviour","Security developed only in childhood","Security that can be developed in adulthood through therapy, healing relationships, and internal reparenting — available to everyone","Attachment security bought through consistent effort"], correct: 2 },
+      { question: "What is the function of 'internal reparenting'?", options: ["Changing your childhood memories","Developing the capacity to provide for yourself the consistency, warmth, and attunement that the early environment did not — becoming your own reliable, compassionate presence","Parenting your own children differently","A therapy technique requiring a professional"], correct: 1 },
+      { question: "What does avoidant (dismissive) attachment look like in adult relationships?", options: ["Fear of abandonment and hypervigilance","Emotional self-sufficiency as armour, discomfort with intimacy, and difficulty expressing feelings","Simultaneous craving and terror of closeness","Consistent, warm, secure connection"], correct: 1 },
+      { question: "How does the attachment system relate to nervous system regulation in childhood?", options: ["They are entirely separate systems","The child's nervous system is literally regulated by the caregiver's — when the caregiver is unavailable or frightening, the child's regulatory system is left without its scaffold","Regulation only happens through self-soothing","Attachment only affects emotional, not physiological, development"], correct: 1 },
+      { question: "How should relational triggers be approached in a trauma-informed way?", options: ["By leaving the relationship immediately","By suppressing the reaction to avoid conflict","By pausing, returning to the body, distinguishing past from present, and communicating with vulnerability about the experience","By telling your partner exactly what they did wrong"], correct: 2 },
+      { question: "What is the most important characteristic of a 'reparative relationship' for earned secure attachment?", options: ["The other person has no problems of their own","The relationship is conflict-free","The other person is reliably available, consistent, and responsive — providing the corrective experience the early environment didn't","The relationship began after formal trauma therapy"], correct: 2 }
+    ]
+  },
+
+  5: {
+    title: "Breaking Free from Shame — The Core Wound",
+    tutorialVideo: "Shame, Trauma and the Feeling of Being Broken",
+    basicVideo: "From Shame to Self-Compassion",
+    content: `
+      <h2>Week 5: Breaking Free from Shame — The Core Wound</h2>
+      <div class="safety-banner">
+        <h4>🌿 The Hardest Week — and One of the Most Important</h4>
+        <p>Shame is deeply uncomfortable to sit with. This week asks you to look directly at it — which takes courage. Go gently. Use your regulation tools. Remember that shame's antidote is always compassion — especially from yourself.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand shame as a core wound of trauma — distinct from healthy guilt</li>
+        <li>Identify the sources of shame in your own history</li>
+        <li>Learn how shame perpetuates itself — and how to interrupt the cycle</li>
+        <li>Develop self-compassion as the primary antidote to shame</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Shame — The Defining Wound of Trauma</h4>
+      <p>If there is one emotional legacy that cuts most deeply across virtually all forms of trauma, it is shame. Shame researcher and author Brené Brown describes it as the intensely painful feeling or experience of believing you are fundamentally flawed — that if others truly knew you, they would not love or accept you. In trauma, shame typically originates in messages received about your very being:</p>
+      <ul>
+        <li>"You are too much." / "You are not enough."</li>
+        <li>"You caused this." / "This happened because of something you are."</li>
+        <li>"You should be ashamed of yourself."</li>
+        <li>"No one will love you if they know this about you."</li>
+        <li>These messages may have been spoken explicitly, or communicated through neglect, rejection, punishment, abuse, or silence — but their effect is the same: the internalisation of the belief that you are fundamentally broken.</li>
+      </ul>
+      <h4>2. Shame vs. Guilt — A Critical Distinction</h4>
+      <p>Shame and guilt are often confused but are profoundly different in their effects:</p>
+      <ul>
+        <li><strong>Guilt:</strong> "I did something bad." It is about a specific behaviour. It is uncomfortable but adaptive — it motivates repair and change. It does not threaten your fundamental sense of worth.</li>
+        <li><strong>Shame:</strong> "I am bad." It is about your entire self. It is corrosive and paralyzing — it motivates hiding, withdrawal, and self-punishment rather than repair. It is the difference between "I made a mistake" and "I am a mistake."</li>
+        <li>Healthy remorse (guilt) serves relationships and growth. Toxic shame serves nothing — it destroys from within.</li>
+      </ul>
+      <h4>3. How Shame Perpetuates Itself</h4>
+      <p>Shame is self-perpetuating through a well-worn cycle:</p>
+      <ul>
+        <li><strong>Secrecy:</strong> Shame tells you to hide — that if anyone knew, they would confirm your worst fears about yourself. Hiding prevents the corrective experience of being known and still accepted.</li>
+        <li><strong>Silence:</strong> Not speaking about shameful experiences keeps them in the dark where they grow. Shame loses power when it is named.</li>
+        <li><strong>Judgment:</strong> Both the internalized judgment of others and your own self-judgment reinforce the shame story. Shame thrives in an atmosphere of comparison and harsh standards.</li>
+        <li><strong>Perfectionism as shame management:</strong> Many people manage shame by striving to be perfect — if you never make mistakes, no one can confirm your unworthiness. But perfectionism is exhausting and ultimately fails, which generates more shame.</li>
+        <li><strong>Self-criticism:</strong> The inner critic is often shame's voice — attacking before others can.</li>
+      </ul>
+      <h4>4. Self-Compassion — The Direct Antidote</h4>
+      <p>Researcher Kristin Neff identifies three components of self-compassion — all of which directly counter the shame cycle:</p>
+      <ul>
+        <li><strong>Self-kindness:</strong> Treating yourself with the same warmth, patience, and understanding you would offer someone you deeply love — rather than harsh judgment and criticism</li>
+        <li><strong>Common humanity:</strong> Recognising that suffering, failure, and imperfection are part of the shared human experience — not evidence of your uniquely broken nature. "I am not alone in this."</li>
+        <li><strong>Mindfulness:</strong> Holding your experience in balanced awareness — neither denying the pain nor catastrophising it. Simply: "This is difficult, and I am here with it."</li>
+        <li>Self-compassion is not self-pity or self-indulgence. Research consistently shows it is associated with greater resilience, motivation, accountability, and emotional wellbeing than self-criticism.</li>
+      </ul>
+      <h4>5. Shame Resilience — Brené Brown's Framework</h4>
+      <p>Shame resilience is not the absence of shame — it is the ability to move through shame experiences without letting them define or destroy you:</p>
+      <ul>
+        <li><strong>Recognise shame and its triggers:</strong> Name it. "This is shame."</li>
+        <li><strong>Practise critical awareness:</strong> Examine the expectations and standards fuelling the shame. Are they realistic? Whose voice is this?</li>
+        <li><strong>Reach out:</strong> Share your experience with a trusted person. Being met with empathy — "me too" or "you're not alone" — is the fastest way to reduce shame's intensity.</li>
+        <li><strong>Speak shame:</strong> Telling your story to the right person, in the right context, transforms shame into something else — narrative, connection, even eventually, wisdom.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Shame Origin Map</strong><br>
+      Write about one shame story you carry — a belief about yourself that you've hidden. Where did it come from? Who or what taught you this about yourself? Was this message true — or was it someone else's limitation, pain, or cruelty being placed on you?</p>
+      <p><strong>Exercise 2: Self-Compassion Break</strong><br>
+      When you notice shame or self-criticism arising, pause and do the following: Place a hand on your heart. Say (out loud or silently): "This is a moment of suffering. Suffering is part of being human. May I be kind to myself in this moment." Breathe. This is Kristin Neff's self-compassion break — simple, evidence-based, and powerful.</p>
+      <p><strong>Exercise 3: The Compassionate Witness</strong><br>
+      Write about your most shameful story — as if you were a compassionate, wise older version of yourself writing to a beloved younger friend. Not to excuse or minimise — but to understand, to have context, and to offer the love that was not available at the time.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the core shame belief you carry — and where did it originate?</li>
+        <li>How has shame shaped your choices, relationships, and the parts of yourself you've kept hidden?</li>
+        <li>What would self-compassion for your most shameful story look like in practice?</li>
+        <li>Who in your life is safe enough to witness a part of your shame — and what might that experience offer you?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(5)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🔍', title: 'Shame vs Guilt Worksheet',          desc: 'Distinguish toxic shame from healthy accountability',  file: 'shame-guilt-worksheet.pdf' },
+      { icon: '🌱', title: 'Self-Compassion Practice Guide',    desc: 'Kristin Neff\'s three-component self-compassion model', file: 'self-compassion-guide.pdf' },
+      { icon: '🗺', title: 'Shame Origin Mapping Template',     desc: 'Trace your shame stories to their source',             file: 'shame-mapping.pdf' },
+      { icon: '💪', title: 'Shame Resilience Framework',        desc: 'Brené Brown\'s four-step shame resilience process',     file: 'shame-resilience.pdf' },
+      { icon: '🎧', title: 'Self-Compassion Meditation',        desc: '15-minute guided self-compassion practice',            file: 'self-compassion-audio.mp3' },
+      { icon: '📚', title: 'Shame & Self-Compassion Reading',   desc: 'Essential books on healing shame and building compassion', file: 'shame-reading.pdf' }
+    ],
+    assessment: [
+      { question: "How does Brené Brown define shame?", options: ["Feeling bad about a specific behaviour","The intensely painful belief that you are fundamentally flawed — and that if truly known, you would not be loved or accepted","A healthy emotional response to wrongdoing","Persistent sadness about past mistakes"], correct: 1 },
+      { question: "What is the critical distinction between shame and guilt?", options: ["They are the same emotion expressed differently","Guilt says 'I did something bad' (about behaviour); shame says 'I am bad' (about your fundamental self)","Shame is always more intense than guilt","Guilt is more destructive than shame"], correct: 1 },
+      { question: "How does perfectionism function in relation to shame?", options: ["Perfectionism eliminates shame permanently","Perfectionism is a shame management strategy — striving never to make mistakes so no one can confirm unworthiness — but it is exhausting and ultimately fails","Perfectionism has nothing to do with shame","Perfectionism is a healthy response to shame"], correct: 1 },
+      { question: "What are the three components of self-compassion identified by Kristin Neff?", options: ["Confidence, self-awareness, and resilience","Self-kindness, common humanity, and mindfulness","Acceptance, forgiveness, and gratitude","Strength, vulnerability, and courage"], correct: 1 },
+      { question: "What does 'common humanity' mean in the context of self-compassion?", options: ["All humans are equally flawed","Recognising that suffering, failure, and imperfection are part of the shared human experience — you are not uniquely broken","Sharing your experiences with the community","Being kind to everyone, including yourself"], correct: 1 },
+      { question: "Why does shame perpetuate through secrecy and silence?", options: ["Because talking about shame makes it worse","Because hiding prevents the corrective experience of being known and still accepted — shame loses power when named and met with empathy","Because shame is too painful to discuss","Because secrecy protects others from your shame"], correct: 1 },
+      { question: "What is 'shame resilience'?", options: ["The ability to feel no shame at all","The ability to prevent shame experiences from occurring","The ability to move through shame experiences without letting them define or destroy you — recognising, examining, reaching out, and speaking shame","The ability to suppress shame quickly"], correct: 2 },
+      { question: "What does research show about self-compassion compared to self-criticism?", options: ["Self-criticism produces better results than self-compassion","They produce the same outcomes","Self-compassion is associated with greater resilience, motivation, accountability, and emotional wellbeing than self-criticism","Self-compassion only works for mild difficulties"], correct: 2 },
+      { question: "What is the fastest way to reduce shame's intensity, according to shame resilience research?", options: ["Positive self-talk and affirmations","Achieving a goal that contradicts the shame story","Being met with empathy — 'me too' or 'you're not alone' — when you share your experience with a trusted person","Analytical understanding of where the shame originated"], correct: 2 },
+      { question: "What is the purpose of the 'shame origin map' exercise?", options: ["To assign blame to those who caused your shame","To trace a shame belief to its source — examining whether it was true or whether it was someone else's limitation or cruelty placed on you","To make a list of all shameful experiences","To share your shame with others"], correct: 1 }
+    ]
+  },
+
+  6: {
+    title: "Post-Traumatic Growth — Integration and Your New Life",
+    tutorialVideo: "What Post-Traumatic Growth Really Means",
+    basicVideo: "Integrating Your Story and Moving Forward",
+    content: `
+      <h2>Week 6: Post-Traumatic Growth — Integration and Your New Life</h2>
+      <div class="safety-banner">
+        <h4>🌿 A Note on This Final Week</h4>
+        <p>This week looks forward — at integration, meaning, and the life that is possible beyond trauma. Please honour all that you have carried and all the work you have done to get here. You are not required to be "over it" to benefit from what this week offers. Growth and grief can exist side by side.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand post-traumatic growth and how it differs from "getting over it"</li>
+        <li>Learn what trauma integration means and what it looks like in practice</li>
+        <li>Develop a sustainable, personalised ongoing healing practice</li>
+        <li>Build a vision of your life that includes — and is informed by — what you have survived</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Post-Traumatic Growth — What It Is and Isn't</h4>
+      <p>Post-traumatic growth (PTG) is a term coined by researchers Richard Tedeschi and Lawrence Calhoun to describe the positive psychological change that can emerge as a result of the struggle with highly challenging life circumstances. It is not the same as resilience (bouncing back) and it is definitely not the same as pretending the trauma didn't happen or that you are "fine."</p>
+      <ul>
+        <li>PTG does not mean the trauma was a gift or that you are glad it happened</li>
+        <li>It does not require you to forgive anyone or find a silver lining</li>
+        <li>It is not a replacement for grief — both can coexist</li>
+        <li>PTG describes genuine positive change that emerges through the process of deeply reckoning with difficult experience — not despite it, but through it</li>
+        <li>Areas of PTG commonly reported: greater personal strength, new possibilities, relating to others more deeply, deeper appreciation for life, spiritual or existential development</li>
+      </ul>
+      <h4>2. Trauma Integration — Not Erasure, but Transformation</h4>
+      <p>The goal of trauma healing is not to erase what happened — it is integration. Integration means the trauma becomes part of your story rather than the whole of it. It no longer controls your present or writes your future. The metaphor of a broken bone is useful here: a well-healed break is often stronger at the fracture point than the original bone. The break happened. The healing happened. Both are true.</p>
+      <ul>
+        <li><strong>Signs of integration:</strong> You can recall difficult events without being flooded or dissociating. The past feels like the past rather than happening now. You can speak about your experience with some distance, even if it still carries emotion. You can be in the present without being hijacked by the past.</li>
+        <li><strong>What integration is not:</strong> Forgetting. No longer feeling anything. Never being triggered again. Having no symptoms. Perfect healing. Integration is a process, not a destination.</li>
+        <li><strong>Narrative integration:</strong> One powerful marker of healing is the ability to construct a coherent narrative of your experience — to be able to say "this happened, and here is how it has shaped me, and here is who I am now." This narrative does not minimise the pain; it contextualises it.</li>
+      </ul>
+      <h4>3. The Role of Meaning</h4>
+      <p>Viktor Frankl, psychiatrist and Holocaust survivor, observed that those who survived the most extreme suffering were often those who could find meaning in it — not justification, not silver lining, but meaning. Meaning is not given — it is made. You are not required to find meaning in your trauma. But if and when meaning becomes available, it can be profoundly transformative:</p>
+      <ul>
+        <li>Meaning may take the form of purpose — using your experience to help others, advocate, create, or contribute</li>
+        <li>Meaning may take the form of understanding — "this is why I am the way I am, and I can now choose differently"</li>
+        <li>Meaning may take the form of values clarification — understanding what genuinely matters to you because of what you have survived</li>
+        <li>You do not have to manufacture meaning on anyone's timeline</li>
+      </ul>
+      <h4>4. Sustaining Your Healing Practice</h4>
+      <p>Trauma healing is a long game. The practices you have developed over these six weeks — grounding, somatic regulation, emotional processing, self-compassion, relational awareness — are lifelong tools, not one-time treatments. Sustaining them requires:</p>
+      <ul>
+        <li><strong>Consistency over intensity:</strong> Ten minutes daily is more effective than two hours once a month</li>
+        <li><strong>Community and support:</strong> Healing is relational. Isolation maintains the trauma state. Finding safe community — whether with a therapist, a group, a trusted friend, or a supportive online space — is not optional; it is part of the infrastructure of recovery</li>
+        <li><strong>Professional support:</strong> If you are not already working with a trauma-informed therapist, this course strongly encourages you to do so. Particularly for complex or developmental trauma, individual therapeutic support is irreplaceable.</li>
+        <li><strong>Compassion for regression:</strong> You will have hard weeks. Triggers will return. Old patterns will flare. This is not failure — it is the non-linear nature of healing. What matters is that you have the tools to return.</li>
+      </ul>
+      <h4>5. A Life That Holds the Whole Story</h4>
+      <p>The most powerful thing this course wants to leave you with is this: your wound and your wisdom are not separate things. The depth of your pain is often the depth of your capacity. The places where you have been broken are frequently where the most light enters — where you develop understanding, compassion, and connection that would have been unavailable without the struggle. You do not have to be grateful for what happened to you. But you are allowed to be someone who survived it, who grew through it, and who now builds a life with the whole of themselves — including every part that has been tested. That is not just healing. That is extraordinary.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Your Integration Story</strong><br>
+      Write a narrative of your healing journey — not the trauma itself, but the journey of reckoning with it. What have you learned? How have you changed? What do you carry forward? Write in the past tense, as if speaking from a healed place.</p>
+      <p><strong>Exercise 2: My Healing Practice Plan</strong><br>
+      Design a specific, realistic weekly healing practice that you can sustain long-term. Include: at least one somatic practice, one emotional regulation practice, one connection to safe community or support, and one act of self-compassion each week.</p>
+      <p><strong>Exercise 3: Letter to Your Future Self</strong><br>
+      Write a letter to yourself one year from now. Tell them what you are learning, what you are hoping for, and what you want them to remember about this moment. Seal it and schedule a reminder to open it in twelve months.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What has shifted in how you understand yourself and your history over the course of this six weeks?</li>
+        <li>What aspect of post-traumatic growth — if any — can you identify in your own life?</li>
+        <li>What part of your healing practice do you most want to sustain going forward?</li>
+        <li>What would you say to someone at the very beginning of this journey?</li>
+      </ul>
+      <h3>🎉 You Have Done Extraordinary Work</h3>
+      <p>Six weeks. Six of the most important and courageous topics anyone can explore. You have looked at trauma, the body, emotions, attachment, shame, and growth — not as abstract concepts, but as living parts of your own story. Whatever you are feeling as you complete this course — relief, grief, hope, exhaustion, something unnamed — it is valid. You have done something that matters deeply. And the work continues — not as a burden, but as the ongoing, worthy, life-long practice of coming home to yourself. You are worth every step of this journey.</p>
+      <button class="submit-btn" onclick="markComplete(6)">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      { icon: '🌱', title: 'Post-Traumatic Growth Guide',       desc: 'Understanding growth that emerges through struggle',   file: 'ptg-guide.pdf' },
+      { icon: '📖', title: 'Trauma Integration Workbook',       desc: 'Building your coherent healing narrative',             file: 'integration-workbook.pdf' },
+      { icon: '📝', title: 'Healing Practice Plan Template',    desc: 'Design your sustainable long-term healing routine',    file: 'healing-plan.pdf' },
+      { icon: '💌', title: 'Letter to Future Self Template',    desc: 'Write to the healed version of yourself',              file: 'future-letter.pdf' },
+      { icon: '🎧', title: 'Integration & Wholeness Meditation',desc: '18-minute guided closing practice for this journey',   file: 'integration-audio.mp3' },
+      { icon: '🏆', title: 'Course Completion Certificate',     desc: 'Download your certificate of completion',              file: 'certificate.pdf' }
+    ],
+    assessment: [
+      { question: "What is post-traumatic growth (PTG)?", options: ["The ability to return to exactly how you were before trauma","Positive psychological change that can emerge through the process of deeply reckoning with highly challenging life experiences","The absence of all trauma symptoms","Forgiveness of those who caused harm"], correct: 1 },
+      { question: "What is trauma integration?", options: ["Forgetting traumatic events","Feeling nothing when recalling difficult experiences","The trauma becoming part of your story rather than the whole of it — no longer controlling your present or writing your future","A medical procedure for treating PTSD"], correct: 2 },
+      { question: "What does Viktor Frankl's work contribute to the understanding of trauma healing?", options: ["That medication is the primary treatment for trauma","That those who could find meaning in suffering — not justification, but meaning — showed greater capacity to survive extreme difficulty","That forgiveness is essential for healing","That trauma must be forgotten to be healed"], correct: 1 },
+      { question: "What is a sign of trauma integration, as described in this week's content?", options: ["No longer having any emotional response to past events","Never being triggered in any situation","Being able to recall difficult events without being flooded — the past feeling like the past rather than happening now","Having no remaining symptoms of any kind"], correct: 2 },
+      { question: "Why is professional therapeutic support described as irreplaceable for complex trauma?", options: ["Because self-help never works","Because only licensed professionals can diagnose trauma","Because for complex or developmental trauma, the consistent, attuned, individual therapeutic relationship provides repair that group and self-directed work alone cannot replicate","Because medication requires a prescription"], correct: 2 },
+      { question: "What does narrative integration mean in trauma healing?", options: ["Writing down traumatic memories in detail","Constructing a coherent narrative — 'this happened, here is how it shaped me, here is who I am now' — that contextualises pain without minimising it","Telling your story to as many people as possible","Creating a fictional version of your trauma story"], correct: 1 },
+      { question: "What is the relationship between PTG and grief, according to this week's content?", options: ["Growth replaces grief — you cannot have both","Grief must be resolved before growth can begin","Both can coexist — PTG does not require you to stop grieving or pretend the trauma was a gift","Grief is a sign that PTG has not yet occurred"], correct: 2 },
+      { question: "Why is consistency more important than intensity in sustaining a healing practice?", options: ["Because intense practice causes retraumatisation","Because ten minutes daily is more effective than two hours once a month — the nervous system heals through repeated, regular experiences of safety and regulation","Because intense practice requires professional supervision","Because healing only occurs when it is effortless"], correct: 1 },
+      { question: "What is the course's core message about the relationship between wound and wisdom?", options: ["Wounds should be forgotten so wisdom can emerge","They are entirely unrelated","Your wound and your wisdom are not separate — the depth of your pain is often the depth of your capacity, and the places you have been broken are frequently where the most light enters","You must choose between honouring pain and moving forward"], correct: 2 },
+      { question: "What does compassion for regression during healing mean?", options: ["Feeling sorry for yourself when you struggle","Excusing harmful behaviour by citing trauma","Understanding that triggers returning and old patterns flaring during hard weeks is the non-linear nature of healing — not failure — and that what matters is having tools to return","Lowering your expectations of healing permanently"], correct: 2 }
+    ]
+  }
+
+}; // end weekData
+</script>
+</body>
+</html>
