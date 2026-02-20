@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grief & Loss Support - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+
+  .user-info { display: flex; align-items: center; gap: 15px; }
+
+  .avatar {
+    width: 45px; height: 45px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: bold;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .progress-overview {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .progress-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 20px; border-radius: 12px; text-align: center;
+  }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+
+  .progress-bar {
+    width: 100%; height: 25px; background: #e0e0e0;
+    border-radius: 15px; overflow: hidden; margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 12px 25px; background: white; border: none;
+    border-radius: 10px 10px 0 0; cursor: pointer;
+    font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease;
+  }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+  .module-selector {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    overflow-x: auto; padding-bottom: 10px;
+  }
+
+  .module-btn {
+    padding: 12px 25px; background: white;
+    border: 2px solid #667eea; border-radius: 25px;
+    cursor: pointer; font-size: 1rem; font-weight: 600;
+    color: #667eea; white-space: nowrap; transition: all 0.3s ease;
+  }
+  .module-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border-color: transparent;
+  }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .video-section {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .video-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px; margin-top: 20px;
+  }
+
+  .video-player {
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative; padding-top: 56.25%;
+  }
+
+  .video-placeholder {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  }
+
+  .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(102, 126, 234, 0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+
+  .lesson-content {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+
+  .assessment-section {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .quiz-question {
+    background: #f8f9fa; padding: 20px; border-radius: 12px;
+    margin-bottom: 20px; border-left: 4px solid #667eea;
+  }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-option {
+    padding: 12px 20px; background: white; border: 2px solid #e0e0e0;
+    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+
+  .submit-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; border-radius: 25px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s ease; margin-top: 20px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+  .already-passed-notice {
+    background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+
+  .safety-banner {
+    background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%);
+    border: 2px solid #764ba2; border-radius: 12px;
+    padding: 20px; margin-bottom: 25px;
+  }
+  .safety-banner h4 { color: #764ba2; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+  .resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .resource-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+
+  .resource-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem; margin-bottom: 15px;
+  }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+
+  .download-badge {
+    display: inline-block; padding: 5px 12px; background: #4caf50;
+    color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px;
+  }
+
+  .admin-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white; border: none; border-radius: 50px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease;
+  }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+
+  @media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    .video-grid { grid-template-columns: 1fr; }
+    .module-selector { flex-wrap: wrap; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Grief &amp; Loss Support</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Name Input Modal -->
+<div id="nameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px; border-radius:20px; max-width:500px; width:90%; text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Grief &amp; Loss Support</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin. You are not alone in this.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Begin Your Healing Journey 🕊️</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Persistent Safety Banner -->
+  <div class="safety-banner">
+    <h4>🕊️ You Are Held in This Space — Always At Your Own Pace</h4>
+    <p>This course walks alongside you through grief. Some weeks may feel very tender. You are always in control of your pace — take breaks whenever needed. Grief has no timeline and no right way. If at any point you feel overwhelmed or in crisis, please reach out: <strong>Crisis Text Line</strong> — text HOME to 741741 | <strong>988 Suicide &amp; Crisis Lifeline</strong>. This course offers compassionate support and education — it complements but does not replace professional grief counselling or therapy.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-card">
+        <h3 id="modulesComplete">0/6</h3>
+        <p>Modules Completed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+        <h3 id="lessonsViewed">0/12</h3>
+        <p>Lessons Viewed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+        <h3 id="assessmentsPassed">0/6</h3>
+        <p>Assessments Passed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content', this)">Content</button>
+    <button class="tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment', this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn"        onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn"        onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn"        onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn"        onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn"        onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <!-- Content Tab -->
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('tutorial', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('basic', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <!-- Assessment Tab -->
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <!-- One-on-One Session Section -->
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalized guidance and support.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your specific situation.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera; microphone; fullscreen; display-capture; autoplay"
+          style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'Grief & Loss Support';
+const TOTAL_WEEKS      = 6;
+const STORAGE_PREFIX   = 'coachL_GLS_'; // unique per course
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+
+let completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'completedWeeks') || '[]')
+);
+
+function saveCompletedWeeks() {
+  localStorage.setItem(STORAGE_PREFIX + 'completedWeeks', JSON.stringify([...completedWeeks]));
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.onload = function () {
+  const savedName  = localStorage.getItem('studentName');
+  const savedEmail = localStorage.getItem('studentEmail');
+  if (savedName && savedEmail) {
+    studentInfo.name  = savedName;
+    studentInfo.email = savedEmail;
+    updateUserDisplay();
+  } else {
+    document.getElementById('nameModal').style.display = 'flex';
+  }
+  updateProgress();
+  refreshModuleButtons();
+  const firstIncomplete = [1,2,3,4,5,6].find(w => !completedWeeks.has(w)) || 1;
+  selectModule(firstIncomplete);
+};
+
+// ============================================================
+// USER INFO
+// ============================================================
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function saveUserInfo() {
+  const name  = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  if (!name)                { alert('Please enter your full name.'); return; }
+  if (!email)               { alert('Please enter your email address.'); return; }
+  if (!isValidEmail(email)) {
+    alert('⚠️ "' + email + '" doesn\'t look like a valid email address.\n\nExample: yourname@gmail.com');
+    document.getElementById('studentEmail').focus();
+    return;
+  }
+  studentInfo.name  = name;
+  studentInfo.email = email;
+  localStorage.setItem('studentName', name);
+  localStorage.setItem('studentEmail', email);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateEmail() {
+  const current  = localStorage.getItem('studentEmail') || '';
+  const newEmail = prompt('Update your email address:', current);
+  if (newEmail === null) return;
+  if (!isValidEmail(newEmail.trim())) { alert('⚠️ That doesn\'t look like a valid email. Please try again.'); return; }
+  studentInfo.email = newEmail.trim();
+  localStorage.setItem('studentEmail', newEmail.trim());
+  alert('✅ Email updated to: ' + newEmail.trim());
+}
+
+function updateUserDisplay() {
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = 'Welcome, ' + studentInfo.name + '!';
+}
+
+// ============================================================
+// MODULE BUTTONS
+// ============================================================
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1;
+    btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) {
+      btn.classList.add('completed');
+      btn.textContent = 'Week ' + w + ' ✓';
+    } else {
+      btn.textContent = 'Week ' + w;
+    }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) {
+  currentWeek = week;
+  refreshModuleButtons();
+  updateWeekContent();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+// ============================================================
+// CONTENT RENDERING
+// ============================================================
+function updateWeekContent() {
+  const week = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent      = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent  = 'Tutorial: ' + week.tutorialVideo;
+  document.getElementById('basicTitle').textContent     = 'Basic Learning: ' + week.basicVideo;
+  document.getElementById('lessonContent').innerHTML    = week.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML    = week.resources.map(r => `
+    <div class="resource-card" onclick="downloadResource('${r.file}', '${r.title}')">
+      <div class="resource-icon">${r.icon}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+      <span class="download-badge">📥 Download</span>
+    </div>
+  `).join('');
+  renderAssessment();
+}
+
+// ============================================================
+// ASSESSMENT
+// ============================================================
+function renderAssessment() {
+  const week   = weekData[currentWeek];
+  const passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+
+  if (passed) {
+    html += `
+      <div class="already-passed-notice">
+        <h3>✅ You already passed this week!</h3>
+        <p>Great work! Your score has been recorded. You can review any week's content freely at any time.</p>
+      </div>`;
+  } else {
+    html += `<p style="margin-bottom:30px;color:#666;">Test your understanding of this week's material. You need 70% to pass.</p>`;
+  }
+
+  week.assessment.forEach((q, i) => {
+    html += `
+      <div class="quiz-question">
+        <h4>Question ${i + 1}: ${q.question}</h4>
+        <div class="quiz-options">
+          ${q.options.map((opt, j) => `
+            <label class="quiz-option">
+              <input type="radio" name="q${i}" value="${j}" ${passed ? 'disabled' : ''}>
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>`;
+  });
+
+  if (!passed) html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+  const week      = weekData[currentWeek];
+  let correct     = 0, answers = [], allAnswered = true;
+  week.assessment.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) { allAnswered = false; return; }
+    const userAnswer = parseInt(selected.value);
+    const isCorrect  = userAnswer === q.correct;
+    if (isCorrect) correct++;
+    answers.push({ question: q.question, userAnswer: q.options[userAnswer], correctAnswer: q.options[q.correct], isCorrect });
+  });
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+  const score  = Math.round((correct / week.assessment.length) * 100);
+  const passed = score >= 70;
+  submitToGoogleSheets(currentWeek, score, correct, week.assessment.length, answers, passed);
+  if (passed) {
+    completedWeeks.add(currentWeek);
+    saveCompletedWeeks();
+    updateProgress();
+    refreshModuleButtons();
+    renderAssessment();
+    if (currentWeek < TOTAL_WEEKS) {
+      alert(`🎉 Congratulations! You passed with ${score}%!\n\n${correct}/${week.assessment.length} correct.\n\nContinue to Week ${currentWeek + 1} whenever you're ready.`);
+    } else {
+      alert(`🏆 You've completed the entire course with ${score}%!\n\nYour certificate is being generated and will be emailed to you. 🎓`);
+    }
+  } else {
+    alert(`You scored ${score}% (${correct}/${week.assessment.length} correct).\n\nYou need 70% to pass. Review the material and try again — you've got this!`);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEETS SUBMISSION
+// ============================================================
+function submitToGoogleSheets(week, score, correct, total, answers, passed) {
+  const payload = {
+    secretKey: SECRET_KEY, timestamp: new Date().toLocaleString(),
+    studentName: studentInfo.name, studentEmail: studentInfo.email,
+    courseName: COURSE_NAME, week, score, correct, total,
+    passed: passed ? 'YES' : 'NO', detailedAnswers: JSON.stringify(answers)
+  };
+  fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(() => console.log('✅ Submitted')).catch(err => console.error('❌ Error:', err));
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  all.push({ ...payload, answers });
+  localStorage.setItem('assessmentResults', JSON.stringify(all));
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const done = completedWeeks.size;
+  const pct  = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width       = pct + '%';
+  document.getElementById('progressBar').textContent       = pct + '%';
+  document.getElementById('modulesComplete').textContent   = done + '/' + TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent     = (done * 2) + '/' + (TOTAL_WEEKS * 2);
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function playVideo(type, week) {
+  alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed (YouTube, Vimeo, etc.).`);
+}
+function markComplete(week) {
+  showTab('assessment', document.querySelectorAll('.tab')[2]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function downloadResource(file, title) {
+  fetch('resources/' + file, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) {
+        const a = document.createElement('a');
+        a.href = 'resources/' + file; a.download = file; a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'); }
+    })
+    .catch(() => alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall() {
+  const iframe = document.getElementById('jitsiFrame');
+  const room   = 'coachL-' + (studentInfo.email || 'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display = 'block';
+  document.getElementById('videoCallContainer').scrollIntoView({ behavior: 'smooth' });
+}
+function endVideoCall() {
+  if (confirm('Are you sure you want to end the session?')) {
+    document.getElementById('jitsiFrame').src = '';
+    document.getElementById('videoCallContainer').style.display = 'none';
+  }
+}
+function viewAllResults() {
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!all.length) { alert('No assessment results yet.'); return; }
+  const rows = all.map((r, i) => `
+    <div class="result-card ${r.passed === 'YES' ? 'passed' : 'failed'}">
+      <h2>Submission #${i+1} — ${r.passed === 'YES' ? '✅ PASSED' : '❌ FAILED'}</h2>
+      <p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p>
+      <p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p>
+      <p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p>
+      <div class="details"><h3>Detailed Answers:</h3><table>
+        <tr><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th></tr>
+        ${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}
+      </table></div>
+    </div>`).join('');
+  const win = window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}
+    .result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+    .passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}
+    .details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}
+    table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+    th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}
+  </style></head><body><h1>📊 Results – Coach L Academy</h1>
+  <p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>
+  ${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Grief & Loss Support (6 weeks, 10 questions each)
+// ============================================================
+const weekData = {
+
+  1: {
+    title: "Understanding Grief — What It Is and What It Isn't",
+    tutorialVideo: "The Truth About Grief Nobody Tells You",
+    basicVideo: "What Grief Really Looks Like",
+    content: `
+      <h2>Week 1: Understanding Grief — What It Is and What It Isn't</h2>
+      <div class="safety-banner">
+        <h4>🕊️ You Are Allowed to Be Here</h4>
+        <p>If you are in the early days of loss, this week may feel very raw. You don't need to absorb everything at once. Simply knowing that what you are experiencing has a name, is normal, and is shared by every human being who has loved something — is enough to begin.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand grief as a natural, necessary human response to loss</li>
+        <li>Challenge common myths and unhelpful beliefs about grief</li>
+        <li>Recognise the many faces and types of loss that grief can accompany</li>
+        <li>Begin establishing a compassionate relationship with your own grief</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Grief Is</h4>
+      <p>Grief is the natural response to loss. It is not a disorder, a malfunction, or a sign that something has gone wrong with you. It is evidence that you have loved — and that what you loved mattered. Grief is the price of love, and paying it is not weakness. It is the most human thing there is.</p>
+      <ul>
+        <li>Grief is not something to be fixed or overcome — it is something to be moved through, at your own pace, in your own way</li>
+        <li>Grief is not linear. It does not follow a tidy sequence of stages and arrive at resolution on schedule. It is more like weather — unpredictable, sometimes gentle, sometimes severe, capable of returning when you least expect it</li>
+        <li>Grief is not only sadness. It includes anger, guilt, relief, numbness, confusion, fear, loneliness, love, and sometimes unexpected moments of joy — often followed by guilt for having felt joy. All of these are normal.</li>
+        <li>Grief is as individual as a fingerprint. No two people grieve the same loss in the same way — even members of the same family grieving the same death will grieve differently. There is no right way to grieve.</li>
+      </ul>
+      <h4>2. The Many Faces of Loss</h4>
+      <p>When we speak of grief, we often think immediately of death. But grief accompanies any significant loss — and many losses go unnamed and unmourned because they don't seem "serious enough." Every significant loss deserves to be grieved:</p>
+      <ul>
+        <li><strong>Death</strong> — of a person, a pet, anyone whose presence was woven into your life</li>
+        <li><strong>Relationship loss</strong> — divorce, separation, the end of a friendship, estrangement from family</li>
+        <li><strong>Identity loss</strong> — retirement, illness that changes your capabilities, a role that ends (parenthood shifting, career ending)</li>
+        <li><strong>Health loss</strong> — a diagnosis that changes your life, the loss of physical capability or freedom</li>
+        <li><strong>Pregnancy loss</strong> — miscarriage, stillbirth, infertility</li>
+        <li><strong>Anticipatory grief</strong> — grieving a loss before it has happened, such as when someone you love has a terminal illness</li>
+        <li><strong>Ambiguous loss</strong> — losses without clear endings, such as a loved one with dementia who is still present but no longer who they were; estrangement; a missing person</li>
+        <li><strong>Disenfranchised grief</strong> — losses that society doesn't fully recognise or validate, making them harder to mourn publicly (loss of a pet, a pregnancy, an ex-partner, a friendship, a dream)</li>
+      </ul>
+      <h4>3. Common Myths About Grief</h4>
+      <p>Much of the unnecessary suffering in grief comes not from the grief itself but from the beliefs we hold about what grief should look like and how long it should last:</p>
+      <ul>
+        <li><strong>Myth: Grief has five stages and you progress through them in order.</strong> Kübler-Ross's stages were originally developed to describe the experience of dying patients, not bereaved survivors. Grief is not a linear sequence — you may experience any emotion at any time, in any order, multiple times.</li>
+        <li><strong>Myth: You should be "over it" within a certain timeframe.</strong> There is no deadline for grief. The notion that grief should resolve within a year (or six months, or any specified time) causes enormous unnecessary suffering and shame.</li>
+        <li><strong>Myth: If you're functioning, you must not be grieving deeply.</strong> People grieve while continuing to work, parent, care for others, and appear "fine" from the outside. Functioning is not evidence of shallow grief.</li>
+        <li><strong>Myth: Grief gets consistently better over time.</strong> Grief does not follow a straight downward trajectory. There are often waves — periods of relative calm followed by intense renewed grief — sometimes called "grief bursts" — triggered by dates, anniversaries, smells, songs, places.</li>
+        <li><strong>Myth: You need to stay strong.</strong> Strength in grief is not the suppression of pain — it is the willingness to feel it honestly, with support.</li>
+      </ul>
+      <h4>4. What Grief Does to the Body</h4>
+      <p>Grief is not only an emotional experience — it is a full-body event. The physical symptoms of grief are real and deserve the same attention as emotional symptoms:</p>
+      <ul>
+        <li>Exhaustion and fatigue — grief is physically tiring in ways that are difficult to describe until you experience them</li>
+        <li>Difficulty sleeping — either sleeping too much or too little; distressing dreams</li>
+        <li>Appetite changes — loss of appetite, or comfort-eating</li>
+        <li>Physical sensations of pain or tightness, particularly in the chest and throat — where grief is often felt most physically</li>
+        <li>Difficulty concentrating, forgetfulness, and a feeling of mental fogginess sometimes called "grief brain"</li>
+        <li>Immune system effects — people in acute grief are more physically vulnerable</li>
+        <li>A deep, cellular tiredness that is different from ordinary fatigue</li>
+      </ul>
+      <h4>5. Beginning With Compassion</h4>
+      <p>The single most important thing you can bring to your grief — in this first week and throughout this course — is compassion. Not for your grief to be different, quicker, or tidier. Not for yourself to be stronger, further along, or coping better. Just compassion — for the fact that you are human, that you have loved, and that you are carrying something real and heavy. That is enough. That is where we begin.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Naming Your Loss</strong><br>
+      Write, as specifically as you can, about the loss you are grieving. Not the story of what happened, but what has been lost: Who or what is gone? What has changed in your daily life? What do you miss most specifically — a sound, a habit, a presence, a future you had imagined? Naming the loss with specificity helps make it real enough to mourn.</p>
+      <p><strong>Exercise 2: The Grief Myth Audit</strong><br>
+      Which of the grief myths listed above are you currently believing — about yourself or your grief? Write honestly: "I have been telling myself that I should be ____." Then write the truth that counters each myth.</p>
+      <p><strong>Exercise 3: A Letter of Permission</strong><br>
+      Write yourself a letter giving yourself explicit permission to grieve — in whatever form, at whatever pace, in whatever way your grief arrives. Include permission for the unexpected emotions: the anger, the relief, the moments of laughter. This letter is from you, to you.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What type of loss are you carrying — and has it been fully acknowledged and named, including by yourself?</li>
+        <li>Which grief myth has caused you the most unnecessary suffering?</li>
+        <li>Where in your body do you most feel your grief?</li>
+        <li>What would it mean to allow your grief — exactly as it is — without trying to change it?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(1)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '📖', title: 'Types of Loss Explained',           desc: 'Named and disenfranchised losses that deserve grief',  file: 'types-of-loss.pdf' },
+      { icon: '🚫', title: 'Grief Myths Debunked',              desc: 'Challenge the beliefs making your grief harder',       file: 'grief-myths.pdf' },
+      { icon: '🫀', title: 'Grief in the Body Guide',           desc: 'Physical symptoms of grief and how to support yourself', file: 'grief-body.pdf' },
+      { icon: '📝', title: 'Naming Your Loss Worksheet',        desc: 'Give your grief the specificity it deserves',          file: 'naming-loss.pdf' },
+      { icon: '🎧', title: 'Compassion for Grief Meditation',   desc: '12-minute guided self-compassion practice for grief',  file: 'grief-compassion-audio.mp3' },
+      { icon: '🆘', title: 'Grief Support Resources',           desc: 'Grief counsellors, hotlines, and support groups',      file: 'grief-support.pdf' }
+    ],
+    assessment: [
+      { question: "What is grief, in its most fundamental definition?", options: ["A mental illness that requires medical treatment","A sign of weakness or inability to cope","The natural, necessary human response to loss — evidence that you have loved and that what you loved mattered","A process that should be completed within one year"], correct: 2 },
+      { question: "What is 'disenfranchised grief'?", options: ["Grief that lasts longer than expected","Grief caused by financial loss","Losses that society doesn't fully recognise or validate — such as pet loss, pregnancy loss, or the loss of a friendship — making them harder to mourn publicly","Grief experienced by children"], correct: 2 },
+      { question: "What is 'ambiguous loss'?", options: ["Grief where you are unsure what you have lost","Losses without clear endings — such as a loved one with dementia who is present but no longer who they were, or estrangement","Loss that comes without warning","Grief that is ambivalent — where you feel both sadness and relief"], correct: 1 },
+      { question: "What is the truth about Kübler-Ross's five stages of grief?", options: ["They are a reliable sequence everyone progresses through","They were originally developed to describe the experience of dying patients — not bereaved survivors — and grief does not follow a linear sequence","They represent the only healthy way to grieve","They should be completed within one year"], correct: 1 },
+      { question: "What is a 'grief burst'?", options: ["A short, intense crying episode","A sudden positive memory of the deceased","A wave of intense renewed grief triggered by a date, anniversary, smell, song, or place — a normal part of non-linear grieving","A physical symptom of acute grief"], correct: 2 },
+      { question: "What does 'anticipatory grief' mean?", options: ["Preparing yourself emotionally before a loss so it hurts less","Grieving a loss before it has happened — such as when a loved one has a terminal illness","Anticipating that grief will eventually pass","Grief that comes in anticipation of each anniversary"], correct: 1 },
+      { question: "What is 'grief brain'?", options: ["Damage to the brain caused by grief","A condition requiring neurological treatment","The cognitive effects of grief — difficulty concentrating, forgetfulness, and mental fogginess that are normal parts of acute grief","Depression caused by loss"], correct: 2 },
+      { question: "Which of these is a true statement about grief?", options: ["Grief is the same for every member of a family experiencing the same loss","Grief follows a straight downward trajectory — consistently improving over time","Grief is as individual as a fingerprint — no two people grieve the same loss in the same way","People who appear to be functioning normally are not grieving deeply"], correct: 2 },
+      { question: "What does the myth 'you need to stay strong' cause in grieving people?", options: ["Greater resilience and faster healing","The suppression of genuine pain — when real strength in grief is the willingness to feel it honestly, with support","Appropriate emotional regulation","No particular harm — it is a helpful belief"], correct: 1 },
+      { question: "What is the most important quality to bring to your grief, according to this week's content?", options: ["Speed — moving through it as quickly as possible","Stoicism and emotional control","Compassion — for the fact that you are human, that you have loved, and that you are carrying something real and heavy","Positivity and focus on gratitude"], correct: 2 }
+    ]
+  },
+
+  2: {
+    title: "The Emotional Landscape of Grief",
+    tutorialVideo: "Every Emotion in Grief Is Valid",
+    basicVideo: "Working with Grief's Most Difficult Feelings",
+    content: `
+      <h2>Week 2: The Emotional Landscape of Grief</h2>
+      <div class="safety-banner">
+        <h4>🕊️ All Your Emotions Belong Here</h4>
+        <p>This week explores the full emotional range of grief — including the emotions that can feel shameful or confusing, like anger, relief, and guilt. You are not required to feel all of these. But if you recognise them, know they are normal. Take breaks as needed.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the full emotional spectrum of grief — beyond sadness</li>
+        <li>Work with guilt, anger, relief, and other emotions that often feel shameful in grief</li>
+        <li>Develop tools for processing difficult emotions without being overwhelmed</li>
+        <li>Learn how to hold grief and still function in daily life</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Grief Is Not Only Sadness</h4>
+      <p>If grief were only sadness, it would be simpler — sad, but simpler. What makes grief so complicated is the full orchestra of emotions it contains. People are often unprepared for the presence of emotions that seem contradictory, inappropriate, or shameful alongside the expected sadness. Understanding the full emotional landscape of grief is one of the most important things this course can offer you.</p>
+      <h4>2. Anger in Grief</h4>
+      <p>Anger is one of the most universal — and least discussed — emotions in grief. It may appear as:</p>
+      <ul>
+        <li>Anger at the person who died — for leaving, for the manner of their death, for things left unsaid or undone</li>
+        <li>Anger at yourself — for real or imagined failures, for not being there, for things you said or didn't say</li>
+        <li>Anger at others — at medical systems, at people who seem untouched by the loss, at those who say unhelpful things</li>
+        <li>Anger at the universe, at God, at fate — a profound sense of injustice</li>
+        <li>Anger that seems to have no object — a free-floating rage at the simple, brutal fact of loss</li>
+        <li>Anger in grief is normal, appropriate, and important. It is grief's energy — the part that says "this should not have happened." It needs expression, not suppression. Turned inward without outlet, it becomes depression.</li>
+      </ul>
+      <h4>3. Guilt in Grief</h4>
+      <p>Guilt is perhaps the most corrosive emotion in grief. It takes many forms:</p>
+      <ul>
+        <li><strong>Survivor guilt:</strong> "Why am I alive when they are not?"</li>
+        <li><strong>Caregiver guilt:</strong> "Did I do enough? Should I have noticed sooner? Could I have prevented this?"</li>
+        <li><strong>Relationship guilt:</strong> "I should have called more. We argued before they died. There were things left unresolved."</li>
+        <li><strong>Relief guilt:</strong> Feeling relief that suffering has ended — and then feeling guilty for the relief</li>
+        <li><strong>Joy guilt:</strong> Feeling guilty for moments of laughter, happiness, or forgetting — as if these represent a betrayal of the person you are grieving</li>
+        <li>Almost all guilt in grief contains an element of magical thinking — the belief that somehow you had more control over events than you actually did. The antidote to guilt is compassion, honest reflection, and often, forgiveness — of yourself as much as anyone.</li>
+      </ul>
+      <h4>4. Relief in Grief</h4>
+      <p>When a loved one has suffered — through illness, addiction, pain, or a long dying — it is entirely natural and human to feel relief when that suffering ends. This relief does not mean you didn't love them. It does not mean you wanted them gone. It means you were paying attention to their suffering, and some part of you couldn't bear it. Relief and grief can coexist without either invalidating the other.</p>
+      <h4>5. Numbness and Emptiness</h4>
+      <p>Many people in the early stages of grief feel nothing — a profound numbness or blankness where feeling should be. This is not absence of grief; it is grief's protective mechanism. The psyche knows when the full weight of a loss is too much to absorb at once, and it doses the experience accordingly. Numbness is not denial. It is the nervous system buying time for the heart to catch up. It will not last forever — and when feeling returns, it returns on its own schedule.</p>
+      <h4>6. Loneliness — Even in Company</h4>
+      <p>One of the most profound and least discussed aspects of grief is a particular kind of loneliness — the experience of being surrounded by people who care about you and still feeling utterly, incomprehensibly alone. This happens because grief is, in the end, your personal relationship with your loss. No one else had exactly the relationship you had with who or what you have lost. No one else has lost exactly what you have lost. This loneliness is real, and it is normal, and it does not mean you are not loved.</p>
+      <h4>7. Holding Grief and Functioning</h4>
+      <p>Life does not stop for grief. Work, parenting, relationships, practical responsibilities continue — often with cruel indifference to the enormity of what you are carrying. Some practical approaches to holding grief while still functioning:</p>
+      <ul>
+        <li><strong>Grief containers:</strong> Set aside deliberate, bounded time to grieve — 20 minutes after dinner, Saturday mornings — so that grief has a place to go rather than flooding everything at once</li>
+        <li><strong>One thing at a time:</strong> In acute grief, the cognitive load is enormous. Simplify wherever possible. One task. One day. One hour.</li>
+        <li><strong>Tell the people around you:</strong> You don't have to hide your grief. "I'm having a hard week" is enough. People cannot support what they don't know about.</li>
+        <li><strong>Lower the bar:</strong> What you accomplish in grief is remarkable, even when it looks modest. Getting through the day is an achievement. Feed yourself. Sleep when you can. That is enough.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Emotion Inventory</strong><br>
+      List every emotion you have noticed in your grief — including the ones that feel shameful, confusing, or contradictory. Next to each one, write: "This is allowed. This is normal." You are not trying to resolve these emotions. You are simply naming and acknowledging them.</p>
+      <p><strong>Exercise 2: A Letter to Your Guilt</strong><br>
+      If guilt is present in your grief, write a letter to it. Tell it what it is saying. Then write a response from the part of you that is compassionate and fair — examining honestly whether the guilt is proportionate, and what you would actually say to a friend carrying the same guilt.</p>
+      <p><strong>Exercise 3: The Grief Container</strong><br>
+      Set up your grief container for this week: a specific time, at least 20 minutes, when you will allow yourself to grieve fully — to cry, to write, to look at photographs, to feel. Outside of this time, when grief arises, you can say: "I see you. I will be with you at [time]." This is not suppression — it is pacing.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which emotion in your grief has felt most unexpected or shameful — and what would you say to a friend who was feeling it?</li>
+        <li>Is guilt present in your grief — and is the guilt actually proportionate to the reality of what happened?</li>
+        <li>How does the loneliness of grief show up for you — and what, if anything, helps?</li>
+        <li>What would it mean to give yourself full permission to feel every emotion that grief brings?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(2)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '😤', title: 'Anger in Grief — A Guide',          desc: 'Understanding and expressing grief\'s anger safely',   file: 'anger-grief.pdf' },
+      { icon: '💔', title: 'Guilt in Grief Workbook',           desc: 'Examine, process, and release grief-related guilt',    file: 'guilt-grief.pdf' },
+      { icon: '😶', title: 'Numbness and the Grief Process',    desc: 'Why feeling nothing is a normal part of grief',        file: 'numbness-grief.pdf' },
+      { icon: '🫙', title: 'The Grief Container Technique',     desc: 'How to hold grief and still function each day',        file: 'grief-container.pdf' },
+      { icon: '🎧', title: 'Grief Emotions Meditation',         desc: '14-minute guided practice for sitting with grief',     file: 'grief-emotions-audio.mp3' },
+      { icon: '📚', title: 'Grief Emotions Reading List',       desc: 'Key books on the emotional landscape of loss',         file: 'grief-emotions-reading.pdf' }
+    ],
+    assessment: [
+      { question: "Why is anger described as 'grief's energy'?", options: ["Because anger is always the first stage of grief","Because it is the part that says 'this should not have happened' — turned inward without expression, it becomes depression","Because anger helps us find someone to blame for our loss","Because anger motivates people to move forward faster"], correct: 1 },
+      { question: "What is 'relief guilt' in grief?", options: ["Guilt about feeling relieved that your own grief is easing","Feeling guilty for experiencing relief when a suffering loved one has died — as if the relief means you didn't love them","Guilt about asking others for relief from caregiving","Feeling relieved and guilty simultaneously about a complicated relationship"], correct: 1 },
+      { question: "What is 'joy guilt' in grief?", options: ["Feeling bad about experiencing moments of happiness or laughter, as if these betray the person you are grieving","Feeling joy that others are grieving alongside you","Guilt about not feeling more joy in your memories of the person","A normal part of every grief journey"], correct: 0 },
+      { question: "What is the primary source of most guilt in grief?", options: ["Genuine moral wrongdoing during the relationship","Magical thinking — the belief that you had more control over events than you actually did","A lack of love for the person who died","Cultural messages about how to be a good caregiver"], correct: 1 },
+      { question: "What does grief-related numbness represent?", options: ["Absence of true grief or love","Denial that should be gently challenged","Grief's protective mechanism — the psyche buying time for the heart to catch up, dosing the experience when the full weight is too much to absorb at once","A pathological response requiring treatment"], correct: 2 },
+      { question: "Why do grieving people often feel lonely even when surrounded by people who care about them?", options: ["Because grief makes you unable to connect with others","Because others are uncomfortable with grief","Because grief is your personal relationship with your loss — no one else had exactly what you had or lost exactly what you lost","Because grieving people push others away"], correct: 2 },
+      { question: "What is the 'grief container' technique?", options: ["A physical object that holds mementos of the deceased","Setting aside deliberate, bounded time to grieve fully — so grief has a place to go rather than flooding everything at once","Suppressing grief until a safe time","A technique for containing grief permanently"], correct: 1 },
+      { question: "What does it mean that relief and grief 'can coexist without either invalidating the other'?", options: ["You must resolve the relief before properly grieving","Feeling relief means your grief is not genuine","Both are real, valid responses to the same loss — relief at the end of suffering does not negate love or grief","You should only feel one emotion at a time in grief"], correct: 2 },
+      { question: "What is the advice for managing cognitive load during acute grief?", options: ["Push yourself to maintain full productivity — structure helps","Take on new projects to distract from the grief","Simplify wherever possible — one task, one day, one hour at a time","Make important decisions promptly before grief makes them harder"], correct: 2 },
+      { question: "What is the compassionate frame for anger directed at a person who has died?", options: ["It is inappropriate and should be redirected","It is normal — anger at the person for leaving, for the manner of their death, or for things left unresolved is a common and valid part of grief","It means the relationship was not a loving one","It is only appropriate for deaths involving wrongdoing"], correct: 1 }
+    ]
+  },
+
+  3: {
+    title: "Continuing Bonds — Love Does Not End",
+    tutorialVideo: "The Bond That Doesn't Break",
+    basicVideo: "Staying Connected to Who You've Lost",
+    content: `
+      <h2>Week 3: Continuing Bonds — Love Does Not End</h2>
+      <div class="safety-banner">
+        <h4>🕊️ You Don't Have to Let Go</h4>
+        <p>This week challenges the old idea that grief is about "letting go" and introduces a more compassionate and evidence-based understanding: that love continues, and that maintaining a connection to who you have lost is not only normal — it is healthy. This week may feel tender and also, for some people, deeply relieving.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the continuing bonds theory of grief</li>
+        <li>Challenge the harmful myth that grief means "letting go" or "moving on"</li>
+        <li>Discover practical ways to maintain a loving connection with who or what you have lost</li>
+        <li>Learn how to carry the person with you into your future</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Old Model — "Letting Go"</h4>
+      <p>For much of the twentieth century, grief theory was dominated by a model that described healing as the progressive withdrawal of emotional energy from the deceased — the gradual process of "letting go" in order to "move on." This model caused enormous suffering by pathologising what is in fact a normal and healthy human experience: the continuation of love beyond death and beyond loss. People who maintained strong inner connections to those they had lost were told they were "stuck" or "not moving through their grief" — when in fact they were doing something deeply human and deeply healthy.</p>
+      <h4>2. The Continuing Bonds Theory</h4>
+      <p>In the 1990s, grief researchers Dennis Klass, Phyllis Silverman, and Steven Nickman introduced continuing bonds theory — the idea that maintaining an ongoing relationship with the deceased is a normal, healthy, and often healing part of grief. This approach has been supported by substantial research since:</p>
+      <ul>
+        <li>Grief is not about severing the bond with who you have lost — it is about transforming the nature of that bond</li>
+        <li>The relationship changes — it can no longer be physical, interactive, and reciprocal in the same way — but the love, the influence, and the inner presence of the person can continue</li>
+        <li>People who maintain healthy continuing bonds often report feeling supported, guided, and accompanied by the person they have lost — particularly in difficult moments</li>
+        <li>The goal of grief is not to place the deceased in the past — it is to find a new place for them in your ongoing life</li>
+      </ul>
+      <h4>3. What Continuing Bonds Look Like in Practice</h4>
+      <p>Continuing bonds are maintained in many forms — some culturally sanctioned, others quietly personal:</p>
+      <ul>
+        <li><strong>Talking to the person:</strong> Speaking to a photo, at a grave, or simply in your mind — telling them about your day, your struggles, your joys. This is not pathological; it is deeply human.</li>
+        <li><strong>Carrying their values forward:</strong> Living in ways that honour who they were — making choices you know they would respect or be proud of</li>
+        <li><strong>Sensing their presence:</strong> Many bereaved people report experiences of sensing the presence of who they have lost — in dreams, in moments of quiet, in places that held meaning. These experiences are widely reported and are a normal part of grief.</li>
+        <li><strong>Rituals and memorials:</strong> Lighting a candle on their birthday, visiting a meaningful place, cooking their favourite meal, continuing a tradition they loved</li>
+        <li><strong>Sharing their stories:</strong> Keeping them alive in the memory of others — telling stories, preserving photographs, sharing what they meant to you</li>
+        <li><strong>Asking WWLD (What Would [Name] Do):</strong> Drawing on the wisdom and personality of the person in moments of decision</li>
+      </ul>
+      <h4>4. Moving Forward, Not Moving On</h4>
+      <p>There is an important distinction between moving forward and moving on. Moving on implies leaving something behind — abandoning it, consigning it to the past, detaching from it. Most grieving people find the idea of moving on intolerable, because it feels like a betrayal. Moving forward is different: it means continuing to live — growing, finding joy again, building a new life — while taking the person with you. They do not stay behind. They come with you, transformed into memory, influence, love, and presence. You do not get over loss. You learn to carry it, and it becomes part of who you are.</p>
+      <h4>5. When Continuing Bonds Become Complicated</h4>
+      <p>Continuing bonds are healthy when they support your ongoing life — when the inner relationship with the person you have lost gives you comfort, guidance, and a sense of accompaniment. They can become complicated when they function primarily as avoidance — when maintaining the connection is being used to refuse the reality of the death or loss, or when it prevents you from engaging with your present life. The question to ask is: does this connection give me life — or does it keep me from living?</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: A Letter to Your Person</strong><br>
+      Write a letter to who or what you have lost. Tell them what you miss most specifically. Tell them about your life since they left. Ask them what they would want for you. Tell them how you plan to carry them forward. This is not a goodbye — it is a continuation.</p>
+      <p><strong>Exercise 2: Their Gifts to You</strong><br>
+      Write about what this person or this experience gave you — values, perspectives, memories, parts of yourself that are shaped by having loved them. Make a list of the gifts they left behind in you. This is the inheritance of love.</p>
+      <p><strong>Exercise 3: A Ritual of Connection</strong><br>
+      Design one small ritual of continuing connection — something you will do regularly that keeps the bond alive. It might be lighting a candle, cooking a meal, visiting a place, or simply taking five minutes on their birthday to speak to them. Write about what you choose and why.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Have you felt pressure to "let go" or "move on" — and how has that affected you?</li>
+        <li>What forms of continuing connection have you naturally maintained, perhaps without knowing that was what you were doing?</li>
+        <li>What gifts — values, memories, perspectives — did this person or this experience leave inside you?</li>
+        <li>What would it mean to bring them with you into your future, rather than leaving them in the past?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(3)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🔗', title: 'Continuing Bonds Theory Guide',     desc: 'Research and practical application of continuing bonds', file: 'continuing-bonds.pdf' },
+      { icon: '💌', title: 'Letter to Your Person Template',    desc: 'A structured space to write to who you have lost',     file: 'letter-to-person.pdf' },
+      { icon: '🕯', title: 'Ritual Design Worksheet',           desc: 'Create meaningful rituals of ongoing connection',      file: 'ritual-design.pdf' },
+      { icon: '🎁', title: 'Their Gifts to You Journal',        desc: 'Identify and honour what your person left behind in you', file: 'gifts-journal.pdf' },
+      { icon: '🎧', title: 'Continuing Bonds Meditation',       desc: '15-minute guided practice for connecting with your person', file: 'continuing-bonds-audio.mp3' },
+      { icon: '📚', title: 'Continuing Bonds Reading',          desc: 'Key research and books on love beyond loss',           file: 'continuing-bonds-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What did the old 'letting go' model of grief describe as healthy healing?", options: ["Maintaining an ongoing internal relationship with the deceased","The progressive withdrawal of emotional energy from the deceased in order to move on","Finding meaning in the loss","Seeking support from others"], correct: 1 },
+      { question: "What is the core insight of continuing bonds theory?", options: ["Grief ends when you stop thinking about the person","Grief is about severing the bond with who you have lost","Maintaining an ongoing relationship with the deceased is a normal, healthy, and healing part of grief","You should only maintain bonds for a limited time after loss"], correct: 2 },
+      { question: "How does grief transform the bond with the deceased, according to continuing bonds theory?", options: ["The bond is completely replaced by new relationships","The bond ends but the memories remain","The relationship changes — it can no longer be physical and reciprocal in the same way — but love, influence, and inner presence continue","The bond becomes purely symbolic with no emotional reality"], correct: 2 },
+      { question: "What does it mean to 'move forward' rather than 'move on'?", options: ["They are the same thing — both mean leaving the past behind","Moving forward means continuing to live and grow while taking the person with you — they don't stay behind, they come with you transformed into memory and love","Moving forward is slower than moving on","Moving forward means prioritising the future over the past"], correct: 1 },
+      { question: "When can continuing bonds become complicated, according to this week's content?", options: ["When they involve speaking to the deceased","When they involve keeping mementos","When they function primarily as avoidance — refusing the reality of the loss or preventing engagement with present life","When they are maintained privately rather than shared with others"], correct: 2 },
+      { question: "Which of these is an example of a healthy continuing bond?", options: ["Refusing to acknowledge that the death has occurred","Carrying their values forward — making choices that honour who they were","Keeping all their possessions exactly as they were without any changes","Only feeling the connection on anniversaries"], correct: 1 },
+      { question: "Who are the researchers credited with introducing continuing bonds theory?", options: ["Elisabeth Kübler-Ross and David Kessler","John Bowlby and Mary Ainsworth","Dennis Klass, Phyllis Silverman, and Steven Nickman","Viktor Frankl and Bessel van der Kolk"], correct: 2 },
+      { question: "What are reported 'sensing experiences' in grief?", options: ["A sign of complicated grief requiring treatment","Hallucinations caused by intense stress","Widely reported, normal experiences of sensing the presence of who has been lost — in dreams, quiet moments, or meaningful places","A cultural phenomenon limited to certain traditions"], correct: 2 },
+      { question: "What is the key question to ask about your continuing bond?", options: ["How long has it been since the loss?","Are others aware of my connection to this person?","Does this connection give me life — or does it keep me from living?","Am I carrying on enough of their traditions?"], correct: 2 },
+      { question: "What does 'they are your inheritance of love' mean in the context of grief?", options: ["You should inherit the person's material possessions","The values, perspectives, memories, and parts of yourself shaped by loving them are what they have left inside you","Love must be passed on to others in their honour","Their legacy must be publicly commemorated"], correct: 1 }
+    ]
+  },
+
+  4: {
+    title: "Grief's Practical Dimensions — Life After Loss",
+    tutorialVideo: "The Practicalities Nobody Prepares You For",
+    basicVideo: "Rebuilding Daily Life After Loss",
+    content: `
+      <h2>Week 4: Grief's Practical Dimensions — Life After Loss</h2>
+      <div class="safety-banner">
+        <h4>🕊️ The Unglamorous Reality of Grief</h4>
+        <p>This week addresses the practical, unglamorous, and often unacknowledged side of grief — the identity shifts, the relationship changes, the daily life that must be rebuilt. This can feel very concrete and pragmatic alongside something so emotional. That is exactly right. Grief lives in both places.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand how loss reshapes identity and daily life</li>
+        <li>Navigate the changes in relationships that grief often brings</li>
+        <li>Learn how to rebuild structure and routine in a life after loss</li>
+        <li>Understand what to say — and not to say — to yourself and to those who are grieving</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Identity After Loss</h4>
+      <p>Loss does not only take a person, a relationship, or a circumstance. It often takes part of your identity with it. Consider:</p>
+      <ul>
+        <li>The widow or widower who no longer knows how to move through the world as a single person</li>
+        <li>The parent who has lost their only child — who are they now?</li>
+        <li>The person who has lost their health — who are they without the body they knew?</li>
+        <li>The employee of 30 years who retires — who are they without the work that shaped their days?</li>
+        <li>Loss tears a hole in the fabric of who you thought you were. Part of the work of grief — and part of what makes it so exhausting — is the quiet, ongoing project of rebuilding: discovering who you are now, in the aftermath. This is not betrayal of who you were. It is survival.</li>
+      </ul>
+      <h4>2. Relationships and Grief</h4>
+      <p>Grief changes relationships. Often in ways that are painful and unexpected:</p>
+      <ul>
+        <li><strong>People disappear:</strong> Some friends and family members simply cannot tolerate their own discomfort in the face of your grief, and they vanish. This secondary loss — losing the support of people you counted on — is one of the most painful aspects of bereavement.</li>
+        <li><strong>People say the wrong things:</strong> "Everything happens for a reason." "They're in a better place." "At least you have other children." "You should be over this by now." These are almost never said with malicious intent — they are said from discomfort and a desperate desire to fix what cannot be fixed. Understanding this does not make it hurt less, but it may make it easier to receive without closing down.</li>
+        <li><strong>Grief divides families:</strong> Members of the same family often grieve differently — and those differences can create conflict and distance at exactly the time when closeness is most needed.</li>
+        <li><strong>New connections emerge:</strong> Grief sometimes opens unexpected connections — with others who have experienced similar losses, with parts of yourself you hadn't known, with meaning and community in new forms.</li>
+      </ul>
+      <h4>3. What Grieving People Actually Need</h4>
+      <p>Research on what bereaved people find most helpful consistently points to the same things — and they are simpler than most people think:</p>
+      <ul>
+        <li><strong>Presence, not advice:</strong> Being with someone in their pain without trying to fix it or explain it away. "I'm here" is more powerful than any explanation.</li>
+        <li><strong>Practical help:</strong> Meals, errands, childcare, help with paperwork — the concrete, unglamorous tasks that become overwhelming in grief</li>
+        <li><strong>Being remembered over time:</strong> The support that floods in immediately after a loss tends to recede exactly when grief deepens — at weeks three and four, at the end of the first year, at anniversaries. Being remembered then is invaluable.</li>
+        <li><strong>Permission to talk about the person:</strong> Many bereaved people are hungry to speak about who they have lost — and find that others avoid the subject out of discomfort. Asking "Tell me about them" is one of the greatest gifts you can offer.</li>
+        <li><strong>Not being told how to grieve:</strong> No "at leasts." No timelines. No suggestions about what they should be feeling or when.</li>
+      </ul>
+      <h4>4. Rebuilding Structure in Grief</h4>
+      <p>One of the most disorienting aspects of acute grief is the loss of structure. When the person or situation that organised your days is gone, the days themselves can become formless and terrifying. Gentle structure is one of the most important things you can build in grief:</p>
+      <ul>
+        <li>A morning routine — however minimal — that signals the beginning of the day</li>
+        <li>Regular meals and sleep times, even when appetite and rest are disrupted</li>
+        <li>One commitment per day that gets you out of bed — however small</li>
+        <li>Movement — walking, even briefly, has significant effects on grief's emotional and physical weight</li>
+        <li>Time with at least one other person each day — even briefly, even if only by phone</li>
+        <li>A grief container — designated time for grief, within a structure that also holds ordinary life</li>
+      </ul>
+      <h4>5. The First Firsts</h4>
+      <p>The "first firsts" — the first birthday without them, the first holiday, the first anniversary of their death — are often dreaded far in advance. What grief survivors frequently report is that the anticipation is worse than the day itself. Some approaches to navigating the first firsts:</p>
+      <ul>
+        <li>Plan deliberately — decide in advance how you want to spend the day, rather than letting it arrive formless</li>
+        <li>Include your person — light a candle, tell a story about them, visit a meaningful place</li>
+        <li>Allow yourself to feel what you feel — relief, sadness, unexpected okayness, renewed grief — without judgment</li>
+        <li>Have support planned — know who you will call, who will be with you</li>
+        <li>Be gentle with yourself in the days around the date, not just on the day itself</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Identity Mapping After Loss</strong><br>
+      Write about who you were before this loss — the roles, relationships, and parts of identity that were shaped by what you have lost. Then write about who you are now — honestly, without pressure to have answers. Finally, write about any threads of identity that have surprised you — parts of yourself that have emerged or strengthened through loss.</p>
+      <p><strong>Exercise 2: Relationship Review</strong><br>
+      Write about how your key relationships have changed since your loss. Who has shown up? Who has disappeared? Who has said something hurtful (however well-intentioned)? What do you most need from the people in your life right now — and have you asked for it?</p>
+      <p><strong>Exercise 3: My Grief Structure</strong><br>
+      Design your current grief structure — a minimal, realistic daily framework that includes: one morning anchor, regular meals, at least one moment of connection, brief movement, and a designated grief container. Write it out as a gentle daily plan rather than a schedule to be perfect about.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How has your loss changed your sense of who you are?</li>
+        <li>Which relationships have changed most since your loss — and what do you need from those people?</li>
+        <li>What structure — however minimal — is currently sustaining you?</li>
+        <li>Which of the "first firsts" are you most dreading, and what would help you prepare for it?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(4)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🪞', title: 'Identity After Loss Workbook',      desc: 'Explore who you are becoming after what you\'ve lost',  file: 'identity-after-loss.pdf' },
+      { icon: '🤝', title: 'Navigating Relationships in Grief', desc: 'What to expect and how to communicate your needs',     file: 'relationships-grief.pdf' },
+      { icon: '🗓', title: 'First Firsts Preparation Guide',    desc: 'Approach anniversaries and significant dates with care', file: 'first-firsts.pdf' },
+      { icon: '🌅', title: 'Daily Structure in Grief',          desc: 'Build a gentle framework for surviving each day',       file: 'grief-structure.pdf' },
+      { icon: '🎧', title: 'Daily Anchoring Meditation',        desc: '10-minute morning practice to ground yourself in grief', file: 'anchoring-audio.mp3' },
+      { icon: '📚', title: 'Practical Grief Reading',           desc: 'Guides on navigating the practical side of bereavement', file: 'practical-grief-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What does loss often take beyond the person, relationship, or circumstance itself?", options: ["Your future plans only","Part of your identity — the roles, self-understanding, and sense of yourself that was shaped by what you have lost","Your ability to form new relationships","Your memories of the past"], correct: 1 },
+      { question: "What is the 'secondary loss' in bereavement?", options: ["Losing another person after the primary death","Losing material possessions associated with the deceased","Losing the support of people you counted on — friends and family who disappear because they cannot tolerate their own discomfort","Losing faith or meaning after a death"], correct: 2 },
+      { question: "Why do people often say unhelpful things to the bereaved?", options: ["Because they don't care about the grieving person","Almost never from malicious intent — but from discomfort and a desperate desire to fix what cannot be fixed","Because they haven't experienced grief themselves","Because they are trying to rush the grieving person's process"], correct: 1 },
+      { question: "What does research consistently show grieving people find most helpful?", options: ["Being given advice on how to process their grief","Being encouraged to focus on positive memories","Presence without fixing — 'I'm here' — and practical help with concrete tasks over time","Being connected with professional grief counsellors immediately"], correct: 2 },
+      { question: "Why is being remembered over time particularly important for grieving people?", options: ["Because grief actually gets worse over time","Because support floods in immediately but recedes exactly when grief deepens — at weeks three and four, at anniversaries, at the end of the first year","Because time is the only healer","Because early support is often intrusive"], correct: 1 },
+      { question: "What is the significance of asking a bereaved person 'Tell me about them'?", options: ["It helps the bereaved person achieve closure","It is one of the greatest gifts — bereaved people are often hungry to speak about who they've lost but find others avoid the subject","It helps you understand the relationship","It is appropriate only in the early days of grief"], correct: 1 },
+      { question: "Why is gentle daily structure important in acute grief?", options: ["Because structure prevents you from feeling grief too intensely","Because the loss of the person or situation that organised your days leaves days formless and disorienting — structure provides an anchor","Because productivity supports immune function","Because grief requires full attention and cannot be managed alongside ordinary life"], correct: 1 },
+      { question: "What do grief survivors most often report about the 'first firsts' — the first birthday without the person, the first holiday?", options: ["That the day itself is always the hardest","That they are identical to subsequent anniversaries","That the anticipation is often worse than the day itself","That they should be avoided entirely"], correct: 2 },
+      { question: "What is one recommended approach to navigating a 'first first'?", options: ["Plan to keep the day as normal as possible and ignore its significance","Spend the day alone to avoid burdening others","Plan deliberately — include your person through ritual, have support arranged, and allow yourself to feel whatever arrives","Work through the day to distract from the significance"], correct: 2 },
+      { question: "What emerges for some people through the experience of grief?", options: ["Permanent inability to form new close relationships","Reduced capacity for empathy","New unexpected connections — with others who have experienced similar losses, with parts of themselves previously unknown, with meaning in new forms","A complete rebuilding of identity that erases who they were before"], correct: 2 }
+    ]
+  },
+
+  5: {
+    title: "Finding Meaning After Loss",
+    tutorialVideo: "How Meaning Emerges from the Hardest Experiences",
+    basicVideo: "Making Meaning Without Minimising the Loss",
+    content: `
+      <h2>Week 5: Finding Meaning After Loss</h2>
+      <div class="safety-banner">
+        <h4>🕊️ Meaning Cannot Be Forced — But It Can Be Found</h4>
+        <p>This week explores meaning-making in grief — which is not about finding a silver lining or suggesting your loss was "meant to be." If you are in early or acute grief, meaning may feel inaccessible right now. That is completely normal. Plant these seeds and let them grow in their own time.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand meaning-making as a natural part of the grief process</li>
+        <li>Distinguish between healthy meaning-making and toxic positivity</li>
+        <li>Explore how loss can clarify values, deepen compassion, and reshape purpose</li>
+        <li>Begin the personal work of finding — or making — meaning from your loss</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Meaning Matters in Grief</h4>
+      <p>The need for meaning is one of the most fundamental human drives. When loss strikes — particularly sudden, violent, or untimely loss — it shatters the assumptive world: the collection of beliefs we hold about how life works, about fairness, about safety, about the future. Meaning-making is the process by which we rebuild a worldview that can accommodate the reality of what has happened — not by pretending it didn't happen, or that it was secretly good, but by finding a way to hold it that allows continued living.</p>
+      <ul>
+        <li>Meaning is not a consolation prize — it does not make the loss less painful. But it makes it less random. Less incomprehensible. Less something that is happening to you and more something that is part of a larger story you are still writing.</li>
+        <li>Research by grief scholars including Robert Neimeyer shows that the ability to find meaning — to reconstruct a coherent narrative of the loss — is one of the strongest predictors of long-term grief adjustment</li>
+        <li>Meaning does not need to be grand or philosophical. It can be intimate and specific: "This loss reminded me what matters most." "This made me a more compassionate person." "Because of this, I will never take ordinary days for granted."</li>
+      </ul>
+      <h4>2. Meaning-Making vs. Toxic Positivity</h4>
+      <p>There is a crucial distinction between genuine meaning-making and what is sometimes called toxic positivity — the pressure to find a bright side, to be grateful, to believe everything happens for a reason:</p>
+      <ul>
+        <li><strong>Toxic positivity:</strong> "Everything happens for a reason." "God needed another angel." "At least you had the time you had." "They wouldn't want you to be sad." These statements, however well-intentioned, dismiss the reality of the loss and place a burden of manufactured cheerfulness on the bereaved.</li>
+        <li><strong>Genuine meaning-making:</strong> Emerges organically from within. It is not imposed from outside. It is found — or made — in the bereaved person's own time, in their own terms, from within their own framework of understanding. It does not minimise the pain; it exists alongside it.</li>
+        <li>You are not required to find meaning. Some losses — particularly the deaths of children, or deaths by violence or suicide — resist meaning, and no framework fully accommodates them. You are not failing to grieve if you cannot find a "reason" or a "lesson." Sometimes loss is simply loss, and bearing witness to it honestly is the most courageous thing you can do.</li>
+      </ul>
+      <h4>3. How Loss Clarifies Values</h4>
+      <p>One of the most common and most genuine forms of meaning-making in grief is the clarification of values. Loss has a way of burning away what doesn't matter — leaving only what does. People who have walked through significant loss frequently report:</p>
+      <ul>
+        <li>A profound reordering of priorities — relationships over achievements, presence over productivity</li>
+        <li>A lowered tolerance for meaningless obligation and a heightened commitment to what genuinely matters to them</li>
+        <li>A new relationship with time — an acute awareness of its scarcity and an urgency to use it well</li>
+        <li>Greater compassion for others in pain — having been broken open by loss, they are more available to the broken places in others</li>
+        <li>A confrontation with mortality that, paradoxically, can produce greater aliveness — a willingness to take risks, to love more openly, to live more deliberately</li>
+      </ul>
+      <h4>4. David Kessler's Sixth Stage — Finding Meaning</h4>
+      <p>David Kessler — who collaborated with Elisabeth Kübler-Ross on On Death and Dying — proposed a sixth stage of grief in his own work: finding meaning. He is careful to clarify that this does not mean finding a "reason" or being glad for the loss. It means honouring the person who died in a way that gives their life and your grief a purpose:</p>
+      <ul>
+        <li>Meaning might be found in action — advocacy, charitable work, creative expression — in the name of the person or the loss</li>
+        <li>Meaning might be found in relationship — deepening connections, being more present with those who remain</li>
+        <li>Meaning might be found in identity — becoming someone who carries this loss as part of their story without being defined only by it</li>
+        <li>Meaning might be found in legacy — what of this person lives on in the world through you</li>
+      </ul>
+      <h4>5. The Narrative of Loss</h4>
+      <p>Robert Neimeyer's work on narrative reconstruction describes how healing involves developing a coherent story of the loss — one that answers: What happened? How has it changed me? What do I make of it? How does it fit into the larger story of who I am? This narrative is not fixed — it grows and evolves over time, as you do. And it is not a conclusion to grief — it is a way of integrating the loss into an ongoing life that is still being written.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Value Clarification After Loss</strong><br>
+      Write about what this loss has taught you about what truly matters. What have you stopped taking for granted? What priorities have shifted? What do you want more of in the life you are continuing to build? What do you want less of?</p>
+      <p><strong>Exercise 2: The Meaning I Am Making</strong><br>
+      Without pressure — without needing it to be complete or grand — write about any meaning that has begun to emerge from your loss. It might be a small insight, a shift in how you see the world, a change in how you relate to others. Or you might write honestly: "I have not yet found meaning, and that is where I am right now."</p>
+      <p><strong>Exercise 3: Their Legacy</strong><br>
+      Write about what of this person, relationship, or experience lives on in the world — through you, through others, through what they built, created, or touched. What is their legacy — and what part of carrying it forward might be yours?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Has your loss clarified anything about what genuinely matters to you?</li>
+        <li>Have you felt pressure — from others or from yourself — to find meaning before you were ready?</li>
+        <li>What form of meaning-making, if any, has begun to emerge naturally from your experience?</li>
+        <li>What would it mean to carry your person's legacy forward — in the way you live, love, or contribute?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(5)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🌱', title: 'Meaning-Making in Grief Guide',     desc: 'How meaning emerges from loss — and how to support it', file: 'meaning-making.pdf' },
+      { icon: '🚫', title: 'Toxic Positivity vs True Meaning',  desc: 'The difference and why it matters for healing',        file: 'toxic-vs-meaning.pdf' },
+      { icon: '🧭', title: 'Values Clarification Workbook',     desc: 'Discover what loss has revealed about what matters',   file: 'values-after-loss.pdf' },
+      { icon: '📜', title: 'Legacy and Narrative Journal',      desc: 'Write the story of your loss and your person\'s legacy',file: 'legacy-journal.pdf' },
+      { icon: '🎧', title: 'Meaning and Purpose Meditation',    desc: '14-minute guided practice for finding meaning in grief',file: 'meaning-audio.mp3' },
+      { icon: '📚', title: 'Meaning in Grief Reading List',     desc: 'Key texts on meaning-making and post-loss growth',     file: 'meaning-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is the 'assumptive world' that loss can shatter?", options: ["A positive attitude toward the future","The collection of beliefs we hold about how life works — about fairness, safety, and the future — that loss can disrupt","An assumption that loss is temporary","The belief that loved ones are immortal"], correct: 1 },
+      { question: "What does research by Robert Neimeyer show about meaning-making in grief?", options: ["Meaning-making is only helpful for religious people","The ability to find meaning and reconstruct a coherent narrative of the loss is one of the strongest predictors of long-term grief adjustment","Meaning must be found within the first year","Meaning-making is less important than emotional processing"], correct: 1 },
+      { question: "What is the key difference between genuine meaning-making and toxic positivity?", options: ["Toxic positivity is false and meaning-making is true","Genuine meaning-making is grand and philosophical; toxic positivity is modest","Genuine meaning-making emerges organically from within the bereaved person's own framework; toxic positivity is imposed from outside and dismisses the reality of the loss","They are different names for the same process"], correct: 2 },
+      { question: "What is David Kessler's proposed sixth stage of grief?", options: ["Acceptance","Forgiveness","Finding meaning — honouring the person in a way that gives their life and your grief a purpose","Reconstruction"], correct: 2 },
+      { question: "What does David Kessler clarify that 'finding meaning' does NOT mean?", options: ["Finding purpose in continuing to live","Connecting with others who have experienced similar losses","Finding a 'reason' for the loss or being glad it happened","Building a legacy in the person's honour"], correct: 2 },
+      { question: "How does loss commonly clarify values for those who have been bereaved?", options: ["It causes people to focus primarily on achievements","It often leads to a reordering of priorities — relationships over achievements, presence over productivity — and a heightened commitment to what genuinely matters","It makes people less tolerant of others' imperfections","It reduces interest in meaningful activities"], correct: 1 },
+      { question: "What is Robert Neimeyer's 'narrative reconstruction' in grief?", options: ["Writing a memoir about the person who died","Developing a coherent story of the loss — what happened, how it has changed you, what you make of it, how it fits into the larger story of who you are","Reconstructing your daily routine after loss","Reinterpreting the relationship with the deceased"], correct: 1 },
+      { question: "What should a bereaved person be told if they cannot find meaning in their loss?", options: ["They are not grieving correctly","They need more professional support","They are not failing — some losses resist meaning, and bearing honest witness to the loss is itself courageous","They should keep trying until meaning emerges"], correct: 2 },
+      { question: "What is one intimate, specific form of meaning that can emerge from loss?", options: ["Understanding the philosophical reason for death","Accepting that everything happens for a reason","'This loss reminded me what matters most' — a personal shift in perspective or priority that arises from having lived through the experience","Finding a cause to support in the person's name"], correct: 2 },
+      { question: "What does the 'confrontation with mortality' through grief paradoxically produce for some people?", options: ["Permanent fear of death","Avoidance of all situations that carry risk","Greater aliveness — a willingness to take risks, love more openly, and live more deliberately","Detachment from the future"], correct: 2 }
+    ]
+  },
+
+  6: {
+    title: "Living Forward — Grief Without End, Life Without Limit",
+    tutorialVideo: "What It Means to Live With Loss",
+    basicVideo: "Building a New Life That Carries Your Grief",
+    content: `
+      <h2>Week 6: Living Forward — Grief Without End, Life Without Limit</h2>
+      <div class="safety-banner">
+        <h4>🕊️ The End of This Course Is Not the End of Your Grief</h4>
+        <p>This final week does not promise that grief is over. It promises something better: that grief and life can coexist. That you can carry your loss and still build a life of meaning, connection, joy, and love. That the person or thing you have lost can travel with you into your future. You are allowed to live. Fully. Honourably. With them carried inside you.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand grief as something you learn to carry rather than something you complete</li>
+        <li>Recognise post-traumatic growth and the possibility of expansion after loss</li>
+        <li>Develop a sustainable long-term grief practice</li>
+        <li>Honour your loss and your ongoing life simultaneously</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Grief Does Not End — It Changes</h4>
+      <p>One of the most important truths this course can offer is this: grief does not end. If you have truly loved, the loss of that love will always carry some weight. The goal is not to arrive at a place where the grief is gone — it is to arrive at a place where the grief no longer prevents you from living. Where it has changed from a howling storm to a weather system you have learned to move through. Where it coexists with joy, with love, with laughter, with purpose.</p>
+      <ul>
+        <li>Grief changes shape over time — from acute and overwhelming to quieter and more intermittent</li>
+        <li>It does not diminish the love — the persistence of grief is evidence of the love that caused it</li>
+        <li>It does not mean you are "stuck" — it means you loved deeply, and love does not switch off on a schedule</li>
+        <li>Many bereaved people describe grief as something they carry rather than something they move through — a weight that becomes more familiar, more integrated, something they have learned to hold</li>
+      </ul>
+      <h4>2. The Dual Process Model of Grief</h4>
+      <p>Researchers Margaret Stroebe and Henk Schut developed the Dual Process Model of grief, which describes healthy grieving as an oscillation between two orientations:</p>
+      <ul>
+        <li><strong>Loss orientation:</strong> Focusing on the loss — grief work, missing the person, processing the pain. This is necessary and important.</li>
+        <li><strong>Restoration orientation:</strong> Focusing on the rebuilding — attending to the practical demands of life, developing new roles and identities, building a new life. This is also necessary and important.</li>
+        <li>Healthy grieving involves moving between these two orientations — neither staying permanently in grief work, nor suppressing the grief in favour of getting on with life. Rest from grief is not a betrayal. Building a new life is not a betrayal. Both are part of healthy mourning.</li>
+      </ul>
+      <h4>3. Post-Traumatic Growth and Loss</h4>
+      <p>Post-traumatic growth — the positive psychological change that can emerge through the struggle with significant adversity — is well-documented in bereavement. It is important to hold this carefully: not as a requirement, not as a silver lining, not as evidence that the loss was secretly good. But as an honest acknowledgement that some people find, through the furnace of grief, that they have been expanded:</p>
+      <ul>
+        <li>Greater compassion and empathy — having been broken open, they are more available to others' pain</li>
+        <li>Deeper and more authentic relationships — having experienced how fragile and precious connection is</li>
+        <li>Clarified sense of purpose — knowing more clearly what they are here for</li>
+        <li>Increased appreciation for ordinary moments — the mundane revealed as sacred through the experience of its potential absence</li>
+        <li>Spiritual or existential deepening — a more nuanced and hard-won relationship with meaning, faith, and the nature of existence</li>
+        <li>Post-traumatic growth and grief coexist. You can be deeply sad and simultaneously growing. These are not contradictions.</li>
+      </ul>
+      <h4>4. Permission to Live — and to Be Happy</h4>
+      <p>One of the most profound permissions grief survivors need — and are rarely given — is permission to be happy again. To laugh, to fall in love again, to make plans for the future, to feel excited about something, to experience joy without immediately being ambushed by guilt. This permission does not come from the person you have lost — though many bereaved people report sensing that the person they loved would want them to live fully. It comes from you. It is yours to give yourself. Living fully and joyfully is not a betrayal of your grief or your love. It is the highest honour you can offer to the one you have lost: proof that love creates life, even through loss.</p>
+      <h4>5. A Sustainable Grief Practice</h4>
+      <p>As this course ends, the invitation is to design a sustainable, long-term grief practice — a way of continuing to honour your loss, maintain your bond, and support your own ongoing healing, without making grief the entirety of your existence. This practice might include:</p>
+      <ul>
+        <li>A regular ritual of connection — monthly, on anniversaries, on ordinary days that hold meaning</li>
+        <li>A grief container — a designated time each week to be with your grief intentionally</li>
+        <li>A support structure — whether therapy, a grief group, a trusted friend, or this course revisited</li>
+        <li>A legacy practice — continuing to carry their values, tell their stories, or contribute in their name</li>
+        <li>Permission and reminders to oscillate — to grieve and to rest from grieving, to mourn and to live, without guilt in either direction</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: A Letter to Your Future Self</strong><br>
+      Write a letter to yourself one year from now. Tell them what you have learned in these six weeks. Tell them what you hope for them. Give them permission to live fully — and to carry the person they have lost into a life that is still worth living. Seal it and set a reminder to read it in twelve months.</p>
+      <p><strong>Exercise 2: My Sustainable Grief Practice</strong><br>
+      Design your personal ongoing grief practice. Write out specifically: one regular ritual of continuing connection, one regular grief container, one person or resource for ongoing support, and one permission you are giving yourself for joy and rebuilding. This is your grief plan — not for grief to end, but for grief and life to coexist.</p>
+      <p><strong>Exercise 3: The Gratitude of Loss</strong><br>
+      Not the gratitude that minimises — but the honest gratitude for what love gave you, before it was lost. Write about what this person, this relationship, or this experience brought into your life. The specific, irreplaceable gifts. The ways you are different for having loved. This is the gratitude that exists alongside grief and does not contradict it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How has your grief changed — even slightly — since you began this course?</li>
+        <li>What do you know now about yourself and your grief that you didn't know six weeks ago?</li>
+        <li>What permission are you most ready to give yourself — to grieve, to carry them, or to live?</li>
+        <li>What would your person most want for your ongoing life — and is there anything stopping you from giving that to yourself?</li>
+      </ul>
+      <h3>🕊️ A Closing Word</h3>
+      <p>Six weeks ago, you arrived here carrying something heavy. The loss you carry has not disappeared — and it never will, entirely. But you have spent six weeks looking at it honestly, learning its contours, understanding its nature, and beginning the long, brave work of learning to carry it differently. You have learned that grief is love with nowhere to go — and you have found places for it to go: into memory, into ritual, into meaning, into the ongoing bond that death or loss cannot fully sever. You are allowed to grieve. You are allowed to love. You are allowed to live. All three, simultaneously, for the rest of your days. Go gently. Take them with you. And live.</p>
+      <button class="submit-btn" onclick="markComplete(6)">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      { icon: '⚖️', title: 'Dual Process Model Explained',      desc: 'Oscillating between grief and restoration healthily',  file: 'dual-process.pdf' },
+      { icon: '🌱', title: 'Post-Traumatic Growth in Grief',    desc: 'The expansion that can emerge from loss',               file: 'ptg-grief.pdf' },
+      { icon: '📋', title: 'Sustainable Grief Practice Plan',   desc: 'Design your long-term grief and living practice',      file: 'grief-practice-plan.pdf' },
+      { icon: '💌', title: 'Letter to Future Self Template',    desc: 'Write to yourself one year from now',                  file: 'future-self-letter.pdf' },
+      { icon: '🎧', title: 'Living Forward Meditation',         desc: '18-minute guided closing practice for grief and life', file: 'living-forward-audio.mp3' },
+      { icon: '🏆', title: 'Course Completion Certificate',     desc: 'Download your certificate of completion',              file: 'certificate.pdf' }
+    ],
+    assessment: [
+      { question: "What is the most honest description of where grief leads, according to this course?", options: ["Grief ends completely after sufficient time and work","Grief never changes and remains at the same intensity indefinitely","Grief changes shape — from acute and overwhelming to quieter and more integrated — but does not fully end if you have truly loved","Grief ends when you find meaning"], correct: 2 },
+      { question: "What is the Dual Process Model of grief, developed by Stroebe and Schut?", options: ["A model with two stages — sadness and acceptance","The oscillation between loss orientation (grief work) and restoration orientation (rebuilding life) — both necessary and neither a betrayal of the other","A model for grieving two losses simultaneously","A dual-therapy approach combining individual and group work"], correct: 1 },
+      { question: "What does 'loss orientation' in the Dual Process Model involve?", options: ["Focusing on the future","Developing new roles and identities after loss","Grief work — missing the person, processing pain, focusing on the loss itself","Attending to the practical demands of life"], correct: 2 },
+      { question: "What does 'restoration orientation' in the Dual Process Model involve?", options: ["Returning to how life was before the loss","Attending to practical life demands, developing new roles and identities, building a new life — while oscillating with grief work","Restoring the relationship with the deceased","Only available after grief work is complete"], correct: 1 },
+      { question: "What is the important caveat about post-traumatic growth in grief?", options: ["It only occurs for those with religious faith","It means the loss was secretly good or that growth justifies the loss","It is to be held carefully — not as a requirement or silver lining, but as an honest acknowledgement that some people are expanded by the furnace of grief, while grief and growth coexist","It requires professional guidance to occur"], correct: 2 },
+      { question: "What permission does this week identify that grief survivors most rarely receive?", options: ["Permission to grieve publicly","Permission to take as long as they need","Permission to be happy again — to laugh, to fall in love, to make plans, to feel joy without guilt","Permission to speak about their loss"], correct: 2 },
+      { question: "Why is living fully and joyfully described as 'the highest honour' for the person lost?", options: ["Because it proves the grief is over","Because it is proof that love creates life even through loss — not a betrayal of grief or the person, but its expression","Because the deceased would prefer it","Because joyful living attracts more supportive people"], correct: 1 },
+      { question: "What is a 'legacy practice' in a sustainable grief practice?", options: ["Preserving the deceased's material possessions","Only attending memorial events","Continuing to carry the person's values, tell their stories, or contribute in their name — keeping their influence alive in the world","A formal memorial organised by the family"], correct: 2 },
+      { question: "What does the phrase 'grief is love with nowhere to go' mean in the context of this course?", options: ["Grief is caused by love being misdirected","Grief only affects people who loved deeply","The weight of grief is evidence of the love that caused it — and this course has helped find places for that love to go: memory, ritual, meaning, and continuing bond","Grief should eventually be redirected toward new people"], correct: 2 },
+      { question: "What is the core message of this course's closing to the student?", options: ["The grief should be resolved by now","Moving on from loss is the goal of all grief work","You are allowed to grieve, to love, and to live — all three simultaneously, for the rest of your days — carrying them with you as you go","This course is the final step in healing your grief"], correct: 2 }
+    ]
+  }
+
+}; // end weekData
+</script>
+</body>
+</html>
