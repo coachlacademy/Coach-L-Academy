@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anxiety Management Toolkit - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+
+  .user-info { display: flex; align-items: center; gap: 15px; }
+
+  .avatar {
+    width: 45px; height: 45px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: bold;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+
+  .progress-overview {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .progress-stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; padding: 20px; border-radius: 12px; text-align: center;
+  }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+
+  .progress-bar {
+    width: 100%; height: 25px; background: #e0e0e0;
+    border-radius: 15px; overflow: hidden; margin: 20px 0;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px; transition: width 0.5s ease;
+    display: flex; align-items: center; justify-content: flex-end;
+    padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem;
+    min-width: 45px;
+  }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    border-bottom: 2px solid #e0e0e0; flex-wrap: wrap;
+  }
+
+  .tab {
+    padding: 12px 25px; background: white; border: none;
+    border-radius: 10px 10px 0 0; cursor: pointer;
+    font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease;
+  }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+
+  .module-selector {
+    display: flex; gap: 10px; margin-bottom: 30px;
+    overflow-x: auto; padding-bottom: 10px;
+  }
+
+  .module-btn {
+    padding: 12px 25px; background: white;
+    border: 2px solid #667eea; border-radius: 25px;
+    cursor: pointer; font-size: 1rem; font-weight: 600;
+    color: #667eea; white-space: nowrap; transition: all 0.3s ease;
+  }
+  .module-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border-color: transparent;
+  }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+
+  .video-section {
+    background: white; border-radius: 15px; padding: 25px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .video-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 25px; margin-top: 20px;
+  }
+
+  .video-player {
+    background: #000; border-radius: 12px; overflow: hidden;
+    position: relative; padding-top: 56.25%;
+  }
+
+  .video-placeholder {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #434343 0%, #000000 100%);
+  }
+
+  .play-btn {
+    width: 70px; height: 70px;
+    background: rgba(102, 126, 234, 0.9); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+
+  .lesson-content {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+
+  .assessment-section {
+    background: white; border-radius: 15px; padding: 30px;
+    margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  }
+
+  .quiz-question {
+    background: #f8f9fa; padding: 20px; border-radius: 12px;
+    margin-bottom: 20px; border-left: 4px solid #667eea;
+  }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+
+  .quiz-option {
+    padding: 12px 20px; background: white; border: 2px solid #e0e0e0;
+    border-radius: 8px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+
+  .submit-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; border: none; border-radius: 25px;
+    font-size: 1.1rem; font-weight: 600; cursor: pointer;
+    transition: all 0.3s ease; margin-top: 20px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+
+  .already-passed-notice {
+    background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px;
+    padding: 20px; margin-bottom: 20px; text-align: center;
+  }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+
+  .safety-banner {
+    background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%);
+    border: 2px solid #764ba2; border-radius: 12px;
+    padding: 20px; margin-bottom: 25px;
+  }
+  .safety-banner h4 { color: #764ba2; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+
+  .resources-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px; margin-top: 20px;
+  }
+
+  .resource-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease;
+    cursor: pointer; border: 2px solid transparent;
+  }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+
+  .resource-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem; margin-bottom: 15px;
+  }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+
+  .download-badge {
+    display: inline-block; padding: 5px 12px; background: #4caf50;
+    color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px;
+  }
+
+  .admin-btn {
+    position: fixed; bottom: 30px; right: 30px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white; border: none; border-radius: 50px;
+    font-size: 1rem; font-weight: 600; cursor: pointer;
+    box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease;
+  }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+
+  @media (max-width: 768px) {
+    .header-content { flex-direction: column; gap: 15px; text-align: center; }
+    .video-grid { grid-template-columns: 1fr; }
+    .module-selector { flex-wrap: wrap; }
+    .resources-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex; align-items:center; gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Anxiety Management Toolkit</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Name Input Modal -->
+<div id="nameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center;">
+  <div style="background:white; padding:40px; border-radius:20px; max-width:500px; width:90%; text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Anxiety Management Toolkit</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin building your personalised anxiety toolkit:</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Build My Toolkit 🧰</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Persistent Safety Banner -->
+  <div class="safety-banner">
+    <h4>🧰 Your Practical Anxiety Toolkit — Evidence-Based and Always at Your Pace</h4>
+    <p>This course provides research-backed, practical tools for managing anxiety, panic, and an overactive nervous system. If you experience severe anxiety, panic disorder, or are in crisis, please seek professional support alongside this course. <strong>Crisis Text Line</strong> — text HOME to 741741 | <strong>988 Suicide &amp; Crisis Lifeline</strong>. If you have a diagnosed anxiety disorder, this course complements — but does not replace — treatment from a qualified mental health professional.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat-card">
+        <h3 id="modulesComplete">0/6</h3>
+        <p>Modules Completed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);">
+        <h3 id="lessonsViewed">0/12</h3>
+        <p>Lessons Viewed</p>
+      </div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);">
+        <h3 id="assessmentsPassed">0/6</h3>
+        <p>Assessments Passed</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content', this)">Content</button>
+    <button class="tab" onclick="showTab('resources', this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment', this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn"        onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn"        onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn"        onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn"        onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn"        onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <!-- Content Tab -->
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('tutorial', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player">
+            <div class="video-placeholder">
+              <div class="play-btn" onclick="playVideo('basic', currentWeek)"></div>
+            </div>
+          </div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <!-- Resources Tab -->
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <!-- Assessment Tab -->
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <!-- One-on-One Session Section -->
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalized guidance and support.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your specific situation.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera; microphone; fullscreen; display-capture; autoplay"
+          style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'Anxiety Management Toolkit';
+const TOTAL_WEEKS      = 6;
+const STORAGE_PREFIX   = 'coachL_AMT_'; // unique per course
+
+// ============================================================
+// STATE
+// ============================================================
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+
+let completedWeeks = new Set(
+  JSON.parse(localStorage.getItem(STORAGE_PREFIX + 'completedWeeks') || '[]')
+);
+
+function saveCompletedWeeks() {
+  localStorage.setItem(STORAGE_PREFIX + 'completedWeeks', JSON.stringify([...completedWeeks]));
+}
+
+// ============================================================
+// BOOT
+// ============================================================
+window.onload = function () {
+  const savedName  = localStorage.getItem('studentName');
+  const savedEmail = localStorage.getItem('studentEmail');
+  if (savedName && savedEmail) {
+    studentInfo.name  = savedName;
+    studentInfo.email = savedEmail;
+    updateUserDisplay();
+  } else {
+    document.getElementById('nameModal').style.display = 'flex';
+  }
+  updateProgress();
+  refreshModuleButtons();
+  const firstIncomplete = [1,2,3,4,5,6].find(w => !completedWeeks.has(w)) || 1;
+  selectModule(firstIncomplete);
+};
+
+// ============================================================
+// USER INFO
+// ============================================================
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+function saveUserInfo() {
+  const name  = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('studentEmail').value.trim();
+  if (!name)                { alert('Please enter your full name.'); return; }
+  if (!email)               { alert('Please enter your email address.'); return; }
+  if (!isValidEmail(email)) {
+    alert('⚠️ "' + email + '" doesn\'t look like a valid email address.\n\nExample: yourname@gmail.com');
+    document.getElementById('studentEmail').focus();
+    return;
+  }
+  studentInfo.name  = name;
+  studentInfo.email = email;
+  localStorage.setItem('studentName', name);
+  localStorage.setItem('studentEmail', email);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateEmail() {
+  const current  = localStorage.getItem('studentEmail') || '';
+  const newEmail = prompt('Update your email address:', current);
+  if (newEmail === null) return;
+  if (!isValidEmail(newEmail.trim())) { alert('⚠️ That doesn\'t look like a valid email. Please try again.'); return; }
+  studentInfo.email = newEmail.trim();
+  localStorage.setItem('studentEmail', newEmail.trim());
+  alert('✅ Email updated to: ' + newEmail.trim());
+}
+
+function updateUserDisplay() {
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent   = 'Welcome, ' + studentInfo.name + '!';
+}
+
+// ============================================================
+// MODULE BUTTONS
+// ============================================================
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1;
+    btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) {
+      btn.classList.add('completed');
+      btn.textContent = 'Week ' + w + ' ✓';
+    } else {
+      btn.textContent = 'Week ' + w;
+    }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) {
+  currentWeek = week;
+  refreshModuleButtons();
+  updateWeekContent();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+}
+
+// ============================================================
+// CONTENT RENDERING
+// ============================================================
+function updateWeekContent() {
+  const week = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent      = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent  = 'Tutorial: ' + week.tutorialVideo;
+  document.getElementById('basicTitle').textContent     = 'Basic Learning: ' + week.basicVideo;
+  document.getElementById('lessonContent').innerHTML    = week.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML    = week.resources.map(r => `
+    <div class="resource-card" onclick="downloadResource('${r.file}', '${r.title}')">
+      <div class="resource-icon">${r.icon}</div>
+      <h4>${r.title}</h4>
+      <p>${r.desc}</p>
+      <span class="download-badge">📥 Download</span>
+    </div>
+  `).join('');
+  renderAssessment();
+}
+
+// ============================================================
+// ASSESSMENT
+// ============================================================
+function renderAssessment() {
+  const week   = weekData[currentWeek];
+  const passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+
+  if (passed) {
+    html += `
+      <div class="already-passed-notice">
+        <h3>✅ You already passed this week!</h3>
+        <p>Great work! Your score has been recorded. You can review any week's content freely at any time.</p>
+      </div>`;
+  } else {
+    html += `<p style="margin-bottom:30px;color:#666;">Test your understanding of this week's material. You need 70% to pass.</p>`;
+  }
+
+  week.assessment.forEach((q, i) => {
+    html += `
+      <div class="quiz-question">
+        <h4>Question ${i + 1}: ${q.question}</h4>
+        <div class="quiz-options">
+          ${q.options.map((opt, j) => `
+            <label class="quiz-option">
+              <input type="radio" name="q${i}" value="${j}" ${passed ? 'disabled' : ''}>
+              ${opt}
+            </label>
+          `).join('')}
+        </div>
+      </div>`;
+  });
+
+  if (!passed) html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+  const week      = weekData[currentWeek];
+  let correct     = 0, answers = [], allAnswered = true;
+  week.assessment.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (!selected) { allAnswered = false; return; }
+    const userAnswer = parseInt(selected.value);
+    const isCorrect  = userAnswer === q.correct;
+    if (isCorrect) correct++;
+    answers.push({ question: q.question, userAnswer: q.options[userAnswer], correctAnswer: q.options[q.correct], isCorrect });
+  });
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+  const score  = Math.round((correct / week.assessment.length) * 100);
+  const passed = score >= 70;
+  submitToGoogleSheets(currentWeek, score, correct, week.assessment.length, answers, passed);
+  if (passed) {
+    completedWeeks.add(currentWeek);
+    saveCompletedWeeks();
+    updateProgress();
+    refreshModuleButtons();
+    renderAssessment();
+    if (currentWeek < TOTAL_WEEKS) {
+      alert(`🎉 Congratulations! You passed with ${score}%!\n\n${correct}/${week.assessment.length} correct.\n\nContinue to Week ${currentWeek + 1} whenever you're ready.`);
+    } else {
+      alert(`🏆 You've completed the entire course with ${score}%!\n\nYour certificate is being generated and will be emailed to you. 🎓`);
+    }
+  } else {
+    alert(`You scored ${score}% (${correct}/${week.assessment.length} correct).\n\nYou need 70% to pass. Review the material and try again — you've got this!`);
+  }
+}
+
+// ============================================================
+// GOOGLE SHEETS SUBMISSION
+// ============================================================
+function submitToGoogleSheets(week, score, correct, total, answers, passed) {
+  const payload = {
+    secretKey: SECRET_KEY, timestamp: new Date().toLocaleString(),
+    studentName: studentInfo.name, studentEmail: studentInfo.email,
+    courseName: COURSE_NAME, week, score, correct, total,
+    passed: passed ? 'YES' : 'NO', detailedAnswers: JSON.stringify(answers)
+  };
+  fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(() => console.log('✅ Submitted')).catch(err => console.error('❌ Error:', err));
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  all.push({ ...payload, answers });
+  localStorage.setItem('assessmentResults', JSON.stringify(all));
+}
+
+// ============================================================
+// PROGRESS
+// ============================================================
+function updateProgress() {
+  const done = completedWeeks.size;
+  const pct  = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width       = pct + '%';
+  document.getElementById('progressBar').textContent       = pct + '%';
+  document.getElementById('modulesComplete').textContent   = done + '/' + TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent     = (done * 2) + '/' + (TOTAL_WEEKS * 2);
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function playVideo(type, week) {
+  alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed (YouTube, Vimeo, etc.).`);
+}
+function markComplete(week) {
+  showTab('assessment', document.querySelectorAll('.tab')[2]);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function downloadResource(file, title) {
+  fetch('resources/' + file, { method: 'HEAD' })
+    .then(r => {
+      if (r.ok) {
+        const a = document.createElement('a');
+        a.href = 'resources/' + file; a.download = file; a.target = '_blank';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      } else { alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'); }
+    })
+    .catch(() => alert('📁 ' + title + '\n\nAdd "' + file + '" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall() {
+  const iframe = document.getElementById('jitsiFrame');
+  const room   = 'coachL-' + (studentInfo.email || 'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display = 'block';
+  document.getElementById('videoCallContainer').scrollIntoView({ behavior: 'smooth' });
+}
+function endVideoCall() {
+  if (confirm('Are you sure you want to end the session?')) {
+    document.getElementById('jitsiFrame').src = '';
+    document.getElementById('videoCallContainer').style.display = 'none';
+  }
+}
+function viewAllResults() {
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!all.length) { alert('No assessment results yet.'); return; }
+  const rows = all.map((r, i) => `
+    <div class="result-card ${r.passed === 'YES' ? 'passed' : 'failed'}">
+      <h2>Submission #${i+1} — ${r.passed === 'YES' ? '✅ PASSED' : '❌ FAILED'}</h2>
+      <p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p>
+      <p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p>
+      <p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p>
+      <div class="details"><h3>Detailed Answers:</h3><table>
+        <tr><th>Question</th><th>Student Answer</th><th>Correct Answer</th><th>Result</th></tr>
+        ${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}
+      </table></div>
+    </div>`).join('');
+  const win = window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>
+    body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}
+    .result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}
+    .passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}
+    .details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}
+    table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}
+    th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}
+  </style></head><body><h1>📊 Results – Coach L Academy</h1>
+  <p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>
+  ${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Anxiety Management Toolkit (6 weeks, 10 Qs each)
+// ============================================================
+const weekData = {
+
+  1: {
+    title: "Understanding Anxiety — Your Nervous System Is Not Broken",
+    tutorialVideo: "What Anxiety Actually Is (And Why You Have It)",
+    basicVideo: "The Neuroscience of Anxiety Made Simple",
+    content: `
+      <h2>Week 1: Understanding Anxiety — Your Nervous System Is Not Broken</h2>
+      <div class="safety-banner">
+        <h4>🧰 Start Here: Understanding Before Fixing</h4>
+        <p>Before any tool works, you need to understand what you are working with. This week lays the foundation — why anxiety exists, what it does to your body, and why your nervous system is not broken. Understanding anxiety is the first step to managing it.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand anxiety as a protective, biological system — not a disorder of character</li>
+        <li>Learn the neuroscience of the threat response: what happens in the brain and body</li>
+        <li>Identify the different types and presentations of anxiety</li>
+        <li>Begin to approach your anxiety with curiosity rather than shame or fear</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Anxiety Is — And Why You Have It</h4>
+      <p>Anxiety is not a malfunction. It is an ancient, sophisticated alarm system designed to protect you from threat. For hundreds of thousands of years, the humans who survived were the ones whose nervous systems were wired to detect danger quickly — to mobilise the body for fight, flight, or freeze before the conscious mind had time to deliberate. That alarm system is still running in you today. The problem is not that you have it. The problem is that it is often miscalibrated — firing in the absence of genuine threat, treating a difficult conversation or a crowded room as if it were a predator.</p>
+      <ul>
+        <li>Anxiety exists on a spectrum — from helpful, motivating alertness to paralyzing, debilitating fear</li>
+        <li>Some anxiety is adaptive: it sharpens focus, accelerates response time, and motivates preparation</li>
+        <li>Anxiety becomes problematic when it is chronic, disproportionate to actual threat, or when it significantly interferes with daily functioning</li>
+        <li>Having anxiety does not mean you are weak, defective, or broken — it means you have a nervous system that has learned, for understandable reasons, to be on high alert</li>
+      </ul>
+      <h4>2. The Brain and Anxiety — The Amygdala Alarm</h4>
+      <p>At the centre of the anxiety response is the amygdala — a small, almond-shaped structure deep in the brain that acts as the threat detector. Understanding what the amygdala does explains almost everything about why anxiety feels the way it does:</p>
+      <ul>
+        <li><strong>Threat detection:</strong> The amygdala scans constantly for danger — faster than conscious thought. It can trigger a threat response before you are even aware of what triggered it.</li>
+        <li><strong>The stress hormone cascade:</strong> Once the amygdala fires, it triggers the release of adrenaline (epinephrine) and cortisol — which prepare the body for survival: heart rate increases, breathing quickens, muscles tense, digestion pauses, vision narrows.</li>
+        <li><strong>Prefrontal cortex goes offline:</strong> During high anxiety, the rational, planning brain (prefrontal cortex) has reduced activity. This is why anxious thinking is often catastrophic, all-or-nothing, and difficult to reason your way out of — the reasoning brain is literally less available.</li>
+        <li><strong>Sensitisation:</strong> When the amygdala fires frequently, it becomes more sensitive — more easily triggered. This is why anxiety can worsen over time without intervention: the alarm becomes hair-trigger.</li>
+        <li><strong>The good news — neuroplasticity:</strong> The amygdala can also be recalibrated. With consistent practice, new neural pathways can reduce its reactivity. The brain that learned anxiety can un-learn it — or at least learn to respond to it differently.</li>
+      </ul>
+      <h4>3. The Physical Language of Anxiety</h4>
+      <p>Anxiety is not primarily a thought — it is a physical event. Understanding the body's anxiety responses makes them less frightening:</p>
+      <ul>
+        <li><strong>Racing heart:</strong> Pumping blood faster to muscles in preparation for action</li>
+        <li><strong>Rapid, shallow breathing:</strong> Taking in more oxygen for the anticipated physical effort</li>
+        <li><strong>Muscle tension:</strong> Preparing to fight or run</li>
+        <li><strong>Sweating:</strong> Cooling the body in anticipation of physical exertion</li>
+        <li><strong>Nausea / digestive disruption:</strong> Digestion is paused as energy redirects to muscles</li>
+        <li><strong>Dizziness / tingling:</strong> Often caused by hyperventilation — breathing too fast, lowering CO2 levels</li>
+        <li><strong>Sense of unreality (derealisation):</strong> A dissociative response the brain can use when threat feels overwhelming</li>
+        <li>Every physical symptom of anxiety is your body doing exactly what it was designed to do. The symptoms are not dangerous. They are preparatory. They feel terrible, but they are not harmful.</li>
+      </ul>
+      <h4>4. Types of Anxiety</h4>
+      <p>Anxiety presents in many forms. Recognising yours is essential for choosing the right tools:</p>
+      <ul>
+        <li><strong>Generalised Anxiety:</strong> Persistent, free-floating worry across many areas of life — "what if" thinking that cycles without resolution</li>
+        <li><strong>Social Anxiety:</strong> Intense fear of social situations — of judgment, humiliation, or scrutiny by others</li>
+        <li><strong>Panic Disorder:</strong> Recurrent unexpected panic attacks — sudden surges of intense physical anxiety symptoms — often accompanied by fear of the panic itself</li>
+        <li><strong>Health Anxiety:</strong> Preoccupation with illness and physical symptoms, interpreting normal sensations as signs of serious disease</li>
+        <li><strong>Specific Phobias:</strong> Intense fear of specific objects or situations — spiders, heights, flying, needles</li>
+        <li><strong>OCD (Obsessive-Compulsive patterns):</strong> Intrusive thoughts driving compulsive behaviours intended to neutralise anxiety</li>
+        <li><strong>High-functioning anxiety:</strong> Anxiety that drives high achievement and appears competent from the outside, while internally the person is in constant dread and overdrive</li>
+      </ul>
+      <h4>5. Moving from Fear of Anxiety to Curiosity About It</h4>
+      <p>One of the most important — and counterintuitive — shifts in anxiety management is moving from a relationship of fear and resistance toward one of curiosity and understanding. When you fear your anxiety, you add a second layer of threat: anxiety about the anxiety. This compounds it. When you become curious — "what is my nervous system trying to tell me right now?" — you reduce the second layer and create space to respond rather than react.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Anxiety Mapping</strong><br>
+      Map your anxiety: When does it most commonly arise? In what situations, relationships, or contexts? What physical sensations do you notice? What thoughts typically accompany it? What do you typically do in response? This map is your baseline — the starting point for everything that follows.</p>
+      <p><strong>Exercise 2: The Body Scan for Anxiety</strong><br>
+      When anxiety is present, spend 5 minutes scanning your body from head to feet. Notice where the anxiety lives physically — tight chest, tense shoulders, churning stomach? Simply notice, without trying to change anything. Naming where anxiety lives in the body reduces its intensity and creates a small but important moment of observation rather than reaction.</p>
+      <p><strong>Exercise 3: The Curiosity Reframe</strong><br>
+      Next time anxiety arises this week, instead of "Why is this happening to me?" try: "What is my nervous system trying to protect me from right now?" Write down what you notice. Is the threat real? Is it present? Is it proportionate? This is not dismissing the anxiety — it is beginning to understand it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What type of anxiety do you most recognise in yourself?</li>
+        <li>What physical sensations are most prominent when you are anxious — and can you now understand what each one is doing?</li>
+        <li>What stories or beliefs do you carry about having anxiety — and are they accurate?</li>
+        <li>What would it mean to approach your anxiety with curiosity rather than fear?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(1)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🧠', title: 'Anxiety Neuroscience Guide',        desc: 'The amygdala, stress hormones, and the threat response', file: 'anxiety-neuroscience.pdf' },
+      { icon: '🗺', title: 'Anxiety Mapping Worksheet',         desc: 'Chart your personal anxiety triggers and patterns',    file: 'anxiety-mapping.pdf' },
+      { icon: '📋', title: 'Types of Anxiety Reference Card',   desc: 'Identify your anxiety presentation clearly',           file: 'anxiety-types.pdf' },
+      { icon: '🫀', title: 'Physical Symptoms Explained',       desc: 'What every anxiety symptom is actually doing',         file: 'symptoms-guide.pdf' },
+      { icon: '🎧', title: 'Introduction to Calm Meditation',   desc: '10-minute guided practice for nervous system awareness', file: 'intro-calm-audio.mp3' },
+      { icon: '🆘', title: 'Anxiety Support Resources',         desc: 'Professional support, apps, and crisis helplines',     file: 'anxiety-support.pdf' }
+    ],
+    assessment: [
+      { question: "What is the primary purpose of anxiety from an evolutionary perspective?", options: ["To signal weakness or mental illness","An ancient alarm system designed to detect and respond to threat — protecting survival","To prevent people from taking risks","A modern response to the complexity of contemporary life"], correct: 1 },
+      { question: "What is the amygdala's role in anxiety?", options: ["It is the part of the brain that controls rational thinking","It acts as the threat detector — scanning constantly for danger and triggering the stress response faster than conscious thought","It produces serotonin, which regulates mood","It controls memory storage and retrieval"], correct: 1 },
+      { question: "Why does anxious thinking often feel catastrophic and difficult to reason with?", options: ["Because anxious people are generally less rational","Because during high anxiety, activity in the prefrontal cortex (rational thinking brain) is reduced — making reasoned thinking less available","Because anxiety distorts memory","Because the amygdala suppresses serotonin"], correct: 1 },
+      { question: "What is amygdala sensitisation?", options: ["A therapeutic technique for reducing anxiety","The process by which frequent amygdala firing makes it more easily triggered over time — causing anxiety to worsen without intervention","A medical condition requiring medication","The amygdala becoming less sensitive after repeated exposures"], correct: 1 },
+      { question: "What causes the dizziness and tingling often experienced during anxiety?", options: ["Reduced blood flow to the brain","A sign that something is medically wrong","Often caused by hyperventilation — breathing too rapidly lowers CO2 levels, causing these sensations","Adrenaline directly affecting the nervous system"], correct: 2 },
+      { question: "What is 'high-functioning anxiety'?", options: ["Mild anxiety that is easy to manage","Anxiety that is well-controlled through medication","Anxiety that drives high achievement and appears competent from the outside, while the person internally lives in constant dread and overdrive","A clinical diagnosis used by therapists"], correct: 2 },
+      { question: "What is neuroplasticity's relevance to anxiety management?", options: ["It proves anxiety is permanent and unchangeable","The brain that learned anxiety can develop new neural pathways — the amygdala can be recalibrated through consistent practice","Neuroplasticity only applies to learning new skills","It means anxiety gets worse with age"], correct: 1 },
+      { question: "Why does nausea and digestive disruption occur during anxiety?", options: ["The body is allergic to the stress hormones released","Digestion is paused as the body redirects energy to muscles for survival action","Adrenaline directly affects the stomach lining","Anxiety reduces the production of digestive enzymes"], correct: 1 },
+      { question: "What is the key shift this week encourages in your relationship with anxiety?", options: ["From acceptance to avoidance","From curiosity to suppression","From fear and resistance toward curiosity — asking 'what is my nervous system trying to protect me from?' rather than fearing the anxiety itself","From emotional response to pure logic"], correct: 2 },
+      { question: "What does 'anxiety about anxiety' mean and why is it problematic?", options: ["It is the technical term for panic disorder","It is a healthy early warning system","Fearing your own anxiety adds a second layer of threat, compounding the original anxiety and making it harder to manage","It only affects people with severe anxiety disorders"], correct: 2 }
+    ]
+  },
+
+  2: {
+    title: "Breathwork and Immediate Calming Tools",
+    tutorialVideo: "Your Breath Is Your Fastest Anxiety Tool",
+    basicVideo: "Five Breathing Techniques That Actually Work",
+    content: `
+      <h2>Week 2: Breathwork and Immediate Calming Tools</h2>
+      <div class="safety-banner">
+        <h4>🧰 Your First-Response Toolkit</h4>
+        <p>This week is entirely practical. Every technique here is a tool you can use in the moment — during a panic attack, in a difficult meeting, before a hard conversation, or when anxiety spikes unexpectedly. Practice these daily, even when you don't feel anxious. The nervous system learns through repetition.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why breathing is the fastest and most direct tool for regulating the nervous system</li>
+        <li>Master five evidence-based breathing techniques for anxiety reduction</li>
+        <li>Learn additional immediate calming tools including grounding and cold water</li>
+        <li>Build a personal first-response protocol for anxiety spikes</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Breathing Works — The Vagus Nerve</h4>
+      <p>Breathing is the only autonomic function you can consciously control — and that makes it uniquely powerful. The vagus nerve, the longest cranial nerve in the body, connects the brain to the heart, lungs, and gut. When you breathe slowly and deeply — particularly when you extend the exhale — you stimulate the vagus nerve, which activates the parasympathetic nervous system (the "rest and digest" branch) and directly counteracts the sympathetic "fight or flight" activation of anxiety.</p>
+      <ul>
+        <li>The inhale activates the sympathetic nervous system slightly — it is energising</li>
+        <li>The exhale activates the parasympathetic nervous system — it is calming</li>
+        <li>A longer exhale than inhale is the single most reliable physiological signal to the nervous system that it is safe to calm down</li>
+        <li>This is not a placebo or a distraction technique — it is direct physiological intervention in the anxiety cycle</li>
+        <li>Heart Rate Variability (HRV) — the variation in time between heartbeats — is increased by slow, deep breathing and is one of the best measurable indicators of a calm, flexible nervous system</li>
+      </ul>
+      <h4>2. Five Evidence-Based Breathing Techniques</h4>
+      <p><strong>Technique 1 — Extended Exhale (4:8):</strong> Breathe in through the nose for 4 counts. Breathe out through the mouth for 8 counts. Repeat 5–10 times. This is the simplest and most universally effective. The doubled exhale reliably activates the parasympathetic system. Use anywhere, anytime.</p>
+      <p><strong>Technique 2 — Box Breathing (4:4:4:4):</strong> Breathe in for 4 counts. Hold for 4. Breathe out for 4. Hold for 4. Repeat 4–6 cycles. Used by military special forces and emergency responders. Particularly effective for bringing acute anxiety under control quickly. The holds add a small amount of CO2 which further calms the system.</p>
+      <p><strong>Technique 3 — Physiological Sigh:</strong> Take a double inhale through the nose (a normal inhale, then a small secondary sniff to fully inflate the lungs). Then a long, slow exhale through the mouth. This technique — researched at Stanford — is the fastest single-breath reset for acute anxiety. The double inhale reinflates the alveoli (air sacs in the lungs that collapse under stress) and the long exhale dumps CO2 rapidly.</p>
+      <p><strong>Technique 4 — Resonance Breathing (5.5:5.5):</strong> Breathe in for 5.5 seconds, out for 5.5 seconds — approximately 5–6 breaths per minute. Research shows this rate maximises HRV and produces profound calm. Use for longer practice sessions (10–20 minutes) to recalibrate baseline anxiety.</p>
+      <p><strong>Technique 5 — Alternate Nostril Breathing (Nadi Shodhana):</strong> Close the right nostril with the right thumb. Inhale through the left nostril. Close the left nostril with the ring finger. Release the right nostril, exhale through it. Inhale through the right. Close right. Exhale left. This is one complete cycle — continue for 5–10 cycles. Research supports its effectiveness for reducing anxiety and balancing nervous system activity.</p>
+      <h4>3. The 5-4-3-2-1 Grounding Technique</h4>
+      <p>When anxiety is acute and breathing alone isn't breaking through, grounding techniques bring the attention back to the present moment — which is almost never as dangerous as the anxious mind believes. 5-4-3-2-1 works by engaging all five senses:</p>
+      <ul>
+        <li>Name <strong>5 things you can see</strong> — describe them in detail</li>
+        <li>Name <strong>4 things you can physically feel</strong> — the chair, your feet on the floor, the texture of your clothing</li>
+        <li>Name <strong>3 things you can hear</strong> — near and distant sounds</li>
+        <li>Name <strong>2 things you can smell</strong> — or two things you like the smell of</li>
+        <li>Name <strong>1 thing you can taste</strong></li>
+        <li>The exercise works by flooding the sensory cortex with present-moment information, displacing the anxious narrative with concrete, immediate reality</li>
+      </ul>
+      <h4>4. Cold Water and the Dive Reflex</h4>
+      <p>Splashing cold water on the face — particularly around the eyes and forehead — or submerging the face briefly in cold water activates the mammalian dive reflex. This evolutionary response slows the heart rate, reduces blood pressure, and shifts the nervous system toward calm within seconds. It is used in Dialectical Behaviour Therapy (DBT) as the "Temperature" component of TIPP skills. This technique works best for moderate-to-high acute anxiety and is one of the fastest physiological interventions available.</p>
+      <h4>5. Progressive Muscle Relaxation (PMR)</h4>
+      <p>Progressive Muscle Relaxation involves systematically tensing and then releasing muscle groups throughout the body. The physiological logic: anxiety produces chronic muscle tension; deliberately tensing a muscle to its maximum and then releasing it produces a rebound relaxation deeper than the muscle was before the exercise. A full PMR session takes 15–20 minutes and covers all major muscle groups from feet to face. A shortened version targeting just the hands, shoulders, and face can be done in under 3 minutes and used discreetly in most situations.</p>
+      <h4>6. Building Your First-Response Protocol</h4>
+      <p>The goal of this week is to build your personal first-response protocol — a sequenced set of 2–3 tools you will use when anxiety spikes. The sequence matters: choose your fastest tool first (physiological sigh or cold water), then follow with a sustained technique (extended exhale or box breathing), then anchor with grounding (5-4-3-2-1) if needed. Having a protocol means you don't have to think when anxiety is high — you simply execute the plan.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Daily Breathing Practice</strong><br>
+      Choose one breathing technique from this week and practise it daily for 5 minutes — whether or not you feel anxious. Morning practice is most effective for recalibrating baseline nervous system tone. Keep a simple log: technique used, duration, how you felt before and after. After one week, you will have data to determine which technique works best for you.</p>
+      <p><strong>Exercise 2: The Panic Drill</strong><br>
+      When you are calm, practise your first-response protocol as if you were anxious. Run through it deliberately: physiological sigh → box breathing → 5-4-3-2-1. Practice it until the sequence is automatic. When anxiety is high, you will not have to remember what to do — your body will already know.</p>
+      <p><strong>Exercise 3: Build Your Protocol Card</strong><br>
+      Write a personal protocol card — a simple, 3-step card listing your chosen tools in order. Keep it in your phone notes, wallet, or taped somewhere accessible. At the top, write: "I am safe. These symptoms are temporary. Here is what I do next."</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which breathing technique felt most natural or effective for you when you tried it?</li>
+        <li>What does your anxiety typically feel like at the moment it spikes — and which first-response tool would most help in that moment?</li>
+        <li>Have you ever instinctively done something that calmed your anxiety (deep breath, cold water, walking)? Can you now see why it worked?</li>
+        <li>What is the biggest barrier to using your toolkit in the moment — and how can you prepare for that barrier?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(2)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '💨', title: 'Five Breathing Techniques Guide',   desc: 'Step-by-step instructions for all five techniques',   file: 'breathing-guide.pdf' },
+      { icon: '🧊', title: 'Cold Water & Dive Reflex Guide',   desc: 'How and when to use the temperature technique',       file: 'cold-water-guide.pdf' },
+      { icon: '💪', title: 'Progressive Muscle Relaxation',    desc: 'Full and shortened PMR scripts for daily use',         file: 'pmr-guide.pdf' },
+      { icon: '🗺', title: 'First-Response Protocol Template', desc: 'Build your personalised anxiety toolkit card',         file: 'protocol-card.pdf' },
+      { icon: '🎧', title: 'Box Breathing Audio Guide',        desc: '10-minute guided box breathing practice',              file: 'box-breathing-audio.mp3' },
+      { icon: '📚', title: 'Breathwork Research Reading',      desc: 'The science behind breathing for anxiety management',  file: 'breathwork-reading.pdf' }
+    ],
+    assessment: [
+      { question: "Why is breathing the fastest tool for regulating the nervous system during anxiety?", options: ["It is the only technique that requires no equipment","Breathing is the only autonomic function you can consciously control — allowing direct voluntary activation of the parasympathetic system via the vagus nerve","It distracts the mind from anxious thoughts","It increases oxygen levels, which reduces anxiety"], correct: 1 },
+      { question: "Why is a longer exhale than inhale particularly effective for reducing anxiety?", options: ["The exhale eliminates more carbon dioxide, which causes anxiety","A longer exhale activates the parasympathetic nervous system — the single most reliable physiological signal to the nervous system that it is safe to calm down","Longer exhales increase heart rate variability by itself","The exhale activates the sympathetic nervous system"], correct: 1 },
+      { question: "What is box breathing and why is it used by military and emergency responders?", options: ["A relaxation technique involving visualising a safe box","Breathing in for 4, holding for 4, out for 4, holding for 4 — effective for bringing acute anxiety under rapid control","A breathing pattern of 4 in, 4 out with no holds","A technique only suitable for trained professionals"], correct: 1 },
+      { question: "What is the physiological sigh and what makes it the fastest single-breath reset for anxiety?", options: ["A single deep inhale and exhale","A double inhale through the nose (to fully inflate the lungs) followed by a long exhale — which reinflates collapsed alveoli and rapidly dumps CO2","A slow inhale held for maximum duration","A breathing technique from yoga that involves humming"], correct: 1 },
+      { question: "How does the 5-4-3-2-1 grounding technique reduce anxiety?", options: ["It provides a logical argument against anxious thinking","It floods the sensory cortex with present-moment information, displacing the anxious narrative with concrete, immediate reality","It uses counting to distract from physical symptoms","It activates the parasympathetic nervous system through sensory input"], correct: 1 },
+      { question: "What is the mammalian dive reflex and how does it reduce anxiety?", options: ["An involuntary response to perceived drowning that increases heart rate","Triggered by cold water on the face — it slows heart rate, reduces blood pressure, and shifts the nervous system toward calm within seconds","A breathing reflex that activates during submersion","A relaxation response triggered by warm water"], correct: 1 },
+      { question: "What is the physiological logic behind Progressive Muscle Relaxation?", options: ["Tensing muscles increases blood flow which reduces anxiety","Muscle movement distracts from anxious thoughts","Deliberately tensing a muscle to its maximum then releasing it produces a rebound relaxation deeper than the muscle's baseline state","PMR works by reducing adrenaline through physical exertion"], correct: 2 },
+      { question: "What is resonance breathing and what does research show about it?", options: ["Breathing in sync with another person for calm","Breathing at approximately 5–6 breaths per minute (5.5s in, 5.5s out) — which maximises HRV and produces profound calm","A technique for resonating breathing with music","Breathing in and out through both nostrils simultaneously"], correct: 1 },
+      { question: "Why is it recommended to practise your first-response protocol when calm?", options: ["To ensure you don't need it when anxious","To prove the techniques work","So the sequence becomes automatic — when anxiety is high, you execute the plan without having to remember or choose","Because the techniques only work properly when practised in a relaxed state"], correct: 2 },
+      { question: "What is the purpose of a personal 'protocol card' for anxiety?", options: ["To share your anxiety management plan with others","To track anxiety symptoms over time","A simple 3-step card listing your chosen tools in order — accessible in moments of high anxiety when thinking clearly is difficult","A reminder to seek professional help during panic"], correct: 2 }
+    ]
+  },
+
+  3: {
+    title: "Managing Panic Attacks — What They Are and What to Do",
+    tutorialVideo: "What a Panic Attack Actually Is (And Isn't)",
+    basicVideo: "Surviving and Defusing a Panic Attack",
+    content: `
+      <h2>Week 3: Managing Panic Attacks — What They Are and What to Do</h2>
+      <div class="safety-banner">
+        <h4>🧰 Panic Attacks Are Terrifying — and Survivable</h4>
+        <p>This week is devoted entirely to panic attacks — what they are, why they happen, and exactly what to do during one. If you have never experienced a full panic attack, this week will still help you understand anxiety at its most intense. If you have, this week is designed specifically for you. <strong>Important:</strong> If you experience chest pain, severe shortness of breath, or symptoms that feel medically serious, always seek medical evaluation first to rule out physical causes.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand exactly what a panic attack is and what it is not</li>
+        <li>Learn why panic attacks are not dangerous — and why they feel like they are</li>
+        <li>Master the specific tools for managing a panic attack in real time</li>
+        <li>Understand how to reduce panic attack frequency through lifestyle and mindset changes</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What a Panic Attack Is</h4>
+      <p>A panic attack is a sudden, intense surge of fear and physical anxiety symptoms that peaks within minutes. During a panic attack, the body's alarm system has triggered a full-scale emergency response — often in the absence of any actual external threat. The experience is genuinely terrifying because the body is behaving as if you are in mortal danger. But understanding what is actually happening makes the experience less catastrophic:</p>
+      <ul>
+        <li>A panic attack is a massive adrenaline surge — your body doing exactly what it is designed to do in an emergency, at the wrong time</li>
+        <li>Panic attacks are self-limiting: they cannot continue indefinitely. Adrenaline has a half-life of approximately 3–5 minutes. The peak of a panic attack typically lasts between 5–20 minutes. They always end.</li>
+        <li>Panic attacks are not dangerous: they cannot cause a heart attack, cause you to stop breathing, cause you to go insane, or cause you to lose control and do something terrible — even though every one of these feels possible during one</li>
+        <li>Panic attacks do not cause death — even though the sense of impending doom that often accompanies them is one of their defining features</li>
+      </ul>
+      <h4>2. The Panic Cycle — How Panic Feeds Itself</h4>
+      <p>Understanding the panic cycle is one of the most important tools for breaking it:</p>
+      <ul>
+        <li><strong>Trigger:</strong> A sensation, thought, situation, or memory activates the amygdala</li>
+        <li><strong>Initial anxiety response:</strong> Heart rate increases, breathing quickens, body prepares for threat</li>
+        <li><strong>Catastrophic interpretation:</strong> "Something is terribly wrong with me. I'm having a heart attack. I'm going to die / lose control / go mad."</li>
+        <li><strong>More adrenaline:</strong> The catastrophic thought is itself a threat — triggering more adrenaline and more symptoms</li>
+        <li><strong>Escalation:</strong> The body responds to its own symptoms as if they are threats, creating a feedback loop that accelerates the panic</li>
+        <li><strong>The break:</strong> Eventually, the adrenaline is metabolised and the system returns to baseline — with or without intervention</li>
+        <li>Every intervention in panic is aimed at breaking this cycle — either by reducing the adrenaline directly (breathing techniques) or by interrupting the catastrophic interpretation (cognitive techniques)</li>
+      </ul>
+      <h4>3. What to Do During a Panic Attack — The Six Steps</h4>
+      <p><strong>Step 1 — Accept it:</strong> Do not fight the panic attack. Fighting it increases adrenaline and prolongs it. Instead: "This is a panic attack. I know what this is. It is not dangerous. It will pass."</p>
+      <p><strong>Step 2 — Breathe out first:</strong> The physiological sigh — a double inhale then a long exhale — is the fastest tool. Then move to extended exhale breathing (4 in, 8 out). Do not take big gasping inhales — this worsens hyperventilation.</p>
+      <p><strong>Step 3 — Ground yourself:</strong> Feel your feet on the floor. Press your back against a chair or wall. Run cold water over your wrists or splash your face. Use 5-4-3-2-1 if accessible.</p>
+      <p><strong>Step 4 — Challenge the catastrophe:</strong> Ask yourself: "Has this killed me before?" The answer is no. "Will it?" No. "What is actually happening?" My nervous system has over-fired. It will correct itself.</p>
+      <p><strong>Step 5 — Ride it like a wave:</strong> Rather than fleeing the situation (which reinforces the panic association), stay if possible and allow the wave to crest and pass. You are not in danger. The sensations are intense, but they are not harmful. They will subside.</p>
+      <p><strong>Step 6 — Debrief compassionately:</strong> After the panic attack, when you are calm: what triggered it? What helped? What would you do the same or differently next time? No self-criticism — only information gathering.</p>
+      <h4>4. Avoidance — The Engine of Panic Disorder</h4>
+      <p>The most powerful driver of ongoing panic disorder is avoidance. Every time you avoid a situation because you fear a panic attack, you send your nervous system a message: "That place/situation/sensation is dangerous." This confirms the false alarm and makes the system more likely to fire in similar contexts in the future. Avoidance provides short-term relief and long-term worsening. The treatment for panic disorder — and the key to reducing panic attack frequency — involves gradual, structured exposure to feared situations, demonstrating to the nervous system through repeated experience that the threat is not real.</p>
+      <h4>5. Lifestyle Factors That Reduce Panic Attack Frequency</h4>
+      <ul>
+        <li><strong>Caffeine:</strong> A direct anxiogenic — it mimics anxiety symptoms (increased heart rate, jitteriness) and lowers the threshold for panic. Reducing or eliminating caffeine often significantly reduces panic frequency.</li>
+        <li><strong>Sleep:</strong> Sleep deprivation dramatically increases amygdala reactivity. Consistent, adequate sleep is one of the most powerful anti-anxiety interventions available.</li>
+        <li><strong>Blood sugar:</strong> Hypoglycaemia (low blood sugar) produces physical symptoms nearly identical to a panic attack — racing heart, shaking, dizziness. Regular eating prevents the physical triggers that can escalate into panic.</li>
+        <li><strong>Exercise:</strong> Regular aerobic exercise is one of the most effective evidence-based treatments for anxiety. It metabolises stress hormones, reduces amygdala reactivity, and trains the body to tolerate elevated heart rate without catastrophising it.</li>
+        <li><strong>Alcohol:</strong> While alcohol reduces anxiety in the short term, it significantly increases anxiety in the days after consumption — especially during sleep. Rebound anxiety and panic after drinking are common and under-recognised.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Panic Script</strong><br>
+      Write your personal panic script — exactly what you will say to yourself during a panic attack. Include the six steps in your own words. Make it specific, compassionate, and grounded in fact. "This is a panic attack. I have had these before and survived every one. My adrenaline will peak in the next few minutes and begin to subside. Here is what I am going to do now..." Keep this accessible on your phone.</p>
+      <p><strong>Exercise 2: Interoceptive Awareness Practice</strong><br>
+      Gently induce mild anxiety symptoms (spin in a chair for 30 seconds, breathe through a coffee stirrer for 1 minute, do 20 jumping jacks) to practise tolerating physical sensations without catastrophising them. This is a simplified version of interoceptive exposure used in CBT for panic. The goal is to become familiar with physical arousal symptoms in a safe context — reducing their power to trigger panic when they arise unexpectedly.</p>
+      <p><strong>Exercise 3: Avoidance Audit</strong><br>
+      List five situations, places, or sensations you currently avoid because of panic or anxiety. Rank them from least to most anxiety-provoking. The least anxiety-provoking item becomes your first step toward gradual re-engagement. Simply acknowledge what you're avoiding and why — the audit is the beginning.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What typically triggers your panic — and is the trigger actually dangerous, or does it only feel that way?</li>
+        <li>Where in the panic cycle do you most get stuck — the catastrophic interpretation, the escalation, the avoidance?</li>
+        <li>What has helped you most in previous panic attacks — and can you formalise that into your protocol?</li>
+        <li>What are you currently avoiding because of anxiety — and what is that avoidance costing you?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(3)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '⚡', title: 'Panic Attack Survival Guide',       desc: 'The six steps for managing panic in real time',        file: 'panic-survival.pdf' },
+      { icon: '🔄', title: 'The Panic Cycle Explained',         desc: 'Understand and break the feedback loop of panic',      file: 'panic-cycle.pdf' },
+      { icon: '📝', title: 'Personal Panic Script Template',    desc: 'Write your own grounding script for panic attacks',    file: 'panic-script.pdf' },
+      { icon: '🚫', title: 'Avoidance Audit Worksheet',         desc: 'Map what you avoid and build a re-engagement plan',    file: 'avoidance-audit.pdf' },
+      { icon: '🎧', title: 'Panic De-escalation Audio',         desc: '8-minute guided panic de-escalation practice',         file: 'panic-audio.mp3' },
+      { icon: '📚', title: 'Panic Disorder Research Reading',   desc: 'Evidence-based resources on panic and its treatment',  file: 'panic-reading.pdf' }
+    ],
+    assessment: [
+      { question: "How long does the peak of a typical panic attack last?", options: ["1–2 minutes","5–20 minutes — adrenaline has a half-life of 3–5 minutes and the attack always ends","30–60 minutes","Hours, without treatment"], correct: 1 },
+      { question: "What is the most important thing to do when a panic attack begins?", options: ["Leave the situation immediately to prevent it worsening","Take fast, deep breaths to get more oxygen","Accept it — do not fight the panic attack, as fighting increases adrenaline and prolongs it","Call someone immediately for help"], correct: 2 },
+      { question: "What is the panic cycle's 'catastrophic interpretation' step?", options: ["The physical symptoms of the panic attack","The decision to avoid similar situations in future","The moment of thinking 'something is terribly wrong with me — I'm having a heart attack / going to lose control / die'","The trigger event that starts the panic"], correct: 2 },
+      { question: "Why does avoidance worsen panic disorder over time?", options: ["It makes you more anxious about avoiding","Every avoided situation confirms to the nervous system that the place or sensation is dangerous — making the alarm more likely to fire in similar contexts in future","Avoidance has no long-term effects","Avoidance only worsens specific phobias, not panic disorder"], correct: 1 },
+      { question: "What is interoceptive exposure and why is it used in treating panic?", options: ["Exposing yourself to external panic triggers in gradual steps","Deliberately inducing mild anxiety symptoms in a safe context to practise tolerating physical sensations — reducing their power to trigger panic when they arise unexpectedly","A breathing technique for panic attacks","A form of meditation focused on body awareness"], correct: 1 },
+      { question: "Why does caffeine increase panic attack frequency?", options: ["It directly affects the amygdala through chemical action","It mimics anxiety symptoms (increased heart rate, jitteriness) and lowers the threshold at which the alarm system fires","It dehydrates the body, which causes physical anxiety symptoms","It reduces serotonin levels"], correct: 1 },
+      { question: "How does alcohol affect anxiety despite initially reducing it?", options: ["It has no lasting effect on anxiety","It permanently reduces anxiety with regular use","It significantly increases anxiety in the days after consumption — rebound anxiety and panic after drinking are common and under-recognised","It only affects anxiety if consumed in large quantities"], correct: 2 },
+      { question: "What does 'riding it like a wave' mean in the context of a panic attack?", options: ["Using surfing imagery to distract from panic","Matching your breathing to the wave pattern of panic","Staying in the situation if possible and allowing the panic to crest and pass — rather than fleeing, which reinforces the fear association","A specific breathing technique"], correct: 2 },
+      { question: "Why can low blood sugar trigger or worsen panic attacks?", options: ["Low blood sugar directly affects the amygdala","Hypoglycaemia produces physical symptoms nearly identical to a panic attack — racing heart, shaking, dizziness — which can escalate into panic","Low blood sugar reduces serotonin","The body releases cortisol in response to low blood sugar which causes panic"], correct: 1 },
+      { question: "What is the purpose of a personal panic script?", options: ["To explain your condition to others during a panic attack","To document your panic attacks for medical review","Exact self-talk prepared in advance — so when panic strikes and clear thinking is difficult, you know exactly what to say to yourself to stay grounded","A relaxation script to prevent panic attacks"], correct: 2 }
+    ]
+  },
+
+  4: {
+    title: "Cognitive Tools — Changing the Thoughts That Drive Anxiety",
+    tutorialVideo: "The Thinking Patterns That Keep Anxiety Alive",
+    basicVideo: "How to Challenge Anxious Thoughts Effectively",
+    content: `
+      <h2>Week 4: Cognitive Tools — Changing the Thoughts That Drive Anxiety</h2>
+      <div class="safety-banner">
+        <h4>🧰 The Mind Matters — But It Isn't the Whole Story</h4>
+        <p>This week focuses on the cognitive (thinking) dimension of anxiety. Anxious thoughts are often convincing, urgent, and feel like facts. They are not. They are predictions and interpretations — and they can be examined and changed. These tools take practice — they are skills, not switches.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Identify the cognitive distortions that characterise anxious thinking</li>
+        <li>Understand the role of worry and rumination in maintaining anxiety</li>
+        <li>Learn evidence-based cognitive techniques from CBT for challenging anxious thoughts</li>
+        <li>Develop a more accurate, flexible relationship with your own thinking</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Cognitive Model of Anxiety</h4>
+      <p>Cognitive Behavioural Therapy (CBT), the most extensively researched psychological treatment for anxiety, proposes that anxiety is maintained not primarily by situations themselves but by our interpretation of those situations. The thought — "I will humiliate myself in this meeting" — generates more anxiety than the meeting itself. Changing the thought changes the anxiety. This is not the same as positive thinking — it is thinking more accurately.</p>
+      <h4>2. Common Cognitive Distortions in Anxiety</h4>
+      <ul>
+        <li><strong>Catastrophising:</strong> Assuming the worst possible outcome is the most likely outcome. "If I make a mistake at work, I will be fired, and then I will lose my house, and then..." The anxious mind telescopes from one error to total disaster.</li>
+        <li><strong>Overestimating threat:</strong> Overestimating the probability that something bad will happen. "I'm sure I'll have a panic attack at the party." "The plane is definitely going to crash."</li>
+        <li><strong>Underestimating coping:</strong> Underestimating your ability to handle what might happen. "If X happens, I won't be able to cope." People consistently cope with far more than they believe they can — in advance.</li>
+        <li><strong>Mind reading:</strong> Assuming you know what others are thinking about you — and assuming it is negative. "Everyone could see I was nervous." "They all think I'm stupid."</li>
+        <li><strong>Fortune telling:</strong> Treating predictions as facts. "This is going to go terribly." "I know it won't work."</li>
+        <li><strong>All-or-nothing thinking:</strong> Seeing situations in black and white. "Either I do this perfectly or it's a complete failure." No middle ground.</li>
+        <li><strong>Emotional reasoning:</strong> "I feel anxious, therefore danger must be present." The feeling is treated as evidence of the fact. But feeling afraid does not mean threat is real.</li>
+        <li><strong>Should statements:</strong> "I shouldn't feel this anxious." "I should be able to handle this." Should statements about anxiety often add shame to anxiety, compounding the distress.</li>
+      </ul>
+      <h4>3. Worry and Rumination — The Anxiety Maintenance Loops</h4>
+      <p>Worry is anticipatory — it focuses on future threat: "What if X happens?" Rumination is retrospective — it focuses on past events: "Why did I do that? What did they think of me?" Both maintain anxiety by keeping the threat-detection system active without resolution. Some important truths about worry:</p>
+      <ul>
+        <li>Worry feels productive — like problem-solving — but most worry does not generate solutions, only further worry</li>
+        <li>Most worried-about events don't happen — and when they do, people cope better than they predicted</li>
+        <li>Worry can serve as avoidance: as long as you are worrying about the future, you don't have to engage with the present</li>
+        <li>Chronic worry literally keeps the sympathetic nervous system activated — maintaining a baseline of anxiety even in the absence of immediate threat</li>
+      </ul>
+      <h4>4. The Thought Record — CBT's Core Cognitive Tool</h4>
+      <p>The thought record is the foundational tool of cognitive therapy for anxiety. It involves:</p>
+      <ul>
+        <li><strong>Step 1 — Situation:</strong> What happened? (The facts, not the interpretation)</li>
+        <li><strong>Step 2 — Emotion:</strong> What did I feel, and how intensely? (Rate 0–100)</li>
+        <li><strong>Step 3 — Automatic thought:</strong> What went through my mind? What am I predicting or concluding?</li>
+        <li><strong>Step 4 — Evidence for:</strong> What evidence supports this thought?</li>
+        <li><strong>Step 5 — Evidence against:</strong> What evidence contradicts it? What would I say to a friend thinking this? What actually happened in similar past situations?</li>
+        <li><strong>Step 6 — Balanced thought:</strong> A more accurate, less distorted version that incorporates both the evidence for and against</li>
+        <li><strong>Step 7 — Re-rate emotion:</strong> How intense is the feeling now? (0–100)</li>
+        <li>The thought record does not require the balanced thought to be positive — only more accurate. "I might make a mistake, but I have handled mistakes before and I know how to recover" is not positive thinking — it is realistic thinking.</li>
+      </ul>
+      <h4>5. The Worry Window and Stimulus Control</h4>
+      <p>The Worry Window is a structured technique for containing worry without suppressing it:</p>
+      <ul>
+        <li>Set a designated "worry time" of 20–30 minutes per day — a specific time and place</li>
+        <li>When worries arise outside this window, acknowledge them ("I notice I'm worrying about X") and deliberately postpone them to worry time: "I'll think about this at 6pm."</li>
+        <li>At worry time, sit with your worries deliberately — write them down, problem-solve where possible, and acknowledge what cannot be solved</li>
+        <li>Research shows this technique significantly reduces the total time spent worrying — without requiring the person to suppress the worries outright</li>
+        <li>The technique works because it teaches the brain that worry is a scheduled activity, not an emergency — reducing the sense of urgency that makes worry feel uncontrollable</li>
+      </ul>
+      <h4>6. Defusion — Creating Distance from Anxious Thoughts</h4>
+      <p>From Acceptance and Commitment Therapy (ACT), defusion is the practice of creating distance between yourself and your thoughts — observing them without fusing with them or treating them as commands:</p>
+      <ul>
+        <li>Instead of: "I can't do this" → "I notice I'm having the thought that I can't do this"</li>
+        <li>Instead of: "Something terrible is going to happen" → "My mind is telling me something terrible will happen"</li>
+        <li>Defusion does not involve disputing or trying to change the thought — it changes your relationship to it. The thought is just a thought, not a fact or a command.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Distortion Identification</strong><br>
+      Choose a recent anxiety-provoking situation. Write down the thoughts you had. Then identify which cognitive distortions are present in those thoughts. Name them specifically: "This is catastrophising." "This is overestimating threat." Naming the distortion creates distance from the thought.</p>
+      <p><strong>Exercise 2: The Full Thought Record</strong><br>
+      Complete a full thought record for one anxious situation this week. Work through all seven steps. Notice the shift in emotional intensity between Step 2 and Step 7. The shift — even small — is evidence that the thought was not an immutable fact.</p>
+      <p><strong>Exercise 3: The Worry Window</strong><br>
+      Implement the Worry Window for this week. Choose your 20–30 minute daily worry time. For one week, practise postponing worries to that window. At the end of the week, write about what you noticed: Did the postponed worries seem as urgent at worry time? Did some dissolve before you got there?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which cognitive distortion do you recognise most strongly in your own anxious thinking?</li>
+        <li>What is the difference between a thought and a fact — and how easily do you confuse them when anxious?</li>
+        <li>What does your worry usually centre on — and how often do the things you worry about actually come to pass?</li>
+        <li>What would your thinking look like if it were 10% more accurate and 10% less catastrophic?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(4)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '🧩', title: 'Cognitive Distortions Reference',   desc: 'Full guide to identifying anxious thinking patterns',  file: 'distortions-guide.pdf' },
+      { icon: '📋', title: 'Thought Record Worksheet',          desc: 'Seven-step CBT thought record template',               file: 'thought-record.pdf' },
+      { icon: '⏰', title: 'Worry Window Implementation Guide', desc: 'How to contain and manage chronic worry effectively',   file: 'worry-window.pdf' },
+      { icon: '🪴', title: 'ACT Defusion Techniques',           desc: 'Creating distance from anxious thoughts',              file: 'defusion-guide.pdf' },
+      { icon: '🎧', title: 'Cognitive Anxiety Audio',           desc: '12-minute guided cognitive reframing practice',        file: 'cognitive-audio.mp3' },
+      { icon: '📚', title: 'CBT for Anxiety Reading',           desc: 'Essential books on cognitive approaches to anxiety',   file: 'cbt-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What is the central claim of the cognitive model of anxiety?", options: ["Anxiety is caused entirely by life circumstances","Anxiety is maintained primarily by our interpretation of situations — changing the thought changes the anxiety","Thoughts are less important than physical symptoms in anxiety management","Anxiety is caused by neurological imbalances that thoughts cannot change"], correct: 1 },
+      { question: "What is 'catastrophising' as a cognitive distortion?", options: ["Taking a situation too seriously","Assuming the worst possible outcome is the most likely — telescoping from one error to total disaster","Overestimating the physical danger in a situation","Being overly cautious about genuine risks"], correct: 1 },
+      { question: "What is 'emotional reasoning'?", options: ["Making decisions based on emotions rather than logic","Treating feelings as evidence of facts — 'I feel anxious, therefore danger must be present'","Overanalysing emotional responses","Justifying avoidance with emotional arguments"], correct: 1 },
+      { question: "What is the key difference between worry and rumination?", options: ["Rumination is healthier than worry","Worry is anticipatory (future-focused — 'what if?'); rumination is retrospective (past-focused — 'why did I?')","They are the same process directed at different times","Worry is conscious; rumination is unconscious"], correct: 1 },
+      { question: "What does the Worry Window technique achieve and how does it work?", options: ["It eliminates worry by providing a safe space for it","It schedules 20–30 minutes of daily worry time — teaching the brain worry is a scheduled activity, not an emergency — significantly reducing total time spent worrying","It prevents worry by filling the time with other activities","It works by confronting the worst-case scenario directly"], correct: 1 },
+      { question: "In the thought record, what is the purpose of Step 5 — 'evidence against'?", options: ["To dismiss the anxious thought entirely","To find evidence that contradicts the automatic thought — what would you say to a friend? What actually happened in similar past situations?","To identify which distortion is present","To assess the physical symptoms associated with the thought"], correct: 1 },
+      { question: "What is defusion from ACT (Acceptance and Commitment Therapy)?", options: ["A breathing technique for reducing anxiety","Replacing negative thoughts with positive ones","Creating distance from thoughts by observing them without fusing with them — 'I notice I'm having the thought that...' rather than treating thoughts as facts or commands","A form of exposure therapy"], correct: 2 },
+      { question: "What is 'underestimating coping' as a cognitive distortion?", options: ["Believing you cannot cope with any situation","Overestimating your ability to handle anxiety","Underestimating your actual ability to handle what might happen — people consistently cope with far more than they believe in advance they can","Avoiding situations to prevent having to cope"], correct: 2 },
+      { question: "What does the balanced thought in Step 6 of the thought record need to be?", options: ["Positive — reversing the negative automatic thought completely","More accurate, incorporating evidence for and against — not necessarily positive, just realistic","A direct contradiction of the automatic thought","A statement that anxiety is unfounded"], correct: 1 },
+      { question: "Why does chronic worry keep anxiety elevated even without immediate threat?", options: ["It causes the body to produce extra cortisol over time","Chronic worry literally keeps the sympathetic nervous system activated — maintaining a baseline of anxiety as the brain cannot distinguish imagined threat from real threat","Worry exhausts the system, making it more reactive","It prevents the mind from processing emotions that would otherwise reduce anxiety"], correct: 1 }
+    ]
+  },
+
+  5: {
+    title: "Lifestyle Architecture — Building an Anxiety-Resistant Life",
+    tutorialVideo: "The Daily Habits That Protect Your Nervous System",
+    basicVideo: "Sleep, Movement, and Connection as Anxiety Medicine",
+    content: `
+      <h2>Week 5: Lifestyle Architecture — Building an Anxiety-Resistant Life</h2>
+      <div class="safety-banner">
+        <h4>🧰 The Long Game — Sustainable Anxiety Management</h4>
+        <p>Breathing techniques and cognitive tools are essential for managing anxiety in the moment. But long-term anxiety reduction requires changes to the environment and habits in which your nervous system lives every day. This week is about building the lifestyle infrastructure that makes anxiety less likely — and less intense when it does arise.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand how sleep, exercise, nutrition, and social connection directly affect anxiety</li>
+        <li>Learn how to structure your environment to reduce baseline nervous system arousal</li>
+        <li>Understand the role of values-based living in long-term anxiety reduction</li>
+        <li>Build a sustainable, personalised lifestyle architecture for anxiety management</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Sleep — The Foundation of Everything</h4>
+      <p>Sleep deprivation is one of the most powerful amplifiers of anxiety known to science. Even one night of poor sleep increases amygdala reactivity by up to 60% and significantly reduces prefrontal cortex regulation. Consistently poor sleep produces a state neurologically indistinguishable from chronic anxiety. Optimising sleep is not a lifestyle preference — it is the single most important physiological intervention for anxiety:</p>
+      <ul>
+        <li><strong>Consistent sleep and wake times:</strong> Even on weekends. The circadian clock regulates cortisol, which directly affects anxiety</li>
+        <li><strong>Sleep hygiene:</strong> Cool, dark, quiet room; no screens for 60 minutes before bed; no caffeine after 2pm; no alcohol within 3 hours of sleep</li>
+        <li><strong>Wind-down routine:</strong> A consistent 30–60 minute pre-sleep sequence that signals the nervous system that it is safe to downregulate</li>
+        <li><strong>Address anxiety in bed:</strong> If worry keeps you awake, the Worry Window technique applied before bedtime is highly effective. If you cannot sleep after 20 minutes, leave the bed — stimulus control for the bedroom as a place of sleep, not wakefulness</li>
+        <li><strong>The paradox of sleep anxiety:</strong> Trying to force sleep creates arousal that prevents it. The goal is not sleep — it is rest and nervous system downregulation. Sleep follows naturally.</li>
+      </ul>
+      <h4>2. Exercise — The Evidence Is Overwhelming</h4>
+      <p>Regular aerobic exercise is one of the most effective evidence-based interventions for anxiety — comparable in effect size to medication and psychotherapy in some studies. The mechanisms are multiple and powerful:</p>
+      <ul>
+        <li>Exercise metabolises stress hormones (cortisol and adrenaline) — directly clearing the physiological substrate of anxiety</li>
+        <li>Exercise increases GABA (the brain's primary inhibitory neurotransmitter) and BDNF (Brain-Derived Neurotrophic Factor — which promotes neural repair and growth)</li>
+        <li>Exercise trains the body to tolerate elevated heart rate without catastrophising — directly addressing a core trigger of panic</li>
+        <li>Exercise reduces amygdala reactivity over time with consistent practice</li>
+        <li>Even a 20-minute brisk walk produces measurable anxiety reduction for several hours</li>
+        <li>Recommendation: 150 minutes of moderate aerobic exercise per week, distributed across at least 3–4 sessions</li>
+      </ul>
+      <h4>3. Nutrition and the Gut-Brain Axis</h4>
+      <p>The gut-brain axis — the bidirectional communication between the gut microbiome and the brain — is a rapidly growing area of research with significant implications for anxiety:</p>
+      <ul>
+        <li>Approximately 90% of serotonin is produced in the gut, not the brain — gut health directly affects mood and anxiety</li>
+        <li>Blood sugar regulation: as noted in Week 3, hypoglycaemia mimics anxiety. Regular meals with protein, fat, and complex carbohydrates maintain stable blood sugar and reduce the physical substrate of anxiety</li>
+        <li>Omega-3 fatty acids (found in oily fish, flaxseeds, walnuts) have consistent evidence for reducing anxiety</li>
+        <li>Magnesium deficiency is strongly associated with anxiety — magnesium is depleted by stress and caffeine, creating a negative feedback loop in anxious people</li>
+        <li>Caffeine: as discussed in Week 3, reducing or eliminating caffeine often produces a significant reduction in baseline anxiety within 2–4 weeks</li>
+        <li>Alcohol: rebound anxiety after drinking elevates baseline anxiety — reducing alcohol consumption is often one of the most impactful lifestyle changes for anxious people</li>
+      </ul>
+      <h4>4. Social Connection and Anxiety</h4>
+      <p>Loneliness and social isolation are among the strongest predictors of anxiety and mental health difficulties. Human beings are social animals — the nervous system is co-regulated by proximity to other calm, trusted people. The vagus nerve responds directly to human faces, voices, and touch:</p>
+      <ul>
+        <li>Even brief, genuine social connection (a real conversation, a hug, a shared experience) shifts the nervous system toward calm</li>
+        <li>High-quality relationships — with people who genuinely see and accept you — are among the most powerful protective factors against anxiety</li>
+        <li>Isolation worsens anxiety by removing the co-regulatory effect of social presence and by leaving anxious thoughts unchecked by external perspective</li>
+        <li>If social anxiety makes connection difficult — the exposure is still important. Start small. Brief, manageable interactions build the safety associations that gradually make connection easier.</li>
+      </ul>
+      <h4>5. Values-Based Living and Meaningful Activity</h4>
+      <p>From ACT (Acceptance and Commitment Therapy), one of the most powerful long-term anxiety reducers is living in alignment with your values — engaging in activities that feel meaningful and purposeful. Anxiety often flourishes in lives structured around avoidance (not doing things that cause anxiety) rather than approach (moving toward what matters). When your days are oriented around what genuinely matters to you — rather than around what to avoid — anxiety loses some of its organising power over your life.</p>
+      <ul>
+        <li>Identify your top 3–5 life values: what matters most to you — connection, creativity, contribution, growth, health?</li>
+        <li>Ask: are my daily activities reflecting these values — or am I spending most of my energy managing and avoiding anxiety?</li>
+        <li>Committed action: even small, imperfect steps toward your values — taken despite anxiety — gradually rebuild a life structured around meaning rather than fear</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Lifestyle Audit</strong><br>
+      Rate each of the following on a scale of 1–10 for how well you are currently supporting your nervous system: sleep quality, exercise frequency, nutrition regularity, caffeine intake (lower = better), alcohol intake (lower = better), social connection, meaningful activity. Your two lowest scores are your priority targets this week.</p>
+      <p><strong>Exercise 2: Design Your Wind-Down Routine</strong><br>
+      Design a specific 30–45 minute pre-sleep wind-down routine that you will trial this week. Include: screen-off time, a calming activity (reading, stretching, bath/shower), and a brief breathing practice. Write it out as a sequence and follow it for 7 consecutive nights. Note any change in sleep quality and morning anxiety levels.</p>
+      <p><strong>Exercise 3: The Values Compass</strong><br>
+      Write your top 5 life values. For each, write: "The action I am currently taking that reflects this value" and "The action anxiety is preventing me from taking in this area." The gap between those two answers is your roadmap for committed action.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which lifestyle factor is currently having the biggest negative impact on your anxiety — and is that changeable?</li>
+        <li>When do you feel most calm and grounded in daily life — and what conditions make that possible?</li>
+        <li>Is your life currently structured around avoiding anxiety or moving toward what matters?</li>
+        <li>What is one lifestyle change you could make this week that would most meaningfully support your nervous system?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete(5)">Mark as Complete</button>
+    `,
+    resources: [
+      { icon: '😴', title: 'Sleep Optimisation for Anxiety',    desc: 'Evidence-based sleep hygiene for anxious minds',       file: 'sleep-anxiety.pdf' },
+      { icon: '🏃', title: 'Exercise as Anxiety Medicine',      desc: 'The research and a practical exercise plan',           file: 'exercise-anxiety.pdf' },
+      { icon: '🥗', title: 'Nutrition and the Gut-Brain Axis',  desc: 'Diet, blood sugar, and anxiety — the connections',     file: 'nutrition-anxiety.pdf' },
+      { icon: '🧭', title: 'Values Compass Worksheet',          desc: 'ACT values clarification for anxiety management',      file: 'values-compass.pdf' },
+      { icon: '🎧', title: 'Evening Wind-Down Audio',           desc: '15-minute guided relaxation for sleep preparation',    file: 'wind-down-audio.mp3' },
+      { icon: '📚', title: 'Lifestyle and Anxiety Reading',     desc: 'Evidence-based books on lifestyle approaches to anxiety', file: 'lifestyle-reading.pdf' }
+    ],
+    assessment: [
+      { question: "What does research show about sleep deprivation and anxiety?", options: ["Sleep deprivation has minimal effect on anxiety if the person is otherwise healthy","Even one night of poor sleep increases amygdala reactivity by up to 60% and reduces prefrontal cortex regulation","Sleep deprivation only affects anxiety if it is chronic","The effects of sleep deprivation on anxiety are reversible within hours of sleeping"], correct: 1 },
+      { question: "Why does consistent aerobic exercise reduce anxiety?", options: ["It tires the body so there is no energy left for anxiety","It distracts from anxious thoughts during the activity","It metabolises stress hormones, increases GABA and BDNF, reduces amygdala reactivity, and trains the body to tolerate elevated heart rate without catastrophising","Exercise only affects anxiety through the placebo effect of feeling productive"], correct: 2 },
+      { question: "What percentage of serotonin is produced in the gut, making gut health relevant to anxiety?", options: ["10%","50%","90%","30%"], correct: 2 },
+      { question: "How does magnesium relate to anxiety?", options: ["Magnesium deficiency directly causes anxiety disorders","Magnesium deficiency is strongly associated with anxiety — and is depleted by both stress and caffeine, creating a negative feedback loop in anxious people","Magnesium supplements eliminate anxiety","Magnesium affects only physical symptoms, not the psychological components of anxiety"], correct: 1 },
+      { question: "How does social connection reduce anxiety physiologically?", options: ["Social connection distracts from anxious thoughts","Human beings are social animals — the nervous system is co-regulated by proximity to calm, trusted people; the vagus nerve responds directly to human faces, voices, and touch","Social connection provides reassurance that reduces catastrophic thinking","Connection only helps with social anxiety, not generalised anxiety"], correct: 1 },
+      { question: "What is 'stimulus control' for the bedroom in the context of sleep and anxiety?", options: ["Using the bedroom as a stimulating environment to improve alertness during the day","Leaving the bed if you cannot sleep after 20 minutes — maintaining the bedroom as an environment associated with sleep, not wakefulness and anxiety","Controlling screen use in the bedroom","Keeping stimulants out of the bedroom"], correct: 1 },
+      { question: "What does ACT's concept of 'committed action' mean in the context of anxiety management?", options: ["Making a commitment not to avoid situations due to anxiety","Taking even small, imperfect steps toward your values despite anxiety — gradually rebuilding a life structured around meaning rather than avoidance","Committing to a full CBT treatment programme","Making public commitments to reduce anxiety accountability"], correct: 1 },
+      { question: "Why does alcohol worsen anxiety despite its short-term calming effect?", options: ["Alcohol permanently reduces serotonin","Rebound anxiety after drinking elevates baseline anxiety — making alcohol a net anxiety-worsening substance despite its immediate sedative effect","Alcohol affects anxiety only when consumed in excess","Alcohol worsens sleep quality which is unrelated to anxiety levels"], correct: 1 },
+      { question: "What is the recommended minimum weekly aerobic exercise for anxiety management?", options: ["30 minutes, once a week","60 minutes, twice a week","150 minutes distributed across at least 3–4 sessions per week","Daily exercise of any duration"], correct: 2 },
+      { question: "What is 'values-based living' in the context of anxiety management?", options: ["Living by strict moral rules that reduce guilt and anxiety","Structuring daily life around what genuinely matters to you — so anxiety loses its power as the primary organising force of your life","Identifying your values as a therapeutic exercise","Accepting anxiety as part of a values-driven life"], correct: 1 }
+    ]
+  },
+
+  6: {
+    title: "Your Long-Term Toolkit — Maintenance, Setbacks, and Thriving",
+    tutorialVideo: "Life with Anxiety — A Different Relationship",
+    basicVideo: "Maintaining Your Progress and Bouncing Back",
+    content: `
+      <h2>Week 6: Your Long-Term Toolkit — Maintenance, Setbacks, and Thriving</h2>
+      <div class="safety-banner">
+        <h4>🧰 The Toolkit Is Yours — For Life</h4>
+        <p>You have built a comprehensive, evidence-based anxiety toolkit over the past six weeks. This final week is about making it sustainable — understanding that setbacks are normal, knowing how to maintain your progress, and developing a vision of a life where anxiety is present but no longer in charge.</p>
+      </div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what long-term anxiety management looks like — and what it doesn't</li>
+        <li>Develop a realistic, compassionate approach to setbacks and difficult periods</li>
+        <li>Build a personalised maintenance plan that keeps skills sharp</li>
+        <li>Develop a vision of thriving with anxiety — not just surviving it</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Long-Term Anxiety Management Actually Looks Like</h4>
+      <p>Anxiety management is not about eliminating anxiety. Anxiety is part of being human — it will always be present in some form. The goal of this course has been to change your relationship with anxiety: from one of fear, avoidance, and being controlled by it — to one of understanding, skill, and choice. Long-term success looks like:</p>
+      <ul>
+        <li>Anxiety arising and being noticed — rather than immediately overwhelming you</li>
+        <li>Having tools you reach for — and that reliably work — rather than feeling helpless</li>
+        <li>Living toward your values even when anxiety is present — not waiting until anxiety is gone to start living</li>
+        <li>Setbacks being temporary — you return to baseline more quickly because you have skills</li>
+        <li>The anxiety being less frequent, less intense, and shorter in duration — even if not absent</li>
+      </ul>
+      <h4>2. Setbacks Are Part of Recovery — Not Evidence of Failure</h4>
+      <p>Almost everyone managing anxiety experiences setbacks: a period of weeks or months where anxiety escalates, where old patterns return, where progress seems reversed. This is not failure. It is the non-linear nature of nervous system healing — and it is universal. Understanding setbacks correctly is essential:</p>
+      <ul>
+        <li>Setbacks are often triggered by identifiable stressors — major life events, illness, sleep disruption, loss, relationship difficulty</li>
+        <li>A setback does not erase your progress — the neural pathways you have built through practice do not disappear. They are temporarily suppressed by stress hormones.</li>
+        <li>Recovery from a setback is faster with each repetition — because you have more tools and more self-knowledge than before</li>
+        <li>The most dangerous response to a setback is catastrophising it — "I'm back to square one. This will never get better." This thought is false and it is itself an example of the cognitive distortions from Week 4.</li>
+        <li>The healthiest response: "This is a setback. I've been here before. I know what to do. I will use my toolkit and return to baseline."</li>
+      </ul>
+      <h4>3. The Anxiety Relapse Prevention Plan</h4>
+      <p>Borrowed from the evidence-based approach to relapse prevention used in CBT, a personal anxiety relapse prevention plan includes:</p>
+      <ul>
+        <li><strong>Early warning signs:</strong> What are the first signs that your anxiety is escalating? Sleep disruption? Increased irritability? Withdrawal from social contact? Heightened worry? Knowing your personal early warning signs allows early intervention.</li>
+        <li><strong>Triggers:</strong> Which situations, stressors, or life events are most likely to escalate your anxiety? Awareness allows preparation.</li>
+        <li><strong>Toolkit reminder:</strong> Which tools from this course work best for you? List them in order of effectiveness.</li>
+        <li><strong>Support network:</strong> Who can you reach out to when anxiety escalates? A friend, a therapist, a support group? Do they know you might call?</li>
+        <li><strong>Professional support trigger:</strong> At what point will you seek professional support — what level of anxiety or duration of difficulty is the signal to make an appointment?</li>
+      </ul>
+      <h4>4. When to Seek Professional Help</h4>
+      <p>This course is a powerful complement to professional support — but it is not a substitute for it. Seeking professional help is not a sign of failure. It is a sign of self-awareness and self-care. Consider seeking professional support when:</p>
+      <ul>
+        <li>Anxiety significantly interferes with your ability to work, maintain relationships, or carry out daily activities</li>
+        <li>Panic attacks are frequent and debilitating</li>
+        <li>Avoidance has significantly restricted your life</li>
+        <li>Anxiety is accompanied by significant depression</li>
+        <li>You have tried the tools in this course consistently and are not making progress</li>
+        <li>Anxiety is accompanied by substance use as a coping mechanism</li>
+        <li>You are having thoughts of harming yourself</li>
+        <li>Evidence-based treatments include CBT, Acceptance and Commitment Therapy (ACT), medication (SSRIs, SNRIs, buspirone), and in some cases, EMDR for anxiety related to traumatic experiences</li>
+      </ul>
+      <h4>5. Thriving With Anxiety — A Different Relationship</h4>
+      <p>The ultimate destination of this course is not the absence of anxiety — it is a different kind of relationship with it. Many people who have done sustained anxiety work describe a quality that might be called "anxious ease" — they still feel anxiety, but it no longer runs the show. They can feel it, name it, use their tools, and continue moving toward what matters. Some even describe a kind of gratitude for what anxiety has taught them: about themselves, about their nervous system, about the value of slowness, about self-compassion. This is not inevitable — and it is not required. But it is available.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Your Complete Toolkit Summary</strong><br>
+      Create your personal anxiety toolkit document — a single, comprehensive reference that includes: your personal anxiety map from Week 1, your first-response protocol from Week 2, your panic script from Week 3, your three most-used cognitive tools from Week 4, your top lifestyle priorities from Week 5, and your relapse prevention plan from this week. This is your document. Keep it somewhere you can access when you need it most.</p>
+      <p><strong>Exercise 2: The Relapse Prevention Plan</strong><br>
+      Write your personal relapse prevention plan using the framework above: your early warning signs, your triggers, your toolkit in priority order, your support network, and the threshold at which you will seek professional support. Review it quarterly.</p>
+      <p><strong>Exercise 3: A Letter to Your Anxious Self</strong><br>
+      Write a letter from the version of you that has completed this course to the version of you that is in the middle of a future setback. Tell them what you know now. Remind them of the tools. Remind them that setbacks are temporary. Give them the compassion and the practical guidance they will need in that moment. Seal it. Open it when you need it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Looking back at Week 1's anxiety map — what has changed in your understanding or experience of anxiety?</li>
+        <li>Which tools from this course have been most useful — and which are you most committed to maintaining?</li>
+        <li>What does "thriving with anxiety" look like for you specifically?</li>
+        <li>What would you tell someone just starting this course about what they are about to learn?</li>
+      </ul>
+      <h3>🧰 You Now Have a Toolkit</h3>
+      <p>Six weeks ago, anxiety may have felt like something that happened to you — unpredictable, uncontrollable, something you could only endure. You now have a different relationship with it. You understand what it is. You know why it feels the way it does. You have tools that work at every level — physiological, cognitive, and lifestyle. You know how to survive a panic attack. You know how to challenge a catastrophic thought. You know what your nervous system needs to stay regulated. None of this makes you immune to anxiety — but it makes you someone who can respond to it with skill rather than fear. That is not a small thing. That is everything. Your toolkit is built. Use it. Keep building it. It belongs to you.</p>
+      <button class="submit-btn" onclick="markComplete(6)">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      { icon: '📋', title: 'Complete Toolkit Summary Template', desc: 'Compile your full personalised anxiety toolkit',       file: 'toolkit-summary.pdf' },
+      { icon: '🛡', title: 'Relapse Prevention Plan Template',  desc: 'Early warning signs, triggers, and support network',  file: 'relapse-prevention.pdf' },
+      { icon: '🔍', title: 'When to Seek Professional Help',    desc: 'Clear guidance on professional support for anxiety',   file: 'professional-help.pdf' },
+      { icon: '💌', title: 'Letter to Future Self Template',    desc: 'Write to yourself for your next difficult period',     file: 'future-self-letter.pdf' },
+      { icon: '🎧', title: 'Long-Term Calm Meditation',         desc: '20-minute guided practice for sustained regulation',   file: 'long-term-calm-audio.mp3' },
+      { icon: '🏆', title: 'Course Completion Certificate',     desc: 'Download your certificate of completion',              file: 'certificate.pdf' }
+    ],
+    assessment: [
+      { question: "What is the realistic goal of long-term anxiety management?", options: ["The complete elimination of anxiety from your life","Never experiencing panic or intense anxiety again","Changing your relationship with anxiety — from fear and helplessness to understanding, skill, and choice — so anxiety is present but no longer in control","Reducing anxiety to zero through consistent technique practice"], correct: 2 },
+      { question: "Why are setbacks not evidence of failure in anxiety recovery?", options: ["Because setbacks mean you weren't trying hard enough","Because setbacks are rare in proper anxiety management","Because a setback does not erase neural pathways built through practice — they are temporarily suppressed by stress hormones, and recovery is faster each time with more tools and self-knowledge","Because everyone experiences setbacks regardless of effort"], correct: 2 },
+      { question: "What is the most dangerous response to a setback in anxiety management?", options: ["Seeking professional support","Catastrophising it — 'I'm back to square one, this will never get better' — which is itself a cognitive distortion that prolongs the setback","Using breathing techniques immediately","Reducing commitments temporarily to recover"], correct: 1 },
+      { question: "What are 'early warning signs' in a relapse prevention plan?", options: ["The triggers that cause anxiety","The physical symptoms of a panic attack","The first personal indicators that anxiety is escalating — such as sleep disruption, increased irritability, or withdrawal from social contact","The point at which professional support is needed"], correct: 2 },
+      { question: "Which of these is a clear signal to seek professional support?", options: ["Feeling anxious during a stressful life period","Having occasional worried thoughts","Anxiety significantly interfering with work, relationships, or daily activities — or panic attacks that are frequent and debilitating","Needing to use anxiety management tools regularly"], correct: 2 },
+      { question: "What does the concept of 'anxious ease' describe?", options: ["A state where anxiety has been permanently eliminated","A medication-induced calm","The quality of still feeling anxiety but no longer being controlled by it — being able to feel it, name it, use tools, and continue moving toward what matters","A relaxation technique combining acceptance and breathing"], correct: 2 },
+      { question: "What evidence-based treatments for anxiety are mentioned for professional support?", options: ["Hypnotherapy, crystals, and positive affirmations","CBT, ACT, medication (SSRIs, SNRIs, buspirone), and EMDR for trauma-related anxiety","Only medication for severe cases","Only CBT and nothing else"], correct: 1 },
+      { question: "What should a personal anxiety toolkit summary document include?", options: ["Only the breathing techniques, as these are the most important","A medical history of anxiety symptoms","The anxiety map, first-response protocol, panic script, cognitive tools, lifestyle priorities, and relapse prevention plan — a complete personal reference","A list of anxiety-provoking situations to avoid"], correct: 2 },
+      { question: "Why is it recommended to review your relapse prevention plan quarterly?", options: ["Because anxiety changes seasonally","To update it with new evidence-based techniques","To stay familiar with your warning signs, triggers, and toolkit — and to update it as your self-knowledge and skills grow","Because the plan expires after three months"], correct: 2 },
+      { question: "What is the core message of this course's closing statement?", options: ["Anxiety can be cured if you work hard enough","You now have understanding, tools at every level, and the ability to respond to anxiety with skill rather than fear — the toolkit belongs to you, keep building it","You no longer need professional support having completed this course","Anxiety management is complete after six weeks"], correct: 1 }
+    ]
+  }
+
+}; // end weekData
+</script>
+</body>
+</html>
