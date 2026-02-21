@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindfulness & Emotional Balance - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #667eea; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #667eea; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(102, 126, 234, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .safety-banner { background: linear-gradient(135deg, #e8f5e9 0%, #f3e5f5 100%); border: 2px solid #764ba2; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .safety-banner h4 { color: #764ba2; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Mindfulness &amp; Emotional Balance</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Mindfulness &amp; Emotional Balance</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin your practice.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Begin My Practice 🧘</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="safety-banner">
+    <h4>🧘 This Is Your Space — Arrive Exactly as You Are</h4>
+    <p>Mindfulness cannot be done wrong. This course welcomes you at whatever level of experience you bring — beginner, returning practitioner, or simply curious. Some practices may bring emotions to the surface; that is the nature of paying attention. Move at your own pace, take breaks freely, and if anything feels overwhelming, please speak with a mental health professional. <strong>Crisis Text Line</strong> — text HOME to 741741 | <strong>988 Suicide &amp; Crisis Lifeline</strong> — call or text 988.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised guidance.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY     = 'CoachL2025SecureKey';
+const COURSE_NAME    = 'Mindfulness & Emotional Balance';
+const TOTAL_WEEKS    = 6;
+const STORAGE_PREFIX = 'coachL_MEB_';
+
+let currentWeek  = 1;
+let studentInfo  = { name: '', email: '' };
+let completedWeeks = new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks')||'[]'));
+function saveCompletedWeeks(){ localStorage.setItem(STORAGE_PREFIX+'completedWeeks', JSON.stringify([...completedWeeks])); }
+
+window.onload = function(){
+  const n = localStorage.getItem('studentName'), e = localStorage.getItem('studentEmail');
+  if(n && e){ studentInfo.name=n; studentInfo.email=e; updateUserDisplay(); }
+  else { document.getElementById('nameModal').style.display='flex'; }
+  updateProgress(); refreshModuleButtons();
+  selectModule([1,2,3,4,5,6].find(w=>!completedWeeks.has(w))||1);
+};
+
+function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(), e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e){alert('Please enter your email address.');return;}
+  if(!isValidEmail(e)){alert('⚠️ "'+e+'" doesn\'t look like a valid email.\n\nExample: yourname@gmail.com');document.getElementById('studentEmail').focus();return;}
+  studentInfo.name=n; studentInfo.email=e;
+  localStorage.setItem('studentName',n); localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none'; updateUserDisplay();
+}
+function updateEmail(){
+  const cur=localStorage.getItem('studentEmail')||'', nw=prompt('Update your email address:',cur);
+  if(nw===null)return;
+  if(!isValidEmail(nw.trim())){alert('⚠️ That doesn\'t look like a valid email.');return;}
+  studentInfo.email=nw.trim(); localStorage.setItem('studentEmail',nw.trim()); alert('✅ Email updated to: '+nw.trim());
+}
+function updateUserDisplay(){ document.getElementById('userAvatar').textContent=studentInfo.name.charAt(0).toUpperCase(); document.getElementById('userName').textContent='Welcome, '+studentInfo.name+'!'; }
+
+function refreshModuleButtons(){
+  document.querySelectorAll('.module-btn').forEach((btn,i)=>{
+    const w=i+1; btn.classList.remove('active','completed');
+    if(completedWeeks.has(w)){btn.classList.add('completed');btn.textContent='Week '+w+' ✓';}
+    else{btn.textContent='Week '+w;}
+    if(w===currentWeek)btn.classList.add('active');
+  });
+}
+function selectModule(week){ currentWeek=week; refreshModuleButtons(); updateWeekContent(); }
+function showTab(tabName,tabBtn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if(tabBtn)tabBtn.classList.add('active');
+}
+function updateWeekContent(){
+  const w=weekData[currentWeek];
+  document.getElementById('weekTitle').textContent='📹 Week '+currentWeek+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tutorialVideo;
+  document.getElementById('basicTitle').textContent='Basic Learning: '+w.basicVideo;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='📚 Course Resources - Week '+currentWeek;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">📥 Download</span></div>`).join('');
+  renderAssessment();
+}
+function renderAssessment(){
+  const w=weekData[currentWeek], passed=completedWeeks.has(currentWeek);
+  let html=`<h2>📝 Week ${currentWeek} Assessment</h2>`;
+  if(passed){ html+=`<div class="already-passed-notice"><h3>✅ You already passed this week!</h3><p>Great work! Your score has been recorded.</p></div>`; }
+  else { html+=`<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass.</p>`; }
+  w.assessment.forEach((q,i)=>{ html+=`<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`; });
+  if(!passed) html+=`<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function submitQuiz(){
+  if(completedWeeks.has(currentWeek)){alert('You have already passed this assessment!');return;}
+  const w=weekData[currentWeek]; let correct=0,answers=[],allAnswered=true;
+  w.assessment.forEach((q,i)=>{ const sel=document.querySelector(`input[name="q${i}"]:checked`); if(!sel){allAnswered=false;return;} const ua=parseInt(sel.value),ok=ua===q.correct; if(ok)correct++; answers.push({question:q.question,userAnswer:q.options[ua],correctAnswer:q.options[q.correct],isCorrect:ok}); });
+  if(!allAnswered){alert('Please answer all questions before submitting.');return;}
+  const score=Math.round((correct/w.assessment.length)*100), passed=score>=70;
+  submitToSheets(currentWeek,score,correct,w.assessment.length,answers,passed);
+  if(passed){ completedWeeks.add(currentWeek); saveCompletedWeeks(); updateProgress(); refreshModuleButtons(); renderAssessment();
+    alert(currentWeek<TOTAL_WEEKS?`🎉 Congratulations! You passed with ${score}%!\n\nContinue to Week ${currentWeek+1} whenever you're ready.`:`🏆 Course complete! You passed with ${score}%!\n\nYour certificate will be emailed to you. 🎓`);
+  } else { alert(`You scored ${score}% (${correct}/${w.assessment.length}).\n\nYou need 70% to pass. Review the material and try again!`); }
+}
+function submitToSheets(week,score,correct,total,answers,passed){
+  const payload={secretKey:SECRET_KEY,timestamp:new Date().toLocaleString(),studentName:studentInfo.name,studentEmail:studentInfo.email,courseName:COURSE_NAME,week,score,correct,total,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(()=>console.log('✅')).catch(e=>console.error('❌',e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]'); all.push({...payload,answers}); localStorage.setItem('assessmentResults',JSON.stringify(all));
+}
+function updateProgress(){
+  const done=completedWeeks.size, pct=Math.round((done/TOTAL_WEEKS)*100);
+  document.getElementById('progressBar').style.width=pct+'%'; document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TOTAL_WEEKS*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TOTAL_WEEKS;
+}
+function playVideo(type,week){alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed.`);}
+function markComplete(){ showTab('assessment',document.querySelectorAll('.tab')[2]); window.scrollTo({top:0,behavior:'smooth'}); }
+function downloadResource(file,title){
+  fetch('resources/'+file,{method:'HEAD'}).then(r=>{ if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);} else{alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.');} }).catch(()=>alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src=`https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){ if(confirm('End the session?')){ document.getElementById('jitsiFrame').src=''; document.getElementById('videoCallContainer').style.display='none'; } }
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No assessment results yet.');return;}
+  const rows=all.map((r,i)=>`<div class="result-card ${r.passed==='YES'?'passed':'failed'}"><h2>Submission #${i+1} — ${r.passed==='YES'?'✅ PASSED':'❌ FAILED'}</h2><p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p><p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p><p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p><div class="details"><h3>Answers:</h3><table><tr><th>Question</th><th>Student</th><th>Correct</th><th>Result</th></tr>${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}</table></div></div>`).join('');
+  const win=window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}.details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}</style></head><body><h1>📊 Results – Coach L Academy</h1><p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA
+// ============================================================
+const weekData = {
+
+  1: {
+    tutorialVideo: "What Mindfulness Really Is — And Isn't",
+    basicVideo: "Your First Mindfulness Practice",
+    content: `
+      <h2>Week 1: The Foundation of Mindfulness — Present-Moment Awareness</h2>
+      <div class="safety-banner"><h4>🧘 All You Need Is This Moment</h4><p>This week introduces mindfulness without pressure to achieve any particular state. There is no "good meditation." There is only noticing — honestly, gently, and with curiosity. If you've never practised before, you're in exactly the right place. If you have, welcome back to beginner's mind.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what mindfulness is — and what it is not</li>
+        <li>Learn the neuroscience of mindfulness and why it changes the brain</li>
+        <li>Complete your first formal mindfulness practice</li>
+        <li>Begin cultivating present-moment awareness in everyday life</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Mindfulness Is</h4>
+      <p>Mindfulness is the practice of paying attention to the present moment — on purpose, without judgment. That definition, developed by Jon Kabat-Zinn who founded Mindfulness-Based Stress Reduction (MBSR) in 1979, contains everything essential. Three elements: attention (deliberately directing your awareness), present moment (now — not the past or future), and without judgment (observing what is, without labelling it good, bad, right, or wrong).</p>
+      <p>Mindfulness is not relaxation — though relaxation often follows. It is not emptying the mind — the mind will always produce thoughts; mindfulness is the practice of noticing them without being pulled away by them. It is not a spiritual requirement — it has Buddhist origins but is practised and studied extensively in entirely secular scientific contexts. And it is not something you can do wrong. Every time you notice that your mind has wandered and bring it back, that is the practice. That noticing is the whole point.</p>
+      <h4>2. The Neuroscience — What Mindfulness Does to the Brain</h4>
+      <p>The research on mindfulness and the brain has grown substantially since the 1990s, and the findings are consistent and striking:</p>
+      <ul>
+        <li><strong>Prefrontal cortex thickening:</strong> Regular mindfulness practice is associated with increased cortical thickness in the prefrontal cortex — the brain's centre for attention, decision-making, and emotional regulation. Sara Lazar's research at Harvard showed measurable changes after just 8 weeks of MBSR.</li>
+        <li><strong>Amygdala shrinkage:</strong> The brain's threat detector (amygdala) becomes less reactive and shows reduced grey matter density with regular practice — directly reducing the hair-trigger anxiety response.</li>
+        <li><strong>Default Mode Network quieting:</strong> The Default Mode Network (DMN) — the "mind wandering" network active when we're not focused on a task, associated with rumination, self-referential thinking, and mind-wandering — shows reduced activity in experienced meditators. This is why mindfulness reduces rumination.</li>
+        <li><strong>Insula activation:</strong> The insula — associated with interoception (awareness of internal body states) and empathy — becomes more active with practice, supporting emotional intelligence and body awareness.</li>
+        <li><strong>Neuroplasticity:</strong> These changes demonstrate that the brain is not fixed. The practising brain is a changing brain — and mindfulness is one of the most well-researched ways to direct that change.</li>
+      </ul>
+      <h4>3. Formal vs Informal Practice</h4>
+      <p>Mindfulness is practised in two modes that complement each other:</p>
+      <ul>
+        <li><strong>Formal practice:</strong> Dedicated, intentional meditation sessions — sitting quietly and directing attention to a chosen focus (breath, body, sounds) for a set period. This is where the skill is developed.</li>
+        <li><strong>Informal practice:</strong> Bringing mindful awareness to ordinary activities — eating, walking, washing dishes, having a conversation. This is where the skill is applied and integrated into life.</li>
+        <li>Both are necessary. Formal practice without informal integration remains confined to the cushion. Informal practice without formal practice lacks the depth that comes from dedicated training.</li>
+      </ul>
+      <h4>4. The Breath as Anchor</h4>
+      <p>The breath is the most commonly used anchor in mindfulness practice — and for good reason. It is always present. It is always in the present moment (you cannot breathe in the past or future). It connects the voluntary and autonomic nervous systems. And attending to it directly activates the parasympathetic nervous system — calming the body as a side effect of the attention itself. When attention wanders — and it will, every time, for every practitioner — the breath is where you return. Not with frustration. With the same gentleness you would use to redirect a curious child.</p>
+      <h4>5. The Attitude of Mindfulness</h4>
+      <p>Jon Kabat-Zinn identified seven foundational attitudes that support mindfulness practice. They are not things you do — they are orientations you cultivate:</p>
+      <ul>
+        <li><strong>Non-judging:</strong> Observing experience without labelling it good or bad</li>
+        <li><strong>Patience:</strong> Allowing things to unfold in their own time</li>
+        <li><strong>Beginner's mind:</strong> Approaching each moment as if for the first time</li>
+        <li><strong>Trust:</strong> Trusting your own experience and inner wisdom</li>
+        <li><strong>Non-striving:</strong> Not trying to get anywhere or achieve a particular state</li>
+        <li><strong>Acceptance:</strong> Seeing things as they actually are in this moment</li>
+        <li><strong>Letting go:</strong> Not clinging to pleasant experiences or pushing away unpleasant ones</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The 5-Minute Breath Awareness Practice</strong><br>Sit comfortably. Close your eyes or soften your gaze downward. Bring attention to the physical sensation of breathing — the rise and fall of the chest or belly, the feeling of air at the nostrils. When your mind wanders (it will — many times), simply notice that it has wandered, and gently return attention to the breath. No frustration. No judgement. Just return. Do this daily for 5 minutes this week. Gradually extend to 10 minutes by the end of the week.</p>
+      <p><strong>Exercise 2: The Raisin Exercise (or any small food)</strong><br>Take one raisin (or a small piece of fruit). Spend 3–5 minutes examining it as if you have never seen anything like it before — its texture, colour, smell, how it feels between your fingers. Then place it in your mouth without chewing, noticing every sensation. Chew slowly, noticing the taste and texture changing. This is informal mindfulness: bringing full attention to the ordinary. Notice how different eating mindfully feels from eating automatically.</p>
+      <p><strong>Exercise 3: The Mindfulness Journal — Day 1</strong><br>Begin a simple mindfulness journal. Each day this week, write three things: (1) What did I notice today that I would normally have missed? (2) When did my mind wander most — what pulled it away? (3) One moment of genuine present-moment awareness, however brief. This journal becomes the record of your developing practice.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Before this week, what was your understanding of mindfulness — and has it changed?</li>
+        <li>When you tried the breath awareness practice, how long did your mind stay with the breath before wandering? (Most beginners: a few seconds. That is completely normal.)</li>
+        <li>What do you notice when you eat, walk, or do ordinary tasks with full attention rather than on autopilot?</li>
+        <li>Which of the seven attitudes of mindfulness feels most foreign or most challenging for you?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🧘',title:'What Is Mindfulness — Full Guide',desc:'Definition, history, MBSR, and core principles',file:'what-is-mindfulness.pdf'},
+      {icon:'🧠',title:'Mindfulness Neuroscience Research',desc:'How mindfulness changes brain structure and function',file:'mindfulness-neuroscience.pdf'},
+      {icon:'💨',title:'Breath Awareness Practice Guide',desc:'Step-by-step instructions for your first formal practice',file:'breath-awareness-guide.pdf'},
+      {icon:'📓',title:'Mindfulness Journal Template',desc:'Weekly journal for tracking your developing practice',file:'mindfulness-journal.pdf'},
+      {icon:'🎧',title:'5-Minute Breath Awareness Audio',desc:'Guided breath awareness meditation for beginners',file:'breath-awareness-audio.mp3'},
+      {icon:'📚',title:'Mindfulness Foundations Reading',desc:'Key books: Full Catastrophe Living, Wherever You Go There You Are',file:'mindfulness-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What are the three core elements in Jon Kabat-Zinn's definition of mindfulness?",options:["Relaxation, breathing, and acceptance","Attention, present moment, and without judgment","Meditation, awareness, and non-attachment","Focus, calm, and clarity"],correct:1},
+      {question:"What does neuroscience research show about the prefrontal cortex and mindfulness practice?",options:["Mindfulness reduces prefrontal cortex activity to allow deeper rest","Regular practice is associated with increased cortical thickness — supporting attention, decision-making, and emotional regulation","The prefrontal cortex is unaffected by mindfulness","Mindfulness redirects prefrontal cortex activity to the amygdala"],correct:1},
+      {question:"What is the Default Mode Network (DMN) and how does mindfulness affect it?",options:["The brain's focus network — activated by mindfulness practice","The brain's reward system — reduced by mindfulness","The 'mind wandering' network associated with rumination and self-referential thinking — which shows reduced activity in experienced meditators","The threat detection system — quieted by mindfulness"],correct:2},
+      {question:"Why is the breath used as the most common anchor in mindfulness practice?",options:["Because breathing is the only bodily process we can consciously control","Because it is always present, always in the present moment, and attending to it activates the parasympathetic nervous system","Because breath awareness is the only true form of mindfulness","Because the breath connects all major organ systems"],correct:1},
+      {question:"What is the difference between formal and informal mindfulness practice?",options:["Formal is for beginners; informal is for advanced practitioners","Formal practice requires a teacher; informal practice is self-directed","Formal practice is dedicated meditation sessions where the skill is developed; informal practice brings mindful awareness to ordinary activities where the skill is applied","Formal practice focuses on the breath; informal practice focuses on the body"],correct:2},
+      {question:"What is 'beginner's mind' as one of the seven attitudes of mindfulness?",options:["Returning to childhood memories during meditation","Approaching each moment as if for the first time — with openness and curiosity, without assumptions","A beginner's meditation technique","Emptying the mind of all prior knowledge"],correct:1},
+      {question:"What is the correct response when the mind wanders during breath awareness meditation?",options:["Stop the session and start again later","Criticise yourself for losing focus and recommit harder","Simply notice that the mind has wandered and gently return attention to the breath — without frustration or judgment","Hold the breath briefly to regain focus"],correct:2},
+      {question:"What does the insula do, and how does mindfulness affect it?",options:["It regulates cortisol — reduced by mindfulness","It stores memories — improved by mindfulness","Associated with interoception and empathy — it becomes more active with mindfulness practice, supporting emotional intelligence and body awareness","It produces serotonin — increased by mindfulness"],correct:2},
+      {question:"What is the attitude of 'non-striving' in mindfulness practice?",options:["Refusing to put effort into meditation","Not trying to achieve a particular state or get anywhere — allowing the practice to be what it is","Avoiding all ambition in daily life","Practising without any goals or intentions"],correct:1},
+      {question:"What is mindfulness NOT, according to this week's content?",options:["A form of attention training","A practice with Buddhist origins","A way to empty the mind of all thoughts — the mind will always produce thoughts; mindfulness is noticing them without being pulled away","A practice that can be studied scientifically"],correct:2}
+    ]
+  },
+
+  2: {
+    tutorialVideo: "Understanding Your Emotions From the Inside Out",
+    basicVideo: "The Wheel of Emotions — Naming What You Feel",
+    content: `
+      <h2>Week 2: Emotional Awareness — Knowing What You Feel and Why</h2>
+      <div class="safety-banner"><h4>🧘 Emotions Are Information — Not Enemies</h4><p>This week turns toward the emotional landscape. Some of what arises in this practice may be unfamiliar, uncomfortable, or surprisingly intense — particularly if you've spent time avoiding or suppressing feelings. All emotions are welcome here. They are all valid signals. Move at your own pace.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what emotions are — their biological purpose and their information value</li>
+        <li>Develop the capacity to identify and name emotions with precision</li>
+        <li>Learn the skill of emotional observation without being swept away</li>
+        <li>Understand the difference between feeling an emotion and being controlled by it</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Emotions Actually Are</h4>
+      <p>Emotions are not inconvenient interruptions to rational life. They are ancient, sophisticated information systems — evolved to guide behaviour, signal threat and opportunity, communicate to others, and motivate action. Every emotion has a biological purpose:</p>
+      <ul>
+        <li><strong>Fear</strong> signals potential threat and prepares the body to protect itself</li>
+        <li><strong>Anger</strong> signals a boundary violation or injustice and mobilises energy to address it</li>
+        <li><strong>Sadness</strong> signals loss and slows us down to process it — drawing support from others</li>
+        <li><strong>Joy</strong> signals safety, connection, and the presence of what matters — motivating us toward more of it</li>
+        <li><strong>Disgust</strong> signals potential contamination — physical or moral</li>
+        <li><strong>Shame</strong> signals a perceived threat to belonging or social acceptance</li>
+        <li>The problem is not emotions themselves — it is our relationship with them. When emotions are suppressed, they don't disappear: they intensify, displace, and surface in distorted form. When emotions are over-identified with, they overwhelm and control. The middle path — awareness and acknowledgement without suppression or overwhelm — is what mindfulness makes possible.</li>
+      </ul>
+      <h4>2. The Neuroscience of Emotion</h4>
+      <p>Emotions are generated through a complex interplay of brain structures. The key players:</p>
+      <ul>
+        <li><strong>Amygdala:</strong> The rapid, automatic emotional evaluator — assessing whether stimuli are threatening or rewarding, often before conscious awareness</li>
+        <li><strong>Anterior cingulate cortex (ACC):</strong> Mediates between emotional and cognitive processing — the place where feeling and thinking meet</li>
+        <li><strong>Prefrontal cortex:</strong> The regulator — when engaged, it can modulate amygdala reactivity, allowing response rather than reaction</li>
+        <li><strong>Interoception:</strong> The brain's continuous monitoring of the body's internal state — emotions are felt in the body first, and mindfulness of the body is therefore a direct route to emotional awareness</li>
+        <li>Lisa Feldman Barrett's theory of constructed emotion proposes that emotions are not simply biological states that happen to us — they are built by the brain as predictions, drawing on past experience, current body state, and cultural context. This means our experience of emotion is, to a significant degree, shaped by what we have learned to notice and name.</li>
+      </ul>
+      <h4>3. Emotional Granularity — The Power of Precise Naming</h4>
+      <p>Research by psychologist Lisa Feldman Barrett shows that people who have a more differentiated emotional vocabulary — who can distinguish between feeling disappointed vs. defeated vs. disheartened vs. disillusioned — have measurably better emotional regulation, physical health outcomes, and resilience than people who can only identify feeling "bad." This capacity is called emotional granularity. Naming an emotion precisely changes your relationship to it:</p>
+      <ul>
+        <li>"I feel anxious" is less useful than "I feel a tight, anticipatory dread about what someone might think of me"</li>
+        <li>Precise naming activates the prefrontal cortex and reduces amygdala reactivity — the neuroscience of "name it to tame it"</li>
+        <li>The Wheel of Emotions (developed by Robert Plutchik) maps the spectrum from primary emotions outward to more nuanced variations — a useful tool for expanding emotional vocabulary</li>
+      </ul>
+      <h4>4. RAIN — A Mindfulness Practice for Difficult Emotions</h4>
+      <p>RAIN is one of the most effective mindfulness-based approaches to working with difficult emotions, developed by Tara Brach. The acronym:</p>
+      <ul>
+        <li><strong>R — Recognise:</strong> Notice what is happening. "I notice anger." "I notice sadness." Simply acknowledge the presence of the emotion.</li>
+        <li><strong>A — Allow:</strong> Let the emotion be here, without trying to fix, suppress, or explain it away. "This is here. I let it be here."</li>
+        <li><strong>I — Investigate:</strong> With curiosity, not analysis — explore where the emotion lives in the body. What does it feel like physically? What does it most need right now?</li>
+        <li><strong>N — Nurture:</strong> Offer the part of you that is hurting the same compassion you would offer a dear friend. A hand on the heart. A kind word. A genuine acknowledgement of the difficulty.</li>
+        <li>After RAIN, notice what has shifted. Not necessarily that the emotion is gone — but that your relationship to it has changed. You are the sky; the emotion is the weather passing through.</li>
+      </ul>
+      <h4>5. Emotional Flooding vs Emotional Awareness</h4>
+      <p>There is a crucial distinction between being aware of an emotion and being overwhelmed by it. John Gottman's research on couples identified "flooding" — when emotional arousal becomes so intense that rational processing becomes impossible and behaviour becomes reactive rather than chosen. The signs: heart rate above 100 bpm, inability to take in new information, automatic defensive or aggressive responses. The antidote to flooding is not suppression — it is the mindfulness skills that create a small but crucial gap between stimulus and response. Viktor Frankl described this gap as the location of human freedom.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Emotion Check-In (Three Times Daily)</strong><br>Set a phone reminder for three times a day. When it goes off, pause and ask: "What am I feeling right now — in my body, and emotionally?" Name it as precisely as possible using the Wheel of Emotions if needed. Write it down. Don't try to change it — just name it. After one week, look back at your notes: what patterns emerge?</p>
+      <p><strong>Exercise 2: RAIN Practice with a Difficult Emotion</strong><br>Choose one emotion from this week that felt difficult or overwhelming. Sit quietly and work through all four steps of RAIN: Recognise, Allow, Investigate, Nurture. Write about what you found — particularly in the Investigate step. Where did the emotion live in your body? What did it most need?</p>
+      <p><strong>Exercise 3: Expanding Your Emotional Vocabulary</strong><br>Download or draw a Wheel of Emotions. For one week, whenever you identify an emotion, find it on the wheel and try to name a more specific variant. If you feel "sad," can you identify whether it is grief, disappointment, helplessness, loneliness, or something else? Write down three new emotional words you have used this week that you would not normally have used.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which of your emotions do you most tend to suppress — and what does that suppression cost you?</li>
+        <li>When you practised the emotion check-in, were you surprised by what you found — or did it confirm what you already knew?</li>
+        <li>Where in your body do you most strongly feel emotion — and had you ever noticed this before?</li>
+        <li>What is the difference between being aware of an emotion and being controlled by it — and can you identify a recent example of each?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🎡',title:'Wheel of Emotions Reference',desc:'Plutchik\'s full emotion wheel for expanding vocabulary',file:'emotion-wheel.pdf'},
+      {icon:'🌧',title:'RAIN Practice Guide',desc:'Step-by-step guide to Tara Brach\'s RAIN technique',file:'rain-practice.pdf'},
+      {icon:'🧬',title:'Neuroscience of Emotion Guide',desc:'How the brain constructs and processes emotions',file:'emotion-neuroscience.pdf'},
+      {icon:'📓',title:'Daily Emotion Check-In Log',desc:'Track three daily emotion check-ins for one week',file:'emotion-checkin-log.pdf'},
+      {icon:'🎧',title:'RAIN Meditation Audio',desc:'15-minute guided RAIN practice for difficult emotions',file:'rain-audio.mp3'},
+      {icon:'📚',title:'Emotional Intelligence Reading',desc:'Key books: Atlas of the Heart, How Emotions Are Made',file:'emotional-intelligence-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the biological purpose of anger, according to this week's content?",options:["To signal weakness and ask for help","To signal a boundary violation or injustice and mobilise energy to address it","To warn others of danger","To slow us down so we can process difficult experiences"],correct:1},
+      {question:"What is 'emotional granularity' and why does it matter?",options:["The ability to feel emotions deeply","The capacity to differentiate emotions with precision — associated with better emotional regulation, physical health, and resilience","The number of emotions a person can feel simultaneously","The intensity with which emotions are experienced"],correct:1},
+      {question:"What does the neuroscience of 'name it to tame it' show?",options:["Naming emotions makes them disappear","Naming emotions activates the prefrontal cortex and reduces amygdala reactivity — changing your relationship to the emotion","Only negative emotions need naming","Naming emotions in writing is more effective than verbal expression"],correct:1},
+      {question:"What does the 'A' in RAIN stand for, and what does it mean in practice?",options:["Analyse — examine the causes of the emotion","Avoid — move away from the emotion temporarily","Allow — let the emotion be present without trying to fix, suppress, or explain it away","Acknowledge — confirm the emotion to someone else"],correct:2},
+      {question:"What is Lisa Feldman Barrett's theory of constructed emotion?",options:["Emotions are purely biological states hardwired into the nervous system","Emotions are social constructs with no neurological basis","Emotions are built by the brain as predictions drawing on past experience, current body state, and cultural context — meaning our experience of emotion is shaped by what we've learned to notice and name","Emotions are secondary to thoughts and arise only after cognitive appraisal"],correct:2},
+      {question:"What is 'emotional flooding' as described by John Gottman?",options:["Being overwhelmed by positive emotions","When emotional arousal becomes so intense that rational processing becomes impossible and behaviour becomes reactive rather than chosen","A therapeutic technique for releasing suppressed emotions","The experience of emotions spreading from one person to another"],correct:1},
+      {question:"What is the role of interoception in emotional awareness?",options:["Interoception monitors external sensory information","Interoception is the brain's monitoring of the body's internal state — emotions are felt in the body first, making body awareness a direct route to emotional awareness","Interoception regulates emotional memory storage","Interoception is the process of naming emotions"],correct:1},
+      {question:"What is the 'N' in RAIN and why is it important?",options:["Notice — observe the emotion from a distance","Navigate — find the most useful response to the emotion","Nurture — offer the hurting part of yourself the same compassion you would offer a dear friend","Name — precisely label the emotion"],correct:2},
+      {question:"What is Viktor Frankl's 'gap' between stimulus and response?",options:["The time needed to process trauma","The space where human freedom lives — the mindfulness skill that creates a moment between what happens and how we choose to respond","The difference between conscious and unconscious emotion","The delay in emotional processing caused by the prefrontal cortex"],correct:1},
+      {question:"What happens when emotions are suppressed rather than acknowledged?",options:["They dissolve naturally over time","They become easier to manage with practice","They don't disappear — they intensify, displace, and surface in distorted form","They are stored harmlessly in long-term memory"],correct:2}
+    ]
+  },
+
+  3: {
+    tutorialVideo: "Body Scan — The Most Important Mindfulness Practice You're Not Doing",
+    basicVideo: "Moving Meditation — Walking and Mindful Movement",
+    content: `
+      <h2>Week 3: The Body as Teacher — Somatic Mindfulness</h2>
+      <div class="safety-banner"><h4>🧘 Your Body Holds Great Wisdom</h4><p>This week brings attention into the body. For some people — particularly those who have experienced trauma — body awareness can bring up unexpected feelings. Go gently. If at any point body scanning feels too intense, shift attention to sounds or the breath instead. Your comfort and safety always come first.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why the body is a primary site of mindfulness practice</li>
+        <li>Learn and practise the body scan — one of the foundational MBSR practices</li>
+        <li>Develop awareness of how emotions and stress live in the body</li>
+        <li>Explore mindful movement as a form of meditation in motion</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Body as the Gateway to the Present</h4>
+      <p>The mind can travel to the past and the future — but the body is always, only, in the present moment. Bringing attention to physical sensation is therefore one of the most reliable routes to present-moment awareness. The phrase "the body keeps the score" (also the title of Bessel van der Kolk's landmark book) captures something profound: experiences, emotions, and particularly trauma are encoded in the body — in patterns of tension, contraction, holding, and release — even when they are not accessible to conscious thought. Mindful body awareness creates the conditions for this wisdom to surface.</p>
+      <h4>2. The Body Scan Practice</h4>
+      <p>The body scan is one of the central practices of MBSR and one of the most extensively researched mindfulness techniques. It involves moving systematic attention through the body from feet to head (or head to feet), resting in each region for a few moments with curious, non-judgmental awareness. What you are noticing: warmth, coolness, tingling, tension, pulsing, pressure, numbness, or absence of sensation. What you are not doing: trying to relax (though relaxation often follows), trying to change anything, or judging what you find. The body scan develops:</p>
+      <ul>
+        <li>Interoceptive awareness — the capacity to feel what is happening inside the body</li>
+        <li>The ability to hold attention in one place without being pulled away</li>
+        <li>Familiarity with the body's resting state — so deviations (tension, agitation, discomfort) are more easily noticed</li>
+        <li>A sense of being at home in the body — particularly valuable for those who experience chronic stress, anxiety, or dissociation</li>
+      </ul>
+      <h4>3. Stress in the Body — Where Do You Hold It?</h4>
+      <p>Stress, anxiety, and difficult emotions have characteristic locations in the body — and these vary by person. Common patterns:</p>
+      <ul>
+        <li><strong>Shoulders and neck:</strong> One of the most universal locations for held tension — often accumulated unconsciously across the day</li>
+        <li><strong>Chest and throat:</strong> Where grief, sadness, unexpressed emotion, and the restraint of crying are often felt</li>
+        <li><strong>Stomach and gut:</strong> Anxiety, dread, and fear often manifest as stomach tension, nausea, or the "gut feeling" of intuition</li>
+        <li><strong>Jaw:</strong> Anger, stress, and suppressed expression are frequently held here — many people clench their jaw without awareness</li>
+        <li><strong>Lower back:</strong> Often holds the physical weight of responsibility, overwhelm, and unresolved stress</li>
+        <li>Knowing where you hold stress gives you an early warning system: when you notice tension in your signature location, stress is already present and may not yet have reached consciousness.</li>
+      </ul>
+      <h4>4. Mindful Movement</h4>
+      <p>Mindfulness is not confined to stillness. Mindful movement — including mindful walking, yoga, tai chi, and qigong — brings meditative awareness into physical activity. Walking meditation is particularly accessible and powerful:</p>
+      <ul>
+        <li>Walk slowly, noticing the sensation of each foot lifting, moving forward, and placing on the ground</li>
+        <li>Notice the shifting of weight, the movement of arms, the contact with the ground</li>
+        <li>When the mind wanders, bring it back to the sensations of walking</li>
+        <li>Walking meditation transforms an ordinary activity into a formal practice — and demonstrates that mindfulness is not confined to a cushion or a quiet room</li>
+        <li>Research shows walking meditation produces similar neurological benefits to seated practice — with the additional benefits of physical movement for mood and brain health</li>
+      </ul>
+      <h4>5. The Mindful Body in Daily Life</h4>
+      <p>Between formal practices, the body offers constant opportunities for mindful awareness. The mindful pause — a brief moment of deliberate body awareness in the midst of activity — is one of the most powerful informal practices:</p>
+      <ul>
+        <li>Before a difficult conversation: check in with the body. Where is the tension? What is the emotional state?</li>
+        <li>During a stressful task: notice if the jaw is clenched, shoulders raised, breathing held. Consciously release.</li>
+        <li>When an emotion arises: before responding, drop attention into the body. Where is this emotion living? What does it physically feel like?</li>
+        <li>The body is always available, always in the present, and always honest. It does not lie the way the thinking mind can.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Daily Body Scan (20 minutes)</strong><br>Lie down or sit comfortably. Beginning at the soles of your feet, move attention slowly upward through the body — feet, ankles, calves, knees, thighs, pelvis, lower back, abdomen, chest, upper back, shoulders, arms, hands, neck, throat, face, and top of the head. Spend 1–2 minutes in each region. Notice whatever is there — without trying to change it. If you fall asleep, that is OK. If the mind wanders constantly, that is OK. Just keep returning. Practise once daily this week.</p>
+      <p><strong>Exercise 2: 10-Minute Walking Meditation</strong><br>Find a quiet space — indoors or outdoors — where you can walk 10–15 steps back and forth. Walk much more slowly than normal. Bring full attention to the sensation of each step: lifting, moving, placing. When the mind wanders, return to the feeling of feet on the ground. This is a formal practice — not a walk to get somewhere. Do this at least twice this week.</p>
+      <p><strong>Exercise 3: Your Stress Map</strong><br>Draw a simple outline of the human body (or find one online). Over the next 5 days, whenever you notice tension, discomfort, or emotional activation, mark it on the body map — where exactly, and what it felt like. By day 5, look at your personal stress map. What patterns do you notice? These are your body's early warning signals.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Where in your body do you most reliably hold stress or difficult emotions — and had you noticed this before?</li>
+        <li>What was your experience of the body scan like — comfortable, uncomfortable, interesting, boring?</li>
+        <li>How is walking meditation different from ordinary walking — and what does that difference reveal?</li>
+        <li>What does your body know about your emotional state that your conscious mind sometimes misses?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🫀',title:'Body Scan Practice Guide',desc:'Full instructions for the 20-minute MBSR body scan',file:'body-scan-guide.pdf'},
+      {icon:'🗺',title:'Personal Stress Map Template',desc:'Body outline for mapping where stress and emotion live',file:'stress-map.pdf'},
+      {icon:'🚶',title:'Walking Meditation Instructions',desc:'Step-by-step guide to formal walking meditation',file:'walking-meditation.pdf'},
+      {icon:'🫁',title:'Somatic Awareness Reference',desc:'How the body stores emotion and stress — the research',file:'somatic-awareness.pdf'},
+      {icon:'🎧',title:'Body Scan Guided Audio',desc:'20-minute guided body scan meditation',file:'body-scan-audio.mp3'},
+      {icon:'📚',title:'Somatic Mindfulness Reading',desc:'The Body Keeps the Score and related resources',file:'somatic-reading.pdf'}
+    ],
+    assessment: [
+      {question:"Why is the body described as 'always in the present moment' and therefore a gateway to mindfulness?",options:["The body does not process past or future experiences","The mind can travel to past and future, but the body is always only in the present — making physical sensation one of the most reliable routes to present-moment awareness","The body's sensations are always pleasant and therefore easy to focus on","The body is more accessible than the breath"],correct:1},
+      {question:"What is the body scan practice and what does it develop?",options:["A relaxation technique that relieves all physical tension","Systematic movement of attention through the body with curious, non-judgmental awareness — developing interoceptive awareness, sustained attention, and a sense of being at home in the body","A diagnostic technique for identifying physical illness","A visualisation practice using imagined body sensations"],correct:1},
+      {question:"What are you NOT trying to do during a body scan?",options:["Notice sensations of warmth, coolness, or tingling","Hold attention in one place","Relax or change what you find — the body scan is observational, not corrective","Move attention from feet to head systematically"],correct:2},
+      {question:"Why is tension in the jaw, shoulders, or stomach considered an 'early warning system'?",options:["These areas indicate physical illness that requires medical attention","Knowing your personal stress-holding locations gives you awareness of stress before it reaches conscious thought — allowing earlier intervention","These areas contain the most nerve endings","Tension here is always caused by emotional suppression"],correct:1},
+      {question:"What does Bessel van der Kolk's phrase 'the body keeps the score' mean in the context of mindfulness?",options:["The body tracks all physical exercise and activity","Experiences, emotions, and particularly trauma are encoded in the body in patterns of tension and holding — even when not accessible to conscious thought","The body monitors emotional health the same way a scoreboard tracks a game","The body remembers positive experiences more accurately than the mind"],correct:1},
+      {question:"What research shows about walking meditation compared to seated practice?",options:["Walking meditation is significantly less effective than seated practice","Walking meditation is only suitable for beginners","Walking meditation produces similar neurological benefits to seated practice — with the additional benefits of physical movement for mood and brain health","Walking meditation is more effective for emotional regulation but less effective for attention training"],correct:2},
+      {question:"What is interoception and why is it relevant to mindfulness practice?",options:["The perception of external sensory information","The ability to predict future emotional states","The brain's capacity to feel what is happening inside the body — developed through body scan and somatic practices, it supports emotional awareness","The process of integrating sensory information from multiple sources"],correct:2},
+      {question:"Where is grief, sadness, and unexpressed emotion most commonly felt in the body?",options:["Lower back and hips","Hands and feet","Chest and throat — where the restraint of crying and unexpressed emotion are often physically held","Shoulders and jaw"],correct:2},
+      {question:"What is the 'mindful pause' as an informal body practice?",options:["A 5-minute formal meditation practised throughout the day","A brief moment of deliberate body awareness in the midst of activity — checking the body's state before responding to situations","A breathing exercise for acute stress","A pause before eating to practise mindful awareness"],correct:1},
+      {question:"Why does mindful movement (walking, yoga, tai chi) qualify as a form of meditation?",options:["Because it produces the same physical relaxation as seated meditation","Because it brings meditative awareness to physical activity — demonstrating that mindfulness is not confined to stillness or a cushion","Because it has Buddhist origins like seated meditation","Because it slows down movement enough to allow observation"],correct:1}
+    ]
+  },
+
+  4: {
+    tutorialVideo: "Responding vs Reacting — The Space Between Stimulus and Response",
+    basicVideo: "Mindfulness in Difficult Moments — Practical Skills",
+    content: `
+      <h2>Week 4: Emotional Regulation — Responding Rather Than Reacting</h2>
+      <div class="safety-banner"><h4>🧘 The Pause Is the Practice</h4><p>This week is the most practically applicable of the course. The skills here — the pause, the breath, the name — are used in real moments of emotional difficulty. They take practice. Be patient with yourself. Even noticing that you reacted automatically and wishing you'd paused is itself a mindful moment — it is the practice working.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the neuroscience of emotional reactivity and the stress response cycle</li>
+        <li>Learn practical mindfulness-based tools for emotional regulation in the moment</li>
+        <li>Develop the capacity to pause between stimulus and response</li>
+        <li>Apply mindfulness to specific high-charge emotional situations</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Reactivity vs Responsiveness</h4>
+      <p>The central distinction of this week is between reacting and responding. A reaction is automatic — triggered by the amygdala before the prefrontal cortex has time to engage. It feels right and urgent in the moment. It is driven by past pattern, habit, and threat-detection. A response is considered — it still involves feeling the full force of the emotion, but there is a moment of awareness between the feeling and the action. That moment is not natural. It is trained. And it is trained through mindfulness practice.</p>
+      <p>The stress response (fight, flight, freeze, fawn) is the most extreme form of reactivity — a full-system emergency response that bypasses higher reasoning. Under moderate stress, we are more reactive, more defensive, more likely to misread social signals, and less able to access our best thinking. Mindfulness practice literally changes the threshold at which this system activates — building a wider window of tolerance within which we can feel difficult emotions without losing our capacity to choose our response.</p>
+      <h4>2. The Window of Tolerance</h4>
+      <p>Developed by Dan Siegel, the Window of Tolerance describes the zone of nervous system activation within which we can experience, process, and integrate difficult experiences without being overwhelmed (hyperarousal — anxiety, panic, rage) or shutting down (hypoarousal — numbness, dissociation, shutdown). Mindfulness practices — particularly the breath, body awareness, and grounding — help to widen this window over time, and to return to it when we have been pushed outside.</p>
+      <h4>3. STOP — A Mindfulness Tool for Real Moments</h4>
+      <p>STOP is one of the most practical mindfulness tools for high-charge moments:</p>
+      <ul>
+        <li><strong>S — Stop:</strong> Whatever you are doing, stop. Create a physical pause.</li>
+        <li><strong>T — Take a breath:</strong> One conscious, deliberate breath — ideally with a longer exhale than inhale. This directly activates the parasympathetic nervous system.</li>
+        <li><strong>O — Observe:</strong> What is happening in the body? What emotion is present? What thought is driving the urge to react? Just notice.</li>
+        <li><strong>P — Proceed:</strong> With awareness of what you have just noticed, choose how to proceed — rather than being driven by automatic reaction.</li>
+        <li>STOP can be done in 30 seconds. It does not require explanation to others. And it can prevent the reactive word, decision, or action that takes much longer to repair.</li>
+      </ul>
+      <h4>4. Surfing the Urge</h4>
+      <p>Urge surfing — developed initially in addiction treatment by Alan Marlatt — applies beautifully to emotional regulation. When a strong emotion or urge to act arises, rather than immediately acting on it (or fighting it), you observe it as a wave: it rises, peaks, and falls. The peak of any emotional urge typically lasts 60–90 seconds if not fed by further thought. Surfing means:</p>
+      <ul>
+        <li>Notice the urge arising — name it: "There's the urge to send that message." "There's the anger wanting to escalate."</li>
+        <li>Breathe into it — don't fight, don't act</li>
+        <li>Observe it in the body — where is it? What does it feel like? What is it doing?</li>
+        <li>Watch it peak and begin to subside</li>
+        <li>From the other side of the wave, choose. Now the choice is genuinely yours.</li>
+      </ul>
+      <h4>5. Mindfulness and Difficult Conversations</h4>
+      <p>One of the most important applications of emotional regulation through mindfulness is in communication — particularly in conflict. Research by John Gottman identifies four communication patterns that reliably predict relationship breakdown: criticism, contempt, defensiveness, and stonewalling. All four are reactive states. Mindfulness offers a practical counter:</p>
+      <ul>
+        <li>Before a difficult conversation: body check-in, conscious breath, clear intention</li>
+        <li>During: STOP when you notice the urge to defend, attack, or withdraw</li>
+        <li>Listen to understand rather than to respond — a profoundly different mode of attention</li>
+        <li>Notice what is being triggered in you — is this about what is happening now, or about something older and deeper?</li>
+        <li>Respond from your values, not from your wound</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: STOP Practice — Three Times Daily</strong><br>For the next seven days, practise STOP at least three times daily — not only in difficult moments, but as a regular pause throughout the day. Before a meal, before a meeting, before picking up your phone. The goal is to make the pause automatic — so it is available when you most need it.</p>
+      <p><strong>Exercise 2: The Urge Surf Journal</strong><br>When a strong emotional urge arises this week (to send an angry message, to avoid a conversation, to engage in a habitual coping behaviour), practise urge surfing. Afterwards, write: What was the urge? What did it feel like in the body? How long did the peak last? What did you choose, having surfed it? What would you have done had you not paused?</p>
+      <p><strong>Exercise 3: The Reactive Moment Audit</strong><br>Think of a recent moment when you reacted rather than responded — something you said or did that you later wished you hadn't. Walk back through it with mindful curiosity: What triggered it? What was happening in the body just before? What emotion was driving the reaction? What value or need was underneath that emotion? What would a response from your best self have looked like? This is not self-criticism — it is self-knowledge.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What situations most reliably push you outside your Window of Tolerance — and can you now understand why?</li>
+        <li>When you practised STOP, what did you notice in the Observe step that you wouldn't have noticed otherwise?</li>
+        <li>What did urge surfing reveal about the nature of strong emotions — particularly about their duration?</li>
+        <li>What would change in your most important relationships if you consistently responded rather than reacted?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🛑',title:'STOP Technique Practice Card',desc:'Pocket guide for the STOP tool in real moments',file:'stop-technique.pdf'},
+      {icon:'🌊',title:'Urge Surfing Guide',desc:'How to ride emotional waves without acting or suppressing',file:'urge-surfing.pdf'},
+      {icon:'🪟',title:'Window of Tolerance Explained',desc:'Dan Siegel\'s model for nervous system regulation',file:'window-tolerance.pdf'},
+      {icon:'💬',title:'Mindfulness in Difficult Conversations',desc:'Applying mindfulness skills to communication and conflict',file:'mindful-conversations.pdf'},
+      {icon:'🎧',title:'Emotional Regulation Meditation',desc:'12-minute guided practice for working with strong emotions',file:'emotional-regulation-audio.mp3'},
+      {icon:'📚',title:'Emotional Regulation Reading',desc:'Key texts on mindfulness-based emotional regulation',file:'emotional-regulation-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the fundamental difference between reacting and responding?",options:["Reactions are faster; responses are slower","A reaction is automatic — driven by past pattern before the prefrontal cortex engages; a response involves awareness between the feeling and the action — trained through mindfulness practice","Reactions are always harmful; responses are always constructive","Responses involve more emotion; reactions involve more thought"],correct:1},
+      {question:"What is the Window of Tolerance and what happens when we exceed it?",options:["The amount of time we can meditate effectively","The zone of nervous system activation within which we can experience and process difficult emotions — outside it we enter hyperarousal (panic, rage) or hypoarousal (numbness, shutdown)","Our tolerance for other people's emotional expressions","The range of emotions considered normal"],correct:1},
+      {question:"What does the 'O' in STOP stand for and what does it involve?",options:["Open — open yourself to the other person's perspective","Observe — noticing what is happening in the body, what emotion is present, and what thought is driving the urge to react","Organise — plan your response before speaking","Oxygenate — take multiple deep breaths"],correct:1},
+      {question:"What does urge surfing demonstrate about the duration of emotional urges?",options:["Emotional urges last as long as the triggering situation continues","Strong urges last for hours without action","The peak of any emotional urge typically lasts 60–90 seconds if not fed by further thought — it rises, peaks, and falls like a wave","Urges must be acted on quickly or they become more powerful"],correct:2},
+      {question:"What did Alan Marlatt originally develop urge surfing for?",options:["Grief counselling","Anger management in couples therapy","Addiction treatment — observing cravings as waves rather than immediately acting on them","Mindfulness-based stress reduction"],correct:2},
+      {question:"How does mindfulness practice change the stress response threshold over time?",options:["It eliminates the stress response entirely","It increases the threshold for the stress response, widening the Window of Tolerance so difficult emotions can be felt without losing the capacity to choose a response","It makes the stress response faster so we can act more quickly","It transfers stress response control from the amygdala to the prefrontal cortex permanently"],correct:1},
+      {question:"What are Gottman's four communication patterns that predict relationship breakdown?",options:["Silence, distancing, avoidance, and withdrawal","Disagreement, debate, difference, and dispute","Criticism, contempt, defensiveness, and stonewalling — all reactive states","Accusation, blame, shame, and punishment"],correct:2},
+      {question:"What is the key instruction during mindfulness of a difficult conversation — 'listen to understand rather than to respond'?",options:["A social courtesy technique","A profoundly different mode of attention — being fully present to what is being said rather than preparing your reply while the other person speaks","A conflict avoidance strategy","A technique for finding common ground"],correct:1},
+      {question:"What does the STOP practice train — beyond its use in difficult moments?",options:["The ability to suppress emotions more effectively","The practice makes the pause automatic — so it is available as a habit when most needed","Faster cognitive processing under stress","The ability to identify cognitive distortions in real time"],correct:1},
+      {question:"What is the mindfulness question to ask during a difficult conversation — 'is this about now or something older?'",options:["A way to dismiss the current situation","A technique for changing the subject","A way to investigate whether emotional reactivity is driven by the current moment or by past wounds being triggered — allowing more accurate and appropriate response","A memory consolidation technique"],correct:2}
+    ]
+  },
+
+  5: {
+    tutorialVideo: "Mindful Compassion — For Yourself and Others",
+    basicVideo: "Loving-Kindness Meditation — The Science and Practice",
+    content: `
+      <h2>Week 5: Compassion and Connection — Loving-Kindness Practice</h2>
+      <div class="safety-banner"><h4>🧘 Compassion Begins With Yourself</h4><p>This week introduces loving-kindness (metta) meditation — and begins with self-compassion, which many people find the most challenging part. If directing warmth toward yourself feels uncomfortable or even impossible, that is completely understandable. Start where you can. Even a small, genuine gesture of kindness toward yourself matters.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand loving-kindness (metta) meditation and its evidence base</li>
+        <li>Develop self-compassion as a foundational practice — not self-indulgence</li>
+        <li>Extend compassion outward to others, including difficult people</li>
+        <li>Understand the connection between self-compassion and genuine care for others</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Is Loving-Kindness Meditation?</h4>
+      <p>Loving-kindness meditation (metta, from the Pali word for benevolence or goodwill) is a practice of deliberately cultivating warmth, care, and goodwill — first toward yourself, then outward in expanding circles to others. Unlike mindfulness of breath or body, which are awareness practices, loving-kindness is a generative practice — you are actively cultivating an emotional quality rather than simply observing what is there. The research on loving-kindness is substantial:</p>
+      <ul>
+        <li>Barbara Fredrickson's research shows that even a brief loving-kindness practice increases positive emotions, which in turn broaden awareness, build psychological resources, and increase resilience (her Broaden-and-Build theory)</li>
+        <li>Loving-kindness practice increases activity in brain regions associated with empathy, positive emotion, and motivation to help others</li>
+        <li>It reduces self-criticism, social anxiety, and implicit bias</li>
+        <li>It is associated with increased feelings of social connection — even toward strangers — and reduced loneliness</li>
+        <li>Crucially: it does not require that you feel warmth. The practice is the intention. The feeling, when it comes, is a welcome side effect.</li>
+      </ul>
+      <h4>2. The Classic Loving-Kindness Phrases</h4>
+      <p>The traditional loving-kindness practice uses repeated phrases — offered first to yourself, then to others in expanding circles. Common phrases (adapt to whatever resonates genuinely for you):</p>
+      <ul>
+        <li>"May I be happy. May I be healthy. May I be safe. May I live with ease."</li>
+        <li>Then: a beloved person → a neutral person → a difficult person → all beings</li>
+        <li>The phrases are not affirmations you are trying to convince yourself of. They are intentions — a turning of the heart in the direction of care. Say them slowly. Feel them as much as you can. When you can't feel them, continue anyway. The orientation matters more than the emotion.</li>
+      </ul>
+      <h4>3. Self-Compassion — The Foundation</h4>
+      <p>Kristin Neff's research on self-compassion (covered also in the Depression course) is directly relevant here. Many people find the "self" step of loving-kindness the most difficult — particularly those who carry deep shame, harsh self-criticism, or the belief that they do not deserve care. Some important truths about self-compassion:</p>
+      <ul>
+        <li>Self-compassion is not self-pity. Self-pity involves over-identification with your suffering and separation from others ("poor me, nobody else has it this bad"). Self-compassion recognises your suffering as part of common humanity.</li>
+        <li>Self-compassion is not self-indulgence or lowered standards. Research consistently shows that self-compassion is associated with greater accountability (not less), more honest self-assessment, and stronger motivation to improve.</li>
+        <li>Self-compassion is not weakness. It is the same strength you would offer to a person you love who is suffering. You are a person worthy of love.</li>
+        <li>If directing phrases toward yourself feels impossible, begin with an image: imagine yourself as a small child. Offer the phrases to that child. This is sometimes an easier entry point for people with high self-criticism.</li>
+      </ul>
+      <h4>4. Compassion Fatigue and the Reservoir</h4>
+      <p>Compassion for others — particularly for those in helping or caregiving roles — can become depleted if it is not replenished. Compassion fatigue (also called secondary traumatic stress) is the experience of emotional exhaustion and reduced capacity for empathy that arises from sustained exposure to others' suffering without adequate self-care. The metaphor of the reservoir: you cannot pour from an empty vessel. Self-compassion practice is not selfish — it is what fills the reservoir that allows genuine, sustainable compassion for others.</p>
+      <h4>5. Extending Compassion to Difficult People</h4>
+      <p>The most challenging — and most transformative — step in loving-kindness practice is extending it to people who have caused harm. This is not forgiveness in the sense of condoning behaviour. It is the recognition that all human beings — including those who have hurt us — are suffering, and that their suffering is the source of the harm they cause. This does not mean reconciliation. It does not mean absence of boundaries. It means releasing the suffering that the grip of resentment causes you — not for their sake, but for yours. The Buddhist teacher Jack Kornfield: "Forgiveness means giving up all hope of a better past."</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Loving-Kindness Meditation — 15 Minutes Daily</strong><br>Sit comfortably. Begin by bringing to mind someone who easily evokes warmth — a child, a pet, a dear friend. Feel the warmth. Then, holding that quality of warmth, direct it to yourself with the phrases: "May I be happy. May I be healthy. May I be safe. May I live with ease." Repeat slowly 5–6 times. Then extend outward: beloved person → neutral person → difficult person → all beings. Spend 2–3 minutes with each. Notice what arises with each group.</p>
+      <p><strong>Exercise 2: The Self-Compassion Letter</strong><br>Write a letter to yourself from the perspective of a deeply compassionate friend who knows everything about you — your struggles, your failures, your history, your best intentions — and loves you completely. What would this friend say about your current difficulty? What would they offer you? Keep this letter for difficult moments.</p>
+      <p><strong>Exercise 3: Just Like Me</strong><br>This informal compassion practice can be done anywhere, with anyone. Look at another person — a stranger on the street, a difficult colleague, someone you care about — and silently note: "Just like me, this person wants to be happy. Just like me, this person has known loss. Just like me, this person has made mistakes. Just like me, this person is trying." Notice what this shifts in how you perceive them.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which step of loving-kindness felt most natural — and which felt most difficult? What does that tell you?</li>
+        <li>What is your inner response to the idea of self-compassion — resistance, relief, curiosity, something else?</li>
+        <li>Who in your life would most benefit from you practising loving-kindness toward them — and have you tried the difficult person step?</li>
+        <li>What does "filling the reservoir" mean for you personally — what replenishes your capacity for care?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'💛',title:'Loving-Kindness Practice Guide',desc:'Full instructions for metta meditation with all stages',file:'loving-kindness-guide.pdf'},
+      {icon:'💙',title:'Self-Compassion Workbook',desc:'Kristin Neff\'s three components with exercises',file:'self-compassion-workbook.pdf'},
+      {icon:'🔬',title:'Loving-Kindness Research Summary',desc:'Fredrickson\'s Broaden-and-Build and other key studies',file:'loving-kindness-research.pdf'},
+      {icon:'💌',title:'Self-Compassion Letter Template',desc:'Write to yourself from a deeply compassionate friend',file:'self-compassion-letter.pdf'},
+      {icon:'🎧',title:'Loving-Kindness Guided Audio',desc:'20-minute guided metta meditation — all five stages',file:'loving-kindness-audio.mp3'},
+      {icon:'📚',title:'Compassion Practice Reading',desc:'Key books: Self-Compassion (Neff), Real Happiness (Salzberg)',file:'compassion-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is loving-kindness (metta) meditation and how does it differ from awareness practices?",options:["A visualisation practice using positive imagery","A breathing-based practice for relaxation","A generative practice that actively cultivates warmth and goodwill — rather than simply observing what is present","A form of prayer practised in Buddhist traditions only"],correct:2},
+      {question:"What does Barbara Fredrickson's Broaden-and-Build theory show about positive emotions cultivated through loving-kindness?",options:["Positive emotions narrow focus for greater task efficiency","Positive emotions increase social comparison","Positive emotions broaden awareness, build psychological resources, and increase resilience over time","Positive emotions are temporary and have no lasting benefit"],correct:2},
+      {question:"In loving-kindness practice, what is the correct order of the expanding circles?",options:["Difficult person → neutral person → beloved → all beings → self","Self → beloved → neutral → difficult person → all beings","All beings → beloved → neutral → self → difficult person","Beloved → self → neutral → all beings → difficult person"],correct:1},
+      {question:"What is the most important thing to know about self-compassion and motivation?",options:["Self-compassion reduces motivation by removing internal pressure","Self-compassion is associated with greater accountability, more honest self-assessment, and stronger motivation to improve — not less","Self-compassion is only helpful for people with low self-esteem","Self-compassion and high standards are incompatible"],correct:1},
+      {question:"What is compassion fatigue and what causes it?",options:["Tiredness from too much meditation practice","Reduced capacity for self-compassion after extended practice","Emotional exhaustion and reduced capacity for empathy arising from sustained exposure to others' suffering without adequate self-replenishment","A form of depression triggered by caring too much"],correct:2},
+      {question:"Why is extending loving-kindness to difficult people described as being 'for your sake, not theirs'?",options:["Because the difficult person will benefit from your meditation without knowing it","Because difficult people need more compassion than others","Because releasing the grip of resentment reduces the suffering resentment causes you — not because it condones their behaviour or requires reconciliation","Because compassion for difficult people builds character"],correct:2},
+      {question:"What does Jack Kornfield mean by 'forgiveness means giving up all hope of a better past'?",options:["You must forget what happened in order to forgive","Forgiveness requires that the harm be minimised","Forgiveness is the release of the impossible wish that things had been different — not a statement about the harm caused but a freedom from being anchored to it","Forgiveness is only possible after the other person apologises"],correct:2},
+      {question:"What is the difference between self-pity and self-compassion?",options:["Self-pity is appropriate; self-compassion is excessive","They are the same experience","Self-pity involves over-identification with suffering and separation from others; self-compassion recognises suffering as part of common humanity — 'not just me but all humans'","Self-compassion is more intense than self-pity"],correct:2},
+      {question:"What is the 'Just Like Me' informal compassion practice?",options:["A technique for building confidence by comparing yourself to others","Silently noting shared humanity with any person — 'just like me, this person wants to be happy, has known loss, has made mistakes' — shifting perception toward connection","A mirror meditation for self-compassion","A technique for resolving conflict by finding common ground"],correct:1},
+      {question:"Why does the loving-kindness practice not require that you feel warmth for it to be effective?",options:["Because the brain cannot distinguish between felt and unfelt intentions","Because the research only measures behavioural outcomes","The practice is the intention — the turning of the heart in the direction of care. The feeling, when it comes, is a welcome side effect of the orientation, not a prerequisite for it","Because the phrases activate specific brain regions regardless of emotional engagement"],correct:2}
+    ]
+  },
+
+  6: {
+    tutorialVideo: "Mindfulness as a Way of Life — Integration and Sustainability",
+    basicVideo: "Building Your Lifelong Practice",
+    content: `
+      <h2>Week 6: Integration — Mindfulness as a Way of Being</h2>
+      <div class="safety-banner"><h4>🧘 This Is Not an Ending — It Is a Beginning</h4><p>Completing six weeks of this course is a genuine achievement. What you have built is not a technique — it is a new relationship with your own experience: with your thoughts, emotions, body, and with others. This week is about making that relationship sustainable, honest, and alive for the rest of your life.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what a sustainable, lifelong mindfulness practice looks like</li>
+        <li>Integrate all six weeks of practice into a coherent personal approach</li>
+        <li>Navigate common obstacles and how to work with them</li>
+        <li>Develop a vision of mindfulness not as technique but as a way of being</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Difference Between Technique and Way of Being</h4>
+      <p>There is an important distinction between practising mindfulness as a technique — something you do for 20 minutes in the morning — and living mindfully as a way of being. Both are valuable. But the deeper invitation of mindfulness is not to add another item to the to-do list — it is to fundamentally change your relationship with experience itself. Jon Kabat-Zinn: "You don't have to sit on a cushion. The whole day is your meditation." Mindfulness as a way of being means:</p>
+      <ul>
+        <li>Meeting each experience with openness rather than automatic judgment</li>
+        <li>Noticing the difference between what is actually happening and the story you are telling about it</li>
+        <li>Bringing curiosity to difficulty rather than defaulting to avoidance or reactivity</li>
+        <li>Choosing, again and again, to be where you are — rather than wishing you were somewhere else</li>
+      </ul>
+      <h4>2. Common Obstacles — and How Mindfulness Meets Them</h4>
+      <p>Every practitioner encounters obstacles. Rather than being problems, the obstacles are the practice:</p>
+      <ul>
+        <li><strong>"I don't have time":</strong> Five minutes is enough to maintain continuity. The question is not how long — it is whether you show up at all. Even one breath taken with full awareness is mindfulness. The morning alarm, the shower, the first cup of tea — any of these can become an anchor.</li>
+        <li><strong>"My mind won't stop":</strong> This is not a problem — it is what minds do. The practice is not to stop the mind but to notice it. A busy mind that is being observed is already being met with mindfulness.</li>
+        <li><strong>"I'm not doing it right":</strong> There is no right. There is only honest attention — as much as you can bring, in this moment, to this experience. That is always enough.</li>
+        <li><strong>"I've lost my practice":</strong> The practice is never fully lost. It only needs to be begun again — and beginning again, after a gap, is itself an act of mindfulness. Return without self-criticism. The return is part of the practice.</li>
+        <li><strong>"Nothing is changing":</strong> Mindfulness changes are often subtle and non-linear — noticed more in retrospect than in the moment. You are more likely to notice what you were like before than what you are like now.</li>
+      </ul>
+      <h4>3. Building a Sustainable Practice</h4>
+      <p>A sustainable mindfulness practice has three components:</p>
+      <ul>
+        <li><strong>Regularity over duration:</strong> Five minutes daily is more valuable than 60 minutes occasionally. The nervous system learns through consistency. Choose a time that is genuinely available — morning tends to be most reliable because the day hasn't yet filled it.</li>
+        <li><strong>Variety over rigidity:</strong> A practice that bores or burdens you will not survive. Rotate between breath awareness, body scan, walking meditation, and loving-kindness. Use guided audio when you need support; sit in silence when you want space.</li>
+        <li><strong>Community over isolation:</strong> Practice deepens in the company of others who are also practising. A local meditation group, an MBSR course, an online community, or even one friend who practises — connection sustains what individual effort cannot always maintain.</li>
+      </ul>
+      <h4>4. Mindfulness and the Whole Life</h4>
+      <p>Mindfulness is not a solution to life's difficulties. It does not prevent loss, conflict, illness, or failure. What it changes is your relationship to these things — and therefore, ultimately, your capacity to live fully within them. Research consistently shows that people with strong mindfulness practices are not protected from hard experiences. They are better equipped to move through them. They recover more quickly. They suffer less secondary suffering — the suffering that arises from resistance, self-blame, and the wish that things were other than they are. They are more present — to difficulty and to beauty, to loss and to love, to the ordinary moments that, when met with full attention, reveal themselves to be extraordinary.</p>
+      <h4>5. A Life Worth Paying Attention To</h4>
+      <p>The ultimate gift of mindfulness practice is this: you begin to notice your life. Not the idea of your life, not the life you think you should be living, not the life projected onto you by others — but this actual, specific, unrepeatable life, unfolding in this moment. The Vietnamese Buddhist teacher Thich Nhat Hanh: "The present moment is the only moment available to us, and it is the door to all moments." Mindfulness is the practice of turning toward that door, again and again, for the rest of your days. Not perfectly. Not permanently. But honestly, and with increasing ease.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Your Personal Practice Plan</strong><br>Write a specific, realistic mindfulness practice plan for the next three months. Include: daily formal practice (which practice, what time, how long), one informal practice to anchor to an existing routine (morning coffee, commute, meals), one community or accountability element. Make it achievable — not aspirational. The practice you will actually do is infinitely more valuable than the perfect practice you won't.</p>
+      <p><strong>Exercise 2: The Six-Week Integration Letter</strong><br>Write a letter to yourself from the beginning of this course. Tell them what you have discovered. What was harder than expected? What was more accessible? What has changed — however subtly — in how you relate to your thoughts, your emotions, your body, other people? What do you know now that you didn't know six weeks ago? Keep this letter alongside your practice plan.</p>
+      <p><strong>Exercise 3: One Ordinary Moment</strong><br>Today, choose one completely ordinary moment — making tea, looking out a window, walking to the kitchen — and give it your absolute, undivided attention for its entire duration. Not as a technique. Just as presence. Afterwards, write about what you noticed when you paid full attention to something you would normally have done on autopilot. This is what mindfulness is for.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Looking back across six weeks — what has surprised you most about your own mind, emotions, or body?</li>
+        <li>Which of the six weeks' practices has most become part of your natural approach — and which has most resisted integration?</li>
+        <li>What obstacle most commonly interrupts your practice — and what does a mindful relationship with that obstacle look like?</li>
+        <li>If mindfulness is a way of being rather than a technique, what would it look like in your life one year from now?</li>
+      </ul>
+      <h3>🧘 A Closing Word</h3>
+      <p>Six weeks ago, you began paying attention. Perhaps for the first time with deliberate intention. You have sat with your breath. You have scanned your body. You have named your emotions. You have paused before reacting. You have directed warmth toward yourself and others. None of this is small. All of it is practice — and practice, by definition, never needs to be perfect. It only needs to be continued. The mind will wander. The emotions will surge. The days will be too full. And you will return — to the breath, to the body, to this moment — because you now know that this moment, attended to honestly, is where everything that matters actually lives. Begin again. Always, gently, begin again.</p>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      {icon:'📋',title:'Personal Practice Plan Template',desc:'3-month sustainable mindfulness practice blueprint',file:'practice-plan.pdf'},
+      {icon:'🚧',title:'Navigating Obstacles Guide',desc:'Common mindfulness obstacles and how to work with them',file:'obstacles-guide.pdf'},
+      {icon:'🌍',title:'Mindfulness as a Way of Life',desc:'Integration beyond technique — mindful living principles',file:'mindful-living.pdf'},
+      {icon:'💌',title:'Integration Letter Template',desc:'Write to your six-weeks-ago self about what you\'ve discovered',file:'integration-letter.pdf'},
+      {icon:'🎧',title:'Closing Integration Meditation',desc:'20-minute guided practice integrating all six weeks',file:'integration-audio.mp3'},
+      {icon:'🏆',title:'Course Completion Certificate',desc:'Download your certificate of completion',file:'certificate.pdf'}
+    ],
+    assessment: [
+      {question:"What is the distinction between mindfulness as a technique and mindfulness as a way of being?",options:["Technique is for beginners; way of being is for advanced practitioners","They are identical — mindfulness is always a technique","Technique is something you do for a set period; way of being means fundamentally changing your relationship with experience — bringing openness, curiosity, and presence to all moments","Way of being requires more time commitment than technique"],correct:2},
+      {question:"What does 'regularity over duration' mean in building a sustainable practice?",options:["Regular short practices are more valuable than occasional long ones — consistency trains the nervous system more effectively than intermittent intensity","Duration is more important — 60-minute sessions are always more effective","Regularity and duration are equally important","Regularity refers to practising at the same location"],correct:0},
+      {question:"What is the mindful response to the obstacle 'I've lost my practice'?",options:["Accept that mindfulness is not for you","Make a formal commitment to restart with external accountability","Return without self-criticism — beginning again after a gap is itself an act of mindfulness, and the return is part of the practice","Double the practice duration to compensate for the gap"],correct:2},
+      {question:"What does mindfulness research show about difficult experiences for people with strong practices?",options:["They are fully protected from hard experiences","They feel less emotion during difficult experiences","They are not protected from difficulty but are better equipped to move through it — recovering more quickly and experiencing less secondary suffering from resistance and self-blame","Their mindfulness practice prevents the emotional impact of loss and conflict"],correct:2},
+      {question:"What is 'secondary suffering' in the context of mindfulness?",options:["Suffering caused by watching others suffer","The physical symptoms of emotional pain","The suffering that arises from resistance, self-blame, and the wish that things were other than they are — the layer of suffering added to the primary difficulty","Depression following an acute grief episode"],correct:2},
+      {question:"What does Jon Kabat-Zinn mean by 'the whole day is your meditation'?",options:["You should meditate for the entire day","Formal practice should be replaced by informal practice eventually","Mindfulness as a way of being means the opportunity for mindful awareness is present in every moment of daily life — not confined to the cushion","Walking, eating, and all activities can replace formal sitting practice"],correct:2},
+      {question:"Why is community or accountability recommended as part of a sustainable practice?",options:["Group meditation is more effective than solo practice","Community provides instruction that solo practice cannot","Practice deepens in the company of others who are also practising — connection sustains what individual effort cannot always maintain","Group practice is required for advanced mindfulness techniques"],correct:2},
+      {question:"What does Thich Nhat Hanh mean by 'the present moment is the door to all moments'?",options:["All memories are accessible through present-moment awareness","Only the present moment exists — past and future are illusions","The present moment, fully attended to, is the only place where life actually unfolds — the entry point to genuine experience that mindfulness makes available","Mindfulness can help access future possibilities"],correct:2},
+      {question:"What is the recommended response when the mind is busy and won't settle during practice?",options:["Stop the session and try again later","Increase the effort to calm the mind","The busy mind is not a problem — it is what minds do; a busy mind that is being observed is already being met with mindfulness","Use a different practice that requires less focus"],correct:2},
+      {question:"What is the ultimate gift of mindfulness practice, according to this week's closing content?",options:["Freedom from negative emotions","The ability to control your thoughts","Noticing your actual, specific, unrepeatable life unfolding in this moment — not the idea of your life or someone else's version of it","A permanently calm and peaceful mind"],correct:2}
+    ]
+  }
+
+};
+</script>
+</body>
+</html>

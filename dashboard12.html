@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finding Your Life Purpose - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #667eea; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #667eea; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(102, 126, 234, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .safety-banner { background: linear-gradient(135deg, #fff9e6 0%, #fef3e2 100%); border: 2px solid #f6a623; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .safety-banner h4 { color: #e67e00; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Finding Your Life Purpose</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Finding Your Life Purpose</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin your purposeful journey.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Discover My Purpose 🌟</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="safety-banner">
+    <h4>🌟 Your Purpose Is Already Inside You — This Course Helps You Find It</h4>
+    <p>Finding your life purpose is one of the most profound and personal journeys you can undertake. There are no wrong answers here — only honest ones. This course invites deep reflection, and some of that reflection may bring up difficult feelings about the gap between where you are and where you long to be. That discomfort is a compass. Move at your own pace, be gentle with yourself, and remember: purpose is not a single destination — it is a direction.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised guidance on your purpose journey.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support tailored to your journey.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY     = 'CoachL2025SecureKey';
+const COURSE_NAME    = 'Finding Your Life Purpose';
+const TOTAL_WEEKS    = 6;
+const STORAGE_PREFIX = 'coachL_FLP_';
+
+let currentWeek  = 1;
+let studentInfo  = { name: '', email: '' };
+let completedWeeks = new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks')||'[]'));
+function saveCompletedWeeks(){ localStorage.setItem(STORAGE_PREFIX+'completedWeeks', JSON.stringify([...completedWeeks])); }
+
+window.onload = function(){
+  const n=localStorage.getItem('studentName'), e=localStorage.getItem('studentEmail');
+  if(n&&e){ studentInfo.name=n; studentInfo.email=e; updateUserDisplay(); }
+  else { document.getElementById('nameModal').style.display='flex'; }
+  updateProgress(); refreshModuleButtons();
+  selectModule([1,2,3,4,5,6].find(w=>!completedWeeks.has(w))||1);
+};
+
+function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(), e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e){alert('Please enter your email address.');return;}
+  if(!isValidEmail(e)){alert('⚠️ "'+e+'" doesn\'t look like a valid email.\n\nExample: yourname@gmail.com');document.getElementById('studentEmail').focus();return;}
+  studentInfo.name=n; studentInfo.email=e;
+  localStorage.setItem('studentName',n); localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none'; updateUserDisplay();
+}
+function updateEmail(){
+  const cur=localStorage.getItem('studentEmail')||'', nw=prompt('Update your email address:',cur);
+  if(nw===null)return;
+  if(!isValidEmail(nw.trim())){alert('⚠️ That doesn\'t look like a valid email.');return;}
+  studentInfo.email=nw.trim(); localStorage.setItem('studentEmail',nw.trim()); alert('✅ Email updated to: '+nw.trim());
+}
+function updateUserDisplay(){ document.getElementById('userAvatar').textContent=studentInfo.name.charAt(0).toUpperCase(); document.getElementById('userName').textContent='Welcome, '+studentInfo.name+'!'; }
+
+function refreshModuleButtons(){
+  document.querySelectorAll('.module-btn').forEach((btn,i)=>{
+    const w=i+1; btn.classList.remove('active','completed');
+    if(completedWeeks.has(w)){btn.classList.add('completed');btn.textContent='Week '+w+' ✓';}
+    else{btn.textContent='Week '+w;}
+    if(w===currentWeek)btn.classList.add('active');
+  });
+}
+function selectModule(week){ currentWeek=week; refreshModuleButtons(); updateWeekContent(); }
+function showTab(tabName,tabBtn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if(tabBtn)tabBtn.classList.add('active');
+}
+function updateWeekContent(){
+  const w=weekData[currentWeek];
+  document.getElementById('weekTitle').textContent='📹 Week '+currentWeek+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tutorialVideo;
+  document.getElementById('basicTitle').textContent='Basic Learning: '+w.basicVideo;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='📚 Course Resources - Week '+currentWeek;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">📥 Download</span></div>`).join('');
+  renderAssessment();
+}
+function renderAssessment(){
+  const w=weekData[currentWeek], passed=completedWeeks.has(currentWeek);
+  let html=`<h2>📝 Week ${currentWeek} Assessment</h2>`;
+  if(passed){ html+=`<div class="already-passed-notice"><h3>✅ You already passed this week!</h3><p>Great work! Your score has been recorded.</p></div>`; }
+  else { html+=`<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass.</p>`; }
+  w.assessment.forEach((q,i)=>{ html+=`<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`; });
+  if(!passed) html+=`<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function submitQuiz(){
+  if(completedWeeks.has(currentWeek)){alert('You have already passed this assessment!');return;}
+  const w=weekData[currentWeek]; let correct=0,answers=[],allAnswered=true;
+  w.assessment.forEach((q,i)=>{ const sel=document.querySelector(`input[name="q${i}"]:checked`); if(!sel){allAnswered=false;return;} const ua=parseInt(sel.value),ok=ua===q.correct; if(ok)correct++; answers.push({question:q.question,userAnswer:q.options[ua],correctAnswer:q.options[q.correct],isCorrect:ok}); });
+  if(!allAnswered){alert('Please answer all questions before submitting.');return;}
+  const score=Math.round((correct/w.assessment.length)*100), passed=score>=70;
+  submitToSheets(currentWeek,score,correct,w.assessment.length,answers,passed);
+  if(passed){ completedWeeks.add(currentWeek); saveCompletedWeeks(); updateProgress(); refreshModuleButtons(); renderAssessment();
+    alert(currentWeek<TOTAL_WEEKS?`🎉 Congratulations! You passed with ${score}%!\n\nContinue to Week ${currentWeek+1} whenever you're ready.`:`🏆 Course complete! You passed with ${score}%!\n\nYour certificate will be emailed to you. 🎓`);
+  } else { alert(`You scored ${score}% (${correct}/${w.assessment.length}).\n\nYou need 70% to pass. Review the material and try again!`); }
+}
+function submitToSheets(week,score,correct,total,answers,passed){
+  const payload={secretKey:SECRET_KEY,timestamp:new Date().toLocaleString(),studentName:studentInfo.name,studentEmail:studentInfo.email,courseName:COURSE_NAME,week,score,correct,total,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(()=>console.log('✅')).catch(e=>console.error('❌',e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]'); all.push({...payload,answers}); localStorage.setItem('assessmentResults',JSON.stringify(all));
+}
+function updateProgress(){
+  const done=completedWeeks.size, pct=Math.round((done/TOTAL_WEEKS)*100);
+  document.getElementById('progressBar').style.width=pct+'%'; document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TOTAL_WEEKS*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TOTAL_WEEKS;
+}
+function playVideo(type,week){alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed.`);}
+function markComplete(){ showTab('assessment',document.querySelectorAll('.tab')[2]); window.scrollTo({top:0,behavior:'smooth'}); }
+function downloadResource(file,title){
+  fetch('resources/'+file,{method:'HEAD'}).then(r=>{ if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);} else{alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.');} }).catch(()=>alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src=`https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){ if(confirm('End the session?')){ document.getElementById('jitsiFrame').src=''; document.getElementById('videoCallContainer').style.display='none'; } }
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No assessment results yet.');return;}
+  const rows=all.map((r,i)=>`<div class="result-card ${r.passed==='YES'?'passed':'failed'}"><h2>Submission #${i+1} — ${r.passed==='YES'?'✅ PASSED':'❌ FAILED'}</h2><p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p><p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p><p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p><div class="details"><h3>Answers:</h3><table><tr><th>Question</th><th>Student</th><th>Correct</th><th>Result</th></tr>${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}</table></div></div>`).join('');
+  const win=window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}.details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}</style></head><body><h1>📊 Results – Coach L Academy</h1><p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Finding Your Life Purpose
+// ============================================================
+const weekData = {
+
+  1: {
+    tutorialVideo: "What Is Life Purpose — And Why It Matters So Much",
+    basicVideo: "The Science of Meaning and Why Humans Need It",
+    content: `
+      <h2>Week 1: Understanding Purpose — What It Is and Why You Need It</h2>
+      <div class="safety-banner"><h4>🌟 You Don't Have to Have It Figured Out Yet</h4><p>Many people arrive at this question having spent years — sometimes decades — feeling that something is missing without knowing what. That feeling is not a failure. It is a signal. This week we lay the foundation by understanding what purpose actually is, why it matters so profoundly, and why it can feel so elusive in modern life.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what life purpose is — and separate it from common myths and misconceptions</li>
+        <li>Learn the psychology and neuroscience of meaning and why humans are wired to need it</li>
+        <li>Distinguish between hedonic wellbeing (pleasure) and eudaimonic wellbeing (meaning)</li>
+        <li>Begin the inner work of honest self-inquiry that purpose-finding requires</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Life Purpose Actually Is</h4>
+      <p>Life purpose is not a job title. It is not a single dramatic revelation. It is not reserved for extraordinary people. Purpose is the sense that your life is oriented toward something that matters — that your actions, relationships, and choices are connected to something larger than immediate gratification. It is the answer — however partial and evolving — to the question: "What am I here for?"</p>
+      <p>William Damon, one of the leading researchers on purpose, defines it as "a stable and generalised intention to accomplish something that is at once meaningful to the self and of consequence in the world beyond the self." Three elements in that definition deserve attention: it is stable (not a whim or mood), it is meaningful to you personally (not imposed from outside), and it has impact beyond yourself (it connects you to something larger).</p>
+      <ul>
+        <li>Purpose is not the same as passion — passion is an intense emotional response to something you love; purpose is a direction that endures even when the passion ebbs</li>
+        <li>Purpose is not fixed — it evolves as you grow, as circumstances change, and as your understanding of yourself deepens</li>
+        <li>Purpose is not one thing — many people have multiple purposes that intersect: as a parent, a professional, a creative, a community member</li>
+        <li>Purpose is not always comfortable — authentic purpose often asks something of you, challenges you, and requires growth</li>
+      </ul>
+      <h4>2. The Psychology and Neuroscience of Meaning</h4>
+      <p>The need for meaning is not philosophical luxury — it is a fundamental human drive, as basic as the need for safety or connection:</p>
+      <ul>
+        <li><strong>Viktor Frankl's logotherapy:</strong> Emerging from his experience in Nazi concentration camps, Frankl observed that those who found meaning in their suffering — a reason to survive — were more likely to endure than those who did not. His conclusion: meaning is the primary human motivation, more fundamental than pleasure or power. "He who has a why to live can bear almost any how."</li>
+        <li><strong>Self-Determination Theory (Deci and Ryan):</strong> Identifies autonomy, competence, and relatedness as the three basic psychological needs — all of which are fulfilled more completely when activity is aligned with intrinsic values and purpose rather than external pressure</li>
+        <li><strong>Neuroscience of purpose:</strong> Purpose is associated with activity in the ventral striatum and medial prefrontal cortex — areas linked to reward, motivation, and self-relevant processing. People with a stronger sense of purpose show measurably lower cortisol reactivity, better immune function, and reduced inflammation.</li>
+        <li><strong>Health outcomes:</strong> Research by Patricia Boyle at Rush University found that people with a strong sense of purpose live longer, have lower risk of Alzheimer's disease, cardiovascular disease, and stroke, and recover more quickly from illness. Purpose is not just psychologically important — it is physiologically protective.</li>
+      </ul>
+      <h4>3. Hedonic vs Eudaimonic Wellbeing</h4>
+      <p>Ancient Greek philosophy distinguished between two forms of the good life — and modern psychology has validated both as distinct, measurable constructs:</p>
+      <ul>
+        <li><strong>Hedonic wellbeing:</strong> Pleasure, happiness, positive emotion, and the absence of pain. The life of feeling good. This is the dominant model in consumer culture — the accumulation of pleasant experiences and the avoidance of unpleasant ones.</li>
+        <li><strong>Eudaimonic wellbeing:</strong> Meaning, growth, virtue, engagement, and the full expression of human potential. The life of being fully alive. This is Aristotle's concept of flourishing — living in accordance with your deepest nature and values.</li>
+        <li>Research (Barbara Fredrickson, Steven Cole) shows that these two types of wellbeing have different biological signatures at the cellular level — eudaimonic wellbeing is associated with gene expression patterns that reduce inflammation and support immunity, while purely hedonic wellbeing is not. Feeling good is not the same as living well.</li>
+        <li>Crucially: a purpose-driven life is not always a happy life in the moment. Parenting is challenging. Creative work is frustrating. Pursuing justice is exhausting. But people engaged in purposeful activity consistently report higher life satisfaction — even when the activity itself is difficult.</li>
+      </ul>
+      <h4>4. Why Purpose Feels Elusive in Modern Life</h4>
+      <p>Purpose has always been a human quest — but modern life creates specific obstacles to finding it:</p>
+      <ul>
+        <li><strong>Overstimulation and distraction:</strong> The constant noise of screens, notifications, and entertainment makes it difficult to hear the quieter inner signals that point toward meaning</li>
+        <li><strong>The tyranny of choice:</strong> Paradoxically, having too many options can make it harder to commit — if every door is open, choosing one feels like closing all the others</li>
+        <li><strong>External definition of success:</strong> Culture defines success as status, income, and productivity — which often conflicts with intrinsic values and authentic purpose</li>
+        <li><strong>Fear of failure:</strong> Purpose requires risk — of trying something and it not working, of being seen, of disappointing others or yourself</li>
+        <li><strong>The myth of the singular calling:</strong> The idea that each person has one specific, pre-ordained purpose that must be discovered (rather than developed) creates unnecessary anxiety and a sense of failure when life doesn't feel that clear</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Meaning Inventory</strong><br>Write freely for 15 minutes in response to each of these questions — do not edit, just write: (1) When have you felt most alive? (2) What activities make you lose track of time? (3) What would you do if you knew you could not fail? (4) What do you care about so deeply that you would speak up even when it is uncomfortable? Keep these answers — they are the raw material of purpose.</p>
+      <p><strong>Exercise 2: Hedonic vs Eudaimonic Audit</strong><br>Look at your typical week. Write down your main activities and classify each as primarily hedonic (feels good in the moment), primarily eudaimonic (meaningful but sometimes challenging), or neither (simply necessary). Where does the balance sit? What does this tell you about the current relationship between pleasure and meaning in your life?</p>
+      <p><strong>Exercise 3: Your Eulogy — The Long View</strong><br>Write the eulogy you would want someone to deliver at your funeral — not the one that reflects where you are now, but the one that reflects the life you most deeply want to have lived. What did you contribute? What did you stand for? How did you love? Who did you become? The gap between that eulogy and your life today is your purpose compass.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the difference between purpose and passion — and which have you been seeking?</li>
+        <li>When in your life have you felt most purposeful — and what conditions made that possible?</li>
+        <li>Which of the modern obstacles to purpose most resonates with your own experience?</li>
+        <li>What did your eulogy exercise reveal about the life you most want to live?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🌟',title:'What Is Life Purpose — Full Guide',desc:'Damon\'s definition, research, and common misconceptions',file:'life-purpose-guide.pdf'},
+      {icon:'🧠',title:'Neuroscience of Meaning and Purpose',desc:'Brain regions, health outcomes, and the biology of purpose',file:'purpose-neuroscience.pdf'},
+      {icon:'⚖️',title:'Hedonic vs Eudaimonic Wellbeing',desc:'The two faces of the good life — research and self-assessment',file:'hedonic-eudaimonic.pdf'},
+      {icon:'📓',title:'Meaning Inventory Journal Prompts',desc:'Deep-dive writing exercises for uncovering your purpose signals',file:'meaning-inventory.pdf'},
+      {icon:'🎧',title:'Purpose Visualisation Meditation',desc:'15-minute guided meditation: your ideal purposeful life',file:'purpose-visualisation-audio.mp3'},
+      {icon:'📚',title:'Purpose and Meaning Reading List',desc:'Man\'s Search for Meaning, The Purpose Driven Life, and more',file:'purpose-reading.pdf'}
+    ],
+    assessment: [
+      {question:"How does William Damon define life purpose?",options:["A career path aligned with your skills and interests","A spiritual calling revealed through religious practice","A stable and generalised intention to accomplish something meaningful to the self and of consequence in the world beyond the self","The achievement of personal happiness and fulfilment"],correct:2},
+      {question:"What is Viktor Frankl's central insight from logotherapy?",options:["Pleasure is the primary human motivation","Power and achievement drive human behaviour most fundamentally","Meaning is the primary human motivation — 'he who has a why to live can bear almost any how'","Social connection is the deepest human need"],correct:2},
+      {question:"What does neuroscience research show about people with a strong sense of purpose?",options:["They are more creative but less productive","They show lower cortisol reactivity, better immune function, reduced inflammation, and live longer with lower disease risk","They experience more positive emotions on a daily basis","They are more successful financially"],correct:1},
+      {question:"What is the key difference between hedonic and eudaimonic wellbeing?",options:["Hedonic is ancient Greek; eudaimonic is modern psychology","Hedonic wellbeing is about pleasure and feeling good; eudaimonic wellbeing is about meaning, growth, and full expression of human potential","Eudaimonic wellbeing is about positive emotions; hedonic is about purpose","They are different names for the same concept"],correct:1},
+      {question:"What did Fredrickson and Cole's research show about eudaimonic vs hedonic wellbeing at the biological level?",options:["Both have identical biological signatures","Hedonic wellbeing produces healthier gene expression than eudaimonic","Eudaimonic wellbeing is associated with gene expression patterns that reduce inflammation and support immunity — while purely hedonic wellbeing is not","Eudaimonic wellbeing only affects mental health, not physical"],correct:2},
+      {question:"What is the 'tyranny of choice' as an obstacle to finding purpose?",options:["Having too many talents makes choosing one career difficult","The idea that having too many options can paradoxically make it harder to commit — choosing one path feels like closing all others","Being forced to choose between purpose and financial security","The cultural pressure to choose purpose over pleasure"],correct:1},
+      {question:"What is Self-Determination Theory (Deci and Ryan) and its relevance to purpose?",options:["A theory that purpose must be self-determined rather than given by others","A therapy model for overcoming purposelessness","A theory identifying autonomy, competence, and relatedness as basic psychological needs — all more fully met when activity aligns with intrinsic values and purpose","A framework for career decision-making"],correct:2},
+      {question:"Why is purpose described as 'not the same as passion'?",options:["Passion is more important than purpose","Passion is a feeling; purpose is a decision","Passion is an intense emotional response that can fluctuate; purpose is a direction that endures even when the passion ebbs","Purpose applies only to career; passion applies to relationships"],correct:2},
+      {question:"What does Patricia Boyle's research at Rush University show about purpose and health?",options:["Purpose reduces stress but has no physical health effects","People with strong purpose live longer, have lower risk of Alzheimer's, cardiovascular disease, and stroke, and recover more quickly from illness","Health outcomes depend on the type of purpose, not its strength","Purpose affects mental health but not physical longevity"],correct:1},
+      {question:"What is the 'myth of the singular calling' and why is it problematic?",options:["The belief that purpose must come from religion","The cultural message that career is the only legitimate source of purpose","The idea that each person has one specific pre-ordained purpose to discover — which creates unnecessary anxiety and a sense of failure when life doesn't feel that clear","The pressure to identify purpose before age 30"],correct:2}
+    ]
+  },
+
+  2: {
+    tutorialVideo: "Uncovering Your Core Values — The Root of Purpose",
+    basicVideo: "Values vs Goals — Why the Difference Changes Everything",
+    content: `
+      <h2>Week 2: Core Values — The Root System of a Purposeful Life</h2>
+      <div class="safety-banner"><h4>🌟 Values Are What You Stand On When Everything Else Moves</h4><p>This week goes deep into values — not the values you think you should have, but the ones that actually drive you. This requires honesty. Many people discover in this work that the values they have been living by were absorbed from family or culture without examination. That is not a failure — it is the beginning of clarity.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what values are and how they differ from goals, rules, and beliefs</li>
+        <li>Identify your core values through structured self-inquiry</li>
+        <li>Distinguish between chosen values and inherited/imposed values</li>
+        <li>Understand values alignment and why misalignment causes suffering</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Values Are</h4>
+      <p>Values are the deeply held principles that guide how you want to live and who you want to be. They are not goals (specific outcomes you want to achieve), not rules (external constraints on behaviour), and not beliefs (what you think is true). Values are directions — ongoing orientations that inform every choice, large and small. From ACT (Acceptance and Commitment Therapy), values are described as "chosen life directions" — they can never be fully achieved, only lived toward, more or less faithfully, in each moment.</p>
+      <ul>
+        <li>A goal is "I want to be healthier." The value is "I value vitality and caring for my body."</li>
+        <li>A rule is "I must never let people down." The value is "I value reliability and contribution."</li>
+        <li>Goals can be completed; values are never finished — you are always either moving toward them or away from them</li>
+        <li>Values give goals their meaning — without underlying values, goals are arbitrary. Achieving them feels hollow.</li>
+      </ul>
+      <h4>2. Core Values vs Surface Values</h4>
+      <p>Not all values are equally central. Some values are core — so fundamental that violating them produces a distinctive kind of pain, a sense of betrayal of self. Others are surface values — important but not identity-defining. Knowing which are which matters enormously for purpose-finding. Core values are typically:</p>
+      <ul>
+        <li>Present since childhood or early life — they show up consistently across contexts and relationships</li>
+        <li>Felt as non-negotiable — when they are violated, there is a visceral response, not merely discomfort</li>
+        <li>Source of deep satisfaction when honoured — not merely relief, but genuine fulfilment</li>
+        <li>Consistent across time and circumstance — they do not change based on what is socially acceptable or professionally advantageous</li>
+      </ul>
+      <h4>3. Chosen vs Inherited Values</h4>
+      <p>One of the most important distinctions in values clarification is between values you have genuinely chosen and values you have absorbed from family, culture, religion, or social environment without conscious examination. Both can be authentic — but only those that have been examined and consciously embraced carry the motivating power of true values. Signs that a value may be inherited rather than chosen:</p>
+      <ul>
+        <li>Living by it produces resentment or exhaustion rather than meaning</li>
+        <li>You feel guilty rather than fulfilled when you honour it</li>
+        <li>You live by it primarily to avoid others' disapproval rather than because it genuinely matters to you</li>
+        <li>When you imagine a life without it, you feel relief rather than loss</li>
+        <li>The examination is not about rejecting inherited values — many are genuinely yours. It is about choosing them consciously rather than carrying them by default.</li>
+      </ul>
+      <h4>4. Values Alignment and Misalignment</h4>
+      <p>Values misalignment — living in ways that contradict your core values — is one of the most significant sources of chronic dissatisfaction, anxiety, and depression. The feeling of being trapped, empty, or perpetually unsatisfied despite apparent success is often the signal of values misalignment. Common forms:</p>
+      <ul>
+        <li><strong>Career misalignment:</strong> Spending 40+ hours per week in work that contradicts what matters most to you — whether in the nature of the work, the environment, or the outcomes</li>
+        <li><strong>Relationship misalignment:</strong> Relationships structured around others' values and needs at the expense of your own authentic expression</li>
+        <li><strong>Social misalignment:</strong> Living according to cultural scripts (success, status, role) that do not reflect your genuine values</li>
+        <li>Values alignment does not mean every moment of life honours every value — it means the overall direction of your life is moving toward what genuinely matters to you</li>
+      </ul>
+      <h4>5. The Values Clarification Process</h4>
+      <p>True values clarification is not a quick exercise. It requires sitting with questions over time, observing your actual behaviour (which reveals values more accurately than stated preferences), and noticing the emotional signals that point toward what genuinely matters. Key questions in the process:</p>
+      <ul>
+        <li>What makes you angry? (Anger often signals a violated value)</li>
+        <li>What makes you feel most alive and engaged? (Points toward honoured values)</li>
+        <li>Who do you most admire — and what specifically do you admire about them? (Often reflects your own unrealised values)</li>
+        <li>What would you regret not doing or being at the end of your life?</li>
+        <li>What do you consistently choose even when it costs you something?</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Values Sort</strong><br>From the following list, choose your top 10 values, then narrow to your top 5, then to your top 3 core values. Notice what feelings arise as you eliminate: Authenticity, Adventure, Balance, Belonging, Compassion, Contribution, Courage, Creativity, Excellence, Family, Freedom, Growth, Health, Honesty, Integrity, Justice, Leadership, Learning, Love, Loyalty, Meaning, Nature, Openness, Passion, Peace, Purpose, Relationships, Resilience, Responsibility, Service, Spirituality, Strength, Trust, Wisdom. For each of your top 3, write: how it shows up in your life today, and how it would show up more fully in your ideal life.</p>
+      <p><strong>Exercise 2: The Anger and Aliveness Map</strong><br>Write two lists. First: five situations in the last year where you felt genuinely angry, resentful, or deeply uncomfortable. For each, identify which value was being violated. Second: five moments when you felt most alive, engaged, or deeply satisfied. For each, identify which value was being honoured. The pattern across both lists is your values profile — far more accurate than any checklist.</p>
+      <p><strong>Exercise 3: The Values Audit</strong><br>Score each of your top 5 values from 1–10: how fully is this value being honoured in your life right now? For any value scoring 6 or below, write: what specifically would change in your life if this value were being honoured at a 9 or 10? These changes are the building blocks of your purpose-aligned life.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the difference between a value and a goal — and why does that difference matter for living purposefully?</li>
+        <li>Which of your current values do you believe you have genuinely chosen — and which might be inherited without examination?</li>
+        <li>Where is the most significant values misalignment in your life right now — and what does that cost you?</li>
+        <li>If you lived fully in accordance with your top 3 values for one year, what would be different?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🧭',title:'Core Values Reference List',desc:'Comprehensive values list for the sorting exercise',file:'values-list.pdf'},
+      {icon:'📊',title:'Values Audit Worksheet',desc:'Score and analyse your current values alignment',file:'values-audit.pdf'},
+      {icon:'🗺',title:'Values vs Goals Clarification Guide',desc:'Understand the crucial distinction and apply it to your life',file:'values-vs-goals.pdf'},
+      {icon:'🔍',title:'Inherited vs Chosen Values Guide',desc:'Identify which values are truly yours',file:'inherited-chosen-values.pdf'},
+      {icon:'🎧',title:'Values Clarification Meditation',desc:'12-minute guided practice for connecting with your core values',file:'values-meditation-audio.mp3'},
+      {icon:'📚',title:'Values and Purpose Reading',desc:'ACT values work, The Values Factor, and related resources',file:'values-reading.pdf'}
+    ],
+    assessment: [
+      {question:"How does ACT (Acceptance and Commitment Therapy) define values?",options:["Moral principles inherited from culture and religion","Specific goals that reflect what is most important to you","Chosen life directions — ongoing orientations that can never be fully achieved, only lived toward more or less faithfully in each moment","Personality traits that determine behaviour"],correct:2},
+      {question:"What is the key difference between a value and a goal?",options:["Values are more important than goals","Goals are short-term; values are long-term","Goals are specific outcomes that can be completed; values are directions that are never finished — you are always moving toward or away from them","Values come from within; goals come from outside"],correct:2},
+      {question:"What is a core value, as distinct from a surface value?",options:["A value rated highly on a values inventory","A value shared by most members of your culture","A fundamental value whose violation produces a distinctive sense of betrayal of self — present since early life, felt as non-negotiable, consistently honoured regardless of social advantage","A value that is consciously chosen rather than inherited"],correct:2},
+      {question:"What is a key sign that a value may be inherited rather than genuinely chosen?",options:["You have held it for a long time","It is shared by your family members","Living by it produces resentment or exhaustion rather than meaning, and you live by it primarily to avoid disapproval rather than because it genuinely matters to you","It appears on standard values lists"],correct:2},
+      {question:"What does values misalignment most commonly produce?",options:["Minor dissatisfaction that resolves with goal achievement","A need to change careers","Chronic dissatisfaction, anxiety, and a sense of being trapped or perpetually unsatisfied despite apparent success","Increased motivation to align values and behaviour"],correct:2},
+      {question:"Why does anger serve as a useful signal in the values clarification process?",options:["Anger indicates the need for boundary-setting","Anger is always the result of a values violation — and consistently identifying what triggers anger reveals which values are most central to you","Anger is a sign of passion, which points toward purpose","Anger reveals unconscious beliefs rather than values"],correct:1},
+      {question:"What does it mean to say 'values give goals their meaning'?",options:["Goals must be approved by your values before being pursued","Values determine which goals are achievable","Without underlying values, goals are arbitrary — achieving them feels hollow because the motivation was not connected to what genuinely matters","Values must be established before any goals can be set"],correct:2},
+      {question:"What is values alignment?",options:["Having values identical to those of your community","The overall direction of your life moving toward what genuinely matters to you — not every moment honouring every value, but the trajectory being purposeful","Scoring 10/10 on a values audit in every area","Choosing a career that matches your stated values"],correct:1},
+      {question:"Why does the question 'who do you most admire and what do you admire about them' reveal personal values?",options:["Because admiration is always a form of envy","Because people we admire are usually more successful","What we admire in others often reflects our own unrealised values — the qualities we recognise as important but have not yet fully embodied","Because our role models show us which career paths are available"],correct:2},
+      {question:"What is the most accurate way to identify your actual values — beyond stated preferences?",options:["A standard values assessment questionnaire","Asking people who know you well","Observing your actual behaviour over time — what you consistently choose even when it costs you something reveals values more accurately than what you say you value","Identifying the values that produce the most positive emotions"],correct:2}
+    ]
+  },
+
+  3: {
+    tutorialVideo: "Passion, Strengths, and the Ikigai Framework",
+    basicVideo: "What You're Naturally Good At — And Why It Matters",
+    content: `
+      <h2>Week 3: Passions and Strengths — What You Love and What You Do Best</h2>
+      <div class="safety-banner"><h4>🌟 You Have More Than You Think</h4><p>This week turns from values — what matters to you — to passions and strengths: what energises you and what you do naturally well. These three dimensions (values, passions, strengths) are the inner architecture of purpose. By the end of this week, you will have a clearer picture of where they converge.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the difference between passion, strengths, and talent</li>
+        <li>Identify your authentic passions — distinct from culturally endorsed interests</li>
+        <li>Discover your signature strengths using evidence-based frameworks</li>
+        <li>Explore the Ikigai model as a framework for purpose integration</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Passion Really Is</h4>
+      <p>Passion is often romanticised as a singular, burning obsession that you are meant to follow at all costs. This version of passion — "just follow your passion" — is increasingly challenged by researchers and educators. Cal Newport's work shows that world-class passion is typically developed through mastery and engagement, not discovered pre-formed. The more useful question is not "what is my passion?" but "what activities consistently draw my interest and energy, even when they are difficult?"</p>
+      <ul>
+        <li><strong>Harmonious passion:</strong> Freely chosen engagement with an activity that integrates naturally with other areas of life — the activity energises rather than consumes</li>
+        <li><strong>Obsessive passion:</strong> A driven, compulsive relationship with an activity that can crowd out everything else — associated with burnout and rigidity</li>
+        <li>Purpose is best served by harmonious passions — activities that you return to freely, that feel aligned rather than addictive, and that connect naturally with your values</li>
+        <li>Passion signals: you lose track of time; you voluntarily read about it; you feel engaged even when it's hard; you find yourself naturally teaching or sharing it</li>
+      </ul>
+      <h4>2. Strengths — The Science of What You Do Best</h4>
+      <p>Martin Seligman and Christopher Peterson's positive psychology research produced the Values in Action (VIA) Classification of Character Strengths — 24 character strengths organised under six virtues that are cross-culturally universal. Unlike skills (things you learn), strengths are natural patterns of thought, feeling, and behaviour that feel energising when used and are associated with high performance:</p>
+      <ul>
+        <li>Wisdom strengths: creativity, curiosity, judgment, love of learning, perspective</li>
+        <li>Courage strengths: bravery, perseverance, honesty, zest</li>
+        <li>Humanity strengths: love, kindness, social intelligence</li>
+        <li>Justice strengths: teamwork, fairness, leadership</li>
+        <li>Temperance strengths: forgiveness, humility, prudence, self-regulation</li>
+        <li>Transcendence strengths: appreciation of beauty, gratitude, hope, humour, spirituality</li>
+        <li>Using your top strengths in new ways — what Seligman calls "signature strengths" — is one of the highest-impact interventions in positive psychology for increasing wellbeing, engagement, and sense of purpose</li>
+      </ul>
+      <h4>3. Talent vs Strength</h4>
+      <p>Marcus Buckingham and Donald Clifton (StrengthsFinder) draw a crucial distinction: talent is a natural pattern of thought, feeling, or behaviour that produces consistent excellence when combined with knowledge and practice. Skill is a how-to — learned ability. Knowledge is what you know. A strength = talent × investment. The clues to talent are:</p>
+      <ul>
+        <li><strong>Yearning:</strong> Drawn to certain activities even before you are good at them</li>
+        <li><strong>Rapid learning:</strong> You pick it up faster than peers — "getting" it with less struggle</li>
+        <li><strong>Flow:</strong> You lose track of time and feel completely engaged</li>
+        <li><strong>Glimpses of excellence:</strong> Moments when you perform with surprising ease and quality</li>
+        <li><strong>Satisfaction:</strong> Doing it feels intrinsically rewarding, not just instrumentally useful</li>
+      </ul>
+      <h4>4. The Ikigai Framework</h4>
+      <p>Ikigai is a Japanese concept meaning "reason for being" — the intersection of four elements that together constitute a purposeful, fulfilling life. The Western adaptation maps these as four overlapping circles:</p>
+      <ul>
+        <li><strong>What you love</strong> (passions and activities that energise you)</li>
+        <li><strong>What you are good at</strong> (your strengths and developed skills)</li>
+        <li><strong>What the world needs</strong> (problems you can solve, contributions you can make)</li>
+        <li><strong>What you can be paid for</strong> (activities that can sustain you financially)</li>
+        <li>The intersections are equally instructive: Love + Good at = Delight (but no economic sustainability). Love + World needs = Meaning (but potential poverty). Good at + Paid for = Comfortable (but potentially empty). The centre — where all four overlap — is ikigai: purpose in action.</li>
+        <li>Not everyone will find a perfect overlap in a single career. Many people express different quadrants in different areas of life — and that is entirely valid. The framework is a compass, not a demand.</li>
+      </ul>
+      <h4>5. The Flow State and Purpose</h4>
+      <p>Mihaly Csikszentmihalyi's concept of flow — the state of optimal experience when you are fully absorbed in a challenging, meaningful activity — is deeply connected to purpose. Flow states occur at the intersection of challenge and skill: when a task is just difficult enough to require your full engagement but not so difficult as to produce anxiety. Activities that reliably produce flow are strong candidates for purpose-aligned work — because flow is the body's signal that you are operating at the edge of your capability in service of something that matters.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Passion Timeline</strong><br>Draw a timeline of your life from childhood to now. Mark every activity, interest, subject, or project that genuinely captivated you — regardless of whether it seemed "useful." Include childhood games, hobbies, obsessions, subjects at school, side projects, and secret interests. Look for patterns: what themes recur? What type of activity is consistently represented? These patterns point toward authentic passion that predates social conditioning.</p>
+      <p><strong>Exercise 2: Strengths Inventory</strong><br>Complete the free VIA Character Strengths survey at viacharacter.org (15 minutes). Write down your top 5 strengths. For each, write: (1) A specific recent example of using this strength. (2) An area of your life where this strength is underused. (3) One new way you could bring this strength to bear in service of something that matters to you. Your purpose will almost certainly involve your top 3 strengths prominently.</p>
+      <p><strong>Exercise 3: Build Your Ikigai Map</strong><br>Draw four overlapping circles and label them: What I Love, What I'm Good At, What the World Needs, What I Can Be Paid For. Fill in each circle with as many honest answers as you can. Then examine the overlaps. Where is the most overlap? Where is there a gap? What would need to be true for you to move toward the centre? This map is not a finished product — it is a working document that evolves as you do.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What activities from your Passion Timeline recur most consistently — and what do they have in common?</li>
+        <li>Which of your VIA signature strengths do you most recognise in your best work — and which are most underused?</li>
+        <li>Where in your Ikigai map is the most significant gap — and is it bridgeable?</li>
+        <li>When have you been in a flow state — and what does that activity tell you about where your purpose might live?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🌊',title:'Flow State and Purpose Guide',desc:'Csikszentmihalyi\'s flow and its role in purposeful work',file:'flow-purpose.pdf'},
+      {icon:'🗺',title:'Ikigai Map Template',desc:'Four-circle framework worksheet for purpose integration',file:'ikigai-map.pdf'},
+      {icon:'💪',title:'VIA Strengths Guide',desc:'All 24 character strengths explained with examples',file:'via-strengths-guide.pdf'},
+      {icon:'📅',title:'Passion Timeline Worksheet',desc:'Life timeline template for identifying passion patterns',file:'passion-timeline.pdf'},
+      {icon:'🎧',title:'Strengths Discovery Meditation',desc:'10-minute guided practice for connecting with your strengths',file:'strengths-meditation-audio.mp3'},
+      {icon:'📚',title:'Passions and Strengths Reading',desc:'So Good They Can\'t Ignore You, Strengthsfinder 2.0, Flow',file:'strengths-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does Cal Newport's research challenge about the idea of 'following your passion'?",options:["That passion is a valid source of motivation","That career and passion can overlap","The romantic idea of a pre-formed passion waiting to be discovered — showing instead that passion is typically developed through mastery and engagement","That passion matters for purpose"],correct:2},
+      {question:"What is the difference between harmonious passion and obsessive passion?",options:["Harmonious passion is stronger; obsessive passion is weaker","Harmonious passion relates to relationships; obsessive passion relates to work","Harmonious passion integrates naturally with other life areas and energises; obsessive passion crowds everything else out and is associated with burnout","Harmonious passion is consciously chosen; obsessive passion develops naturally"],correct:2},
+      {question:"What is a 'signature strength' in Martin Seligman's positive psychology framework?",options:["A strength so rare it defines your personality entirely","Your highest-rated strength on the VIA survey","A natural pattern of thought, feeling, and behaviour from the VIA classification that feels energising when used — whose regular use in new ways is a high-impact intervention for wellbeing and purpose","A strength developed through years of deliberate practice"],correct:2},
+      {question:"What is Mihaly Csikszentmihalyi's concept of flow?",options:["A state of total relaxation and absence of thought","The feeling of motivation that precedes productive work","The state of optimal experience when fully absorbed in a challenging, meaningful activity at the intersection of challenge and skill","A meditative state achieved through breath awareness"],correct:2},
+      {question:"What is the Ikigai framework and what does it map?",options:["A Japanese productivity method for career planning","A spiritual practice for finding inner peace","A framework mapping four elements — what you love, what you're good at, what the world needs, what you can be paid for — whose intersection represents purpose in action","A personality assessment for identifying career fit"],correct:2},
+      {question:"According to Buckingham and Clifton, what is the formula for a strength?",options:["Skill + Practice + Motivation","Natural talent + Hard work","Talent × Investment — where talent is a natural pattern, knowledge is what you know, and skill is learned ability","Passion + Values + Competence"],correct:1},
+      {question:"What does 'rapid learning' as a clue to talent mean?",options:["Learning faster than average through more efficient study methods","You pick up a skill faster than peers with less struggle — your mind already has patterns that make the learning feel natural","You learn best through rapid, repeated practice","You learn quickly because you are highly motivated"],correct:1},
+      {question:"In the Ikigai framework, what does the intersection of 'what you love' and 'what the world needs' represent — without the other two?",options:["Your ideal career","Your Ikigai — your reason for being","Meaning — which is fulfilling but without skill or economic sustainability may not be practically viable","Comfort without passion"],correct:2},
+      {question:"What is the most useful question to replace 'what is my passion?' according to this week's content?",options:["What am I best at?","What will make me the most money?","What activities consistently draw my interest and energy, even when they are difficult?","What do other people say I should do?"],correct:2},
+      {question:"Why are activities that reliably produce flow strong candidates for purpose-aligned work?",options:["Because flow activities are always financially rewarding","Because flow requires no effort and is therefore sustainable","Because flow is the body's signal that you are operating at the edge of your capability in service of something that matters — indicating deep engagement of strengths in meaningful work","Because flow states improve physical health"],correct:2}
+    ]
+  },
+
+  4: {
+    tutorialVideo: "The World Needs What You Have — Contribution and Impact",
+    basicVideo: "From Inner Purpose to Outer Expression",
+    content: `
+      <h2>Week 4: Contribution — Connecting Your Purpose to the World</h2>
+      <div class="safety-banner"><h4>🌟 Purpose Becomes Real When It Touches Others</h4><p>This week bridges the inner work of the first three weeks with the outer world. Values, passions, and strengths become purposeful when they are expressed in service of something beyond yourself. This is not about grand gestures or changing the world alone — it is about finding the specific way your particular combination of gifts can make a genuine difference.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand why purpose requires a contribution dimension — service beyond the self</li>
+        <li>Identify the specific problems, needs, or communities your purpose might serve</li>
+        <li>Explore different modes of contribution: direct service, creative work, advocacy, mentoring</li>
+        <li>Begin connecting your inner purpose profile to outer-world expression</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Purpose Requires Contribution</h4>
+      <p>Damon's definition of purpose includes "consequence in the world beyond the self" for a reason. Research consistently shows that self-focused purpose — pursuing meaning purely for personal fulfilment — produces less lasting satisfaction and wellbeing than other-focused purpose. The most durable, meaningful sense of purpose involves contributing to something larger than your own life: other people, a community, a cause, a creative legacy, future generations, or the natural world. This is not altruism as self-sacrifice — it is the recognition that human beings are relational creatures, and that our deepest fulfilment comes from the awareness that our existence has made some kind of difference.</p>
+      <ul>
+        <li>Adam Grant's research on "givers" — people who contribute generously to others — shows that in the long run, givers experience higher satisfaction, meaning, and success than "takers" or even "matchers," provided they give sustainably</li>
+        <li>The question is not how much you contribute but whether your contribution is genuine — whether it connects authentically to your values, strengths, and passions</li>
+        <li>Contribution does not require grand scale — the teacher who changes one child's relationship to learning, the friend who holds someone through grief, the artist who creates beauty in an impoverished space — all are exercising purpose through contribution</li>
+      </ul>
+      <h4>2. Identifying Your Contribution Niche</h4>
+      <p>Your contribution niche is the specific intersection of what you uniquely offer and what the world genuinely needs. Finding it requires both inner knowledge (values, strengths, passions — from the previous three weeks) and outer awareness (what problems exist? What needs are unmet? Where is your contribution most needed and most valued?). Three questions guide this:</p>
+      <ul>
+        <li><strong>"Who do I most want to serve?"</strong> — specific people, communities, or causes. The more specific, the more powerful the purpose becomes.</li>
+        <li><strong>"What problem do I most want to help solve?"</strong> — the difficulty, gap, or injustice that most calls for your engagement</li>
+        <li><strong>"How do I want to make that contribution?"</strong> — through what medium, in what role, in what context?</li>
+      </ul>
+      <h4>3. Modes of Contribution</h4>
+      <p>Contribution takes many forms — and purpose can be expressed through any of them:</p>
+      <ul>
+        <li><strong>Direct service:</strong> Working directly with the people you serve — healthcare, education, coaching, counselling, social work, community development</li>
+        <li><strong>Creative contribution:</strong> Art, writing, music, design, storytelling — creating things that enrich experience, expand perspective, or express what others cannot articulate</li>
+        <li><strong>Knowledge contribution:</strong> Research, teaching, mentoring, writing — sharing what you know to expand what others can do</li>
+        <li><strong>Advocacy and leadership:</strong> Speaking for those without voice, creating change in systems, leading organisations toward better outcomes</li>
+        <li><strong>Presence and care:</strong> Being someone who shows up — for family, friends, community — with consistent love, attention, and reliability. This is one of the most undervalued forms of contribution.</li>
+        <li><strong>Economic contribution:</strong> Building organisations, creating employment, developing products or services that genuinely improve lives</li>
+      </ul>
+      <h4>4. The Calling vs Job vs Career Framework</h4>
+      <p>Amy Wrzesniewski's research at Yale identifies three orientations to work that cut across all professions:</p>
+      <ul>
+        <li><strong>Job:</strong> Work as a means to an end — financial security, stability. The work itself is not intrinsically meaningful; what it provides is.</li>
+        <li><strong>Career:</strong> Work as advancement — achievement, status, recognition, progression. The work is meaningful primarily as a vehicle for personal success.</li>
+        <li><strong>Calling:</strong> Work experienced as inherently meaningful contribution — deeply connected to identity and values, inseparable from who you are</li>
+        <li>Crucially: people in identical roles can have all three orientations. The orientation is not determined by the profession — it is determined by the relationship with the work. And orientations can change — you can develop a calling in work that began as a job, through the process of making it more aligned with your values and strengths.</li>
+      </ul>
+      <h4>5. Job Crafting — Shaping Your Current Role Toward Purpose</h4>
+      <p>You do not necessarily need to change your job to begin living more purposefully. Job crafting — developed by Amy Wrzesniewski and Jane Dutton — is the practice of actively reshaping your role toward greater alignment with your values, strengths, and purpose:</p>
+      <ul>
+        <li><strong>Task crafting:</strong> Adjusting which tasks you spend most time on, taking on new responsibilities, letting go of those that drain rather than energise</li>
+        <li><strong>Relational crafting:</strong> Changing who you interact with and how — seeking more meaningful connections, mentoring, collaboration</li>
+        <li><strong>Cognitive crafting:</strong> Reframing how you think about your work — seeing it in terms of its broader impact, its connection to your values, its contribution to something larger</li>
+        <li>Research shows that even small amounts of job crafting significantly increase meaning, engagement, and sense of calling — without requiring a career change</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Contribution Map</strong><br>Answer these three questions as specifically as possible: (1) Who do you most want to serve — be specific: children in poverty, women leaving abusive relationships, people in mid-life transition, teenagers who feel they don't belong? (2) What specific problem most calls for your attention — the one you cannot hear about without wanting to act? (3) Through what mode of contribution do you feel most energised? Cross-reference your answers with your values, passions, and strengths from weeks 2 and 3. Where is the overlap?</p>
+      <p><strong>Exercise 2: The Impact Letter</strong><br>Write a letter to someone whose life you would most want to positively impact through your purpose — whether that is a specific person, a type of person, or a future community. Tell them what you want to contribute to their life, what difference you intend to make, and why their flourishing matters to you. This letter clarifies the "who" and "why" of your purpose more powerfully than any framework.</p>
+      <p><strong>Exercise 3: Job Crafting Experiment</strong><br>Identify one specific way you could craft your current work — or one area of your life outside work — to make it more aligned with your values and purpose. Make it small and specific. Execute it this week. Write about what changed — in the activity itself, and in how you felt doing it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What specific problem in the world most consistently captures your attention and concern — and what does that tell you about your purpose?</li>
+        <li>What mode of contribution feels most natural and energising for you — and how much of your current life involves that mode?</li>
+        <li>Do you currently experience your primary work as a job, a career, or a calling — and what would shift it toward calling?</li>
+        <li>Who is the specific person or community you most want your purpose to serve — and can you picture them?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🌍',title:'Contribution and Purpose Guide',desc:'Why service beyond self is essential to lasting meaning',file:'contribution-purpose.pdf'},
+      {icon:'🗺',title:'Contribution Map Worksheet',desc:'Who you serve, what problem, what mode — purpose in action',file:'contribution-map.pdf'},
+      {icon:'🔧',title:'Job Crafting Guide',desc:'Wrzesniewski\'s framework for reshaping your role toward purpose',file:'job-crafting.pdf'},
+      {icon:'💼',title:'Job vs Career vs Calling Assessment',desc:'Identify your current work orientation and shift it',file:'work-orientation.pdf'},
+      {icon:'🎧',title:'Contribution Visualisation Audio',desc:'12-minute guided practice: seeing your purposeful contribution',file:'contribution-audio.mp3'},
+      {icon:'📚',title:'Contribution and Meaning Reading',desc:'Give and Take (Grant), Callings (Gregg Levoy), and more',file:'contribution-reading.pdf'}
+    ],
+    assessment: [
+      {question:"Why does Damon's definition of purpose include 'consequence in the world beyond the self'?",options:["To distinguish purpose from self-improvement","Because purpose must involve paid work that benefits others","Research shows that other-focused purpose produces more lasting satisfaction than self-focused purpose — human beings are relational creatures whose deepest fulfilment comes from making a difference","Because personal fulfilment alone is shallow"],correct:2},
+      {question:"What does Adam Grant's research on 'givers' show?",options:["Givers always suffer more than takers","Generous contribution depletes personal resources over time","Givers experience higher satisfaction, meaning, and long-term success than takers or matchers — provided they give sustainably","Only people in helping professions are true givers"],correct:2},
+      {question:"What are the three orienting questions for finding your contribution niche?",options:["What do I want to achieve, how much do I want to earn, and where do I want to live?","Who do I most want to serve, what problem do I most want to help solve, and how do I want to make that contribution?","What am I best at, what do I love, and what does the world need?","Who needs me most, what can I offer, and what will I be paid for?"],correct:1},
+      {question:"What is Amy Wrzesniewski's 'calling' orientation to work?",options:["Work in a religious or spiritual vocation","Work that pays extremely well and provides status","Work experienced as inherently meaningful contribution — deeply connected to identity and values, inseparable from who you are","Work that is chosen freely without external pressure"],correct:2},
+      {question:"What is the crucial finding of Wrzesniewski's research about calling vs job orientation?",options:["Calling is only possible in helping professions","Job orientation always leads to career orientation over time","People in identical roles can have all three orientations — the orientation is determined by the relationship with the work, not the profession itself","Calling requires a specific type of personality"],correct:2},
+      {question:"What is job crafting and what does research show about its effects?",options:["Retraining for a new career to align with purpose","Negotiating better working conditions with your employer","Actively reshaping your role toward greater alignment with values, strengths, and purpose — shown to significantly increase meaning and engagement even without a career change","Crafting your professional profile to attract purpose-aligned opportunities"],correct:2},
+      {question:"What is 'cognitive crafting' in the job crafting framework?",options:["Changing which cognitive tasks you focus on at work","Improving cognitive performance through brain training","Reframing how you think about your work — seeing it in terms of broader impact, connection to values, and contribution to something larger","Using cognitive behavioural techniques to improve job satisfaction"],correct:2},
+      {question:"What makes contribution purposeful rather than simply helpful?",options:["The scale of the contribution","The recognition it receives","When it connects authentically to your values, strengths, and passions — rather than being driven by obligation or external expectation","When it is sustainable financially"],correct:2},
+      {question:"What does 'presence and care' as a mode of contribution recognise?",options:["That caregiving professions are the most purposeful","That being someone who consistently shows up with love, attention, and reliability is one of the most undervalued — and genuinely impactful — forms of contribution","That presence is only meaningful in close relationships","That care work should be professionalised"],correct:1},
+      {question:"Why is specificity important when identifying who you want to serve?",options:["Because specific audiences pay more","Because you need to market yourself to a niche","The more specific the 'who', the more powerful the purpose becomes — specificity creates genuine connection and direction rather than vague goodwill","Because specific groups are easier to access"],correct:2}
+    ]
+  },
+
+  5: {
+    tutorialVideo: "Overcoming the Fear That Stands Between You and Purpose",
+    basicVideo: "Taking Bold Steps — From Intention to Action",
+    content: `
+      <h2>Week 5: Obstacles and Courage — Moving Toward Your Purpose Despite Fear</h2>
+      <div class="safety-banner"><h4>🌟 The Obstacles Are Part of the Path — Not Detours from It</h4><p>This week is perhaps the most practically challenging. You now have clarity about your values, passions, strengths, and contribution — and now the fears, doubts, and practical obstacles may be very loud. This week is not about silencing them. It is about moving forward in their company, because purpose requires courage, not the absence of fear.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Identify the specific fears and inner obstacles blocking your purposeful life</li>
+        <li>Understand the psychology of fear in relation to purpose — why purpose triggers fear</li>
+        <li>Learn courage-building frameworks for taking purposeful action despite uncertainty</li>
+        <li>Develop a concrete plan for moving toward your purpose in the next 90 days</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Purpose Triggers Fear</h4>
+      <p>It seems paradoxical: if purpose is what we most deeply want, why does moving toward it so often feel terrifying? The answer lies in what purpose asks of us:</p>
+      <ul>
+        <li><strong>Visibility:</strong> Living purposefully means being seen — being known for something, standing for something, being accountable for it</li>
+        <li><strong>Risk of failure:</strong> If purpose becomes important to you and you fail, you cannot say "it didn't matter anyway." The more it matters, the more there is to lose</li>
+        <li><strong>Identity disruption:</strong> Moving toward purpose often means leaving behind identities, roles, or relationships that have defined you — even if they no longer fit</li>
+        <li><strong>Disappointing others:</strong> Authentic purpose frequently conflicts with others' expectations — parents, partners, communities</li>
+        <li><strong>Imposter phenomenon:</strong> "Who am I to do this? Others are far more qualified, experienced, talented." The gap between where you are and where purpose wants you to go can feel humiliatingly large.</li>
+      </ul>
+      <h4>2. The Imposter Phenomenon</h4>
+      <p>First described by psychologists Pauline Clance and Suzanne Imes in 1978, the imposter phenomenon is the persistent belief that you are not as competent as others perceive you to be — that you have fooled people, and it is only a matter of time before you are found out. Research shows it is experienced by approximately 70% of people at some point — it is particularly prevalent among high achievers, women, people from underrepresented groups, and those entering new fields or roles. In the context of purpose, imposter feelings arise when you begin doing work that matters to you:</p>
+      <ul>
+        <li>The solution is not to eliminate the feeling but to act despite it — and to accumulate evidence through action that contradicts it</li>
+        <li>Reframing: "I feel like an imposter" means "I am doing something that matters to me and I care about doing it well." It is the signal of engagement, not incompetence.</li>
+        <li>Every expert was once a beginner. Every author published their first imperfect book. Every leader made their first terrifying decision. The feeling is universal; the action is what distinguishes those who move through it.</li>
+      </ul>
+      <h4>3. The Inner Critic and Its Origin</h4>
+      <p>The inner critic is the internal voice that undermines, minimises, and discourages movement toward purpose. It typically originated in early experience — as an internalised version of the critical messages you received from parents, teachers, peers, or culture. In its original context, it served a protective function: don't step out of line, don't be too visible, don't be too much. In the context of purpose, it is a protective mechanism that has overstayed its welcome. Working with the inner critic rather than being controlled by it involves:</p>
+      <ul>
+        <li>Naming it — "there is the inner critic again." Creating distance rather than fusing with its message.</li>
+        <li>Identifying its origin — when did you first hear this message? Whose voice is it really?</li>
+        <li>Asking what it is trying to protect you from — understanding its intention even while declining to follow its direction</li>
+        <li>Replacing obedience with gratitude: "Thank you for trying to protect me. I'm going anyway."</li>
+      </ul>
+      <h4>4. Brené Brown's Research on Vulnerability and Courage</h4>
+      <p>Brené Brown's research at the University of Houston identifies vulnerability — the willingness to show up and be seen even when there are no guarantees — as the birthplace of everything meaningful: creativity, connection, love, belonging, and purpose. Her findings:</p>
+      <ul>
+        <li>Vulnerability is not weakness — it is the most accurate measure of courage</li>
+        <li>"Wholehearted" living — the life of meaning and deep connection — requires willingness to be imperfect, to fail, and to try again</li>
+        <li>The opposite of vulnerability is not strength — it is armour. And armour keeps out both pain and purpose.</li>
+        <li>The "arena" (from Theodore Roosevelt's famous speech): the person in the arena, face covered in dust and sweat, is doing something the critic in the stands will never do. Purpose puts you in the arena.</li>
+      </ul>
+      <h4>5. The 90-Day Purpose Action Plan</h4>
+      <p>Purpose without action remains a beautiful idea. The bridge between insight and a purposeful life is taken in small, concrete, courageous steps. The 90-day purpose action plan works as follows:</p>
+      <ul>
+        <li><strong>One purpose statement:</strong> A clear, one-sentence articulation of what you are moving toward — "I am building a life that [values], by [contribution], using [strengths]."</li>
+        <li><strong>Three 90-day goals:</strong> Specific, measurable actions that move meaningfully toward your purpose — not aspirations but concrete experiments</li>
+        <li><strong>Weekly actions:</strong> For each goal, one specific action per week that moves it forward</li>
+        <li><strong>Accountability:</strong> One person who knows your plan and will ask you about it</li>
+        <li>The plan is not a promise of certainty. It is a commitment to movement — toward something that matters, despite not knowing exactly where it will lead.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Fear Inventory</strong><br>Write down every fear, doubt, and obstacle — internal and external — that stands between you and living your purpose. Be exhaustive. Then go through each one and categorise it: Is this a real practical obstacle? An internal fear? A fear of others' judgment? An imposter belief? For each internal fear, write: what is this fear trying to protect me from? Is that protection still needed? What is the cost of obeying it?</p>
+      <p><strong>Exercise 2: One Courageous Action This Week</strong><br>Identify one action that moves you toward your purpose — and that genuinely scares you a little. Not recklessly, but authentically. Tell one person about it before you do it. Do it. Write about what happened — both externally and internally. This is the beginning of building a courage muscle: it grows only through use.</p>
+      <p><strong>Exercise 3: Write Your 90-Day Purpose Action Plan</strong><br>Using the framework above: write your purpose statement, three 90-day goals, and the weekly action for the coming week for each goal. Identify your accountability partner and tell them today. Review the plan at the end of each week. Adjust as you learn. The adjustments are not failures — they are data.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which fear is most loudly arguing against your purposeful life — and what is it really protecting you from?</li>
+        <li>Have you experienced the imposter phenomenon in relation to your purpose — and what evidence contradicts it?</li>
+        <li>What would you do in pursuit of your purpose if you knew you could not be judged?</li>
+        <li>Who is the accountability partner you will share your 90-day plan with — and what makes them the right person?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🦁',title:'Courage and Purpose Guide',desc:'Brown\'s vulnerability research applied to purposeful living',file:'courage-purpose.pdf'},
+      {icon:'👥',title:'Imposter Phenomenon Workbook',desc:'Understanding and moving through imposter feelings',file:'imposter-workbook.pdf'},
+      {icon:'📋',title:'90-Day Purpose Action Plan Template',desc:'Purpose statement, goals, weekly actions, and accountability',file:'90-day-plan.pdf'},
+      {icon:'🔇',title:'Working With the Inner Critic Guide',desc:'Name, understand, and move beyond self-sabotaging thoughts',file:'inner-critic-guide.pdf'},
+      {icon:'🎧',title:'Courage Activation Meditation',desc:'12-minute guided practice for moving toward fear with purpose',file:'courage-audio.mp3'},
+      {icon:'📚',title:'Purpose and Courage Reading',desc:'Daring Greatly (Brown), Big Magic (Gilbert), The War of Art (Pressfield)',file:'courage-reading.pdf'}
+    ],
+    assessment: [
+      {question:"Why does moving toward purpose often trigger fear rather than excitement alone?",options:["Because purpose requires changing your personality","Because purpose requires visibility, risks failure that now matters, may disrupt identity, and can disappoint others — all of which activate genuine threat responses","Because people are generally resistant to positive change","Because fear is a sign that purpose is not authentic"],correct:1},
+      {question:"What is the imposter phenomenon?",options:["The belief that you are more capable than others recognise","A feeling of confusion about your identity during major transitions","The persistent belief that you are not as competent as others perceive — that you have fooled people and will eventually be found out","A form of social anxiety specific to high-achieving environments"],correct:2},
+      {question:"What percentage of people experience the imposter phenomenon at some point?",options:["Approximately 20%","Only people in competitive fields","Approximately 70% — it is particularly prevalent among high achievers, women, people from underrepresented groups, and those entering new roles","Less than 10% of the population"],correct:2},
+      {question:"What is the recommended reframe for 'I feel like an imposter'?",options:["'I need more qualifications before proceeding'","'Others feel this way too so it doesn't matter'","'I feel like an imposter means I am doing something that matters to me and I care about doing it well' — it is the signal of engagement, not incompetence","'I should find a purpose more suited to my current level'"],correct:2},
+      {question:"What is Brené Brown's central finding about vulnerability?",options:["Vulnerability is a weakness that should be managed","Vulnerability is only appropriate in close relationships","Vulnerability — the willingness to show up and be seen without guarantees — is not weakness but the most accurate measure of courage and the birthplace of everything meaningful","Vulnerability produces temporary discomfort but no lasting benefit"],correct:2},
+      {question:"What does Brown mean when she says 'the opposite of vulnerability is not strength — it is armour'?",options:["Physical toughness protects against emotional pain","Emotional armour is a valid long-term strategy","Protective armour keeps out both pain and purpose — you cannot selectively numb vulnerability without also numbing the capacity for meaning, love, and connection","Armour is appropriate for certain high-stakes situations"],correct:2},
+      {question:"What is the origin of the inner critic, according to this week's content?",options:["A genetically inherited personality trait","A result of traumatic experiences alone","An internalised version of critical messages received from parents, teachers, peers, or culture — originally protective, now often blocking purpose","A cognitive distortion developed through negative self-talk patterns"],correct:2},
+      {question:"What is the recommended response to the inner critic when pursuing purpose?",options:["Argue back with positive affirmations","Eliminate the inner critic through therapy","Name it, understand its protective intention, and proceed anyway — 'thank you for trying to protect me, I'm going anyway'","Ignore it until it disappears"],correct:2},
+      {question:"What is the key principle of a 90-day purpose action plan?",options:["Planning the entire journey from purpose to outcome","Having a perfect, certain path before beginning","Committing to movement — specific, concrete, weekly actions toward purpose despite not knowing exactly where it will lead","Keeping the plan private to protect against judgment"],correct:2},
+      {question:"What does the 'arena' metaphor from Theodore Roosevelt (as used by Brown) represent in the context of purpose?",options:["Competitive environments where purpose is tested","The workplace as a site of purposeful contribution","The space of purposeful action where you are visible, imperfect, and doing something the critic in the stands will never do — purpose requires entering the arena","A mental space for rehearsing purposeful behaviour"],correct:2}
+    ]
+  },
+
+  6: {
+    tutorialVideo: "Your Purpose Statement — Writing the North Star of Your Life",
+    basicVideo: "Living on Purpose Every Day — From Vision to Practice",
+    content: `
+      <h2>Week 6: Your Purpose Statement and the Purposeful Life — Integration</h2>
+      <div class="safety-banner"><h4>🌟 Six Weeks In — and the Real Journey Begins Here</h4><p>This final week is about integration and commitment. You have examined your values, uncovered your passions, identified your strengths, defined your contribution, and begun moving through your fears. Now we bring it all together into a living purpose statement — and a practical vision of what a purposeful life looks like day by day, not as a destination arrived at but as a way of moving through the world.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Synthesise the work of six weeks into a personal purpose statement</li>
+        <li>Understand what a purposeful life looks like in practice — in ordinary days, not only extraordinary moments</li>
+        <li>Develop practices for staying connected to purpose when life becomes difficult</li>
+        <li>Create a long-term vision and the immediate first steps toward it</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Purpose Statement</h4>
+      <p>A purpose statement is not a mission statement for a company. It is a personal declaration — a compass sentence that orients your decisions, anchors your identity, and reminds you of what you are for when life gets confusing or hard. A good purpose statement has several qualities:</p>
+      <ul>
+        <li>It is personal — it sounds like you, not like a motivational poster</li>
+        <li>It is specific enough to guide decisions and decline opportunities that don't align</li>
+        <li>It includes both the inner orientation (what values, qualities, or way of being) and the outer expression (what contribution, for whom)</li>
+        <li>It is aspirational but not unreachable — it describes the direction, not a final destination</li>
+        <li>It moves you when you read it — there is an emotional resonance, a sense of recognition</li>
+        <li>A template: "My purpose is to [contribution/impact], by [how you will do it], guided by [core values], so that [the difference it makes]." Do not treat this as a formula — use it as a starting structure and then make it entirely your own.</li>
+      </ul>
+      <h4>2. Purpose Is Lived in Ordinary Days</h4>
+      <p>The most dangerous misconception about purpose is that it lives in the big moments — the grand achievements, the transformative experiences, the dramatic turning points. In reality, purpose is mostly expressed in ordinary days: in how you treat the person in front of you, in the care you bring to your work, in the consistency of your choices, in the small conversations that matter, in the incremental contributions that accumulate over time. Viktor Frankl: "What matters is not the meaning of life in general but rather the specific meaning of a person's life at a given moment." Purpose is what you bring to this moment, with this person, in this situation.</p>
+      <h4>3. Purpose Anchors — Daily Practices for Staying Connected</h4>
+      <p>Purpose is not a one-time discovery — it requires active maintenance. When life becomes busy, stressful, or difficult, the connection to purpose can fade. Purpose anchors are daily practices that keep you oriented:</p>
+      <ul>
+        <li><strong>Morning intention:</strong> Each morning, a brief (1–3 minute) practice of connecting with your purpose statement and setting an intention for how you will express it today</li>
+        <li><strong>Evening reflection:</strong> Each evening, a brief review: where did I express my purpose today? Where did I move away from it? What would I do differently?</li>
+        <li><strong>Purpose check-in on decisions:</strong> When facing a significant choice, ask: does this move me toward or away from my purpose? Does it align with my core values?</li>
+        <li><strong>Annual purpose review:</strong> Once a year, revisit your purpose statement. Purpose evolves — what was true at 30 may deepen, shift, or expand by 40. Allow it to grow.</li>
+      </ul>
+      <h4>4. When Purpose Is Hard to Find</h4>
+      <p>Not everyone will emerge from six weeks of this work with a clear, confident purpose statement. For some people, the clarity comes gradually — through action rather than reflection. Some important truths for those still searching:</p>
+      <ul>
+        <li>Clarity comes from action, not just from thinking. You cannot think your way to purpose — you have to live your way there. Begin with what you know: your values, your strengths, your passions. Act from there. The purpose will become clearer as you move.</li>
+        <li>Uncertainty about purpose is not the absence of purpose — it may be the beginning of it. The question "what am I here for?" is itself one of the most meaningful questions a human can ask.</li>
+        <li>Not all purpose is found in work. For many people, their deepest purpose lives in relationships, community, creativity, spirituality, or care — areas that career and public life often overlook.</li>
+        <li>Your purpose at this stage of life may be different from your purpose in ten years. Allow this version to be enough for now.</li>
+      </ul>
+      <h4>5. The Legacy — Living Forward</h4>
+      <p>Purpose is ultimately about legacy — not in the sense of fame or monument, but in the sense of the mark you leave in the lives of the people you touch, the work you create, the change you participate in, and the love you give. Stephen Covey's "begin with the end in mind" is not about morbid fixation on death but about the clarity that comes from knowing what you want your life to have meant. When you know your intended legacy, every day becomes an opportunity to begin building it — and no day is trivial.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Write Your Purpose Statement</strong><br>Drawing on your Meaning Inventory (Week 1), Core Values (Week 2), Passion Timeline and Ikigai Map (Week 3), Contribution Map (Week 4), and Fear Inventory (Week 5) — write your purpose statement. Write 3–5 drafts. Read each one aloud. Notice which one produces the clearest sense of recognition — "yes, that is what I am for." Refine it. It does not have to be perfect. It has to be yours.</p>
+      <p><strong>Exercise 2: The Purpose-Aligned Life Blueprint</strong><br>Describe, in as much detail as feels alive, what your life looks like in 5 years if you are living fully in alignment with your purpose. What work are you doing? Who are you with? How do you spend your days? What have you contributed? What has changed? Read this description to yourself. What is the distance between that life and today — and what is the first step that begins to close it?</p>
+      <p><strong>Exercise 3: A Letter to Your Purpose</strong><br>Write a letter to your purpose as if it were a person who has been waiting patiently for you to arrive. Tell it what you have been afraid of. Tell it what you now understand. Tell it what you are committing to. Make a promise to it — one specific, courageous thing you will do in the next seven days that begins to honour it. Sign the letter. Keep it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Reading your purpose statement aloud — does it produce recognition, or does it still feel incomplete? What would make it more yours?</li>
+        <li>Where in your ordinary daily life do you already express your purpose — and where is the biggest gap?</li>
+        <li>What is the first concrete step toward your 5-year purposeful life that you can take this week?</li>
+        <li>Six weeks ago, what was your relationship to the question "what am I here for?" — and how has it changed?</li>
+      </ul>
+      <h3>🌟 A Closing Word</h3>
+      <p>Six weeks ago you began one of the most important journeys a human being can take: the search for meaning in your own specific, irreplaceable life. You have been honest about what matters. You have dug into your values, your passions, your strengths. You have faced your fears and begun to move through them. You have started to articulate — however imperfectly — what you are here for. That is a remarkable thing. Purpose is not a destination. It is a conversation you have with your life — one that deepens over years, shifts as you grow, and never fully resolves. But it orients you. It gives you a north star. And now you have yours. Go toward it. Not perfectly. Not fearlessly. But consistently, honestly, and with the full weight of who you are. The world needs exactly what only you can bring. Begin.</p>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      {icon:'⭐',title:'Purpose Statement Writing Guide',desc:'Templates, examples, and refinement process for your statement',file:'purpose-statement-guide.pdf'},
+      {icon:'🔭',title:'5-Year Life Blueprint Template',desc:'Design your purpose-aligned future in vivid detail',file:'life-blueprint.pdf'},
+      {icon:'⚓',title:'Daily Purpose Anchors Guide',desc:'Morning intention, evening reflection, and decision check-in',file:'purpose-anchors.pdf'},
+      {icon:'🏛',title:'Legacy and Living Forward',desc:'Covey\'s begin with the end in mind — applied to purpose',file:'legacy-guide.pdf'},
+      {icon:'🎧',title:'Purpose Integration Meditation',desc:'20-minute guided closing practice for purpose clarity',file:'purpose-integration-audio.mp3'},
+      {icon:'🏆',title:'Course Completion Certificate',desc:'Download your certificate of completion',file:'certificate.pdf'}
+    ],
+    assessment: [
+      {question:"What are the qualities of a good personal purpose statement?",options:["Long, comprehensive, and covering every area of life","Aspirational, vague enough to apply to many situations, and inspirational","Personal, specific enough to guide decisions, including both inner orientation and outer contribution, and emotionally resonant when read","Identical to a professional mission statement in structure"],correct:2},
+      {question:"Where does purpose primarily live, according to this week's content?",options:["In major achievements and dramatic life events","In career success and public recognition","Mostly in ordinary days — in how you treat people, the care you bring to work, the consistency of choices, and the incremental contributions that accumulate over time","In moments of spiritual or peak experience"],correct:2},
+      {question:"What does Viktor Frankl mean by 'what matters is the specific meaning of a person's life at a given moment'?",options:["Life meaning changes too rapidly to define","Abstract life meaning is less important than the purpose expressed in this specific moment, with this person, in this situation","Meaning is subjective and therefore unmeasurable","Young people cannot understand life purpose"],correct:1},
+      {question:"What is the purpose of a morning intention practice as a purpose anchor?",options:["A prayer or affirmation to start the day positively","A brief daily practice of connecting with your purpose statement and setting an intention for how you will express it today","A planning session for daily goals","A mindfulness practice for reducing morning anxiety"],correct:1},
+      {question:"What is Stephen Covey's 'begin with the end in mind' in the context of purpose and legacy?",options:["Planning every detail of your future before acting","Focusing primarily on death and mortality","Using clarity about your intended legacy to make every day an opportunity to build it — so no day is trivial","A goal-setting technique for career planning"],correct:2},
+      {question:"For people who finish this course without clear purpose — what does this week say is the key to finding it?",options:["Continue reflecting until clarity arrives","Read more books about purpose","Clarity comes from action, not just reflection — begin with what you know (values, strengths, passions) and act from there; purpose clarifies as you move","Wait until circumstances change to allow purpose exploration"],correct:2},
+      {question:"What is the annual purpose review and why is it important?",options:["A yearly career assessment","A scheduled review of your purpose statement to allow it to evolve and deepen as you grow — because purpose at 30 may shift significantly by 40","An accountability check on your 90-day plan","A yearly comparison of your life to your purpose blueprint"],correct:1},
+      {question:"What does the template 'My purpose is to [contribution], by [how], guided by [values], so that [difference]' provide?",options:["A complete, finished purpose statement to adopt directly","A starting structure to build from and make entirely your own — not a formula to follow but a scaffold to shape","A formula used in professional coaching contexts only","A structure only useful for career-related purposes"],correct:1},
+      {question:"What important truth does this week offer for people whose deepest purpose lives outside of career?",options:["Career-based purpose is always the most legitimate form","Non-career purpose is less meaningful but more achievable","For many people, their deepest purpose lives in relationships, community, creativity, spirituality, or care — areas that career and public life often overlook","Purpose outside career can only be expressed in retirement"],correct:2},
+      {question:"What is the closing message of this course?",options:["Purpose requires certainty before action","You must eliminate fear before living purposefully","Go toward your purpose consistently, honestly, and with the full weight of who you are — not perfectly or fearlessly, but the world needs exactly what only you can bring","Purpose is only accessible to those with the right circumstances"],correct:2}
+    ]
+  }
+
+};
+</script>
+</body>
+</html>
