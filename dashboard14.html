@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goal Setting & Achievement - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #667eea; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #667eea; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(102, 126, 234, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .safety-banner { background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 100%); border: 2px solid #2e7d32; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .safety-banner h4 { color: #1b5e20; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Goal Setting &amp; Achievement</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Goal Setting &amp; Achievement</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin your achievement journey.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Start Achieving 🎯</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="safety-banner">
+    <h4>🎯 Goals That Align With Who You Are — Not Just What You Think You Should Want</h4>
+    <p>The most common reason people fail to achieve their goals is not laziness or lack of discipline — it is that they are pursuing goals that don't truly belong to them. This course starts from the inside out: your values, your vision, your authentic ambitions. Some of the reflection here may reveal uncomfortable gaps between where you are and where you want to be. That discomfort is useful information. Move through it with honesty and self-compassion.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised guidance on your goal achievement journey.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for accountability, strategy, and support.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY     = 'CoachL2025SecureKey';
+const COURSE_NAME    = 'Goal Setting & Achievement';
+const TOTAL_WEEKS    = 6;
+const STORAGE_PREFIX = 'coachL_GSA_';
+
+let currentWeek  = 1;
+let studentInfo  = { name: '', email: '' };
+let completedWeeks = new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks')||'[]'));
+function saveCompletedWeeks(){ localStorage.setItem(STORAGE_PREFIX+'completedWeeks', JSON.stringify([...completedWeeks])); }
+
+window.onload = function(){
+  const n=localStorage.getItem('studentName'), e=localStorage.getItem('studentEmail');
+  if(n&&e){ studentInfo.name=n; studentInfo.email=e; updateUserDisplay(); }
+  else { document.getElementById('nameModal').style.display='flex'; }
+  updateProgress(); refreshModuleButtons();
+  selectModule([1,2,3,4,5,6].find(w=>!completedWeeks.has(w))||1);
+};
+
+function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(), e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e){alert('Please enter your email address.');return;}
+  if(!isValidEmail(e)){alert('⚠️ "'+e+'" doesn\'t look like a valid email.\n\nExample: yourname@gmail.com');document.getElementById('studentEmail').focus();return;}
+  studentInfo.name=n; studentInfo.email=e;
+  localStorage.setItem('studentName',n); localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none'; updateUserDisplay();
+}
+function updateEmail(){
+  const cur=localStorage.getItem('studentEmail')||'', nw=prompt('Update your email address:',cur);
+  if(nw===null)return;
+  if(!isValidEmail(nw.trim())){alert('⚠️ That doesn\'t look like a valid email.');return;}
+  studentInfo.email=nw.trim(); localStorage.setItem('studentEmail',nw.trim()); alert('✅ Email updated to: '+nw.trim());
+}
+function updateUserDisplay(){ document.getElementById('userAvatar').textContent=studentInfo.name.charAt(0).toUpperCase(); document.getElementById('userName').textContent='Welcome, '+studentInfo.name+'!'; }
+
+function refreshModuleButtons(){
+  document.querySelectorAll('.module-btn').forEach((btn,i)=>{
+    const w=i+1; btn.classList.remove('active','completed');
+    if(completedWeeks.has(w)){btn.classList.add('completed');btn.textContent='Week '+w+' ✓';}
+    else{btn.textContent='Week '+w;}
+    if(w===currentWeek)btn.classList.add('active');
+  });
+}
+function selectModule(week){ currentWeek=week; refreshModuleButtons(); updateWeekContent(); }
+function showTab(tabName,tabBtn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if(tabBtn)tabBtn.classList.add('active');
+}
+function updateWeekContent(){
+  const w=weekData[currentWeek];
+  document.getElementById('weekTitle').textContent='📹 Week '+currentWeek+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tutorialVideo;
+  document.getElementById('basicTitle').textContent='Basic Learning: '+w.basicVideo;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='📚 Course Resources - Week '+currentWeek;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">📥 Download</span></div>`).join('');
+  renderAssessment();
+}
+function renderAssessment(){
+  const w=weekData[currentWeek], passed=completedWeeks.has(currentWeek);
+  let html=`<h2>📝 Week ${currentWeek} Assessment</h2>`;
+  if(passed){ html+=`<div class="already-passed-notice"><h3>✅ You already passed this week!</h3><p>Great work! Your score has been recorded.</p></div>`; }
+  else { html+=`<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass.</p>`; }
+  w.assessment.forEach((q,i)=>{ html+=`<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`; });
+  if(!passed) html+=`<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function submitQuiz(){
+  if(completedWeeks.has(currentWeek)){alert('You have already passed this assessment!');return;}
+  const w=weekData[currentWeek]; let correct=0,answers=[],allAnswered=true;
+  w.assessment.forEach((q,i)=>{ const sel=document.querySelector(`input[name="q${i}"]:checked`); if(!sel){allAnswered=false;return;} const ua=parseInt(sel.value),ok=ua===q.correct; if(ok)correct++; answers.push({question:q.question,userAnswer:q.options[ua],correctAnswer:q.options[q.correct],isCorrect:ok}); });
+  if(!allAnswered){alert('Please answer all questions before submitting.');return;}
+  const score=Math.round((correct/w.assessment.length)*100), passed=score>=70;
+  submitToSheets(currentWeek,score,correct,w.assessment.length,answers,passed);
+  if(passed){ completedWeeks.add(currentWeek); saveCompletedWeeks(); updateProgress(); refreshModuleButtons(); renderAssessment();
+    alert(currentWeek<TOTAL_WEEKS?`🎉 Congratulations! You passed with ${score}%!\n\nContinue to Week ${currentWeek+1} whenever you're ready.`:`🏆 Course complete! You passed with ${score}%!\n\nYour certificate will be emailed to you. 🎓`);
+  } else { alert(`You scored ${score}% (${correct}/${w.assessment.length}).\n\nYou need 70% to pass. Review the material and try again!`); }
+}
+function submitToSheets(week,score,correct,total,answers,passed){
+  const payload={secretKey:SECRET_KEY,timestamp:new Date().toLocaleString(),studentName:studentInfo.name,studentEmail:studentInfo.email,courseName:COURSE_NAME,week,score,correct,total,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(()=>console.log('✅')).catch(e=>console.error('❌',e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]'); all.push({...payload,answers}); localStorage.setItem('assessmentResults',JSON.stringify(all));
+}
+function updateProgress(){
+  const done=completedWeeks.size, pct=Math.round((done/TOTAL_WEEKS)*100);
+  document.getElementById('progressBar').style.width=pct+'%'; document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TOTAL_WEEKS*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TOTAL_WEEKS;
+}
+function playVideo(type,week){alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed.`);}
+function markComplete(){ showTab('assessment',document.querySelectorAll('.tab')[2]); window.scrollTo({top:0,behavior:'smooth'}); }
+function downloadResource(file,title){
+  fetch('resources/'+file,{method:'HEAD'}).then(r=>{ if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);} else{alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.');} }).catch(()=>alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src=`https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){ if(confirm('End the session?')){ document.getElementById('jitsiFrame').src=''; document.getElementById('videoCallContainer').style.display='none'; } }
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No assessment results yet.');return;}
+  const rows=all.map((r,i)=>`<div class="result-card ${r.passed==='YES'?'passed':'failed'}"><h2>Submission #${i+1} — ${r.passed==='YES'?'✅ PASSED':'❌ FAILED'}</h2><p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p><p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p><p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p><div class="details"><h3>Answers:</h3><table><tr><th>Question</th><th>Student</th><th>Correct</th><th>Result</th></tr>${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}</table></div></div>`).join('');
+  const win=window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}.details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}</style></head><body><h1>📊 Results – Coach L Academy</h1><p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Goal Setting & Achievement
+// ============================================================
+const weekData = {
+
+  1: {
+    tutorialVideo: "Why Most Goals Fail — And What Actually Works",
+    basicVideo: "The Psychology of Motivation and Goal Achievement",
+    content: `
+      <h2>Week 1: The Foundation of Achievement — Why Goals Succeed or Fail</h2>
+      <div class="safety-banner"><h4>🎯 Start With Why — Not What</h4><p>Before writing a single goal, this week asks the most important question: why do you want what you want? Goals disconnected from genuine values and intrinsic motivation are goals that will not survive the inevitable difficulties of pursuit. This week builds the foundation everything else rests on.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the psychology of motivation and why intrinsic goals outperform extrinsic ones</li>
+        <li>Learn the most common reasons goals fail — and how to avoid each one</li>
+        <li>Understand the neuroscience of goal-setting and the brain's achievement system</li>
+        <li>Begin clarifying the values and vision that will anchor your goals throughout the course</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Goals Fail — The Research</h4>
+      <p>Studies consistently show that approximately 80% of New Year's resolutions are abandoned by February, and most self-set goals are never fully achieved. The reasons are well-documented:</p>
+      <ul>
+        <li><strong>Vagueness:</strong> "I want to be healthier" gives the brain nothing to act on. Without specificity, the goal remains an aspiration rather than a target.</li>
+        <li><strong>External motivation:</strong> Goals pursued to impress others, meet expectations, or avoid criticism lack the intrinsic fuel needed to sustain effort through difficulty</li>
+        <li><strong>Outcome focus without process focus:</strong> Fixating on the destination without planning and valuing the journey means the first obstacle becomes a reason to quit</li>
+        <li><strong>Overambition without scaffolding:</strong> Setting goals that are too large, too fast, without breaking them into achievable steps, guarantees early failure and reinforces the belief that change is impossible</li>
+        <li><strong>No accountability system:</strong> Goals kept private have no external reinforcement — the brain treats them as optional</li>
+        <li><strong>Identity misalignment:</strong> Pursuing goals that conflict with your self-concept. James Clear's insight: "Every action you take is a vote for the type of person you wish to become." Goals that don't connect to identity-level change rarely stick.</li>
+      </ul>
+      <h4>2. Intrinsic vs Extrinsic Motivation — The Science</h4>
+      <p>Edward Deci and Richard Ryan's Self-Determination Theory (SDT) is the most robust motivational framework in psychology. It identifies two fundamentally different types of motivation:</p>
+      <ul>
+        <li><strong>Extrinsic motivation:</strong> Pursuing a goal for external rewards — money, status, approval, avoiding punishment. Effective for short-term, simple tasks. Unreliable for complex, long-term goals requiring sustained creative effort.</li>
+        <li><strong>Intrinsic motivation:</strong> Pursuing a goal because it is inherently interesting, enjoyable, or aligned with your values. Associated with greater persistence, creativity, wellbeing, and performance — particularly when tasks become difficult.</li>
+        <li><strong>The overjustification effect:</strong> Adding external rewards to intrinsically motivated activity can actually reduce intrinsic motivation — the brain shifts from "I do this because I love it" to "I do this for the reward." This is why performance pay sometimes backfires.</li>
+        <li>SDT identifies three conditions that support intrinsic motivation: <strong>autonomy</strong> (feeling that you chose this goal freely), <strong>competence</strong> (believing you have — or can develop — the skills needed), and <strong>relatedness</strong> (feeling connected to others through the pursuit).</li>
+      </ul>
+      <h4>3. The Neuroscience of Goals</h4>
+      <p>The brain has dedicated systems for goal pursuit — and understanding them makes goal-setting dramatically more effective:</p>
+      <ul>
+        <li><strong>The prefrontal cortex:</strong> The goal-setting and planning centre — responsible for holding future intentions in mind, evaluating options, and regulating impulses that conflict with long-term goals. Stress, poor sleep, and low blood sugar directly impair its function — which is why willpower is always lowest when you are tired, hungry, or overwhelmed.</li>
+        <li><strong>The dopamine system:</strong> Dopamine is released not primarily when you achieve a goal but in anticipation of progress — in the pursuit itself. This is why the journey must be rewarding, not just the destination. Celebrating small wins activates this system and sustains motivation.</li>
+        <li><strong>Implementation intentions:</strong> Peter Gollwitzer's research shows that forming specific "if-then" plans — "If it is Monday morning, then I will go to the gym before breakfast" — doubles or triples follow-through on goals. The brain treats these pre-committed responses as near-automatic.</li>
+        <li><strong>Mental contrasting:</strong> Gabriele Oettingen's research challenges the popular idea that positive visualisation alone improves performance. Fantasising about the goal without also mentally contrasting it with obstacles actually reduces motivation. Her WOOP method (Wish, Outcome, Obstacle, Plan) — which combines positive vision with honest obstacle identification — consistently outperforms pure positive thinking.</li>
+      </ul>
+      <h4>4. Values-Anchored Goals</h4>
+      <p>The most durable goals are those anchored in core values — they are pursued not only for what they produce but for who they help you become. A goal to "run a marathon" anchored in the value of health and resilience means that even if the race is cancelled, the training continues — because the underlying value remains. A goal to "run a marathon" anchored purely in external motivation (impressing others, ticking a bucket list item) collapses when circumstances change. Before setting any goals this week, the essential question is: what do I genuinely value — and what goals would naturally emerge from living those values more fully?</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Goal Failure Autopsy</strong><br>Think of three significant goals you have set and not achieved. For each, diagnose honestly: which failure mode was at work? Vague goal? External motivation? No process plan? Too ambitious without scaffolding? No accountability? Identity misalignment? Understanding your personal failure patterns is the most important step in breaking them.</p>
+      <p><strong>Exercise 2: Motivation Source Check</strong><br>List five goals you are currently pursuing or considering. For each, rate on a scale of 1–10: how intrinsically motivated are you (10 = entirely for its own sake, 1 = entirely for external reasons)? For any goal scoring 5 or below, ask: is this actually my goal — or am I pursuing it for someone else? The answer may be uncomfortable. It is more useful than comfortable.</p>
+      <p><strong>Exercise 3: Values-to-Goals Mapping</strong><br>Write your top five values (from your own self-knowledge, or refer to the values work in other courses). For each value, write one goal that would naturally emerge from living that value more fully. These are your starting candidates for the goals you will develop throughout this course. Notice how different these feel from goals you have set from external pressure.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is your most common personal goal-failure pattern — and what has it cost you?</li>
+        <li>Which of your current goals are intrinsically motivated — and which are being pursued primarily for external reasons?</li>
+        <li>What does the WOOP method reveal about a goal you have been pursuing with pure positive thinking?</li>
+        <li>What would your goal landscape look like if every goal were anchored in a core value?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🧠',title:'Psychology of Goal Achievement',desc:'SDT, intrinsic motivation, and the neuroscience of goals',file:'goal-psychology.pdf'},
+      {icon:'🔍',title:'Goal Failure Autopsy Worksheet',desc:'Diagnose your personal failure patterns across past goals',file:'failure-autopsy.pdf'},
+      {icon:'💡',title:'WOOP Method Guide',desc:'Oettingen\'s Wish-Outcome-Obstacle-Plan framework in practice',file:'woop-guide.pdf'},
+      {icon:'🧭',title:'Values-to-Goals Mapping Worksheet',desc:'Connect your core values to authentic goal candidates',file:'values-goals-map.pdf'},
+      {icon:'🎧',title:'Goal Clarity Visualisation Audio',desc:'15-minute guided practice for connecting with your authentic goals',file:'goal-clarity-audio.mp3'},
+      {icon:'📚',title:'Goal Achievement Reading List',desc:'Atomic Habits (Clear), Rethinking Positive Thinking (Oettingen), Drive (Pink)',file:'goal-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What percentage of goals (such as New Year's resolutions) are typically abandoned shortly after being set?",options:["Around 30%","Around 50%","Around 80%","Around 95%"],correct:2},
+      {question:"What is the 'overjustification effect' in motivation research?",options:["Setting goals that are too ambitious, causing overwhelming justification of failure","The tendency to over-explain your goals to others, reducing commitment","Adding external rewards to intrinsically motivated activity can reduce intrinsic motivation — the brain shifts from doing it for love to doing it for the reward","Justifying poor performance by blaming external circumstances"],correct:2},
+      {question:"What are the three conditions Self-Determination Theory identifies as supporting intrinsic motivation?",options:["Challenge, reward, and recognition","Planning, persistence, and performance","Autonomy (freely chosen), competence (belief in ability to develop skills), and relatedness (feeling connected to others through the pursuit)","Goals, systems, and habits"],correct:2},
+      {question:"What does Peter Gollwitzer's research on implementation intentions show?",options:["Writing goals down doubles achievement rates","Sharing goals with others triples follow-through","Forming specific 'if-then' plans — 'If it is Monday morning, then I will go to the gym' — doubles or triples follow-through by creating near-automatic responses","Reviewing goals daily is the strongest predictor of achievement"],correct:2},
+      {question:"What does Gabriele Oettingen's research show about pure positive visualisation?",options:["Positive visualisation is the most effective goal achievement strategy","Positive visualisation works best when combined with affirmations","Fantasising about the goal without contrasting it with obstacles actually reduces motivation — her WOOP method, which combines vision with honest obstacle identification, consistently outperforms pure positive thinking","Positive visualisation is only effective for short-term goals"],correct:2},
+      {question:"Why does the dopamine system support goal pursuit rather than only goal achievement?",options:["Dopamine is released exclusively at goal completion as a reward","Dopamine responds to the size of the goal rather than progress","Dopamine is released in anticipation of progress — during the pursuit itself — which is why the journey must be rewarding, and why celebrating small wins sustains motivation","Dopamine regulates willpower, not motivation"],correct:2},
+      {question:"What is James Clear's insight about identity and goal achievement?",options:["Identity must change before goals can be set","Goals should be chosen to match your current identity","Every action you take is a vote for the type of person you wish to become — goals that don't connect to identity-level change rarely stick because they conflict with the self-concept","Identity is irrelevant to goal achievement — only systems matter"],correct:2},
+      {question:"Why does willpower tend to be lowest when tired, hungry, or overwhelmed?",options:["Fatigue reduces motivation and enthusiasm for goal pursuit","The unconscious mind resists goals during stress","Because willpower relies on prefrontal cortex function — which is directly impaired by stress, poor sleep, and low blood sugar, reducing the capacity for goal-directed self-regulation","Tired people prioritise comfort over achievement"],correct:2},
+      {question:"What is the key difference between a values-anchored goal and an externally motivated goal?",options:["Values-anchored goals are easier to achieve","Values-anchored goals produce more positive emotions","Values-anchored goals are pursued for who they help you become — so the underlying purpose persists even when circumstances change, unlike externally motivated goals that collapse when the external reward is removed or conditions shift","Values-anchored goals are more specific and measurable"],correct:2},
+      {question:"What is 'identity misalignment' as a cause of goal failure?",options:["Setting goals that conflict with your values","Setting goals that others disapprove of","Pursuing goals that conflict with your self-concept — the brain resists actions that feel inconsistent with who you believe you are, making goals that don't connect to identity-level change unsustainable","Setting goals in areas where you have no existing skills"],correct:2}
+    ]
+  },
+
+  2: {
+    tutorialVideo: "SMART Goals and Beyond — Setting Goals That Actually Work",
+    basicVideo: "The Goal Hierarchy — Vision, Goals, Projects, and Actions",
+    content: `
+      <h2>Week 2: Goal Architecture — Building Goals That Are Designed to Succeed</h2>
+      <div class="safety-banner"><h4>🎯 A Well-Built Goal Is Half Achieved</h4><p>This week is where aspiration becomes architecture. The difference between a wish and a goal is structure — and the right structure dramatically increases the probability of success. This week gives you the frameworks to design goals that are clear, compelling, and built to survive reality.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Master the SMART framework and its evidence-based extensions</li>
+        <li>Build a goal hierarchy: vision → long-term goals → projects → weekly actions</li>
+        <li>Understand the role of stretch goals vs learning goals in different contexts</li>
+        <li>Apply the WOOP method to each of your major goals</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. SMART Goals — The Framework and Its Limits</h4>
+      <p>The SMART framework (Specific, Measurable, Achievable, Relevant, Time-bound) is the most widely used goal-setting tool in the world — and for good reason. Research by Edwin Locke and Gary Latham consistently shows that specific, challenging goals produce significantly higher performance than vague "do your best" goals. Breaking SMART down:</p>
+      <ul>
+        <li><strong>Specific:</strong> Precise enough that a stranger could understand exactly what you intend. "Exercise more" → "Run 5km three times per week." "Improve my relationship" → "Have one uninterrupted, device-free dinner with my partner every week."</li>
+        <li><strong>Measurable:</strong> How will you know when you've achieved it? What gets measured gets managed. Include a metric: frequency, volume, quality rating, completion date.</li>
+        <li><strong>Achievable:</strong> Challenging enough to require growth but realistic given your current resources, time, and circumstances. The research shows goals should be difficult but not so difficult they trigger hopelessness.</li>
+        <li><strong>Relevant:</strong> Connected to your larger values and vision. If you can't articulate why this goal matters, your motivation will not survive the first obstacle.</li>
+        <li><strong>Time-bound:</strong> Without a deadline, goals become perpetually deferred. A date creates urgency and allows planning.</li>
+        <li><strong>SMART's limits:</strong> SMART is excellent for performance goals but less suited to learning goals, creative goals, and goals in domains where outcomes are genuinely uncertain. It also says nothing about the emotional relationship with the goal or the systems needed to sustain it.</li>
+      </ul>
+      <h4>2. The Goal Hierarchy</h4>
+      <p>Effective goal systems operate across multiple time horizons — each level providing context and direction for the one below it:</p>
+      <ul>
+        <li><strong>Vision (3–10 years):</strong> The vivid, emotionally compelling picture of the life you are building toward. Not a specific goal — a direction and a feeling. "In 10 years I am living a life that is [description]."</li>
+        <li><strong>Long-term goals (1–3 years):</strong> The major outcomes that would move you meaningfully toward your vision. Three to five per major life area (health, relationships, career, finances, personal growth).</li>
+        <li><strong>Projects (1–3 months):</strong> The specific initiatives that advance your long-term goals. A project has a clear outcome, a deadline, and a set of actions.</li>
+        <li><strong>Weekly actions:</strong> The specific, scheduled tasks this week that advance a project. This is where the vision meets Tuesday morning. Without this level, every higher level remains theoretical.</li>
+        <li>The hierarchy means that every weekly action has a reason — it advances a project, which advances a long-term goal, which builds the vision. This "why" chain is what sustains motivation when the immediate task is difficult.</li>
+      </ul>
+      <h4>3. Performance Goals vs Learning Goals</h4>
+      <p>Carol Dweck and her colleagues distinguish between two goal orientations that produce dramatically different responses to difficulty:</p>
+      <ul>
+        <li><strong>Performance goals:</strong> Focused on demonstrating ability — achieving a specific outcome, looking competent, outperforming others. Effective when skills are already developed. Fragile under difficulty — when performance goals are threatened, people with a fixed mindset give up or cheat.</li>
+        <li><strong>Learning goals:</strong> Focused on developing ability — acquiring new skills, understanding, and capability. Robust under difficulty — obstacles become information rather than evidence of inadequacy. People with learning goals persist longer, recover faster, and ultimately outperform those with only performance goals.</li>
+        <li>The practical application: in any new domain, or when tackling significant challenges, frame your goals as learning goals — "I will develop the skill of public speaking" rather than "I will give a perfect presentation." As mastery develops, performance goals become more appropriate.</li>
+      </ul>
+      <h4>4. The WOOP Method Applied</h4>
+      <p>Oettingen's WOOP method applies directly to goal design. For each major goal:</p>
+      <ul>
+        <li><strong>Wish:</strong> State the goal clearly and specifically. What do you most wish to achieve in the next 3–6 months?</li>
+        <li><strong>Outcome:</strong> Vividly imagine the best possible outcome. How would it feel? What would be different? Spend 2–3 minutes with this image — engage emotion, not just intellect.</li>
+        <li><strong>Obstacle:</strong> Now, honestly identify the most significant inner obstacle — not external circumstances but the internal barrier (self-doubt, distraction, fear, old habit) most likely to prevent you. What typically stops you?</li>
+        <li><strong>Plan:</strong> Form an if-then implementation intention specifically for that obstacle. "If [obstacle arises], then I will [specific action]." This pre-commitment dramatically increases follow-through.</li>
+        <li>Research shows WOOP consistently outperforms both pure positive thinking and pure action planning — it is the combination of aspiration and honest obstacle work that makes it so effective.</li>
+      </ul>
+      <h4>5. Anti-Goals — Defining What You Don't Want</h4>
+      <p>A powerful complement to positive goal-setting is defining your anti-goals: the outcomes, situations, or experiences you most want to avoid. This is the inversion principle from Charlie Munger — "invert, always invert." Asking "what would make my life a disaster in 5 years?" and then doing the opposite is sometimes clearer than asking "what do I want?" Anti-goals also help you decline opportunities that look attractive but move you toward what you don't want — a crucial filtering function as your ambition and options grow.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: SMART Goal Conversion</strong><br>Take three goals from your Week 1 values-to-goals mapping. Convert each into a fully SMART goal. Write the vague version and then the SMART version side by side. Notice how much clearer the brain's task becomes with specificity. For each SMART goal, also identify: is this a performance goal or a learning goal — and is the framing appropriate for your current skill level?</p>
+      <p><strong>Exercise 2: Build Your Goal Hierarchy</strong><br>Choose one major life area (career, health, relationships, finances, or personal growth). Write: your 10-year vision for that area (vivid, emotional, specific), your three 1–3 year long-term goals that move toward it, one current project (with deadline) that advances one of those goals, and the three specific actions you will take this week that advance the project. This is a living document — return to it weekly.</p>
+      <p><strong>Exercise 3: WOOP Your Top Goal</strong><br>Apply the full WOOP method to your single most important current goal. Write each element in full. Spend real time on the Outcome visualisation — at least 3 minutes. Be ruthlessly honest in the Obstacle step — the inner obstacle, not external circumstances. Form a specific if-then plan for that obstacle. Put the plan where you will see it daily.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>When you converted vague goals to SMART goals, what did the specificity reveal about whether you actually want this goal?</li>
+        <li>What is the "why chain" connecting your most important weekly action to your 10-year vision?</li>
+        <li>Are your current major goals framed as performance or learning goals — and is that appropriate given your skill level?</li>
+        <li>What did the Obstacle step of WOOP reveal about your most significant inner barrier?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🎯',title:'SMART Goals Master Template',desc:'Convert vague aspirations into precise, actionable goals',file:'smart-goals-template.pdf'},
+      {icon:'🏗',title:'Goal Hierarchy Builder',desc:'Vision → Goals → Projects → Weekly Actions worksheet',file:'goal-hierarchy.pdf'},
+      {icon:'🔮',title:'WOOP Worksheet',desc:'Apply Wish-Outcome-Obstacle-Plan to your top three goals',file:'woop-worksheet.pdf'},
+      {icon:'⚡',title:'Performance vs Learning Goals Guide',desc:'Dweck\'s framework for choosing the right goal orientation',file:'performance-learning-goals.pdf'},
+      {icon:'🎧',title:'Goal Architecture Visualisation Audio',desc:'12-minute guided practice for building your goal hierarchy',file:'goal-architecture-audio.mp3'},
+      {icon:'📚',title:'Goal Setting Research Reading',desc:'Goal Setting and Task Performance (Locke & Latham), Mindset (Dweck)',file:'goal-setting-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does Locke and Latham's research consistently show about specific, challenging goals?",options:["They produce anxiety that undermines performance","They are only effective for simple, short-term tasks","They produce significantly higher performance than vague 'do your best' goals","They work best when set by managers rather than individuals"],correct:2},
+      {question:"What is the 'Relevant' component of SMART goals testing?",options:["That the goal is realistic given available resources","That the goal is related to similar goals you've achieved before","That the goal is connected to your larger values and vision — if you can't articulate why it matters, motivation will not survive the first obstacle","That the goal is relevant to current market conditions"],correct:2},
+      {question:"What is the role of the 'Weekly actions' level in the goal hierarchy?",options:["Setting aside time each week to review your vision","Planning the week around the most urgent tasks","The specific scheduled tasks this week that advance a project — where the vision meets Tuesday morning. Without this level, every higher level remains theoretical.","Weekly reflection on progress toward long-term goals"],correct:2},
+      {question:"What is a 'learning goal' orientation and why is it more robust under difficulty?",options:["A goal focused on learning new information rather than changing behaviour","A goal set in an educational context","Focused on developing ability — acquiring skills, understanding, and capability. Robust under difficulty because obstacles become information rather than evidence of inadequacy, producing greater persistence and recovery.","A goal that takes longer to achieve because it requires new skills"],correct:2},
+      {question:"In what context is a performance goal orientation more appropriate than a learning goal?",options:["When the stakes are very high","When external rewards are involved","When skills are already developed — performance goals become appropriate as mastery increases, whereas in new domains, learning goals produce better outcomes","When competing against others"],correct:2},
+      {question:"What is the 'Obstacle' step of WOOP specifically asking for?",options:["External barriers such as lack of time or resources","The most difficult part of achieving the goal","The most significant inner obstacle — not external circumstances but the internal barrier (self-doubt, fear, old habit) most likely to prevent achievement","All possible obstacles ranked by probability"],correct:2},
+      {question:"What is the 'inversion principle' applied through anti-goals?",options:["Setting goals that are the opposite of your fears","Working backwards from your goal to identify the first step","Asking 'what would make my life a disaster?' and then doing the opposite — sometimes clearer than asking what you want, and useful for filtering opportunities that move toward undesired outcomes","Inverting the goal hierarchy to start with weekly actions"],correct:2},
+      {question:"What is the 'why chain' in a goal hierarchy?",options:["The series of reasons you give others for pursuing your goal","The emotional justification for each goal in your portfolio","The connection from every weekly action up through project → long-term goal → vision — ensuring each immediate task has a reason that sustains motivation when it is difficult","The chain of causation linking your goals to your values"],correct:2},
+      {question:"What does SMART's limitation around learning and creative goals point to?",options:["SMART is ineffective for all goal types","SMART only works in professional settings","SMART is excellent for performance goals but doesn't address the emotional relationship with the goal, the systems needed to sustain it, or domains where outcomes are genuinely uncertain","SMART goals are too specific for creative work"],correct:2},
+      {question:"What does the research show about why WOOP consistently outperforms pure positive thinking?",options:["WOOP includes specific measurement criteria","WOOP forces commitment through public declaration","It is the combination of positive vision (aspiration) with honest obstacle identification and pre-planned response that makes WOOP effective — positive thinking alone reduces motivation by creating fantasy without preparation","WOOP uses implementation intentions more effectively"],correct:2}
+    ]
+  },
+
+  3: {
+    tutorialVideo: "The Habit Loop — Building the Systems Behind Your Goals",
+    basicVideo: "Atomic Habits — Small Changes, Remarkable Results",
+    content: `
+      <h2>Week 3: Habits and Systems — The Engine of Lasting Achievement</h2>
+      <div class="safety-banner"><h4>🎯 Goals Set the Direction — Systems Determine Whether You Arrive</h4><p>Goals tell you where you're going. Habits and systems are what get you there — day after day, without requiring fresh willpower each time. This week teaches you the science of habit formation and how to design systems that make progress automatic rather than effortful.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the habit loop and how habits form, sustain, and change</li>
+        <li>Learn James Clear's four laws of behaviour change</li>
+        <li>Design environment and routine systems that support your goals</li>
+        <li>Understand the compound effect of small, consistent actions over time</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Habit Loop</h4>
+      <p>Charles Duhigg's foundational research on habits identifies a three-part neurological loop that underlies every habitual behaviour:</p>
+      <ul>
+        <li><strong>Cue:</strong> The trigger that initiates the behaviour — a time of day, a location, an emotional state, the presence of other people, or immediately preceding action</li>
+        <li><strong>Routine:</strong> The behaviour itself — the physical, mental, or emotional sequence that the cue triggers</li>
+        <li><strong>Reward:</strong> The benefit that reinforces the loop — pleasure, relief, stimulation, or the removal of discomfort. The reward teaches the brain that this loop is worth remembering.</li>
+        <li>Habits form when this loop is repeated enough times that the brain begins to anticipate the reward at the cue — creating craving. The craving is what drives habitual behaviour. Understanding the habit loop means you can design new habits deliberately — and diagnose and change existing ones.</li>
+        <li><strong>The golden rule of habit change:</strong> You cannot eliminate a habit — you can only replace the routine while keeping the same cue and delivering a similar reward. This is why cold-turkey elimination of habits is rarely effective.</li>
+      </ul>
+      <h4>2. James Clear's Four Laws of Behaviour Change</h4>
+      <p>In Atomic Habits, James Clear synthesises behaviour change research into four laws — and their inverses for breaking habits:</p>
+      <ul>
+        <li><strong>Law 1 — Make it Obvious (cue):</strong> Design your environment so the cues for desired behaviours are visible and prominent. Put your running shoes by the bed. Leave the book on the pillow. Place fruit on the counter. The most powerful version: habit stacking — "After I [current habit], I will [new habit]."</li>
+        <li><strong>Law 2 — Make it Attractive (craving):</strong> Bundle desired behaviours with things you genuinely enjoy. "I will listen to my favourite podcast only while exercising." Link the habit to your identity: "I am a person who exercises."</li>
+        <li><strong>Law 3 — Make it Easy (response):</strong> Reduce friction for desired habits; increase friction for undesired ones. Design the 2-minute rule: scale the habit down until the first version takes 2 minutes or less. Mastering the entry is more important than perfecting the behaviour. "Show up" is the essential habit.</li>
+        <li><strong>Law 4 — Make it Satisfying (reward):</strong> Give yourself an immediate reward after the desired behaviour — even a small one. Track your streak on a habit tracker. The satisfaction signal tells the brain this loop is worth repeating. Never miss twice — one missed day is an accident; two begins a new (undesired) habit.</li>
+      </ul>
+      <h4>3. The Compound Effect — Why Small Is Powerful</h4>
+      <p>Darren Hardy's compound effect articulates what maths makes inevitable: small, consistent improvements compound into extraordinary results over time. James Clear's version: if you improve by just 1% per day, you will be 37 times better in one year. The reverse is equally true: 1% worse per day results in near-zero capability by year's end. The compounding works because:</p>
+      <ul>
+        <li>Each improvement builds on the previous one — you are not returning to zero each time</li>
+        <li>Consistent action creates momentum — physical, psychological, and social</li>
+        <li>Skills compound: each skill you develop makes adjacent skills easier to acquire</li>
+        <li>Reputation and opportunity compound: consistent delivery of results attracts more opportunity, which creates more possibility for results</li>
+        <li>The problem: the early stages of compounding look flat. The results are invisible in the first weeks and months — which is exactly when most people quit. The "valley of disappointment" (Clear) is the gap between the investment of effort and the visible emergence of results. Crossing this valley requires understanding that the results are accumulating invisibly.</li>
+      </ul>
+      <h4>4. Environment Design — The Most Underrated Habit Tool</h4>
+      <p>Your behaviour is profoundly shaped by your environment — far more than most people acknowledge. Research by Anne Thorndike and others shows that changing the environment often changes behaviour without requiring any conscious decision-making at all. Environment design principles:</p>
+      <ul>
+        <li>Make desired behaviours the path of least resistance — the default option in your environment</li>
+        <li>Remove friction from good habits (gym bag packed the night before, healthy food at eye level in the fridge)</li>
+        <li>Add friction to bad habits (delete social media apps from phone, keep sweets out of the house, put the TV remote in a drawer)</li>
+        <li>Use context separation: different contexts for different behaviours. Work only at the desk, not in bed. Meditate only in the chair by the window. The brain links behaviour to context — leverage this.</li>
+        <li>Design for the version of yourself who is tired, stressed, and depleted — because that version will show up regularly. A habit system that only works when you're motivated and energised is not a system.</li>
+      </ul>
+      <h4>5. Identity-Based Habits</h4>
+      <p>James Clear's most important insight: the deepest level of behaviour change is identity change. Every action is a vote for the type of person you believe yourself to be. The most durable habit change happens when the habit is connected to identity — not outcome. Instead of "I want to write a book" (outcome), "I am a writer" (identity) — which means sitting down and writing is an expression of who you are, not a means to a future end. The practical application: ask not "what do I want to achieve?" but "who do I want to become?" — and then act as that person would act, one small action at a time.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Habit Audit</strong><br>List your five most important current daily habits — both the ones serving your goals and the ones working against them. For each, identify the cue, routine, and reward. For habits you want to change: what cue could you modify? What alternative routine delivers a similar reward? For habits you want to build: design the full loop — specific cue, clear routine, immediate reward.</p>
+      <p><strong>Exercise 2: Design One Perfect Habit Stack</strong><br>Choose one new habit you want to build in service of your most important goal. Apply all four of Clear's laws: (1) what obvious cue or habit stack will trigger it? (2) what can you pair it with to make it attractive? (3) what is the 2-minute version that eliminates all resistance? (4) what immediate reward will signal success? Write the full design. Implement it tomorrow morning.</p>
+      <p><strong>Exercise 3: Environment Redesign</strong><br>Walk through your home or main workspace and identify: three things you can add or move to make desired behaviours more obvious and easy, and three things you can remove or relocate to reduce friction toward undesired behaviours. Execute the redesign this week. Notice what changes in your behaviour without any conscious effort.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the habit most critical to your most important goal — and does it currently have a clear cue, routine, and reward?</li>
+        <li>Where in your environment is friction pushing you toward behaviours that conflict with your goals?</li>
+        <li>Which of your current goals could be reframed as an identity statement — and how does that reframing feel?</li>
+        <li>Where are you currently in the "valley of disappointment" with a habit or goal — and what keeps you there despite invisible compounding?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🔄',title:'Habit Loop Analysis Worksheet',desc:'Map cue, routine, and reward for your key habits',file:'habit-loop-worksheet.pdf'},
+      {icon:'⚛️',title:'Four Laws of Behaviour Change Guide',desc:'Clear\'s full framework with implementation examples',file:'four-laws-guide.pdf'},
+      {icon:'📈',title:'Compound Effect Tracker',desc:'Visual tracker for small daily improvements over 90 days',file:'compound-tracker.pdf'},
+      {icon:'🏠',title:'Environment Design Checklist',desc:'Audit and redesign your space for automatic good habits',file:'environment-design.pdf'},
+      {icon:'🎧',title:'Habit Formation Meditation Audio',desc:'10-minute visualisation for embedding a new habit identity',file:'habit-formation-audio.mp3'},
+      {icon:'📚',title:'Habits Reading List',desc:'Atomic Habits (Clear), The Power of Habit (Duhigg), The Compound Effect (Hardy)',file:'habits-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What are the three components of the habit loop identified by Charles Duhigg?",options:["Motivation, action, and result","Intention, behaviour, and consequence","Cue (trigger), routine (behaviour), and reward (reinforcement) — together forming the neurological pattern that becomes habitual when repeated","Goal, plan, and execution"],correct:2},
+      {question:"What is the 'golden rule of habit change'?",options:["Replace bad habits with good habits immediately","You cannot eliminate a habit — you can only replace the routine while keeping the same cue and delivering a similar reward","Focus on willpower to override unwanted habits","Change the reward to change the habit"],correct:1},
+      {question:"What is 'habit stacking' as described in the Make it Obvious law?",options:["Combining multiple new habits into a single session","Stacking increasing levels of difficulty within a habit","Linking a new habit to an existing one: 'After I [current habit], I will [new habit]' — using established behaviour as a reliable cue for the new behaviour","Building habits one on top of another over consecutive weeks"],correct:2},
+      {question:"What is the '2-minute rule' in James Clear's framework?",options:["Deciding whether a habit is worth keeping within 2 minutes","Completing habits as fast as possible to build momentum","Scale the habit down until the first version takes 2 minutes or less — because mastering the entry (showing up) is more important than perfecting the behaviour","Taking 2-minute breaks between habit sessions"],correct:2},
+      {question:"What is the 'valley of disappointment' in the context of the compound effect?",options:["The emotional low point when a goal seems unachievable","A period of regression before breakthrough","The early stages of compounding where results are invisible despite consistent effort — the gap between investment and visible emergence of results where most people quit","The dip in motivation that follows initial enthusiasm"],correct:2},
+      {question:"What does the mathematical illustration '1% better every day for a year' demonstrate about the compound effect?",options:["Small improvements lead to 1.01^365 ≈ 37 times better outcomes","Daily 1% improvements are only cumulative if maintained perfectly","Linear progression requires only 365% total improvement","The compound effect requires at least 1% daily improvement to function"],correct:0},
+      {question:"What principle does Anne Thorndike's environment research demonstrate?",options:["People make rational decisions about behaviour independent of context","Willpower is the primary determinant of behaviour change","Changing the environment often changes behaviour without any conscious decision-making — the arrangement of options and defaults powerfully shapes what people choose","Social environment is more influential than physical environment"],correct:2},
+      {question:"What does 'context separation' in environment design mean?",options:["Separating work goals from personal goals","Keeping different types of tasks in separate to-do lists","Using different physical contexts for different behaviours so the brain links behaviour to location — work only at the desk, meditate only in the dedicated chair — leveraging context-behaviour associations","Separating the planning context from the execution context"],correct:2},
+      {question:"What is identity-based habit change and why is it more durable?",options:["Changing habits to match your desired social identity","Building habits that reflect your cultural background","Connecting habits to who you are rather than what you want to achieve — 'I am a writer' rather than 'I want to write a book' — so the habit is an expression of identity rather than a means to a future end","Identifying with your past successes to sustain current habits"],correct:2},
+      {question:"What is the recommended response when you miss one day of a new habit?",options:["Double the habit the following day to compensate","Restart the habit tracking from day one","Never miss twice — one missed day is an accident; two begins a new (undesired) habit. Missing once is forgivable; the pattern is what matters.","Reflect on why you missed before continuing"],correct:2}
+    ]
+  },
+
+  4: {
+    tutorialVideo: "Overcoming Procrastination and Resistance — The Enemy of Achievement",
+    basicVideo: "Focus, Energy Management, and Peak Performance",
+    content: `
+      <h2>Week 4: Overcoming Obstacles — Procrastination, Focus, and Energy</h2>
+      <div class="safety-banner"><h4>🎯 Obstacles Are Not Interruptions to the Journey — They Are the Journey</h4><p>Every goal of any significance will encounter resistance — internal and external. This week addresses the most common internal obstacles to achievement: procrastination, scattered focus, poor energy management, and the fear that masquerades as perfectionism. Naming these precisely is the first step to moving through them.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the psychology of procrastination and its root causes</li>
+        <li>Learn evidence-based strategies for overcoming resistance and taking action</li>
+        <li>Develop a personal focus and energy management system</li>
+        <li>Address perfectionism as a form of self-protection disguised as high standards</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Psychology of Procrastination</h4>
+      <p>Procrastination is not a time management problem — it is an emotion management problem. Research by Fuschia Sirois and Timothy Pychyl shows that procrastination is primarily a strategy for avoiding the negative emotions associated with a task — anxiety, self-doubt, boredom, resentment, uncertainty — by seeking short-term mood repair through avoidance. Understanding this changes the intervention:</p>
+      <ul>
+        <li>The task is not the problem — the anticipated emotional discomfort is. This is why advice to "just do it" rarely helps — it addresses the behaviour while ignoring the emotion driving it.</li>
+        <li>Self-compassion is one of the most evidence-backed interventions for chronic procrastination — because self-criticism after procrastinating increases the negative emotion associated with the task, making future procrastination more likely. Breaking the self-criticism-avoidance loop is essential.</li>
+        <li>The "present bias" — the brain's tendency to strongly prefer immediate rewards over future ones — is neurologically real. The future self who will benefit from today's action feels like a stranger. Strategies that reduce this bias: vividly imagining your future self, reducing the delay between action and reward, and creating accountability systems that make avoidance immediately costly.</li>
+        <li>Task aversiveness is the key variable: the more aversive the task (anxiety-provoking, boring, frustrating, unclear), the more procrastination occurs. Making tasks less aversive — clearer, shorter, more interesting, or more connected to meaning — directly reduces procrastination.</li>
+      </ul>
+      <h4>2. Strategies for Overcoming Procrastination</h4>
+      <ul>
+        <li><strong>The 5-minute rule:</strong> Commit only to working on the task for 5 minutes. The initiation is the hardest part — once started, the Zeigarnik effect (the brain's discomfort with unfinished tasks) keeps you going. Most people continue well beyond 5 minutes once they begin.</li>
+        <li><strong>Temptation bundling:</strong> Pair the aversive task with something genuinely enjoyable — your favourite music, a pleasurable drink, an attractive workspace. Reduce the emotional cost of beginning.</li>
+        <li><strong>Implementation intentions:</strong> Pre-commit the when, where, and how: "I will work on the proposal from 9–11am at the kitchen table with my phone in another room." Specificity eliminates the decision that gives procrastination its opening.</li>
+        <li><strong>Reduce the task size:</strong> If procrastination is severe, the task may simply be too large. Break it into the smallest possible meaningful action. Not "write the report" but "write the first paragraph of the introduction."</li>
+        <li><strong>Self-compassion check-in:</strong> When you notice procrastination, pause before self-criticism. Ask: what is the emotional discomfort I am avoiding? Is there a way to address that discomfort directly rather than through avoidance?</li>
+      </ul>
+      <h4>3. Focus and Deep Work</h4>
+      <p>Cal Newport's concept of deep work — the ability to focus without distraction on a cognitively demanding task — is increasingly rare and increasingly valuable. The capacity for sustained focus is the leverage point for nearly all meaningful achievement. Research shows:</p>
+      <ul>
+        <li>The average knowledge worker checks email or messaging every 6 minutes. Each interruption takes an average of 23 minutes to fully recover from (Gloria Mark's research). This means sustained deep work is almost impossible in the average distraction-saturated work environment.</li>
+        <li>Focus is a trainable skill — it deteriorates with constant distraction and improves with deliberate practice of sustained attention</li>
+        <li>The most effective deep work sessions are 90–120 minutes — aligned with the ultradian rhythm (the body's natural 90-minute activity cycle). After a focused session, a genuine rest (not shallow distraction) allows recovery and enables the next session.</li>
+        <li>Single-tasking dramatically outperforms multitasking — which is largely a myth. The brain does not truly multitask; it rapidly task-switches, incurring cognitive costs with each switch. Protecting single-task time is a performance multiplier.</li>
+      </ul>
+      <h4>4. Energy Management — The Foundation of Consistent Performance</h4>
+      <p>Jim Loehr and Tony Schwartz's energy management framework argues that managing energy — not time — is the key to sustained high performance. Time is fixed; energy is renewable — but only with appropriate recovery. Four dimensions of energy:</p>
+      <ul>
+        <li><strong>Physical energy:</strong> The foundation. Sleep (the single most important performance variable), nutrition (stable blood sugar, adequate protein), movement (exercise increases cognitive function and mood directly), and recovery (genuine rest, not just absence of work)</li>
+        <li><strong>Emotional energy:</strong> The quality of the energy you bring to activities. Negative emotions (anxiety, resentment, frustration) drain energy and impair cognitive performance. Positive emotions (purpose, curiosity, care) sustain and replenish it.</li>
+        <li><strong>Mental energy:</strong> The ability to focus, make decisions, and solve problems. Decision fatigue is real — each decision depletes mental energy. Reducing decisions (routines, pre-commitment, simplified choices) preserves mental energy for what matters most.</li>
+        <li><strong>Purpose energy:</strong> The deepest source — the sense that what you are doing matters. Work connected to meaning and values is sustaining; work disconnected from purpose is draining even when technically "easy."</li>
+      </ul>
+      <h4>5. Perfectionism — Protection Disguised as High Standards</h4>
+      <p>Perfectionism is not the pursuit of excellence — it is the avoidance of judgment. Brené Brown's research distinguishes between healthy striving (internally motivated, focused on improvement, evaluates work honestly) and perfectionism (externally motivated, focused on avoiding criticism, defines self-worth by flawless performance). Perfectionism blocks achievement because:</p>
+      <ul>
+        <li>It makes starting impossible — because no beginning can meet the impossible standard</li>
+        <li>It makes finishing impossible — because no completion is ever good enough</li>
+        <li>It destroys resilience — because any imperfection becomes a catastrophic failure rather than information</li>
+        <li>The antidote is not lower standards — it is the courage to produce imperfect work and submit it to the world. As Voltaire wrote: "Perfect is the enemy of good." Done and imperfect beats perfect and incomplete every time.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Procrastination Root Cause Analysis</strong><br>Identify your most chronic procrastination target — the task or category of tasks you most reliably avoid. Write: what specific emotional discomfort does this task evoke (anxiety, self-doubt, boredom, resentment)? What short-term mood repair does avoidance provide? Design a specific intervention using the 5-minute rule, temptation bundling, or task reduction. Execute it before the end of this week.</p>
+      <p><strong>Exercise 2: Design Your Deep Work System</strong><br>Answer: what is the most cognitively demanding work required for your most important goal? When in the day is your energy and focus naturally highest? What specific environment would best support uninterrupted focus? Design a recurring weekly deep work block: specific time, duration (90 minutes), location, and phone/notification protocol. Schedule it now — not "when it fits."</p>
+      <p><strong>Exercise 3: Energy Audit</strong><br>For one week, track your energy levels (1–10) at three points each day: morning, midday, and evening. Note what preceded high and low energy states (sleep, food, exercise, specific activities, interactions). By the end of the week, identify: your natural peak energy window, your two biggest energy drains, and one change to your routine that would protect or increase your energy for goal-critical work.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What emotional discomfort is driving your most significant procrastination — and what would change if you addressed the emotion rather than the behaviour?</li>
+        <li>How much genuine deep work (uninterrupted, cognitively demanding focus) does your most important goal currently receive per week?</li>
+        <li>In which energy dimension — physical, emotional, mental, or purpose — are you most depleted, and what is the cost to your goal achievement?</li>
+        <li>Is your pursuit of quality driven by healthy striving or by perfectionism — and how do you know the difference?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'⏸',title:'Procrastination Root Cause Guide',desc:'Emotion-first diagnosis and evidence-based interventions',file:'procrastination-guide.pdf'},
+      {icon:'🎯',title:'Deep Work Design Template',desc:'Build your weekly uninterrupted focus schedule',file:'deep-work-template.pdf'},
+      {icon:'⚡',title:'Energy Audit Tracker',desc:'7-day energy logging for identifying your peak performance patterns',file:'energy-audit.pdf'},
+      {icon:'🚫',title:'Perfectionism vs Healthy Striving Guide',desc:'Brown\'s distinction and practical antidotes to perfectionism',file:'perfectionism-guide.pdf'},
+      {icon:'🎧',title:'Focus and Flow State Audio',desc:'12-minute guided practice for entering a focused, purposeful state',file:'focus-audio.mp3'},
+      {icon:'📚',title:'Performance and Focus Reading',desc:'Deep Work (Newport), The Power of Full Engagement (Loehr & Schwartz), Solving the Procrastination Puzzle',file:'performance-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does research by Fuschia Sirois and Timothy Pychyl identify as the primary driver of procrastination?",options:["Poor time management and planning skills","Lack of motivation or interest in the task","Avoidance of negative emotions associated with a task — procrastination is primarily an emotion management strategy, seeking short-term mood repair through avoiding anticipated discomfort","Perfectionism and fear of failure exclusively"],correct:2},
+      {question:"Why does self-criticism after procrastinating worsen future procrastination?",options:["Self-criticism reduces confidence needed for action","Self-criticism takes up time that could be spent working","It increases the negative emotion associated with the task, making future avoidance more likely by amplifying the aversiveness that drove procrastination in the first place","Self-criticism reinforces the neural pathway of avoidance"],correct:2},
+      {question:"What is the 'present bias' in the context of procrastination?",options:["The tendency to focus only on present emotions rather than future goals","A cognitive bias toward present-day information over historical data","The brain's neurologically real tendency to strongly prefer immediate rewards over future ones — making the future self who benefits from today's action feel like a stranger","The preference for present tasks over future planning"],correct:2},
+      {question:"What is the Zeigarnik effect and how does the 5-minute rule leverage it?",options:["The anxiety produced by approaching deadlines","The tendency to remember completed tasks more than incomplete ones","The brain's discomfort with unfinished tasks — once started, this effect keeps you engaged beyond the initial 5-minute commitment, making initiation the key barrier to overcome","The effect of negative feedback on task performance"],correct:2},
+      {question:"What does Gloria Mark's research show about interruptions and recovery time?",options:["Interruptions under 2 minutes have no measurable impact","Most people recover from interruptions within 5 minutes","Each interruption takes an average of 23 minutes to fully recover from — making the average distraction-saturated work environment nearly incompatible with sustained deep work","Interruptions improve creativity through unexpected associations"],correct:2},
+      {question:"What is Cal Newport's concept of 'deep work'?",options:["Working later at night when distractions are minimal","Working intensively on multiple important projects simultaneously","The ability to focus without distraction on a cognitively demanding task — increasingly rare, increasingly valuable, and the leverage point for nearly all meaningful achievement","Any work done without social interaction"],correct:2},
+      {question:"What does Loehr and Schwartz's energy management framework argue about the key to sustained high performance?",options:["Time management is the foundation of high performance","Sleep is the only variable that matters for performance","Managing energy — not time — is the key: time is fixed while energy is renewable (but only with appropriate recovery). Energy management across physical, emotional, mental, and purpose dimensions determines performance capacity.","Mental energy is the most important dimension of performance"],correct:2},
+      {question:"What is 'decision fatigue' and how should it be addressed for goal achievement?",options:["Exhaustion from making too many important choices","The quality reduction in decisions made late in the day","Each decision depletes mental energy — decision fatigue is real. Address it by reducing decisions through routines, pre-commitment, and simplified choices, preserving mental energy for what matters most","The tendency to avoid decisions when tired"],correct:2},
+      {question:"What is Brené Brown's distinction between perfectionism and healthy striving?",options:["Perfectionism sets higher standards than healthy striving","They differ only in degree of aspiration","Perfectionism is externally motivated, focused on avoiding criticism, and defines self-worth by flawless performance; healthy striving is internally motivated, focused on improvement, and evaluates work honestly without collapsing self-worth under imperfection","Healthy striving accepts imperfection; perfectionism doesn't"],correct:2},
+      {question:"Why does perfectionism block achievement rather than enhancing it?",options:["Perfectionists spend too much time planning rather than doing","High standards take longer to meet, slowing progress","It makes starting impossible (no beginning meets the impossible standard), finishing impossible (no completion is ever enough), and destroys resilience (any imperfection becomes catastrophic rather than information)","Perfectionism only blocks achievement in creative fields"],correct:2}
+    ]
+  },
+
+  5: {
+    tutorialVideo: "Accountability, Tracking, and Staying on Course",
+    basicVideo: "Navigating Setbacks and the Art of Intelligent Pivoting",
+    content: `
+      <h2>Week 5: Accountability and Resilience — Staying on Course When It Gets Hard</h2>
+      <div class="safety-banner"><h4>🎯 The Path to Every Goal Is Nonlinear — Build for That</h4><p>No significant goal is achieved in a straight line. Setbacks, plateaus, unexpected obstacles, and moments of doubt are not signs that you are failing — they are the normal terrain of meaningful pursuit. This week gives you the accountability systems and resilience frameworks to stay on course through all of it.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Build a personal accountability system that sustains commitment through difficulty</li>
+        <li>Learn how to track progress effectively without becoming enslaved to metrics</li>
+        <li>Develop resilience strategies for navigating setbacks, plateaus, and failure</li>
+        <li>Understand when to persist and when to pivot — and how to tell the difference</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Science of Accountability</h4>
+      <p>Research consistently shows that people who share their goals with others, report progress regularly, and have an accountability relationship are significantly more likely to achieve those goals. The mechanisms:</p>
+      <ul>
+        <li><strong>Social commitment:</strong> When you tell another person what you will do, the psychological cost of not doing it increases. This is not manipulation — it is the use of social nature to reinforce commitment to your own values and goals.</li>
+        <li><strong>Regular reporting:</strong> Weekly check-ins (even brief ones) create recurring decision points where you reassess, adjust, and recommit — rather than drifting for months without review</li>
+        <li><strong>The right accountability partner:</strong> Not a cheerleader (who only affirms) and not a critic (who only judges) but a supportive challenger — someone who genuinely cares about your growth, will ask honest questions, and will hold you to what you said you would do</li>
+        <li><strong>Public commitment effect:</strong> Research by Robert Cialdini shows that public commitments are significantly more binding than private ones — the desire for consistency with our stated intentions is a powerful motivator</li>
+        <li><strong>Caution:</strong> Some research (Gollwitzer) suggests that sharing goals can sometimes produce a "social reality" effect — where talking about a goal provides some of the satisfaction of achieving it, reducing actual motivation to do the work. The solution: share commitments to specific actions and report on them, rather than simply declaring aspirations.</li>
+      </ul>
+      <h4>2. Progress Tracking — The Data of Achievement</h4>
+      <p>What gets measured gets managed — but not all tracking is equal. Effective progress tracking:</p>
+      <ul>
+        <li><strong>Lead measures vs lag measures:</strong> Stephen Covey distinguishes between lead measures (the actions within your control that predict future outcomes) and lag measures (the outcomes themselves, which you can only measure after the fact). Track lead measures — they are actionable. Lag measures are the score; lead measures are the game.</li>
+        <li><strong>The habit tracker:</strong> Tracking streaks of daily habit completion is a lead measure with a powerful psychological effect — you don't want to break the chain. Jerry Seinfeld's "don't break the chain" approach to daily writing is the classic example.</li>
+        <li><strong>Weekly reviews:</strong> A structured weekly review (David Allen's Getting Things Done methodology) creates a reliable system for staying oriented: what did I complete? What is in progress? What do I need to decide or schedule? What is my priority for next week?</li>
+        <li><strong>The danger of over-tracking:</strong> Tracking can become a substitute for doing — optimising the tracking system rather than executing the plan. Keep tracking simple enough that it takes less time than the work itself.</li>
+      </ul>
+      <h4>3. Navigating Setbacks — The Resilience Framework</h4>
+      <p>Martin Seligman's research on explanatory style shows that how you explain setbacks determines how quickly you recover from them. The three dimensions of explanatory style:</p>
+      <ul>
+        <li><strong>Permanence:</strong> "This setback is permanent" (pessimistic) vs "This is temporary" (optimistic). Resilient goal-pursuers treat setbacks as temporary — a bump, not a wall.</li>
+        <li><strong>Pervasiveness:</strong> "This affects everything" (pessimistic) vs "This affects this specific area" (optimistic). Localising the setback prevents it from contaminating every other domain of life and effort.</li>
+        <li><strong>Personalisation:</strong> "This is entirely my fault" (pessimistic) vs "There are both internal and external factors" (realistic). Neither pure self-blame nor pure external blame — honest assessment of what you could have done differently alongside what was outside your control.</li>
+        <li>The resilient response to a setback: (1) Acknowledge it honestly — don't minimise or catastrophise. (2) Localise it — this area, this time, these circumstances. (3) Learn from it — what can be done differently? (4) Recommit — what is the next action? Recovery from setback is not automatic; it requires deliberate processing.</li>
+      </ul>
+      <h4>4. Plateaus — The Invisible Progress Phase</h4>
+      <p>Every significant skill acquisition and goal pursuit goes through plateaus — periods where visible progress stalls despite consistent effort. Understanding plateaus prevents abandonment during what is actually a critical phase of development:</p>
+      <ul>
+        <li>Plateaus are periods of consolidation — the skill or change is being integrated at a deeper level, often invisibly. The neural pathways are being reinforced, the capacity is being built, even when results are not visible.</li>
+        <li>Plateaus are the point where most people quit — precisely because they cannot see that the work is still working. The "overnight success" narrative hides the plateau phase that almost always preceded the breakthrough.</li>
+        <li>Strategies for plateaus: add variety (change the approach to reactivate learning), zoom out (review long-term progress rather than just recent weeks), seek feedback (a coach or mentor who can see what you cannot), reconnect with purpose (remind yourself why this matters).</li>
+      </ul>
+      <h4>5. When to Persist and When to Pivot</h4>
+      <p>One of the most important — and least discussed — skills in goal achievement is knowing when to change course versus when to push through. Seth Godin's distinction:</p>
+      <ul>
+        <li><strong>The Dip:</strong> The temporary difficulty that everyone pursuing mastery goes through — where the initial enthusiasm has worn off but genuine competence has not yet arrived. The Dip is the reason most people quit and the reason so few achieve mastery. The Dip is worth pushing through.</li>
+        <li><strong>The Cul-de-sac:</strong> A path that leads nowhere — work or a goal that will never produce meaningful results regardless of additional effort. The Cul-de-sac is worth quitting — quickly and without shame.</li>
+        <li>The distinguishing question: is this hard because it is worthwhile and requires growth? Or is this hard because it is genuinely not working and will not work? Honest data, trusted perspectives, and values alignment are the tools for answering it.</li>
+        <li>Pivoting is not failure — it is intelligent adaptation. The most successful achievers pivot repeatedly, integrating what they learn from each attempt into the next.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Design Your Accountability System</strong><br>Answer specifically: who is your accountability partner? (Name a specific person who fits the supportive challenger profile.) What will you report to them? (Specific actions, not just aspirations.) How often? (Weekly is the research-supported frequency.) What happens if you miss your commitment? Design this in writing and share it with your accountability partner this week.</p>
+      <p><strong>Exercise 2: Build Your Weekly Review Practice</strong><br>Design a 20-minute weekly review ritual for every Sunday evening (or your preferred transition time). Include: review of the past week's commitments (what was completed, what was not, and why), update of your goal hierarchy and habit tracker, and setting of next week's three most important actions for your primary goal. Schedule the first one this coming Sunday.</p>
+      <p><strong>Exercise 3: Setback Resilience Script</strong><br>Think of a goal-related setback you have experienced — recent or historical. Write through Seligman's three dimensions: How permanent is this? (Reframe to temporary.) How pervasive? (Localise to this specific area.) What was within my control vs outside it? Then write: what did I learn from this? What is the next action? Read this script back to yourself — and save it for the next setback.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the current state of your accountability system — and where is the gap between where it is and where it needs to be?</li>
+        <li>What lead measures are you tracking for your most important goal — and are they actually predicting the lag measure outcomes you want?</li>
+        <li>Are you currently in a Dip or a Cul-de-sac with any of your goals — and what evidence informs that assessment?</li>
+        <li>What is your typical explanatory style when facing setbacks — and what would a more resilient explanation look like?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🤝',title:'Accountability Partner System Guide',desc:'How to find, brief, and work with an accountability partner',file:'accountability-system.pdf'},
+      {icon:'📊',title:'Lead vs Lag Measures Tracker',desc:'Covey\'s framework for tracking what you can actually control',file:'lead-lag-tracker.pdf'},
+      {icon:'🔄',title:'Weekly Review Template',desc:'20-minute structured review ritual for consistent course correction',file:'weekly-review.pdf'},
+      {icon:'💪',title:'Setback Resilience Workbook',desc:'Seligman\'s explanatory style applied to goal setbacks',file:'resilience-workbook.pdf'},
+      {icon:'🎧',title:'Resilience and Recommitment Audio',desc:'12-minute guided practice for recovering from setbacks',file:'resilience-audio.mp3'},
+      {icon:'📚',title:'Resilience and Accountability Reading',desc:'The Dip (Godin), Learned Optimism (Seligman), Finish (Acuff)',file:'resilience-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does research show about the effect of sharing goals and regular progress reporting on achievement?",options:["Sharing goals reduces intrinsic motivation by creating external pressure","Sharing goals is only effective in professional contexts","People who share goals with others, report progress regularly, and have an accountability relationship are significantly more likely to achieve those goals — social commitment raises the psychological cost of not following through","Sharing goals creates unhelpful social comparison"],correct:2},
+      {question:"What is the caution from Gollwitzer's research about sharing goals?",options:["Shared goals create dependency on others' approval","Public goals attract unwanted attention and pressure","Simply declaring aspirations can produce a 'social reality' effect where talking about a goal provides some satisfaction of achieving it, reducing actual motivation. The solution: share specific action commitments and report on them, not just aspirations.","Sharing goals with multiple people reduces accountability"],correct:2},
+      {question:"What is the distinction between lead measures and lag measures?",options:["Lead measures predict future performance; lag measures track historical performance","Lead measures are the goals; lag measures are the metrics","Lead measures are the actions within your control that predict future outcomes; lag measures are the outcomes themselves, measurable only after the fact. Track lead measures because they are actionable — they are the game, not just the score.","Lead measures are short-term; lag measures are long-term"],correct:2},
+      {question:"What is the 'permanence' dimension of Seligman's explanatory style for setbacks?",options:["How long a setback takes to overcome","The physical duration of the difficult period","Whether you explain the setback as permanent ('this will always be this way') or temporary ('this is a temporary difficulty') — resilient people consistently use temporary explanations, enabling faster recovery","The lasting impact of a setback on motivation"],correct:2},
+      {question:"What is the 'personalisation' dimension of resilient explanatory style?",options:["Taking personal ownership of all outcomes","Avoiding self-blame entirely by attributing setbacks to external factors","Honest assessment recognising both internal and external factors — neither pure self-blame nor pure external attribution — identifying what you could have done differently alongside what was genuinely outside your control","Personalising your approach to goal achievement"],correct:2},
+      {question:"Why are plateaus described as a critical phase of development rather than a sign of failure?",options:["Plateaus indicate you have reached your limit and should adjust expectations","Plateaus are caused by inadequate effort and require more work","Plateaus are periods of consolidation — skills and changes are being integrated at a deeper level, often invisibly. Neural pathways are being reinforced even when results aren't visible. They are the point where most people quit, just before the breakthrough.","Plateaus signal the need to change goals entirely"],correct:2},
+      {question:"What is Seth Godin's 'The Dip' and why is it worth pushing through?",options:["The initial drop in motivation after setting a goal","The period of reduced performance that follows peak achievement","The temporary difficulty that everyone pursuing mastery goes through — where initial enthusiasm has worn off but genuine competence hasn't arrived yet. It is worth pushing through because it is the reason so few achieve mastery and the reason most people quit.","The dip in energy that follows a focused work session"],correct:2},
+      {question:"What distinguishes a 'Dip' from a 'Cul-de-sac' in Godin's framework?",options:["A Dip is temporary; a Cul-de-sac is permanent difficulty in the same path","A Dip is external; a Cul-de-sac is internal resistance","A Dip is worth pushing through — a temporary difficulty before mastery; a Cul-de-sac leads nowhere regardless of effort and is worth quitting quickly and without shame. The key is accurately diagnosing which you are in.","A Dip involves skill gaps; a Cul-de-sac involves motivation gaps"],correct:2},
+      {question:"What does Robert Cialdini's research on public commitment show?",options:["Public commitments are less binding because they invite social judgment","Public and private commitments are equally effective","Public commitments are significantly more binding than private ones — the desire for consistency with our stated intentions is a powerful motivator that public declaration activates","Public commitments only work in professional contexts"],correct:2},
+      {question:"What is the recommended resilient response sequence to a goal setback?",options:["Push through immediately without processing the setback","Take a break from the goal until motivation naturally returns","Acknowledge honestly (don't minimise or catastrophise), localise (this area, this time, these circumstances), learn (what can be done differently?), and recommit (what is the next action?) — deliberate processing that enables recovery","Share the setback with your accountability partner before processing it alone"],correct:2}
+    ]
+  },
+
+  6: {
+    tutorialVideo: "From Achievement to a Life of Meaningful Success",
+    basicVideo: "Your 12-Month Achievement Roadmap — Putting It All Together",
+    content: `
+      <h2>Week 6: Integration — Your Achievement System for Life</h2>
+      <div class="safety-banner"><h4>🎯 Achievement Is Not a Destination — It Is How You Move Through the World</h4><p>Six weeks of learning, reflection, and practice converge here. This final week is about synthesising everything into a coherent, sustainable achievement system — one that serves not just the goals of this moment but the life you are building across years and decades. Not a to-do list. A way of living with intention.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Synthesise all six weeks into a personalised, complete achievement system</li>
+        <li>Design a 12-month goal roadmap across all major life areas</li>
+        <li>Develop sustainable practices for annual review and goal evolution</li>
+        <li>Understand the relationship between achievement and wellbeing — success that actually satisfies</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Complete Achievement System</h4>
+      <p>A complete achievement system integrates all the elements covered across this course:</p>
+      <ul>
+        <li><strong>Foundation:</strong> Values-anchored goals, intrinsic motivation, identity alignment (Week 1)</li>
+        <li><strong>Architecture:</strong> SMART goals, goal hierarchy (vision → long-term → projects → weekly actions), WOOP (Week 2)</li>
+        <li><strong>Engine:</strong> Keystone habits, the four laws, environment design, compound effect (Week 3)</li>
+        <li><strong>Protection:</strong> Procrastination management, deep work, energy management, anti-perfectionism (Week 4)</li>
+        <li><strong>Maintenance:</strong> Accountability system, progress tracking, weekly review, setback resilience (Week 5)</li>
+        <li><strong>Evolution:</strong> Annual review, goal adaptation, celebrating achievement, and beginning again (Week 6)</li>
+        <li>The system is not rigid — it is a living structure that adapts as your circumstances, values, and goals evolve. The weekly review is what keeps it current; the annual review is what keeps it aligned with the life you are actually building.</li>
+      </ul>
+      <h4>2. Designing Your 12-Month Roadmap</h4>
+      <p>The 12-month roadmap provides enough horizon to pursue meaningful goals while remaining close enough to reality to plan concretely. Design it across six life areas:</p>
+      <ul>
+        <li><strong>Health and vitality:</strong> Physical health, energy, sleep, fitness, mental health</li>
+        <li><strong>Relationships:</strong> Partner, family, friendships, community, and professional relationships</li>
+        <li><strong>Career and contribution:</strong> Professional goals, skill development, impact, and meaningful work</li>
+        <li><strong>Financial:</strong> Income, savings, debt, investment, and financial security</li>
+        <li><strong>Personal growth:</strong> Learning, creativity, spirituality, and the ongoing development of who you are</li>
+        <li><strong>Enjoyment and recreation:</strong> The activities, experiences, and pleasures that restore and enrich your life</li>
+        <li>For each area, write: current reality (honest, not aspirational), one-year vision (specific, compelling), one SMART goal for the year, and one keystone habit that serves that goal. This becomes your annual operating document.</li>
+      </ul>
+      <h4>3. The Annual Review — Taking Stock and Setting Direction</h4>
+      <p>The annual review is one of the most high-leverage practices in goal achievement — a deliberate, structured reflection on the year that has passed and intentional design of the year ahead. Key elements:</p>
+      <ul>
+        <li><strong>Looking back:</strong> What did you accomplish? What fell short — and why, honestly? What unexpected gifts did the year bring? What would you do differently?</li>
+        <li><strong>Looking inward:</strong> How have you grown? What do you now know about yourself that you didn't a year ago? What needs to change in who you are becoming?</li>
+        <li><strong>Looking forward:</strong> What do you most want the coming year to be? Which goals are complete and can be retired? Which are ongoing? What new goals are emerging from your evolution?</li>
+        <li>The annual review is best done in writing, over 2–3 hours, in a dedicated space without distraction. It is not a performance review — it is an honest, compassionate conversation with yourself about the life you are building.</li>
+      </ul>
+      <h4>4. Celebrating Achievement — The Underrated Practice</h4>
+      <p>Most high achievers are better at pursuing the next goal than at acknowledging and celebrating the completion of the last one. This creates a hedonic treadmill of perpetual striving without satisfaction — the "arrival fallacy" described by Tal Ben-Shahar: the belief that once you achieve the goal, you will finally be happy. The achievement happens; the happiness is briefly present; then it's on to the next thing. To interrupt this cycle:</p>
+      <ul>
+        <li>Build deliberate celebration into your goal system — not as indulgence but as acknowledgment of genuine effort and genuine accomplishment</li>
+        <li>Celebrate the process milestones, not only the final outcome — the consistent habits, the difficult days you showed up anyway, the setbacks you recovered from</li>
+        <li>Share your achievements with people who genuinely care — celebration is more meaningful in community than in isolation</li>
+        <li>Allow yourself to arrive — to be genuinely satisfied with what you have done, however briefly, before reaching for what's next</li>
+      </ul>
+      <h4>5. Achievement and Wellbeing — Success That Actually Satisfies</h4>
+      <p>The final and perhaps most important question: what kind of success actually produces lasting wellbeing? The research is clear and counter-cultural:</p>
+      <ul>
+        <li>External achievements (status, income, material goods) beyond a certain threshold produce rapidly diminishing increases in wellbeing — the hedonic adaptation is fast and complete</li>
+        <li>Intrinsic goals (personal growth, meaningful relationships, community contribution, health) produce more lasting wellbeing than extrinsic goals — and their achievement is experienced as more satisfying</li>
+        <li>The journey matters as much as the destination: the engagement, growth, and meaning of pursuit contribute more to lasting wellbeing than the moment of achievement</li>
+        <li>Martin Seligman's PERMA model identifies the five elements of lasting wellbeing: Positive emotions, Engagement (flow), Relationships, Meaning, and Achievement. A life of genuine flourishing requires all five — and a goal system that serves only Achievement at the expense of the others is building an incomplete life</li>
+        <li>The final question this course leaves you with: what would it look like to achieve your goals and be fully alive in the process?</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Build Your 12-Month Roadmap</strong><br>Work through all six life areas. For each: write current reality honestly, your one-year vision specifically, one SMART annual goal, and one keystone habit. This takes time — give it a full evening or weekend morning. The roadmap is not a promise; it is your current best thinking about the year ahead. Return to it monthly and revise as needed.</p>
+      <p><strong>Exercise 2: Design Your Annual Review Practice</strong><br>Schedule your first annual review — choose a date (your birthday, New Year's Eve, a personally meaningful anniversary). Write the three questions you will answer in each of the three sections: looking back, looking inward, looking forward. Create the conditions: a dedicated space, 2–3 hours, no interruptions, your journal or laptop. This review is one of the highest-leverage investments you can make in your future self.</p>
+      <p><strong>Exercise 3: Achievement Celebration</strong><br>Before leaving this course, take stock of what you have actually accomplished in six weeks — not just what you have learned but what you have done: the insights you have had, the goals you have written, the habits you have begun, the systems you have designed, the honest self-inquiry you have practised. Write it down. Acknowledge it — to yourself, and to at least one person who has been part of your journey. This is a genuine accomplishment. Receive it as one.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Looking across your 12-month roadmap — which life area shows the greatest gap between current reality and one-year vision? What does that reveal about where your attention most needs to go?</li>
+        <li>What would your achievement system need to look like for you to maintain it consistently — not perfectly, but reliably — for the next 12 months?</li>
+        <li>Where have you been achieving at the expense of wellbeing — and what would it look like to pursue your goals while remaining fully alive in the process?</li>
+        <li>Six weeks ago, what was your relationship to your own ambitions — and how has that relationship changed?</li>
+      </ul>
+      <h3>🎯 A Closing Word</h3>
+      <p>Six weeks ago you began a conversation about what you most want to achieve and who you most want to become. You have learned the science of motivation, the architecture of goals, the mechanics of habits, the management of obstacles, and the discipline of accountability. More than that, you have begun to practise them — in small ways that are already compounding. Achievement is not a character trait you either have or don't. It is a skill — and like every skill, it develops through deliberate practice, honest feedback, patient persistence, and the courage to begin again after every setback. You now have the framework. The work — the daily, unglamorous, deeply satisfying work of building the life you have envisioned — is yours. Begin. Keep going. And when you arrive at what you set out for, take a moment to let it matter. Then set your sights on the next horizon.</p>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      {icon:'🗺',title:'12-Month Goal Roadmap Template',desc:'Six life areas: current reality, vision, SMART goal, keystone habit',file:'12-month-roadmap.pdf'},
+      {icon:'🔍',title:'Annual Review Guide',desc:'Looking back, inward, and forward — the complete review framework',file:'annual-review-guide.pdf'},
+      {icon:'🎉',title:'Achievement Celebration Guide',desc:'Build deliberate celebration into your goal system',file:'celebration-guide.pdf'},
+      {icon:'🌱',title:'PERMA Wellbeing and Achievement',desc:'Seligman\'s model for success that actually satisfies',file:'perma-wellbeing.pdf'},
+      {icon:'🎧',title:'Achievement Integration Meditation',desc:'20-minute guided practice for aligning ambition with wellbeing',file:'achievement-integration-audio.mp3'},
+      {icon:'🏆',title:'Course Completion Certificate',desc:'Download your certificate of completion',file:'certificate.pdf'}
+    ],
+    assessment: [
+      {question:"What are the six components of a complete achievement system as covered in this course?",options:["Goals, habits, focus, accountability, resilience, and celebration","Vision, planning, action, review, resilience, and reward","Values-anchored foundation, goal architecture, habit engine, obstacle protection, accountability maintenance, and goal evolution — each building on the previous","Motivation, SMART goals, habits, energy, tracking, and annual review"],correct:2},
+      {question:"What are the six life areas recommended for the 12-month roadmap?",options:["Career, finances, health, relationships, travel, and education","Work, money, family, fitness, hobbies, and spiritual life","Health and vitality, relationships, career and contribution, financial, personal growth, and enjoyment and recreation","Mind, body, spirit, work, love, and community"],correct:2},
+      {question:"What are the three sections of an effective annual review?",options:["What worked, what didn't, and what's next","Goals achieved, goals missed, and new goals","Looking back (accomplishments, shortfalls, lessons), looking inward (personal growth, self-knowledge), and looking forward (upcoming goals, goal evolution)","Performance review, skill audit, and goal setting"],correct:2},
+      {question:"What is the 'arrival fallacy' described by Tal Ben-Shahar?",options:["The belief that you have arrived at your destination before you have","The disappointment that follows achieving a goal you worked hard for","The belief that once you achieve the goal you will finally be happy — which leads to a hedonic treadmill of perpetual striving without satisfaction, because the happiness is brief before the next goal beckons","The false sense of arrival produced by celebrating milestones"],correct:2},
+      {question:"What does research show about external vs intrinsic goals and lasting wellbeing?",options:["External goals (status, income) produce lasting wellbeing if pursued with genuine effort","All types of goals produce similar wellbeing once achieved","External achievements beyond a certain threshold produce rapidly diminishing wellbeing due to hedonic adaptation; intrinsic goals (growth, relationships, contribution, health) produce more lasting satisfaction and are experienced as more meaningful","Intrinsic goals are only meaningful if they also produce external results"],correct:2},
+      {question:"What does Seligman's PERMA model identify as the elements of lasting wellbeing?",options:["Purpose, Engagement, Resilience, Mastery, Achievement","Positivity, Energy, Relationships, Motivation, Ambition","Positive emotions, Engagement (flow), Relationships, Meaning, and Achievement — all five required for genuine flourishing; a goal system serving only Achievement at others' expense builds an incomplete life","Performance, Effectiveness, Responsibility, Mindfulness, Accountability"],correct:2},
+      {question:"Why should achievement celebration be built into the goal system rather than being optional?",options:["Celebration motivates others to support your goals","Celebration only matters for major milestones","Most high achievers are better at pursuing the next goal than celebrating the last — which creates a hedonic treadmill of perpetual striving without satisfaction. Deliberate celebration acknowledges genuine effort and interrupts the 'always onto the next' pattern.","Celebration provides data about which goals were most satisfying"],correct:2},
+      {question:"What is the recommended approach to a 12-month roadmap — a promise or a planning document?",options:["A binding commitment to specific outcomes","A promise made to your accountability partner","Current best thinking about the year ahead — not a promise but a living document to return to monthly and revise as circumstances, values, and goals evolve","A public declaration that creates social accountability"],correct:2},
+      {question:"What does 'the journey matters as much as the destination' mean in the research on achievement and wellbeing?",options:["The time spent pursuing a goal is as valuable as the outcome","Process-focused goals are superior to outcome-focused goals","The engagement, growth, and meaning experienced during pursuit contribute more to lasting wellbeing than the moment of achievement — which makes how you pursue your goals as important as what you achieve","Goals should be valued for the activities they require, not the outcomes they produce"],correct:2},
+      {question:"What is the closing message of this course about the nature of achievement?",options:["Achievement belongs to those with the right talent and circumstances","Achievement requires complete elimination of self-doubt","Achievement is not a character trait you either have or don't — it is a skill developed through deliberate practice, honest feedback, patient persistence, and the courage to begin again after every setback. The framework is available; the daily work is yours.","Achievement is primarily about having the right goals and the right habits"],correct:2}
+    ]
+  }
+
+};
+</script>
+</body>
+</html>

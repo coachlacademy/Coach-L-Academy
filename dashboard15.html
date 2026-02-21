@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Effective Communication Skills - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #667eea; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #667eea; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(102,126,234,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .safety-banner { background: linear-gradient(135deg, #e3f2fd 0%, #e8eaf6 100%); border: 2px solid #1565c0; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .safety-banner h4 { color: #0d47a1; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Effective Communication Skills</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Effective Communication Skills</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin your communication journey.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Start Communicating 🗣️</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="safety-banner">
+    <h4>🗣️ Communication Is a Skill — Not a Personality Trait</h4>
+    <p>Whether you consider yourself naturally quiet or naturally talkative, introverted or extroverted — effective communication is something every person can learn and improve. This course covers the full spectrum: listening, speaking, non-verbal presence, assertiveness, and conflict resolution. Some of these skills may feel uncomfortable at first — particularly if past communication patterns have caused pain. Move through that discomfort with patience and self-compassion. The ability to connect, express, and resolve is one of the most transformative skills you can develop.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised communication coaching.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly to practise and refine your communication skills.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY     = 'CoachL2025SecureKey';
+const COURSE_NAME    = 'Effective Communication Skills';
+const TOTAL_WEEKS    = 6;
+const STORAGE_PREFIX = 'coachL_ECS_';
+
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+let completedWeeks = new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks')||'[]'));
+function saveCompletedWeeks(){ localStorage.setItem(STORAGE_PREFIX+'completedWeeks', JSON.stringify([...completedWeeks])); }
+
+window.onload = function(){
+  const n=localStorage.getItem('studentName'), e=localStorage.getItem('studentEmail');
+  if(n&&e){ studentInfo.name=n; studentInfo.email=e; updateUserDisplay(); }
+  else { document.getElementById('nameModal').style.display='flex'; }
+  updateProgress(); refreshModuleButtons();
+  selectModule([1,2,3,4,5,6].find(w=>!completedWeeks.has(w))||1);
+};
+function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(), e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e){alert('Please enter your email address.');return;}
+  if(!isValidEmail(e)){alert('⚠️ "'+e+'" doesn\'t look like a valid email.\n\nExample: yourname@gmail.com');document.getElementById('studentEmail').focus();return;}
+  studentInfo.name=n; studentInfo.email=e;
+  localStorage.setItem('studentName',n); localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none'; updateUserDisplay();
+}
+function updateEmail(){
+  const cur=localStorage.getItem('studentEmail')||'', nw=prompt('Update your email address:',cur);
+  if(nw===null)return;
+  if(!isValidEmail(nw.trim())){alert('⚠️ That doesn\'t look like a valid email.');return;}
+  studentInfo.email=nw.trim(); localStorage.setItem('studentEmail',nw.trim()); alert('✅ Email updated to: '+nw.trim());
+}
+function updateUserDisplay(){ document.getElementById('userAvatar').textContent=studentInfo.name.charAt(0).toUpperCase(); document.getElementById('userName').textContent='Welcome, '+studentInfo.name+'!'; }
+function refreshModuleButtons(){
+  document.querySelectorAll('.module-btn').forEach((btn,i)=>{
+    const w=i+1; btn.classList.remove('active','completed');
+    if(completedWeeks.has(w)){btn.classList.add('completed');btn.textContent='Week '+w+' ✓';}
+    else{btn.textContent='Week '+w;}
+    if(w===currentWeek)btn.classList.add('active');
+  });
+}
+function selectModule(week){ currentWeek=week; refreshModuleButtons(); updateWeekContent(); }
+function showTab(tabName,tabBtn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if(tabBtn)tabBtn.classList.add('active');
+}
+function updateWeekContent(){
+  const w=weekData[currentWeek];
+  document.getElementById('weekTitle').textContent='📹 Week '+currentWeek+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tutorialVideo;
+  document.getElementById('basicTitle').textContent='Basic Learning: '+w.basicVideo;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='📚 Course Resources - Week '+currentWeek;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">📥 Download</span></div>`).join('');
+  renderAssessment();
+}
+function renderAssessment(){
+  const w=weekData[currentWeek], passed=completedWeeks.has(currentWeek);
+  let html=`<h2>📝 Week ${currentWeek} Assessment</h2>`;
+  if(passed){ html+=`<div class="already-passed-notice"><h3>✅ You already passed this week!</h3><p>Great work! Your score has been recorded.</p></div>`; }
+  else { html+=`<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass.</p>`; }
+  w.assessment.forEach((q,i)=>{ html+=`<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`; });
+  if(!passed) html+=`<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function submitQuiz(){
+  if(completedWeeks.has(currentWeek)){alert('You have already passed this assessment!');return;}
+  const w=weekData[currentWeek]; let correct=0,answers=[],allAnswered=true;
+  w.assessment.forEach((q,i)=>{ const sel=document.querySelector(`input[name="q${i}"]:checked`); if(!sel){allAnswered=false;return;} const ua=parseInt(sel.value),ok=ua===q.correct; if(ok)correct++; answers.push({question:q.question,userAnswer:q.options[ua],correctAnswer:q.options[q.correct],isCorrect:ok}); });
+  if(!allAnswered){alert('Please answer all questions before submitting.');return;}
+  const score=Math.round((correct/w.assessment.length)*100), passed=score>=70;
+  submitToSheets(currentWeek,score,correct,w.assessment.length,answers,passed);
+  if(passed){ completedWeeks.add(currentWeek); saveCompletedWeeks(); updateProgress(); refreshModuleButtons(); renderAssessment();
+    alert(currentWeek<TOTAL_WEEKS?`🎉 Congratulations! You passed with ${score}%!\n\nContinue to Week ${currentWeek+1} whenever you're ready.`:`🏆 Course complete! You passed with ${score}%!\n\nYour certificate will be emailed to you. 🎓`);
+  } else { alert(`You scored ${score}% (${correct}/${w.assessment.length}).\n\nYou need 70% to pass. Review the material and try again!`); }
+}
+function submitToSheets(week,score,correct,total,answers,passed){
+  const payload={secretKey:SECRET_KEY,timestamp:new Date().toLocaleString(),studentName:studentInfo.name,studentEmail:studentInfo.email,courseName:COURSE_NAME,week,score,correct,total,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(()=>console.log('✅')).catch(e=>console.error('❌',e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]'); all.push({...payload,answers}); localStorage.setItem('assessmentResults',JSON.stringify(all));
+}
+function updateProgress(){
+  const done=completedWeeks.size, pct=Math.round((done/TOTAL_WEEKS)*100);
+  document.getElementById('progressBar').style.width=pct+'%'; document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TOTAL_WEEKS*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TOTAL_WEEKS;
+}
+function playVideo(type,week){alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed.`);}
+function markComplete(){ showTab('assessment',document.querySelectorAll('.tab')[2]); window.scrollTo({top:0,behavior:'smooth'}); }
+function downloadResource(file,title){
+  fetch('resources/'+file,{method:'HEAD'}).then(r=>{ if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);} else{alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.');} }).catch(()=>alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src=`https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){ if(confirm('End the session?')){ document.getElementById('jitsiFrame').src=''; document.getElementById('videoCallContainer').style.display='none'; } }
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No assessment results yet.');return;}
+  const rows=all.map((r,i)=>`<div class="result-card ${r.passed==='YES'?'passed':'failed'}"><h2>Submission #${i+1} — ${r.passed==='YES'?'✅ PASSED':'❌ FAILED'}</h2><p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p><p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p><p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p><div class="details"><h3>Answers:</h3><table><tr><th>Question</th><th>Student</th><th>Correct</th><th>Result</th></tr>${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}</table></div></div>`).join('');
+  const win=window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}.details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}</style></head><body><h1>📊 Results – Coach L Academy</h1><p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Effective Communication Skills
+// ============================================================
+const weekData = {
+
+  1: {
+    tutorialVideo: "The Science of Communication — How We Connect and Misconnect",
+    basicVideo: "Communication Styles — Finding Your Voice",
+    content: `
+      <h2>Week 1: Communication Foundations — How We Really Connect</h2>
+      <div class="safety-banner"><h4>🗣️ Communication Is How We Experience Each Other</h4><p>Every relationship in your life — personal and professional — is built almost entirely from communication. The quality of your communication determines the quality of your connections. This week establishes the foundation: how communication actually works, what gets in the way, and what your personal communication style currently looks like.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the communication process and the most common points of breakdown</li>
+        <li>Learn the four primary communication styles and identify your own</li>
+        <li>Understand the role of verbal, non-verbal, and paraverbal communication</li>
+        <li>Begin developing awareness of your own communication patterns and their impact</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. How Communication Actually Works</h4>
+      <p>Communication is far more complex than it appears. The sender-receiver model — I speak, you hear, you understand — is a dramatic oversimplification that explains why miscommunication is the rule rather than the exception. In reality, every communication involves:</p>
+      <ul>
+        <li><strong>Encoding:</strong> The sender translates their internal experience (thoughts, feelings, intentions) into words, tone, and body language. This encoding is always imperfect — language cannot fully capture experience.</li>
+        <li><strong>Transmission:</strong> The message travels through a channel (face-to-face, phone, text, email) which affects what information is carried. Text strips tone and non-verbal cues; phone strips facial expression; face-to-face carries the full spectrum.</li>
+        <li><strong>Noise:</strong> Anything that distorts the message — physical noise, emotional state, assumptions, cultural differences, the receiver's own preoccupations and filters.</li>
+        <li><strong>Decoding:</strong> The receiver interprets the message through their own filters — past experience, current mood, assumptions about the sender, cultural context. The decoded message is almost never identical to the encoded one.</li>
+        <li><strong>Feedback:</strong> The receiver's response, which tells the sender how the message was received — and allows correction. Without feedback, there is transmission but not communication.</li>
+        <li>George Bernard Shaw: "The single biggest problem in communication is the illusion that it has taken place." Most conflicts, misunderstandings, and relationship breakdowns are not caused by malice — they are caused by the gap between what was sent and what was received.</li>
+      </ul>
+      <h4>2. The Three Channels of Communication</h4>
+      <p>Albert Mehrabian's research (often oversimplified as the "7-38-55 rule") highlights that communication involves far more than words alone. The three channels:</p>
+      <ul>
+        <li><strong>Verbal (words):</strong> The explicit content of what is said — the information, requests, questions, and statements. Words carry meaning most precisely when they are specific and unambiguous.</li>
+        <li><strong>Paraverbal (voice):</strong> How words are delivered — tone, pace, pitch, volume, emphasis, and pauses. The same sentence ("I'm fine") can communicate distress, sarcasm, genuine reassurance, or anger depending entirely on tone.</li>
+        <li><strong>Non-verbal (body):</strong> Facial expression, eye contact, posture, gesture, physical proximity, and touch. Non-verbal signals are processed faster and believed more readily than verbal ones — when words and body language conflict, people almost always trust the body.</li>
+        <li>The practical implication: improving communication requires attention to all three channels — not only to what you say but to how your body and voice are delivering it, and to the non-verbal signals you are receiving from others.</li>
+      </ul>
+      <h4>3. The Four Communication Styles</h4>
+      <p>Communication styles fall along two dimensions: assertiveness (how directly you express your needs and views) and responsiveness (how attuned you are to others' emotions and needs). Four primary styles emerge:</p>
+      <ul>
+        <li><strong>Passive:</strong> Prioritises others' needs and comfort over one's own. Avoids conflict, difficulty expressing opinions, tends to agree to avoid disapproval. The short-term relief of avoiding conflict comes with the long-term cost of resentment, unmet needs, and loss of self.</li>
+        <li><strong>Aggressive:</strong> Prioritises own needs and views without adequate regard for others. Dominates conversations, intimidates, criticises, and dismisses. May achieve short-term compliance but damages trust, connection, and voluntary cooperation.</li>
+        <li><strong>Passive-Aggressive:</strong> Indirect expression of hostility — sarcasm, sulking, "forgetting," backhanded compliments, subtle sabotage. The most confusing and relationship-damaging style, because it denies the conflict it is expressing.</li>
+        <li><strong>Assertive:</strong> Direct, honest expression of one's own needs, views, and feelings — while respecting the rights and needs of others. The communication style most associated with healthy relationships, professional success, and personal wellbeing. Not a personality type — a learnable skill.</li>
+      </ul>
+      <h4>4. Filters and Blind Spots</h4>
+      <p>Every person communicates through a set of invisible filters — unconscious assumptions, past experiences, cultural conditioning, and emotional states that shape both what they transmit and how they receive. Common communication filters:</p>
+      <ul>
+        <li><strong>Assumptions:</strong> We fill gaps in information with assumptions — usually based on past experience rather than present reality. "She didn't reply — she must be angry" may be entirely false.</li>
+        <li><strong>Emotional state:</strong> When we are anxious, angry, or defensive, we hear differently — more threat, less nuance, less openness to alternative interpretations.</li>
+        <li><strong>Cultural context:</strong> Directness, eye contact, silence, interruption, and emotional expression all carry different meanings in different cultures. What reads as respectful in one context can read as rude or evasive in another.</li>
+        <li><strong>Past experience:</strong> If previous relationships involved criticism, manipulation, or unpredictability, those experiences filter current communication — producing hypervigilance to threat signals that may not be present.</li>
+        <li>Developing communication intelligence means becoming increasingly aware of your own filters — not to eliminate them (impossible) but to hold them lightly enough that they do not distort every message you send and receive.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Communication Style Audit</strong><br>Over the next three days, keep a brief log of your significant communication interactions. For each, note: which style did you predominantly use (passive, aggressive, passive-aggressive, or assertive)? What was the outcome? What did you notice in the other person's response? By the end of three days, what pattern emerges? Which style do you default to under stress?</p>
+      <p><strong>Exercise 2: The Three Channels Observation</strong><br>In your next significant face-to-face conversation, consciously observe all three channels — your own and the other person's. After the conversation, write: what did their body language communicate that their words did not? Was there alignment or misalignment between what they said and how they said it? What were you communicating non-verbally that you may not have intended?</p>
+      <p><strong>Exercise 3: Filter Identification</strong><br>Think of a recent miscommunication or conflict. Walk back through it: what assumptions did you make that turned out to be incorrect? What emotional state were you in that may have distorted your interpretation? What past experience may have been shaping how you received the other person's message? This is not about blame — it is about developing the self-awareness that makes better communication possible.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which communication style do you most frequently default to — and in what contexts does it shift?</li>
+        <li>What are the most significant filters in your own communication — the assumptions, experiences, or emotional patterns that most consistently distort what you send and receive?</li>
+        <li>When words and body language conflict in someone you communicate with regularly, which do you tend to believe — and what does that tell you?</li>
+        <li>What would shift in your most important relationships if communication breakdowns were treated as understanding failures rather than character failures?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🗣️',title:'Communication Process Guide',desc:'Encoding, transmission, noise, decoding, and feedback explained',file:'communication-process.pdf'},
+      {icon:'🎭',title:'Four Communication Styles Assessment',desc:'Identify your dominant style across different contexts',file:'communication-styles.pdf'},
+      {icon:'👁️',title:'Non-Verbal Communication Reference',desc:'Reading and sending body language, tone, and presence',file:'nonverbal-guide.pdf'},
+      {icon:'🔍',title:'Communication Filters Worksheet',desc:'Identify the assumptions and experiences shaping your communication',file:'filters-worksheet.pdf'},
+      {icon:'🎧',title:'Communication Awareness Audio',desc:'12-minute guided practice for mindful communication presence',file:'communication-awareness-audio.mp3'},
+      {icon:'📚',title:'Communication Foundations Reading',desc:'Crucial Conversations, You Just Don\'t Understand (Tannen), Nonviolent Communication',file:'communication-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does George Bernard Shaw's quote — 'the single biggest problem in communication is the illusion that it has taken place' — mean for everyday communication?",options:["Most people are dishonest communicators","Communication requires formal confirmation to be complete","Most conflicts arise not from malice but from the gap between what was encoded and sent versus what was decoded and received — the illusion that understanding occurred when it did not","Communication is fundamentally unreliable and should be supplemented with written records"],correct:2},
+      {question:"What is 'noise' in the communication process?",options:["Literal background sound that interferes with hearing","Unnecessary words that clutter a message","Anything that distorts the message between sender and receiver — physical noise, emotional state, assumptions, cultural differences, or the receiver's own preoccupations and filters","The emotional intensity of a difficult conversation"],correct:2},
+      {question:"What does research on the three channels of communication show about conflicts between verbal and non-verbal signals?",options:["Words are always the most reliable channel","Both channels are equally weighted by receivers","When words and body language conflict, people almost always trust the body — non-verbal signals are processed faster and believed more readily than verbal content","Paraverbal signals (tone) are the most reliable indicator of meaning"],correct:2},
+      {question:"What characterises passive-aggressive communication as the most relationship-damaging style?",options:["It is the most emotionally intense style","It combines elements of aggression and passivity in equal measure","It denies the conflict it is expressing — through sarcasm, sulking, 'forgetting', and subtle sabotage — making it the most confusing style because the sender maintains deniability while the message is still hostile","It damages professional relationships more than personal ones"],correct:2},
+      {question:"What is the key distinction between assertive and aggressive communication?",options:["Assertive communication is quieter and more controlled","Assertive communication avoids all conflict","Assertive communication expresses needs and views directly and honestly while respecting others' rights and needs; aggressive communication expresses needs at others' expense without adequate regard for their perspective","Assertive communication is only appropriate in professional contexts"],correct:2},
+      {question:"Why does passive communication carry long-term costs despite providing short-term relief?",options:["Passive communicators never get what they need","Passive communication is dishonest by definition","The short-term relief of avoiding conflict comes with resentment, unmet needs, and loss of self — the suppression of authentic expression accumulates into disconnection and quiet suffering","Passive communicators are eventually confronted by others"],correct:2},
+      {question:"What is the role of 'feedback' in the communication model?",options:["Formal evaluation of communication performance","Written confirmation that a message was received","The receiver's response that tells the sender how the message was received — allowing correction and ensuring transmission becomes genuine two-way communication","Constructive criticism offered after a conversation"],correct:2},
+      {question:"How does emotional state act as a communication filter?",options:["Strong emotions make communication more intense and therefore clearer","Emotional people communicate more authentically","When anxious, angry, or defensive, we hear differently — perceiving more threat, less nuance, and less openness to alternative interpretations, causing misreading of neutral or even positive messages","Emotional state only affects the sender, not the receiver's interpretation"],correct:2},
+      {question:"What is the practical communication implication of Mehrabian's three-channel research?",options:["Words account for 93% of communication impact","Non-verbal signals are irrelevant in text-based communication","Improving communication requires attention to all three channels — not only what you say but how your body and voice deliver it, and reading others' non-verbal signals alongside their words","The paraverbal channel (tone) is more important than content in all contexts"],correct:2},
+      {question:"What does developing 'communication intelligence' mean in the context of filters?",options:["Eliminating all unconscious assumptions about others","Learning to detect others' filters while hiding your own","Becoming increasingly aware of your own filters — not to eliminate them (impossible) but to hold them lightly enough that they do not consistently distort what you send and receive","Communicating exclusively in literal, factual language to avoid filter interference"],correct:2}
+    ]
+  },
+
+  2: {
+    tutorialVideo: "Active Listening — The Most Powerful Communication Skill You're Not Using",
+    basicVideo: "Empathic Listening — Hearing What Isn't Said",
+    content: `
+      <h2>Week 2: Active Listening — The Foundation of All Great Communication</h2>
+      <div class="safety-banner"><h4>🗣️ Most People Listen to Reply — Not to Understand</h4><p>Of all the communication skills, listening is the most underrated and undertaught — and the most transformative when genuinely practised. This week teaches you to listen in a way that makes people feel truly heard, that dramatically reduces misunderstanding, and that forms the basis of trust in every relationship.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the difference between hearing, listening, and active listening</li>
+        <li>Learn and practise the core skills of active listening</li>
+        <li>Develop empathic listening — the ability to hear the emotional content beneath the words</li>
+        <li>Identify and interrupt your own barriers to genuine listening</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Hearing vs Listening vs Active Listening</h4>
+      <p>These three terms describe fundamentally different levels of engagement with another person's communication:</p>
+      <ul>
+        <li><strong>Hearing</strong> is passive and physiological — sound waves hitting eardrums, processed automatically. It requires no intention or effort.</li>
+        <li><strong>Listening</strong> is selective attention — choosing to process some sounds over others. Most conversational "listening" is actually people waiting for their turn to speak, forming their response while the other person is still talking.</li>
+        <li><strong>Active listening</strong> is a fully engaged, intentional process of attending to another person's communication in its entirety — words, tone, body language, and the emotional content beneath all of them — with the goal of genuinely understanding, not merely processing enough to respond.</li>
+        <li>Research by Ralph Nichols at the University of Minnesota showed that immediately after hearing a message, the average person retains only about 50% of it — and within 48 hours, that drops to 25%. Active listening dramatically improves retention and understanding.</li>
+      </ul>
+      <h4>2. The Core Skills of Active Listening</h4>
+      <ul>
+        <li><strong>Full presence:</strong> Eliminating or minimising distractions — phones away, internal preoccupations set aside (as much as possible), physical orientation toward the speaker. Presence is the non-negotiable foundation of listening. You cannot actively listen while also checking your phone or mentally composing your grocery list.</li>
+        <li><strong>Non-verbal engagement:</strong> Eye contact (natural and sustained, not staring), open and facing body posture, appropriate nods and facial expressions that signal engagement. These signals tell the speaker that you are with them — and encourage them to say more.</li>
+        <li><strong>Not interrupting:</strong> Allowing the speaker to complete their thought before responding. The urge to interrupt is almost always about inserting your own experience or view — it signals that what is in your head is more important than what the speaker is sharing. Resisting this urge is one of the most powerful listening disciplines.</li>
+        <li><strong>Minimal encouragers:</strong> Brief verbal signals that indicate you are following — "mm-hmm," "I see," "go on," "tell me more." These maintain the speaker's flow without hijacking the conversation.</li>
+        <li><strong>Reflecting and paraphrasing:</strong> Feeding back the essence of what you heard, in your own words: "So what I'm hearing is..." or "It sounds like you're saying..." This serves two functions: it confirms to the speaker that they have been understood, and it gives them the opportunity to correct any misunderstanding.</li>
+        <li><strong>Clarifying questions:</strong> Open-ended questions that invite more: "What did you mean when you said...?" "Can you tell me more about...?" "Help me understand..." These deepen understanding and communicate genuine interest.</li>
+        <li><strong>Summarising:</strong> At the end of a longer conversation or a significant section, briefly summarise the key points to confirm shared understanding: "So the main things I'm taking away from this are..."</li>
+      </ul>
+      <h4>3. Empathic Listening — The Deeper Level</h4>
+      <p>Stephen Covey described empathic listening as "listening with the intent to understand" — not just the words but the emotion, the meaning, and the experience behind them. Empathic listening involves:</p>
+      <ul>
+        <li><strong>Listening for feelings, not just content:</strong> Every message carries both a content dimension (what is being said) and a relational/emotional dimension (how the speaker feels about it). "My boss criticised my presentation in front of the team" is content. The feeling beneath it might be humiliation, anger, self-doubt, or all three. Responding only to the content misses what the person most needs you to hear.</li>
+        <li><strong>Naming what you sense:</strong> Tentatively reflecting the emotional content: "It sounds like that was really embarrassing" or "I'm sensing a lot of frustration in what you're describing." Tentative because you may be wrong — and the speaker's correction is itself valuable information.</li>
+        <li><strong>Withholding advice:</strong> The impulse to solve, advise, reassure, or redirect is almost universal — and almost always premature. Before offering any of these, ask: "What would be most helpful right now — to talk through how you're feeling, or to think through what to do about it?" The answer is often different from what you assumed.</li>
+        <li><strong>The validation principle:</strong> Validating an emotion does not mean agreeing with every conclusion or action. It means acknowledging that the emotion makes sense given the person's experience: "I understand why you feel that way" is not "you are right to be angry." It is "your feelings are real and understandable." This distinction is crucial — people do not need agreement; they need to feel heard.</li>
+      </ul>
+      <h4>4. Barriers to Active Listening</h4>
+      <p>Honest self-awareness about the barriers that prevent genuinely listening:</p>
+      <ul>
+        <li><strong>Internal preoccupation:</strong> Your own thoughts, worries, plans, and internal monologue that compete for attention while someone else is speaking</li>
+        <li><strong>Formulating your response:</strong> Mentally composing what you will say next rather than staying with what is being said now</li>
+        <li><strong>Assumptions and early conclusions:</strong> Deciding you know what the person means before they have finished — and filtering subsequent words through your assumed conclusion</li>
+        <li><strong>Emotional reactivity:</strong> When what someone says triggers a strong emotional response in you, your attention moves inward to manage your reaction rather than outward to the speaker</li>
+        <li><strong>The fix-it impulse:</strong> Listening for the problem rather than for the person — scanning for the issue you can solve, which means you stop hearing the full experience</li>
+        <li><strong>Selective listening:</strong> Attending only to the parts that confirm what you already believe — filtering out information that doesn't fit your existing view</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Silent Listen</strong><br>Choose one conversation this week where you will commit to speaking as little as possible. Your only tools: non-verbal engagement, minimal encouragers, reflecting, and clarifying questions. No advice. No stories about yourself. No problem-solving. Just listen. Afterwards, write: what did you hear that you would have missed if you had spoken more? What did the other person's response tell you about how it felt to be truly listened to?</p>
+      <p><strong>Exercise 2: Feeling Beneath the Content</strong><br>In three conversations this week, consciously practise identifying the emotional content beneath the words. For each, write: what was the explicit content? What feelings did you sense beneath it? Did you name those feelings (tentatively)? What happened when you did — or what do you think would have happened if you had? Build the habit of listening with both ears — one for content, one for emotion.</p>
+      <p><strong>Exercise 3: Barrier Audit</strong><br>After a conversation where you notice you were not fully present, write honestly: which listening barrier was most active? (Internal preoccupation, formulating response, assumptions, emotional reactivity, fix-it impulse, or selective listening?) What triggered it? What would it have required to remain present? This is not self-criticism — it is the specific self-awareness that makes change possible.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>When do you feel most genuinely listened to — and what specifically does that person do that creates that feeling?</li>
+        <li>Which listening barrier is most persistently active for you — and in what types of conversations does it most strongly appear?</li>
+        <li>What is the difference between listening to understand and listening to respond — and which do you more commonly practise?</li>
+        <li>What would change in your most important relationship if you increased the quality of your listening by 20%?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'👂',title:'Active Listening Skills Guide',desc:'All seven core skills with scripts and practice scenarios',file:'active-listening-guide.pdf'},
+      {icon:'💙',title:'Empathic Listening Workbook',desc:'Listening for feelings, validation, and the deeper level',file:'empathic-listening.pdf'},
+      {icon:'🚧',title:'Listening Barriers Assessment',desc:'Identify your top three barriers and targeted interventions',file:'listening-barriers.pdf'},
+      {icon:'🪞',title:'Reflecting and Paraphrasing Scripts',desc:'Practice phrases for reflecting content and emotion',file:'reflecting-scripts.pdf'},
+      {icon:'🎧',title:'Active Listening Practice Audio',desc:'12-minute guided practice for full-presence listening',file:'listening-audio.mp3'},
+      {icon:'📚',title:'Listening and Empathy Reading',desc:'The Lost Art of Listening (Nichols), Empathy (Krznaric), Just Listen (Goulston)',file:'listening-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What did Ralph Nichols' research at the University of Minnesota show about message retention?",options:["People retain 80% of what they hear immediately after a conversation","Retention is primarily determined by the listener's interest in the topic","Immediately after hearing a message, the average person retains only about 50% — and within 48 hours that drops to 25%. Active listening dramatically improves both retention and understanding.","Retention is equal between listeners regardless of technique"],correct:2},
+      {question:"What is the fundamental difference between listening and active listening?",options:["Active listening requires more intelligence","Active listening is formal listening in professional contexts","Most conversational 'listening' is waiting to speak while forming a response; active listening is a fully engaged, intentional process of attending to words, tone, body language, and emotional content with the goal of genuinely understanding","Active listening requires special training that most people lack"],correct:2},
+      {question:"What is the purpose of reflecting and paraphrasing in active listening?",options:["To demonstrate intelligence and comprehension","To slow the conversation and allow time to think","To confirm to the speaker that they have been understood, and to give them the opportunity to correct any misunderstanding — serving both understanding and the speaker's experience of being heard","To summarise the conversation for later reference"],correct:2},
+      {question:"What does Stephen Covey mean by 'listening with the intent to understand' (empathic listening)?",options:["Understanding both parties' perspectives equally","Using active listening techniques to gather information","Attending not just to words but to the emotion, meaning, and experience behind them — the full human content of what is being communicated, including what the speaker may not be saying explicitly","Listening without forming any personal opinion"],correct:2},
+      {question:"What is 'emotional validation' in empathic listening — and what is it not?",options:["Agreeing with everything the speaker feels","Expressing sympathy and offering comfort","Acknowledging that the emotion makes sense given the person's experience ('I understand why you feel that way') — not agreement with every conclusion or action, but recognition that the feelings are real and understandable","Naming the speaker's emotions back to them accurately"],correct:2},
+      {question:"Why is the 'fix-it impulse' identified as a listening barrier?",options:["It makes the listener appear dismissive","It shifts the conversation to problem-solving prematurely","When you listen for the problem rather than for the person, you stop hearing the full experience — you scan for the issue you can solve, missing the emotional content that is often what the person most needs communicated","It is generally unwelcome in personal conversations"],correct:2},
+      {question:"What is the function of 'minimal encouragers' in active listening?",options:["To demonstrate that you agree with the speaker","To fill silences that would otherwise feel awkward","Brief verbal signals ('mm-hmm', 'I see', 'go on') that maintain the speaker's flow and communicate continued attention without hijacking or redirecting the conversation","To indicate when you want to take a turn speaking"],correct:2},
+      {question:"What does research show about the two dimensions of every message?",options:["Every message has a literal and a metaphorical dimension","Messages have both verbal and non-verbal dimensions","Every message carries a content dimension (what is being said) and a relational/emotional dimension (how the speaker feels about it) — responding only to content misses what the person may most need you to hear","Messages differ in their logical and emotional appeal"],correct:2},
+      {question:"What should you do before offering advice or solutions in an empathic conversation?",options:["Determine whether the problem is within your area of expertise","Wait until the speaker has finished speaking completely","Ask: 'What would be most helpful right now — to talk through how you're feeling, or to think through what to do about it?' — because the answer is often different from what you assumed","Establish whether the speaker is looking for validation or perspective"],correct:2},
+      {question:"Why is 'not interrupting' identified as one of the most powerful listening disciplines?",options:["Interrupting is rude in all cultural contexts","Interruptions break the speaker's train of thought","The urge to interrupt is almost always about inserting your own experience or view — it signals that what is in your head is more important than what the speaker is sharing, which undermines the trust and safety required for genuine communication","Completing sentences for others shows empathy rather than interruption"],correct:2}
+    ]
+  },
+
+  3: {
+    tutorialVideo: "Assertive Communication — Saying What You Mean Without Losing Yourself",
+    basicVideo: "Non-Violent Communication — The Language of Connection",
+    content: `
+      <h2>Week 3: Assertive Communication and Non-Violent Communication</h2>
+      <div class="safety-banner"><h4>🗣️ You Can Be Honest AND Kind — These Are Not Opposing Values</h4><p>This week covers the two most practically transformative communication frameworks in the field: assertiveness and Non-Violent Communication. Both rest on the same premise — that you can express your full truth, including difficult truths, in ways that preserve and even deepen connection rather than damaging it.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Master the principles and language of assertive communication</li>
+        <li>Learn Marshall Rosenberg's Non-Violent Communication (NVC) framework</li>
+        <li>Apply NVC to express needs, make requests, and receive difficult messages</li>
+        <li>Practise the specific language of assertive and NVC communication</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Principles of Assertive Communication</h4>
+      <p>Assertive communication rests on a foundational belief: that your needs, thoughts, and feelings matter — as much as anyone else's, and no more. It is the communication style of self-respect and other-respect in equal measure. The core principles:</p>
+      <ul>
+        <li><strong>First-person language:</strong> "I feel frustrated when..." rather than "You always make me..." First-person statements describe your experience without attributing blame or intent to the other person. They are much harder to argue with — no one can tell you that you don't feel what you feel.</li>
+        <li><strong>Specificity:</strong> Describing specific behaviours, not character. "When you interrupt me in meetings..." rather than "You're so dismissive." Specific behaviour can be changed; character attacks produce defensiveness.</li>
+        <li><strong>Direct requests:</strong> Stating clearly what you want or need — not hinting, not hoping they'll figure it out, not asking indirectly through complaints. "I'd like you to..." or "Would you be willing to...?"</li>
+        <li><strong>The broken record technique:</strong> When assertive requests are deflected, ignored, or argued with, calmly repeat the core message without escalation. Persistence without aggression communicates that you mean what you say.</li>
+        <li><strong>Saying no clearly:</strong> "No, I can't take that on right now" — without excessive apology, justification, or leaving the door open for negotiation when you mean a firm no. "No" is a complete sentence.</li>
+        <li><strong>Receiving criticism assertively:</strong> Neither collapsing (agreeing with everything to end the discomfort) nor defending aggressively. "That's useful feedback — I'll think about it" is assertive. "You might be right about that — can you say more about what you mean?" is assertive. Both acknowledge without capitulating.</li>
+      </ul>
+      <h4>2. Marshall Rosenberg's Non-Violent Communication (NVC)</h4>
+      <p>Developed by Marshall Rosenberg and used in conflict resolution contexts from individual relationships to international peace negotiations, NVC is a framework for communicating in ways that connect rather than alienate. It rests on the conviction that all human behaviour — even harmful behaviour — is an attempt to meet a need, and that conflict arises when needs clash rather than because people are fundamentally opposed. The four-step NVC process:</p>
+      <ul>
+        <li><strong>Step 1 — Observation:</strong> State what you observed, as specifically and neutrally as possible — without evaluation, judgment, or interpretation. "When I saw the report had not been submitted by the deadline we agreed" (observation) rather than "When you were irresponsible with the deadline" (evaluation).</li>
+        <li><strong>Step 2 — Feeling:</strong> Express how you feel in relation to what you observed — using feeling words, not thoughts disguised as feelings. "I feel concerned" (feeling) rather than "I feel like you don't take this seriously" (thought/judgment). Common feeling words: frustrated, anxious, disappointed, relieved, confused, embarrassed, grateful, hurt, hopeful.</li>
+        <li><strong>Step 3 — Need:</strong> Identify and state the underlying need that is connected to your feeling. All feelings arise from met or unmet needs. "Because I need reliability and clear communication in our work together." Needs are universal and non-personal — everyone has them. Stating needs invites understanding rather than triggering defensiveness.</li>
+        <li><strong>Step 4 — Request:</strong> Make a specific, present-moment, positive request — what you are asking the other person to do now (not what you want them to stop doing). "Would you be willing to let me know by Tuesday if there is a risk of the deadline not being met?" A request is genuinely open to the response "no" — if it is not, it is a demand.</li>
+      </ul>
+      <h4>3. Applying NVC to Receiving Difficult Messages</h4>
+      <p>NVC is as powerful when receiving communication as when sending it. When someone is communicating with anger, criticism, or blame — which Rosenberg calls "tragic expressions of unmet needs" — NVC offers a way to hear beneath the surface message to what is really being said:</p>
+      <ul>
+        <li>Ask yourself: what are they observing? What are they feeling? What do they need? What are they requesting?</li>
+        <li>Respond to the need rather than to the surface expression: "It sounds like you're really frustrated — is there something I could do differently that would help?"</li>
+        <li>This is not easy, particularly when you are the target of the anger. It requires practice, internal regulation, and genuine commitment to connection over being right.</li>
+        <li>The distinction between requests and demands: "Would you be willing to..." (request — open to no) versus "You need to..." or "You have to..." (demand — compliance or punishment follows). Even the same words become demands when delivered with the implicit message that "no" is not acceptable.</li>
+      </ul>
+      <h4>4. Difficult Conversations — The NVC Application</h4>
+      <p>The most powerful application of NVC is in conversations that matter — with people whose response genuinely affects you. The preparation:</p>
+      <ul>
+        <li>Before the conversation: clarify your own observation (what exactly happened, stripped of interpretation?), your genuine feeling (not performance), your deepest need (not your strategy for getting it), and your specific request (not a demand disguised as a question)</li>
+        <li>During the conversation: lead with observation, not judgment. Make space for the other person's response after each step. Stay curious about their experience — the more you understand what they are feeling and needing, the more creatively you can find solutions that work for both.</li>
+        <li>NVC does not guarantee that every conversation ends in agreement. It does dramatically increase the probability that both parties feel heard and that the conversation produces understanding rather than entrenchment.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Thought vs Feeling Audit</strong><br>Write down ten statements that begin with "I feel..." from your typical communication. For each, identify: is this a genuine feeling word, or is it a thought disguised as a feeling? (e.g. "I feel like you don't care" = thought/judgment, not feeling.) Rewrite any that are thoughts into genuine feelings: "I feel hurt and overlooked when..." This seemingly small distinction changes how others receive what you say.</p>
+      <p><strong>Exercise 2: Write an NVC Message</strong><br>Think of a current situation where you need to communicate something difficult to someone — a complaint, a request, an expression of hurt or frustration. Write the full NVC version: (1) What I observe: [specific, neutral], (2) I feel: [genuine feeling], (3) Because I need: [universal need], (4) Would you be willing to: [specific, positive, present request]? Compare this to how you would normally communicate this. Notice what is different.</p>
+      <p><strong>Exercise 3: Assertive Saying No</strong><br>Identify one request this week that you want to decline but would typically agree to out of discomfort, guilt, or people-pleasing. Practise saying no assertively — clearly, briefly, without excessive explanation: "I can't take that on right now — thank you for thinking of me." Or "That doesn't work for me, but I hope you find what you need." Write about what happened and how it felt to express a clear, honest no.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the difference between a feeling and a thought disguised as a feeling — and which do you more commonly express?</li>
+        <li>Think of a recurring conflict in your life: what might the other person's unmet need be — and how might naming that shift the conversation?</li>
+        <li>Where in your life do you most struggle to say no assertively — and what does the cost of that struggle look like?</li>
+        <li>What is the difference between a request and a demand — and which do you more often make?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'💬',title:'Assertiveness Skills Workbook',desc:'Scripts, scenarios, and practice for assertive expression',file:'assertiveness-workbook.pdf'},
+      {icon:'🕊️',title:'NVC Four-Step Guide',desc:'Rosenberg\'s full framework with examples and practice sheets',file:'nvc-guide.pdf'},
+      {icon:'❤️',title:'Feelings and Needs Vocabulary',desc:'Comprehensive NVC feeling words and universal needs reference',file:'feelings-needs-vocab.pdf'},
+      {icon:'🗨️',title:'Difficult Conversations Prep Sheet',desc:'NVC preparation template for important conversations',file:'difficult-conversations.pdf'},
+      {icon:'🎧',title:'Assertive Communication Audio',desc:'12-minute guided practice for assertive expression and NVC',file:'assertive-audio.mp3'},
+      {icon:'📚',title:'NVC and Assertiveness Reading',desc:'Nonviolent Communication (Rosenberg), The Assertiveness Workbook',file:'nvc-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the foundational belief of assertive communication?",options:["Your needs are more important than others' in professional contexts","Assertiveness requires confidence that most people must develop over time","Your needs, thoughts, and feelings matter — as much as anyone else's and no more. It is the communication style of self-respect and other-respect in equal measure.","Assertiveness means always expressing your opinion regardless of context"],correct:2},
+      {question:"Why is first-person language ('I feel...') more effective than second-person attribution ('You always...')?",options:["First-person language is more grammatically correct","First-person language is more polite and professional","First-person statements describe your experience without attributing blame or intent — they are harder to argue with because no one can tell you that you don't feel what you feel, while 'you' statements trigger defensiveness","First-person language is less emotionally charged"],correct:2},
+      {question:"What is the NVC 'observation' step and how does it differ from evaluation?",options:["Observation describes your reaction; evaluation describes the facts","Observations are longer and more detailed than evaluations","Observation states what you saw or heard as specifically and neutrally as possible without interpretation or judgment — 'the report wasn't submitted by the agreed deadline' versus 'you were irresponsible with the deadline'","Observations are used to start the conversation; evaluations come later"],correct:2},
+      {question:"What is the NVC distinction between a genuine feeling and a thought disguised as a feeling?",options:["Feelings use emotional language; thoughts use logical language","Feelings are shorter expressions; thoughts are more elaborate","'I feel hurt' is a genuine feeling; 'I feel like you don't care' is a thought/judgment — not an emotion but an interpretation of the other person's intent, which triggers defensiveness rather than empathy","Genuine feelings are always about yourself; thoughts involve others"],correct:2},
+      {question:"What is a 'universal need' in the NVC framework and why does naming it matter?",options:["A need shared by everyone in a particular culture","A need that is more important than individual preferences","Needs are the underlying human drives (reliability, safety, connection, respect, autonomy) connected to our feelings — they are non-personal and universal. Stating them invites understanding rather than triggering defensiveness, because everyone can recognise and relate to them.","Needs that can be met without depending on another person"],correct:2},
+      {question:"What distinguishes a request from a demand in NVC?",options:["Requests are verbal; demands are written","Requests use 'please'; demands are direct","A request is genuinely open to the response 'no' — if it is not open to no, it is a demand regardless of how politely it is phrased. The test: 'Would you be willing to...' with genuine openness to the answer","Requests come from needs; demands come from wants"],correct:2},
+      {question:"How does NVC approach receiving angry or critical communication from others?",options:["By calmly explaining why the anger is unjustified","By allowing the other person to vent completely before responding","By hearing beneath the surface expression to the unmet need — 'What are they observing? Feeling? Needing?' and responding to the need rather than the surface message, treating anger as a 'tragic expression of an unmet need'","By immediately applying the four-step NVC framework in response"],correct:2},
+      {question:"What is the 'broken record technique' in assertive communication?",options:["Repeating an apology to demonstrate genuine remorse","Recording difficult conversations to refer back to","Calmly repeating the core assertive message without escalation when it is deflected, ignored, or argued with — communicating that you mean what you say through persistent, non-aggressive reiteration","Playing back a recording of what was said to resolve factual disputes"],correct:2},
+      {question:"What does Rosenberg mean when he describes all human behaviour as 'an attempt to meet a need'?",options:["People always have good intentions even when they behave badly","Behaviour is always rational if you understand the underlying motivation","Even harmful or destructive behaviour is driven by an underlying need — conflict arises when needs clash. Understanding this transforms how we see people and creates the possibility of finding solutions that address both parties' needs","All behaviour can be justified if the need is genuine"],correct:2},
+      {question:"What is the key principle for using 'specificity' in assertive communication?",options:["Being as detailed as possible to avoid misunderstanding","Using precise language in professional but not personal contexts","Describing specific behaviours rather than character — 'When you interrupt me in meetings' rather than 'You're so dismissive' — because specific behaviours can be changed while character attacks produce only defensiveness","Limiting assertive statements to one specific example at a time"],correct:2}
+    ]
+  },
+
+  4: {
+    tutorialVideo: "Conflict Resolution — Turning Disagreement into Understanding",
+    basicVideo: "Difficult Conversations — The Framework for High-Stakes Talk",
+    content: `
+      <h2>Week 4: Conflict Resolution — Transforming Disagreement into Connection</h2>
+      <div class="safety-banner"><h4>🗣️ Conflict Is Not the Problem — How We Handle It Is</h4><p>Conflict is inevitable in any genuine relationship, workplace, or community. The goal is not to eliminate conflict — it is to develop the skills to navigate it in ways that preserve dignity, generate understanding, and produce durable solutions. This week gives you the frameworks to do exactly that.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the nature and sources of conflict — and why avoidance makes it worse</li>
+        <li>Learn the Thomas-Kilmann conflict resolution styles and when each is appropriate</li>
+        <li>Apply the Harvard Negotiation Project's principled negotiation framework</li>
+        <li>Develop skills for managing difficult conversations with high emotional stakes</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Nature of Conflict</h4>
+      <p>Conflict arises whenever two or more people have incompatible goals, needs, perceptions, or values. It is not a sign of relationship failure — research by John Gottman shows that the presence or absence of conflict does not predict relationship satisfaction or longevity. What predicts them is how conflict is handled. The four conflict patterns that Gottman identifies as most destructive — his "Four Horsemen" — are:</p>
+      <ul>
+        <li><strong>Criticism:</strong> Attacking the person's character rather than addressing a specific behaviour. "You're so selfish" versus "I felt hurt when you didn't ask about my day."</li>
+        <li><strong>Contempt:</strong> Communicating superiority, disgust, or dismissiveness — the single strongest predictor of relationship dissolution. Eye-rolling, sarcasm, mockery, name-calling. Contempt is the opposite of respect.</li>
+        <li><strong>Defensiveness:</strong> Responding to criticism or concern by deflecting responsibility, counter-attacking, or playing the victim. Defensiveness prevents the legitimate concern from being heard and resolved.</li>
+        <li><strong>Stonewalling:</strong> Withdrawing entirely from the interaction — shutting down, going silent, leaving. Often a response to emotional flooding (heart rate above 100 bpm, cognitive shutdown). The antidote is a genuine time-out — with a commitment to return.</li>
+        <li>Each of the Four Horsemen has a proven antidote: criticism → gentle startup; contempt → expressing appreciation and respect; defensiveness → taking responsibility; stonewalling → physiological self-soothing and returning to the conversation.</li>
+      </ul>
+      <h4>2. The Thomas-Kilmann Conflict Styles</h4>
+      <p>The Thomas-Kilmann model identifies five conflict resolution styles along two dimensions: assertiveness (how strongly you pursue your own needs) and cooperativeness (how strongly you try to satisfy others' needs):</p>
+      <ul>
+        <li><strong>Competing (high assertive, low cooperative):</strong> Win-lose. Appropriate for emergencies, ethical violations, or situations where you must stand firm on a non-negotiable. Damaging when used habitually in relationships.</li>
+        <li><strong>Accommodating (low assertive, high cooperative):</strong> Lose-win. Appropriate when the issue matters more to the other person, or when you are wrong. Damaging when it becomes habitual self-erasure.</li>
+        <li><strong>Avoiding (low assertive, low cooperative):</strong> Lose-lose. Appropriate for trivial issues or when timing is poor. Chronically avoiding conflict allows problems to fester and communicate to others that the relationship cannot hold honest conversation.</li>
+        <li><strong>Compromising (moderate on both):</strong> Partial win-partial win. Appropriate for moderate conflicts where both parties need to move. Produces solutions that neither party loves but both can live with.</li>
+        <li><strong>Collaborating (high assertive, high cooperative):</strong> Win-win. The most time-consuming but most durable approach — working to find a solution that fully addresses both parties' needs. Appropriate for complex, important conflicts in ongoing relationships.</li>
+        <li>The goal is not to always use one style — it is to be able to move between styles deliberately based on what the situation requires.</li>
+      </ul>
+      <h4>3. The Harvard Principled Negotiation Framework</h4>
+      <p>Roger Fisher and William Ury's "Getting to Yes" (the Harvard Negotiation Project) offers four principles for reaching agreements that work for all parties:</p>
+      <ul>
+        <li><strong>Separate people from the problem:</strong> Attack the problem, not each other. Keep the relationship and the issue distinct. You can disagree about the issue while maintaining respect for the person.</li>
+        <li><strong>Focus on interests, not positions:</strong> A position is what you say you want. An interest is why you want it. Two people with opposing positions ("I want X" / "I want Y") often have compatible underlying interests. Negotiating at the interest level creates possibilities that positional bargaining closes off.</li>
+        <li><strong>Invent options for mutual gain:</strong> Before deciding, generate multiple possible solutions — brainstorm without committing. Expanding the option space before evaluating it produces more creative, mutually satisfying agreements.</li>
+        <li><strong>Insist on objective criteria:</strong> Agree on an external standard for evaluating solutions — market rate, expert opinion, precedent, legal standard — so the agreement is based on legitimate criteria rather than whoever is more powerful or more stubborn.</li>
+      </ul>
+      <h4>4. Managing Emotional Flooding in Conflict</h4>
+      <p>John Gottman's research identifies emotional flooding — the state of physiological overwhelm during conflict where rational thinking becomes impossible — as the primary reason conflict escalates beyond repair. Signs of flooding: heart rate above 100 bpm, inability to take in new information, automatic defensive or aggressive responses. Managing flooding:</p>
+      <ul>
+        <li>Recognise it early — you can learn your own physiological warning signs before full flood occurs</li>
+        <li>Call a genuine time-out — minimum 20 minutes for the nervous system to return to baseline. Not a punishing withdrawal — a genuine physiological recovery with a clear commitment to return: "I need 20 minutes to calm down. I'll come back to this at 4pm."</li>
+        <li>During the break: do something genuinely calming (walk, music, slow breathing) — not something that keeps you ruminating about the conflict</li>
+        <li>Return and continue — the time-out is only constructive if the conversation is resumed. Permanently stonewalling disguised as self-care is still stonewalling.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Four Horsemen Audit</strong><br>Think of a recurring conflict in an important relationship. Write honestly: which of the Four Horsemen appear in how you communicate during this conflict? (Criticism, contempt, defensiveness, stonewalling?) For each one you recognise, write the antidote and one specific sentence that represents the alternative. Recognising your patterns is the first step to changing them.</p>
+      <p><strong>Exercise 2: Interests Behind Positions</strong><br>Think of a current disagreement — at work, at home, or in any relationship — where both parties have stated positions that seem incompatible. For your position: write the three underlying interests (why this matters to you beneath the stated want). Then write what you imagine the other person's underlying interests might be. Are any of these interests compatible? What options might address both sets of interests?</p>
+      <p><strong>Exercise 3: Conflict Style Reflection</strong><br>Identify your two most common conflict styles from the Thomas-Kilmann model. For each: in what types of situations do you default to this style? Is it serving you well in those situations — or are you using it as a default when a different style would be more effective? Write one situation this week where you will deliberately try a different conflict style than your default.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which of Gottman's Four Horsemen is most present in your most challenging relationship — and what is its antidote?</li>
+        <li>What is the difference between a position and an interest — and how does that distinction change what solutions become possible?</li>
+        <li>What is your dominant Thomas-Kilmann conflict style — and what does it cost you when used in situations where it is not the best fit?</li>
+        <li>How do you know when you are approaching emotional flooding — and what helps you recover?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'⚡',title:'Four Horsemen Guide',desc:'Gottman\'s destructive patterns and their proven antidotes',file:'four-horsemen-guide.pdf'},
+      {icon:'🤝',title:'Thomas-Kilmann Conflict Styles Assessment',desc:'Identify your dominant style and when each is appropriate',file:'conflict-styles.pdf'},
+      {icon:'🎯',title:'Principled Negotiation Worksheet',desc:'Fisher & Ury\'s Getting to Yes applied to current conflicts',file:'principled-negotiation.pdf'},
+      {icon:'🌊',title:'Emotional Flooding Management Guide',desc:'Recognise, interrupt, and recover from conflict flooding',file:'flooding-guide.pdf'},
+      {icon:'🎧',title:'Conflict Resolution Meditation Audio',desc:'12-minute practice for grounded, regulated conflict engagement',file:'conflict-audio.mp3'},
+      {icon:'📚',title:'Conflict Resolution Reading',desc:'Getting to Yes (Fisher & Ury), The Seven Principles (Gottman), Crucial Conversations',file:'conflict-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does John Gottman's research show about conflict in relationships?",options:["The best relationships have the least conflict","Conflict frequency predicts relationship quality","The presence or absence of conflict does not predict relationship satisfaction — what predicts it is how conflict is handled. Some conflict is inevitable and healthy; it is the style of engagement that determines outcomes.","Conflict is always a sign of deeper incompatibility"],correct:2},
+      {question:"What makes contempt the single strongest predictor of relationship dissolution according to Gottman?",options:["Contempt is the most hurtful of the Four Horsemen","Contempt occurs more frequently than the other patterns","Contempt communicates superiority, disgust, and dismissiveness — the complete absence of respect — which is fundamentally incompatible with the mutual regard that sustains relationships","Contempt is hardest to apologise for"],correct:2},
+      {question:"What is the antidote to defensiveness in Gottman's framework?",options:["Staying calm and not responding to criticism","Explaining your perspective clearly","Taking responsibility — acknowledging the legitimate concern even partially rather than deflecting, counter-attacking, or playing the victim, which prevents the concern from being heard and resolved","Asking for time to think before responding"],correct:2},
+      {question:"What is the 'collaborating' Thomas-Kilmann conflict style and when is it most appropriate?",options:["A compromise that gives each party 50% of what they want","A style that prioritises the relationship over the outcome","High assertiveness and high cooperativeness — working to find a solution that fully addresses both parties' needs. Most time-consuming but most durable, appropriate for complex, important conflicts in ongoing relationships.","A style that involves bringing in a mediator to find a shared solution"],correct:2},
+      {question:"What distinguishes an 'interest' from a 'position' in the Harvard principled negotiation framework?",options:["Interests are more important; positions are more negotiable","Positions are stated publicly; interests are private","A position is what you say you want; an interest is why you want it. Two people with opposing positions often have compatible underlying interests — negotiating at the interest level creates possibilities that positional bargaining closes off.","Interests are long-term; positions apply to specific situations"],correct:2},
+      {question:"What is the role of 'objective criteria' in principled negotiation?",options:["Providing data to prove your position is correct","Establishing rules for the negotiation process","Agreeing on an external standard (market rate, expert opinion, precedent) for evaluating solutions — so agreement is based on legitimate criteria rather than whoever is more powerful or stubborn","Identifying neutral third-party observers for the negotiation"],correct:2},
+      {question:"What is 'emotional flooding' in conflict and what is its primary effect?",options:["The experience of being overwhelmed by others' emotions","A state of high empathy that makes compromise difficult","A state of physiological overwhelm during conflict (heart rate above 100 bpm) where rational thinking becomes impossible — the brain shifts to automatic defensive or aggressive responses, explaining why conflicts often escalate beyond repair","Flooding occurs when too many issues are raised simultaneously in a conflict"],correct:2},
+      {question:"What is the correct protocol for a constructive time-out during emotional flooding?",options:["Leave without explanation and return when you feel ready","Send a text explaining why you need space","Announce a specific duration and return time ('I need 20 minutes — I'll come back at 4pm'), spend the break genuinely calming (not ruminating), and return to the conversation as committed. A time-out is only constructive if the conversation resumes.","Agree to continue the conversation the following day after everyone has slept"],correct:2},
+      {question:"When is the 'avoiding' Thomas-Kilmann conflict style appropriate?",options:["When you are less assertive by nature","When the other person is more aggressive","For trivial issues or when timing is genuinely poor — not as a habitual response, since chronic conflict avoidance allows problems to fester and signals that the relationship cannot hold honest conversation","Whenever emotional flooding risk is high"],correct:2},
+      {question:"What does 'separate people from the problem' mean in the principled negotiation framework?",options:["Conduct negotiations without the emotional parties present","Address personality issues before tackling the substantive conflict","Attack the problem collaboratively, not each other — keep the relationship and the issue distinct so you can disagree about the issue while maintaining respect for the person. The enemy is the problem, not the other party.","Resolve personal conflicts before attempting to negotiate practical issues"],correct:2}
+    ]
+  },
+
+  5: {
+    tutorialVideo: "Communication in the Digital Age — Email, Messaging, and Virtual Presence",
+    basicVideo: "Public Speaking and Presenting with Confidence",
+    content: `
+      <h2>Week 5: Communication Across Contexts — Digital, Professional, and Public</h2>
+      <div class="safety-banner"><h4>🗣️ Context Changes the Rules — But Not the Principles</h4><p>The principles of clear, honest, connected communication remain constant. What changes across contexts is the medium, the audience, and the specific skills required. This week addresses the communication contexts that most people find most challenging: digital communication, professional interactions, and public speaking.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand how digital communication changes the dynamics of connection and misunderstanding</li>
+        <li>Develop professional communication skills for workplace contexts</li>
+        <li>Learn the foundations of confident, effective public speaking</li>
+        <li>Address communication anxiety and develop presence in high-stakes contexts</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Digital Communication — The Stripped Medium</h4>
+      <p>Digital communication — email, text, messaging, and social media — strips out most of the paraverbal and non-verbal channels that carry so much meaning in face-to-face interaction. This makes digital communication dramatically more prone to misinterpretation:</p>
+      <ul>
+        <li><strong>Tone is invisible in text:</strong> "That's an interesting idea" can be genuine enthusiasm, polite dismissal, or cutting sarcasm — and without tone or facial expression, recipients will fill the gap with their own emotional state and assumptions. Research shows that people systematically overestimate how clearly their intended tone is communicated in email.</li>
+        <li><strong>Linguistic minimalism as hostility:</strong> "Okay." reads very differently from "Okay!" or "Sounds great." In text, brevity is often misread as coldness, disapproval, or irritation — even when it simply reflects efficiency. Be aware of this asymmetry.</li>
+        <li><strong>Response latency carries meaning:</strong> The time between message and reply communicates — even when nothing is intended. Silence in digital contexts activates anxiety in ways that silence in face-to-face conversation rarely does.</li>
+        <li><strong>The medium shapes the message:</strong> Choosing the right channel matters. Difficult conversations belong in person (or at minimum on video). Sensitive feedback does not belong in group chats. Nuanced topics do not belong in text chains that strip nuance. When in doubt: upgrade the medium.</li>
+        <li><strong>The permanence trap:</strong> Unlike spoken words, digital communication is permanent, searchable, and shareable. Write emails as if they may be read by anyone. Never write in anger. The 24-hour rule: never send an emotionally reactive message without sleeping on it.</li>
+      </ul>
+      <h4>2. Professional Communication Skills</h4>
+      <p>Workplace communication involves navigating hierarchy, power dynamics, diverse communication styles, and the pressure of professional stakes. Key professional communication principles:</p>
+      <ul>
+        <li><strong>Clarity over cleverness:</strong> In professional contexts, the goal is comprehension, not impression. Short sentences, active voice, concrete specifics. "By Friday, I will send the revised draft" is better than "The revised draft will be completed in a timely manner."</li>
+        <li><strong>The SBAR framework (Situation, Background, Assessment, Recommendation):</strong> A widely used structure for clear professional communication — particularly in high-stakes contexts. What is happening? What is the relevant context? What do I think this means? What am I recommending we do?</li>
+        <li><strong>Upward communication:</strong> Communicating with people who have more authority requires particular skill — being appropriately direct without being presumptuous, raising concerns clearly without seeming insubordinate, and advocating for your perspective without being aggressive.</li>
+        <li><strong>Giving feedback professionally:</strong> The SBI model (Situation, Behaviour, Impact) — describe the specific situation, the observable behaviour, and the impact it had — without character attack or emotional intensity. "In yesterday's team meeting (Situation), when you interrupted Sarah mid-sentence (Behaviour), I noticed she became quieter for the rest of the session (Impact)."</li>
+        <li><strong>Receiving feedback professionally:</strong> Thank the person (even when the feedback is unwelcome), ask clarifying questions to ensure you understand, take time to reflect before responding, and follow up on what you will do differently.</li>
+      </ul>
+      <h4>3. Public Speaking — The Fear and the Framework</h4>
+      <p>Public speaking anxiety — glossophobia — affects approximately 75% of people and is consistently ranked among the most common fears. The good news: it is among the most reliably improvable with deliberate practice and the right framework. The neuroscience: speaking anxiety is driven by the threat-detection system (amygdala) — the social threat of negative evaluation activates the same fight-flight-freeze response as physical threat. Reframing strategies:</p>
+      <ul>
+        <li><strong>Reframe arousal as excitement:</strong> Research by Alison Wood Brooks at Harvard shows that telling yourself "I am excited" before a high-stakes performance outperforms "I am calm" — excitement and anxiety are physiologically similar states; the cognitive label determines whether arousal helps or hinders.</li>
+        <li><strong>Audience focus over self-focus:</strong> Most speaking anxiety is self-focused — what will they think of me? Shifting to audience focus — what do they need from this? How can I serve them? — dramatically reduces anxiety and improves performance.</li>
+        <li><strong>Structure as confidence:</strong> A clearly structured talk (opening hook, three key points, memorable close) reduces cognitive load and frees mental bandwidth for genuine presence and audience connection.</li>
+        <li><strong>The power of opening and closing:</strong> Audiences remember the beginning and the end most clearly. Open with something that commands attention — a story, a question, a surprising fact — not with "thank you for having me" or "today I will be talking about..." Close with a clear call to action or a memorable image, not "so, in conclusion..."</li>
+        <li><strong>Deliberate practice:</strong> Speaking in front of others is the only thing that reliably builds speaking confidence. Toastmasters, presenting in small meetings, recording yourself — all of these accumulate the mastery experience that speaks directly to the anxiety.</li>
+      </ul>
+      <h4>4. Communication Anxiety — General Principles</h4>
+      <p>Many people experience anxiety not only in public speaking but in high-stakes conversations, networking, and even ordinary social interactions. Communication anxiety typically involves:</p>
+      <ul>
+        <li>Negative pre-performance predictions ("they'll think I'm an idiot")</li>
+        <li>Self-focused attention during the interaction (monitoring yourself rather than attending to others)</li>
+        <li>Post-event processing (replaying what went wrong rather than what went well)</li>
+        <li>Avoidance — which provides short-term relief but maintains and strengthens anxiety long-term</li>
+        <li>The antidote: gradual exposure (deliberately entering anxiety-provoking communication situations at manageable intensity levels), combined with cognitive reframing (challenging catastrophic predictions with realistic alternatives) and preparation (knowing your material or your intention reduces one major source of anxiety).</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Digital Communication Audit</strong><br>Review the last 20 work emails or messages you sent. For each, ask: is the tone clear? Could this be misread? Is this the right medium for this message? Is there anything here I would be uncomfortable with others reading? Rewrite three of them with improved clarity, warmth, or channel choice. Notice what the revision reveals about your default digital communication habits.</p>
+      <p><strong>Exercise 2: The Two-Minute Talk</strong><br>Choose any topic you know well. Prepare a two-minute spoken presentation: a clear opening sentence that hooks attention, three key points (each stated in one sentence), and a closing sentence that leaves the listener with something to think about. Deliver it standing up, out loud — to a mirror, to a trusted person, or record yourself. Watch the recording once. Notice: posture, eye contact, filler words, pace. Repeat with one improvement.</p>
+      <p><strong>Exercise 3: Anxiety Reframe Practice</strong><br>Before your next high-stakes communication — a difficult conversation, a meeting, a presentation — write down your worst-case prediction. Then write a realistic alternative: not a best-case fantasy, but an honest assessment of what is actually likely to happen. Note: what is the realistic consequence even if it does not go perfectly? How would you cope? Most anxiety is sustained by catastrophic predictions that do not survive examination.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Where in your digital communication do you most commonly create misunderstanding — and what is the underlying habit?</li>
+        <li>In professional contexts, where do you most need to develop your communication — with authority figures, in giving feedback, or in high-stakes situations?</li>
+        <li>What is the most challenging public or high-stakes communication situation for you — and what specifically is the fear beneath the anxiety?</li>
+        <li>What would become possible in your professional and personal life if communication anxiety was significantly reduced?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'📱',title:'Digital Communication Best Practices',desc:'Email, messaging, and virtual presence guide',file:'digital-communication.pdf'},
+      {icon:'💼',title:'Professional Communication Toolkit',desc:'SBAR, SBI feedback model, and workplace communication scripts',file:'professional-comms.pdf'},
+      {icon:'🎤',title:'Public Speaking Framework Guide',desc:'Structure, opening, closing, and managing speaking anxiety',file:'public-speaking-guide.pdf'},
+      {icon:'🧠',title:'Communication Anxiety Workbook',desc:'Reframing, exposure, and preparation strategies',file:'comm-anxiety-workbook.pdf'},
+      {icon:'🎧',title:'Confident Presence Audio',desc:'12-minute guided practice for grounded, confident communication',file:'presence-audio.mp3'},
+      {icon:'📚',title:'Communication Contexts Reading',desc:'Talk Like TED (Gallo), How to Win Friends (Carnegie), Quiet (Cain)',file:'contexts-reading.pdf'}
+    ],
+    assessment: [
+      {question:"Why is digital communication more prone to misinterpretation than face-to-face interaction?",options:["Digital communication is less formal and more casual","People type faster than they think","It strips out most paraverbal and non-verbal channels that carry so much meaning — the tone, facial expression, and body language that clarify intent. Recipients fill the gap with their own emotional state and assumptions.","Digital communication is used for more sensitive topics"],correct:2},
+      {question:"What does research show about people's ability to communicate tone accurately in email?",options:["Email tone is 70% accurate when the writer is careful","Tone in email is only ambiguous to unfamiliar recipients","People systematically overestimate how clearly their intended tone is communicated in email — senders believe their tone is clear while recipients misread it at much higher rates than expected","Email tone is most accurately read in professional relationships"],correct:2},
+      {question:"What is the 'medium shapes the message' principle and its practical implication?",options:["The format of communication affects how much is retained","Professional media (email) should be used for all formal communication","Choosing the right channel matters — difficult conversations belong in person or on video, sensitive feedback not in group chats, nuanced topics not in text. When communication requires nuance, upgrade the medium.","Social media communication requires different language than email"],correct:2},
+      {question:"What is the SBAR framework for professional communication?",options:["Summary, Background, Analysis, Resolution","Specific, Behaviour, Assessment, Request","Situation (what is happening), Background (relevant context), Assessment (what this means), Recommendation (what to do) — a structure for clear, high-stakes professional communication","Standard, Brief, Accurate, Reviewed"],correct:2},
+      {question:"What is the SBI model for giving professional feedback?",options:["Strengths, Behaviours, Improvements","Specific, Behavioural, Impactful","Situation (specific context), Behaviour (observable action), Impact (effect it had) — describing feedback without character attack or emotional intensity so the recipient can hear and act on it","Sympathetic, Brief, and Intentional"],correct:2},
+      {question:"What does Alison Wood Brooks' research show about reframing anxiety before high-stakes performance?",options:["Telling yourself 'I am calm' is the most effective anxiety management strategy","Deep breathing is more effective than cognitive reframing","Telling yourself 'I am excited' outperforms 'I am calm' because anxiety and excitement are physiologically similar states — the cognitive label ('excited' vs 'anxious') determines whether the arousal helps or hinders performance","Reframing works only for public speaking, not other high-stakes situations"],correct:2},
+      {question:"Why does shifting from self-focus to audience-focus reduce public speaking anxiety?",options:["Thinking about others reduces self-consciousness by distraction","Audience members feel the presenter's focus and respond positively","Most speaking anxiety is driven by 'what will they think of me?' — shifting to 'what do they need from this?' and 'how can I serve them?' redirects attention outward, dramatically reducing the self-monitoring that fuels anxiety","Audience-focus is only effective for experienced speakers"],correct:2},
+      {question:"Why does avoidance of communication anxiety make it worse in the long term?",options:["Avoidance is always a maladaptive response","Anxiety that is not confronted always escalates","Avoidance provides short-term relief but maintains and strengthens anxiety long-term — the anxiety system learns that avoidance is the solution, making each avoided situation feel more threatening and each subsequent exposure more difficult","Avoidance prevents the development of coping skills"],correct:2},
+      {question:"What does 'post-event processing' mean in communication anxiety and why is it unhelpful?",options:["Reviewing communication outcomes to improve future performance","Discussing difficult conversations with a trusted person afterward","Replaying what went wrong after a communication situation rather than what went well — a selective memory process that reinforces anxious predictions, amplifies the negative, and makes the next similar situation feel more threatening","Processing the emotional impact of difficult conversations"],correct:2},
+      {question:"What structure for public speaking maximises audience retention?",options:["A detailed outline covering all relevant points thoroughly","Beginning with acknowledgments and context before the main content","Opening with something commanding attention (story, question, surprising fact), three clearly structured key points, and a memorable close with a clear call to action — leveraging the brain's tendency to remember beginnings and endings most strongly","A conversational structure that allows for audience interaction throughout"],correct:2}
+    ]
+  },
+
+  6: {
+    tutorialVideo: "Communicating With Emotional Intelligence — The Complete Communicator",
+    basicVideo: "Building Your Personal Communication Blueprint",
+    content: `
+      <h2>Week 6: Emotional Intelligence and the Complete Communicator</h2>
+      <div class="safety-banner"><h4>🗣️ The Best Communicators Are the Most Human</h4><p>Six weeks of communication skills converge here in the final — and perhaps most important — dimension: emotional intelligence. The technical skills of listening, asserting, and resolving are only as effective as the emotional awareness and regulation that underlies them. This week completes your communication blueprint and shows you what it looks like to integrate everything into authentic, connected, high-impact communication.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand emotional intelligence (EQ) and its relationship to communication effectiveness</li>
+        <li>Develop the four EQ communication competencies: self-awareness, self-regulation, social awareness, and relationship management</li>
+        <li>Build your personal communication blueprint — a lasting personal development plan</li>
+        <li>Understand cultural communication differences and how to navigate them</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Emotional Intelligence and Communication</h4>
+      <p>Daniel Goleman's emotional intelligence (EQ) framework identifies the skills that underlie effective interpersonal communication — and that predict success in relationships, leadership, and life more reliably than IQ alone. Research consistently shows that EQ accounts for approximately 58% of performance in all types of jobs and is the single strongest predictor of leadership effectiveness. The four EQ domains relevant to communication:</p>
+      <ul>
+        <li><strong>Self-awareness:</strong> Knowing what you are feeling, why you are feeling it, and how it is affecting your communication in real time. The communicator who does not know they are angry is not in a position to choose how they express that anger. Self-awareness is the foundation of all communication intelligence.</li>
+        <li><strong>Self-regulation:</strong> The ability to manage your emotional responses before they manage you — not suppressing emotion but choosing how and when to express it. The space between stimulus and response is where communication intelligence lives.</li>
+        <li><strong>Social awareness (empathy):</strong> Reading others' emotional states accurately — from facial expression, body language, tone, and the content of what they say and don't say. The ability to walk in another's emotional experience, even temporarily, changes what you say and how you say it.</li>
+        <li><strong>Relationship management:</strong> Using self-awareness, self-regulation, and empathy in service of building, maintaining, and repairing relationships — including through difficult conversations, conflict, and change.</li>
+      </ul>
+      <h4>2. The Emotionally Intelligent Communicator</h4>
+      <p>What does emotional intelligence look like in actual communication? The characteristics:</p>
+      <ul>
+        <li><strong>Pauses before responding:</strong> Particularly in high-stakes or emotionally charged situations, takes a moment to check in with their own state and intention before speaking</li>
+        <li><strong>Names emotions without being controlled by them:</strong> Can say "I notice I'm feeling defensive right now" without acting defensively — the naming creates the distance needed for choice</li>
+        <li><strong>Reads the room:</strong> Notices shifts in others' emotional states and adjusts accordingly — knowing when to push forward and when to pause, when to offer a thought and when to simply listen</li>
+        <li><strong>Repairs damage:</strong> When communication goes wrong — and it will, for everyone — the emotionally intelligent communicator takes responsibility, apologises genuinely, and works to restore connection. The repair is often more relationship-building than the original smooth interaction.</li>
+        <li><strong>Holds complexity:</strong> Can hold their own perspective and another's perspective simultaneously — without needing to collapse one to maintain the other. This is the hallmark of mature communication.</li>
+      </ul>
+      <h4>3. Cultural Communication Intelligence</h4>
+      <p>All communication is culturally shaped — and as workplaces, communities, and relationships become increasingly diverse, cultural communication intelligence becomes increasingly important. Key dimensions of cultural variation:</p>
+      <ul>
+        <li><strong>High-context vs low-context cultures (Edward Hall):</strong> Low-context cultures (US, Germany, Scandinavia) rely primarily on explicit verbal communication — meaning is in the words. High-context cultures (Japan, China, Arab countries, much of Africa and Latin America) rely heavily on implicit understanding, relationship, and non-verbal cues — meaning is in the context. What reads as direct and clear in a low-context culture reads as blunt and rude in a high-context one; what reads as polite and nuanced in a high-context culture reads as evasive and unclear in a low-context one.</li>
+        <li><strong>Directness norms:</strong> Some cultures treat direct disagreement as respectful and honest; others treat it as hostile. Some cultures expect you to say no directly; others communicate no through delay, redirection, or silence.</li>
+        <li><strong>Emotional expression norms:</strong> What is appropriate emotional expressiveness in conversation varies enormously across cultures — from demonstrably warm and expressive to reserved and controlled, with both representing relational warmth differently expressed.</li>
+        <li><strong>Power distance:</strong> How much deference is expected across hierarchical levels varies significantly — affecting how people communicate with those above and below them in organisations and families.</li>
+        <li>Cultural intelligence in communication means: curiosity rather than judgment, genuine inquiry about difference, and the willingness to adapt your communication style without abandoning your core self.</li>
+      </ul>
+      <h4>4. Repair — The Underrated Communication Skill</h4>
+      <p>Every communication relationship accumulates miscommunication, hurt, and misunderstanding over time. The ability to repair these ruptures is one of the most powerful relationship skills available — and one of the least taught. Elements of genuine repair:</p>
+      <ul>
+        <li><strong>Acknowledge specifically:</strong> Not "I'm sorry if you felt hurt" (which externalises and minimises) but "I can see that what I said landed harshly and I'm sorry — that wasn't my intention but your experience is real."</li>
+        <li><strong>Take responsibility without self-flagellation:</strong> Honest ownership of what you said or did, without turning the apology into a performance of distress that requires the other person to manage your feelings about having hurt them.</li>
+        <li><strong>Express understanding:</strong> Demonstrate that you heard not just what happened but why it affected the other person the way it did. This communicates that the repair is genuine, not formulaic.</li>
+        <li><strong>Commit to change:</strong> Where relevant, state clearly what you will do differently — not as a promise that eliminates the possibility of future error, but as a genuine intention based on what you now understand.</li>
+        <li>Research by Gottman shows that the ability to repair — not the absence of conflict — is what predicts whether relationships survive difficulty. The repair attempt is one of the most courageous acts in communication.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: EQ Communication Self-Assessment</strong><br>Rate yourself honestly (1–10) on each of the four EQ domains: self-awareness, self-regulation, social awareness, and relationship management. For each, write: one specific recent example of this competency working well, and one example of where its absence cost you in a communication situation. Identify your lowest-rated domain and write one specific practice you will develop over the next month.</p>
+      <p><strong>Exercise 2: Write a Genuine Repair</strong><br>Identify a communication rupture in an important relationship — something you said or did that damaged trust or connection and has not been fully repaired. Write the repair: specific acknowledgment of what happened, ownership of your part, expression of genuine understanding of its impact, and one concrete commitment to what will be different. You do not have to send it — but consider whether you will.</p>
+      <p><strong>Exercise 3: Your Personal Communication Blueprint</strong><br>Drawing on six weeks of learning and self-inquiry, write your personal communication blueprint: (1) Your current communication strengths — where you are already effective and why. (2) Your two most significant growth areas — specific skills or patterns that most need development. (3) Your top three commitments — specific, behavioural things you will do differently in the next 90 days. (4) Your accountability plan — who will you share this with? Keep this document and return to it in 90 days.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which of the four EQ domains is your greatest communication asset — and which most needs development?</li>
+        <li>Is there a communication rupture in your life that could be repaired — and what has prevented you from repairing it?</li>
+        <li>How have cultural differences shaped your communication challenges — either within your own culture or across cultural difference?</li>
+        <li>Six weeks ago, what was your relationship to your own communication — and what has shifted?</li>
+      </ul>
+      <h3>🗣️ A Closing Word</h3>
+      <p>Every significant thing in human life — love, friendship, collaboration, change, healing, conflict, and reconciliation — happens through communication. The skills you have studied and begun to practise over six weeks are not performance techniques. They are ways of being more fully present with other people: more genuinely listening, more honestly expressing, more courageously engaging with difficulty, and more capably repairing what breaks. Communication skills do not guarantee that every conversation goes well. They do mean that you show up with more intention, more awareness, and more tools for connection than you had before. That changes what is possible — in every relationship, in every context, across your entire life. Keep practising. The conversations worth having are always worth the effort they require.</p>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      {icon:'🧠',title:'Emotional Intelligence Communication Guide',desc:'Goleman\'s four EQ domains applied to everyday communication',file:'eq-communication.pdf'},
+      {icon:'🌍',title:'Cultural Communication Intelligence',desc:'Hall\'s high/low context framework and navigating difference',file:'cultural-comms.pdf'},
+      {icon:'🔧',title:'Repair Communication Scripts',desc:'How to genuinely acknowledge, own, and repair communication ruptures',file:'repair-scripts.pdf'},
+      {icon:'📋',title:'Personal Communication Blueprint Template',desc:'Strengths, growth areas, 90-day commitments, and accountability',file:'comm-blueprint.pdf'},
+      {icon:'🎧',title:'Complete Communicator Integration Audio',desc:'20-minute guided practice for embodied, emotionally intelligent communication',file:'complete-comm-audio.mp3'},
+      {icon:'🏆',title:'Course Completion Certificate',desc:'Download your certificate of completion',file:'certificate.pdf'}
+    ],
+    assessment: [
+      {question:"What does research show about emotional intelligence (EQ) as a predictor of professional performance?",options:["IQ is a stronger predictor of performance than EQ in most professions","EQ matters primarily in people-facing roles like sales or counselling","EQ accounts for approximately 58% of performance across all job types and is the single strongest predictor of leadership effectiveness — outperforming IQ in most interpersonal and complex performance contexts","EQ and IQ contribute equally to professional success"],correct:2},
+      {question:"Why is self-awareness described as the 'foundation of all communication intelligence'?",options:["You must know yourself before you can know others","Self-aware people make fewer communication errors","The communicator who does not know they are angry is not in a position to choose how they express that anger — awareness precedes choice. Without it, emotional reactions manage communication rather than the communicator managing them.","Self-awareness is the first EQ skill to develop chronologically"],correct:2},
+      {question:"What is the 'space between stimulus and response' in self-regulation?",options:["The pause before checking your phone during a conversation","The time between receiving feedback and implementing it","The moment between something happening and your reaction to it — where communication intelligence lives. In that space, you can choose how to respond rather than automatically reacting from your emotional state.","The reflection period after a difficult conversation"],correct:2},
+      {question:"What characterises the emotionally intelligent communicator when communication goes wrong?",options:["They prevent communication errors through careful preparation","They recover quickly by moving on without dwelling on mistakes","They take responsibility, apologise genuinely, and work to restore connection — Gottman's research shows that the ability to repair, not the absence of conflict, is what predicts whether relationships survive difficulty","They analyse what went wrong before attempting to repair"],correct:2},
+      {question:"What is Edward Hall's distinction between high-context and low-context cultures?",options:["High-context cultures are more formal; low-context are more casual","High-context cultures have more complex social hierarchies","Low-context cultures rely primarily on explicit verbal communication (meaning is in the words); high-context cultures rely heavily on implicit understanding, relationship, and non-verbal cues (meaning is in the context). What reads as clear directness in one reads as blunt rudeness in the other.","High-context cultures emphasise non-verbal communication; low-context cultures emphasise written communication"],correct:2},
+      {question:"What makes 'I'm sorry if you felt hurt' an inadequate repair attempt?",options:["It is too brief to communicate genuine remorse","It does not include a commitment to change","It externalises and minimises — 'if you felt' questions whether the hurt is real, removing genuine ownership of impact. Genuine repair acknowledges specifically: 'I can see what I said landed harshly and I'm sorry — your experience is real.'","It focuses on the sender's intention rather than the impact"],correct:2},
+      {question:"What does 'holding complexity' mean as a characteristic of the emotionally intelligent communicator?",options:["Managing multiple simultaneous conversations","Understanding complex professional topics","Holding your own perspective and another's perspective simultaneously without collapsing one to maintain the other — the hallmark of mature communication that makes genuine dialogue (rather than parallel monologues) possible","Processing emotionally complex interactions without becoming overwhelmed"],correct:2},
+      {question:"What is the role of 'curiosity rather than judgment' in cultural communication intelligence?",options:["Suspending all opinions when communicating across cultures","Treating all cultural communication differences as equally valid","Approaching cultural differences with genuine inquiry rather than evaluating them against your own cultural norms as the default standard — adapting your communication style without abandoning your core self","Asking questions rather than making statements in cross-cultural interactions"],correct:2},
+      {question:"What does 'naming emotions without being controlled by them' contribute to communication?",options:["It provides vocabulary for more precise emotional expression","It demonstrates emotional sophistication to conversation partners","Saying 'I notice I'm feeling defensive right now' creates psychological distance between the emotion and the self — allowing choice about how to respond rather than automatic enactment of the emotional state","It reduces the intensity of the emotion through conscious awareness"],correct:2},
+      {question:"What is the closing message of this course about the nature of communication skills?",options:["Communication techniques guarantee successful conversations","Perfect communication eliminates conflict","Communication skills are not performance techniques but ways of being more fully present — more genuinely listening, more honestly expressing, more courageously engaging. They don't guarantee every conversation goes well, but they change what is possible in every relationship across your entire life.","Advanced communication skills are only needed in professional contexts"],correct:2}
+    ]
+  }
+
+};
+</script>
+</body>
+</html>
