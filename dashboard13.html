@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confidence & Self-Esteem Building - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #667eea; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #667eea; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(102, 126, 234, 0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #667eea; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #667eea; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #764ba2; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #667eea; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #667eea; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102,126,234,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .safety-banner { background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%); border: 2px solid #e91e8c; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .safety-banner h4 { color: #c2185b; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #667eea; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Confidence &amp; Self-Esteem Building</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#667eea;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Confidence &amp; Self-Esteem Building</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin your transformation.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Own My Worth 💎</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="safety-banner">
+    <h4>💎 You Are Already Worthy — This Course Helps You Remember That</h4>
+    <p>Low self-esteem and chronic self-doubt can run very deep — often rooted in early experiences that told you that you were not enough. This course approaches that wound with honesty and compassion. Some of the reflections here may bring up difficult emotions. That is part of the healing. Move at your own pace. If you find that deeper support is needed, please consider speaking with a therapist or counsellor — <strong>Crisis Text Line</strong>: text HOME to 741741 | <strong>988 Lifeline</strong>: call or text 988.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised guidance on your confidence journey.</p>
+    <div style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate support.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#667eea;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#667eea;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY     = 'CoachL2025SecureKey';
+const COURSE_NAME    = 'Confidence & Self-Esteem Building';
+const TOTAL_WEEKS    = 6;
+const STORAGE_PREFIX = 'coachL_CSE_';
+
+let currentWeek  = 1;
+let studentInfo  = { name: '', email: '' };
+let completedWeeks = new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks')||'[]'));
+function saveCompletedWeeks(){ localStorage.setItem(STORAGE_PREFIX+'completedWeeks', JSON.stringify([...completedWeeks])); }
+
+window.onload = function(){
+  const n=localStorage.getItem('studentName'), e=localStorage.getItem('studentEmail');
+  if(n&&e){ studentInfo.name=n; studentInfo.email=e; updateUserDisplay(); }
+  else { document.getElementById('nameModal').style.display='flex'; }
+  updateProgress(); refreshModuleButtons();
+  selectModule([1,2,3,4,5,6].find(w=>!completedWeeks.has(w))||1);
+};
+
+function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(), e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e){alert('Please enter your email address.');return;}
+  if(!isValidEmail(e)){alert('⚠️ "'+e+'" doesn\'t look like a valid email.\n\nExample: yourname@gmail.com');document.getElementById('studentEmail').focus();return;}
+  studentInfo.name=n; studentInfo.email=e;
+  localStorage.setItem('studentName',n); localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none'; updateUserDisplay();
+}
+function updateEmail(){
+  const cur=localStorage.getItem('studentEmail')||'', nw=prompt('Update your email address:',cur);
+  if(nw===null)return;
+  if(!isValidEmail(nw.trim())){alert('⚠️ That doesn\'t look like a valid email.');return;}
+  studentInfo.email=nw.trim(); localStorage.setItem('studentEmail',nw.trim()); alert('✅ Email updated to: '+nw.trim());
+}
+function updateUserDisplay(){ document.getElementById('userAvatar').textContent=studentInfo.name.charAt(0).toUpperCase(); document.getElementById('userName').textContent='Welcome, '+studentInfo.name+'!'; }
+
+function refreshModuleButtons(){
+  document.querySelectorAll('.module-btn').forEach((btn,i)=>{
+    const w=i+1; btn.classList.remove('active','completed');
+    if(completedWeeks.has(w)){btn.classList.add('completed');btn.textContent='Week '+w+' ✓';}
+    else{btn.textContent='Week '+w;}
+    if(w===currentWeek)btn.classList.add('active');
+  });
+}
+function selectModule(week){ currentWeek=week; refreshModuleButtons(); updateWeekContent(); }
+function showTab(tabName,tabBtn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if(tabBtn)tabBtn.classList.add('active');
+}
+function updateWeekContent(){
+  const w=weekData[currentWeek];
+  document.getElementById('weekTitle').textContent='📹 Week '+currentWeek+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tutorialVideo;
+  document.getElementById('basicTitle').textContent='Basic Learning: '+w.basicVideo;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='📚 Course Resources - Week '+currentWeek;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">📥 Download</span></div>`).join('');
+  renderAssessment();
+}
+function renderAssessment(){
+  const w=weekData[currentWeek], passed=completedWeeks.has(currentWeek);
+  let html=`<h2>📝 Week ${currentWeek} Assessment</h2>`;
+  if(passed){ html+=`<div class="already-passed-notice"><h3>✅ You already passed this week!</h3><p>Great work! Your score has been recorded.</p></div>`; }
+  else { html+=`<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass.</p>`; }
+  w.assessment.forEach((q,i)=>{ html+=`<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`; });
+  if(!passed) html+=`<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function submitQuiz(){
+  if(completedWeeks.has(currentWeek)){alert('You have already passed this assessment!');return;}
+  const w=weekData[currentWeek]; let correct=0,answers=[],allAnswered=true;
+  w.assessment.forEach((q,i)=>{ const sel=document.querySelector(`input[name="q${i}"]:checked`); if(!sel){allAnswered=false;return;} const ua=parseInt(sel.value),ok=ua===q.correct; if(ok)correct++; answers.push({question:q.question,userAnswer:q.options[ua],correctAnswer:q.options[q.correct],isCorrect:ok}); });
+  if(!allAnswered){alert('Please answer all questions before submitting.');return;}
+  const score=Math.round((correct/w.assessment.length)*100), passed=score>=70;
+  submitToSheets(currentWeek,score,correct,w.assessment.length,answers,passed);
+  if(passed){ completedWeeks.add(currentWeek); saveCompletedWeeks(); updateProgress(); refreshModuleButtons(); renderAssessment();
+    alert(currentWeek<TOTAL_WEEKS?`🎉 Congratulations! You passed with ${score}%!\n\nContinue to Week ${currentWeek+1} whenever you're ready.`:`🏆 Course complete! You passed with ${score}%!\n\nYour certificate will be emailed to you. 🎓`);
+  } else { alert(`You scored ${score}% (${correct}/${w.assessment.length}).\n\nYou need 70% to pass. Review the material and try again — you've got this!`); }
+}
+function submitToSheets(week,score,correct,total,answers,passed){
+  const payload={secretKey:SECRET_KEY,timestamp:new Date().toLocaleString(),studentName:studentInfo.name,studentEmail:studentInfo.email,courseName:COURSE_NAME,week,score,correct,total,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(()=>console.log('✅')).catch(e=>console.error('❌',e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]'); all.push({...payload,answers}); localStorage.setItem('assessmentResults',JSON.stringify(all));
+}
+function updateProgress(){
+  const done=completedWeeks.size, pct=Math.round((done/TOTAL_WEEKS)*100);
+  document.getElementById('progressBar').style.width=pct+'%'; document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TOTAL_WEEKS*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TOTAL_WEEKS;
+}
+function playVideo(type,week){alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed.`);}
+function markComplete(){ showTab('assessment',document.querySelectorAll('.tab')[2]); window.scrollTo({top:0,behavior:'smooth'}); }
+function downloadResource(file,title){
+  fetch('resources/'+file,{method:'HEAD'}).then(r=>{ if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);} else{alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.');} }).catch(()=>alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src=`https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){ if(confirm('End the session?')){ document.getElementById('jitsiFrame').src=''; document.getElementById('videoCallContainer').style.display='none'; } }
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No assessment results yet.');return;}
+  const rows=all.map((r,i)=>`<div class="result-card ${r.passed==='YES'?'passed':'failed'}"><h2>Submission #${i+1} — ${r.passed==='YES'?'✅ PASSED':'❌ FAILED'}</h2><p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p><p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p><p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p><div class="details"><h3>Answers:</h3><table><tr><th>Question</th><th>Student</th><th>Correct</th><th>Result</th></tr>${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}</table></div></div>`).join('');
+  const win=window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#667eea;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}.details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}th{background:#667eea;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}</style></head><body><h1>📊 Results – Coach L Academy</h1><p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#667eea;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>${rows}</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
+// COURSE DATA — Confidence & Self-Esteem Building
+// ============================================================
+const weekData = {
+
+  1: {
+    tutorialVideo: "Self-Esteem vs Confidence — What They Really Are",
+    basicVideo: "Where Low Self-Worth Comes From — The Origins Story",
+    content: `
+      <h2>Week 1: Understanding Self-Esteem — Where It Comes From and Why It Matters</h2>
+      <div class="safety-banner"><h4>💎 You Didn't Arrive Here by Accident</h4><p>Low self-esteem almost always has an origin story — something or someone that taught you, early on, that you were not quite enough. Understanding that origin is not about blaming the past. It is about understanding why the voice in your head sounds the way it does — so you can begin to change the story it tells.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the difference between self-esteem, self-confidence, and self-worth</li>
+        <li>Learn how self-esteem develops — and why some people struggle with it more than others</li>
+        <li>Identify the specific origins and patterns of your own low self-esteem</li>
+        <li>Understand the neuroscience of self-perception and why change is genuinely possible</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Self-Esteem, Confidence, and Self-Worth — The Distinctions That Matter</h4>
+      <p>These three terms are often used interchangeably, but they are meaningfully different — and understanding the difference determines which work will actually help you:</p>
+      <ul>
+        <li><strong>Self-worth</strong> is the deepest layer: the unconditional sense that you matter, that you are inherently valuable as a human being — not because of what you do, achieve, or how others see you, but simply because you exist. Self-worth is the foundation everything else rests on.</li>
+        <li><strong>Self-esteem</strong> is your overall evaluation of yourself — how you feel about who you are. It is influenced by self-worth but also by your history, your relationships, your achievements, and the stories you tell about yourself. Nathaniel Branden, a pioneer of self-esteem research, defined it as "the disposition to experience oneself as being competent to cope with the basic challenges of life and as being worthy of happiness."</li>
+        <li><strong>Self-confidence</strong> is situation-specific: your belief in your ability to succeed in a particular domain. You can be highly confident in your professional skills while feeling deeply insecure as a partner or parent. Confidence is built through competence and experience — it grows as you do things.</li>
+        <li>The critical insight: most confidence-building advice addresses only the surface. Lasting change requires working at the self-worth level — healing the belief that you are fundamentally inadequate, unlovable, or not enough.</li>
+      </ul>
+      <h4>2. How Self-Esteem Develops — The Origins</h4>
+      <p>Self-esteem is not innate — it is learned. It develops primarily in the first decade of life through the messages we receive from our environment, and particularly from the key attachment figures in our lives:</p>
+      <ul>
+        <li><strong>Attachment and early mirroring:</strong> Infants develop their initial sense of self through the "mirroring" of caregivers — the ways in which their feelings, needs, and expressions are reflected back. When mirroring is warm, consistent, and attuned, the child develops a baseline sense of being valued and worthy. When mirroring is cold, inconsistent, critical, or absent, the child learns to question their intrinsic worth.</li>
+        <li><strong>Conditional love:</strong> Children who receive love primarily when they perform, achieve, behave, or meet certain standards learn that their worth is conditional — something that must be earned, maintained, and can be lost. This is the root of perfectionism, people-pleasing, and chronic self-doubt in adult life.</li>
+        <li><strong>Critical environments:</strong> Consistent criticism, comparison ("why can't you be more like your sibling"), dismissal of feelings, or emotional neglect directly erodes self-esteem. These messages — "you're too sensitive," "you'll never amount to anything," "stop crying" — become internalised as core beliefs.</li>
+        <li><strong>Trauma and adverse experiences:</strong> Bullying, abuse, neglect, social rejection, academic failure, and other adverse experiences can profoundly damage self-esteem — particularly when they occur during formative years and without adequate adult support</li>
+        <li><strong>Cultural messages:</strong> Race, gender, body, class, sexuality — culture delivers constant messages about whose worth is inherent and whose must be earned or fought for. Internalised cultural messages are some of the most persistent forms of low self-worth.</li>
+      </ul>
+      <h4>3. The Neuroscience of Self-Perception</h4>
+      <p>Self-perception is not simply a belief — it is encoded in the brain as neural pathways, shaped through years of repeated experience and thought patterns. The good news from neuroscience:</p>
+      <ul>
+        <li><strong>Neuroplasticity:</strong> The brain retains the ability to form new neural pathways throughout life. The self-concept you carry today is not fixed — it is a pattern of thinking that can be interrupted, challenged, and gradually replaced with something more accurate and more compassionate.</li>
+        <li><strong>The negativity bias:</strong> The brain is hardwired to attend more strongly to negative information than positive — an evolutionary protection mechanism. This means critical messages in early life leave deeper impressions than positive ones, and that building self-esteem requires deliberate, sustained positive input to counteract this bias.</li>
+        <li><strong>The self-referential network:</strong> The medial prefrontal cortex — the brain's self-referential processing centre — is active when we think about ourselves. Self-compassion practices directly change activity in this region, shifting the emotional tone of self-perception from threat to care.</li>
+        <li><strong>Confirmation bias:</strong> Once a self-belief is established — "I am inadequate," "I am unlovable" — the brain selectively attends to evidence that confirms it and discounts evidence that contradicts it. This is why low self-esteem feels like accurate self-knowledge, and why it takes active, deliberate challenge to shift it.</li>
+      </ul>
+      <h4>4. The Three Faces of Low Self-Esteem</h4>
+      <p>Low self-esteem does not always look the same. It presents in three main patterns — all of which are protecting the same underlying wound:</p>
+      <ul>
+        <li><strong>The Shrinker:</strong> Minimises themselves, avoids visibility, struggles to assert needs or opinions, defers constantly to others. "I don't want to be a bother." "Who am I to have an opinion?"</li>
+        <li><strong>The Striver:</strong> Compensates through relentless achievement, perfectionism, and productivity. Success feels temporarily reassuring but never enough. The anxiety of potential failure is constant. This is the pattern most likely to be unrecognised — from the outside, Strivers look confident.</li>
+        <li><strong>The Defender:</strong> Protects against the pain of low self-worth through arrogance, aggression, dismissiveness, or the constant need to be right. The defensive shell is hard — the wound inside is identical to the Shrinker's.</li>
+        <li>Most people with low self-esteem are a mixture of these patterns — Shrinker in some contexts, Striver in others, Defender when cornered. Recognising your own pattern is the first step toward something different.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Origin Story</strong><br>Write freely for 20 minutes in response to these questions: What were the earliest messages you received about your worth — from family, school, peers, culture? Who most shaped your sense of self, and how? What were the specific words, events, or patterns that told you that you were not enough? You are not re-living these to be hurt again — you are naming them so they lose their unexamined power.</p>
+      <p><strong>Exercise 2: Identify Your Pattern</strong><br>Read the descriptions of the Shrinker, Striver, and Defender. Write about which pattern you most recognise in yourself — and in which contexts each appears. When do you shrink? When do you strive? When do you defend? What triggers each pattern? Understanding your pattern is not self-criticism — it is the first act of genuine self-knowledge.</p>
+      <p><strong>Exercise 3: The Evidence Audit</strong><br>Write down the core negative belief about yourself that feels most persistent — for example: "I am not good enough," "I am unlovable," "I am fundamentally flawed." Then write two lists: evidence that seems to support this belief, and evidence that contradicts it. Most people find the second list longer than they expected — because confirmation bias has been hiding it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is the difference between self-worth and self-confidence — and which do you most need to work on?</li>
+        <li>Who were the most significant early voices in shaping your self-perception — and what did they teach you about your worth?</li>
+        <li>Which of the three patterns — Shrinker, Striver, Defender — do you most recognise in yourself?</li>
+        <li>What would change if the core negative belief you identified were simply not true?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'💎',title:'Self-Esteem vs Confidence Guide',desc:'The crucial distinctions and what they mean for change',file:'esteem-confidence-guide.pdf'},
+      {icon:'🧠',title:'Neuroscience of Self-Perception',desc:'How self-beliefs form, entrench, and can be changed',file:'self-perception-neuroscience.pdf'},
+      {icon:'🌱',title:'Origins of Self-Esteem Worksheet',desc:'Trace the roots of your self-worth beliefs',file:'origins-worksheet.pdf'},
+      {icon:'🪞',title:'Three Patterns of Low Self-Esteem',desc:'Shrinker, Striver, Defender — identify your pattern',file:'three-patterns.pdf'},
+      {icon:'🎧',title:'Self-Worth Foundation Meditation',desc:'12-minute guided practice for connecting with inherent worth',file:'self-worth-audio.mp3'},
+      {icon:'📚',title:'Self-Esteem Foundations Reading',desc:'Six Pillars of Self-Esteem (Branden), The Self-Esteem Workbook',file:'esteem-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the difference between self-worth and self-confidence?",options:["They are the same concept expressed differently","Self-confidence is deeper and more fundamental than self-worth","Self-worth is the unconditional sense of inherent value as a human being; self-confidence is situation-specific belief in your ability to succeed in a particular domain","Self-worth is developed through achievement; self-confidence through relationships"],correct:2},
+      {question:"How does Nathaniel Branden define self-esteem?",options:["The degree to which you like yourself","The absence of self-criticism and negative self-talk","The disposition to experience oneself as competent to cope with life's basic challenges and as being worthy of happiness","The amount of external validation and approval you receive"],correct:2},
+      {question:"What is 'conditional love' and how does it affect self-esteem development?",options:["Love that depends on the child's mood","Receiving love primarily when you perform, achieve, or meet standards — teaching the child that worth must be earned and can be lost, which roots perfectionism and people-pleasing in adult life","Love that is expressed with conditions attached to gifts or rewards","Inconsistent affection due to a parent's own emotional struggles"],correct:1},
+      {question:"What is the 'negativity bias' and why does it matter for self-esteem?",options:["A tendency to remember negative events more vividly","The brain's hardwired attention to negative information more strongly than positive — meaning critical early messages leave deeper impressions, requiring sustained positive input to counteract","A cognitive distortion that creates unnecessarily negative self-perception","The tendency to focus on failures rather than successes when evaluating performance"],correct:1},
+      {question:"What is 'confirmation bias' in the context of low self-esteem?",options:["Seeking confirmation from others before believing positive feedback","The tendency to confirm beliefs through repeated affirmations","Once a self-belief is established, the brain selectively attends to confirming evidence and discounts contradicting evidence — making low self-esteem feel like accurate self-knowledge","A form of self-deception that inflates self-perception"],correct:2},
+      {question:"What is neuroplasticity's significance for self-esteem change?",options:["The brain's structure is fixed after childhood","Only medication can change entrenched self-beliefs","The brain retains the ability to form new neural pathways throughout life — meaning the self-concept you carry today is a pattern of thinking that can be challenged and replaced","Neuroplasticity only affects motor skills and memory, not self-perception"],correct:2},
+      {question:"What characterises the 'Striver' pattern of low self-esteem?",options:["Constant seeking of others' approval and validation","Aggressive and defensive behaviour when self-worth is threatened","Compensating through relentless achievement and perfectionism — where success feels temporarily reassuring but never enough, and the anxiety of failure is constant. Often unrecognised because Strivers appear confident externally.","Minimising themselves and avoiding visibility"],correct:2},
+      {question:"What is the 'mirroring' process in early childhood development?",options:["Children copying adult behaviour to learn social norms","The way caregivers reflect back a child's feelings, needs, and expressions — when warm and attuned, it builds a sense of being valued; when cold or absent, it teaches the child to question their worth","A therapeutic technique for improving self-perception in adolescents","Children observing themselves in mirrors to develop self-awareness"],correct:1},
+      {question:"Why is addressing self-worth described as more fundamental than building confidence?",options:["Confidence is a surface behaviour; only self-worth produces genuine change","Confidence-building is too slow; self-worth work is faster","Most confidence-building addresses only the surface — lasting change requires healing the belief at the self-worth level that one is fundamentally inadequate, unlovable, or not enough","Self-worth is easier to change than confidence"],correct:0},
+      {question:"What is the shared underlying wound across all three patterns of low self-esteem?",options:["A lack of social skills","A fear of failure","The same core belief of inadequacy and unworthiness — whether expressed through shrinking, striving, or defending, all three patterns are protecting the same painful wound","Unresolved childhood trauma"],correct:2}
+    ]
+  },
+
+  2: {
+    tutorialVideo: "The Inner Critic — Understanding the Voice That Tears You Down",
+    basicVideo: "Cognitive Distortions and Self-Esteem — Changing the Story",
+    content: `
+      <h2>Week 2: The Inner Critic — Recognising and Rewriting the Destructive Voice</h2>
+      <div class="safety-banner"><h4>💎 The Inner Critic Is Not the Truth — It Is a Habit</h4><p>The inner critic is the most persistent obstacle to self-esteem. This week you learn to recognise it, understand its origins, and begin the process of changing your relationship with it. This is not about silencing the voice — it is about no longer letting it run the show.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the nature, origin, and function of the inner critic</li>
+        <li>Identify the specific cognitive distortions that fuel low self-esteem</li>
+        <li>Learn practical tools for challenging and reframing the inner critic's narrative</li>
+        <li>Develop the inner mentor as an alternative internal voice</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What the Inner Critic Is</h4>
+      <p>The inner critic is the internal voice — or voices — that judges, condemns, diminishes, and undermines you. It is not your authentic self speaking. It is an internalised composite of every critical message you received — from parents, teachers, peers, culture — that was absorbed, particularly in childhood, before you had the capacity to evaluate it. The inner critic often sounds more like truth than opinion precisely because it has been running unchallenged for so long that its voice has become the background noise of your inner life.</p>
+      <p>The inner critic originally served a protective function: stay small, don't stand out, don't risk rejection — and you'll be safe. In the environment where it developed, it may have been genuinely adaptive. In adult life, it is a protection mechanism that has wildly overshot its brief — attacking you in situations where there is no actual threat, and preventing the very risks that growth and fulfilment require.</p>
+      <h4>2. The Inner Critic's Greatest Hits — Common Attacks</h4>
+      <ul>
+        <li><strong>"You're not good enough"</strong> — the most common, most universal. Triggered by performance, comparison, and any situation where judgment is possible.</li>
+        <li><strong>"Who do you think you are?"</strong> — attacks ambition, aspiration, and the desire to be seen or take up space.</li>
+        <li><strong>"You always mess everything up"</strong> — overgeneralises single failures into permanent identity characteristics.</li>
+        <li><strong>"Nobody really likes you"</strong> — attacks the validity and security of relationships and belonging.</li>
+        <li><strong>"You're too much / not enough"</strong> — simultaneously criticises for being excessive and deficient, making the standard impossible to meet.</li>
+        <li><strong>"You should have known better"</strong> — retrospective attacks that maintain shame about past actions and decisions.</li>
+      </ul>
+      <h4>3. Cognitive Distortions That Fuel the Inner Critic</h4>
+      <p>The inner critic operates through a predictable set of cognitive distortions — errors in thinking that consistently produce negative self-evaluation:</p>
+      <ul>
+        <li><strong>Labelling:</strong> Attaching a global negative identity label to yourself based on a specific event or behaviour. "I made a mistake" becomes "I am a failure."</li>
+        <li><strong>Should statements:</strong> Holding yourself to rigid, inflexible internal rules that produce shame and guilt when not met. "I should always be productive." "I should never need help."</li>
+        <li><strong>Personalisation:</strong> Taking excessive responsibility for negative events and others' emotions. "It's my fault they're upset." "If I'd been different, that wouldn't have happened."</li>
+        <li><strong>Disqualifying the positive:</strong> Dismissing evidence of competence, kindness, and worth. "That doesn't count." "They're just being nice." "Anyone could have done that."</li>
+        <li><strong>Mind reading:</strong> Assuming others are thinking negatively about you without evidence. "They think I'm an idiot." "She didn't reply because she's angry with me."</li>
+        <li><strong>All-or-nothing thinking:</strong> No middle ground — you are either perfect or a total failure, completely worthy or completely worthless.</li>
+        <li><strong>Emotional reasoning:</strong> "I feel inadequate, therefore I am inadequate." Treating feelings as facts about self-worth.</li>
+      </ul>
+      <h4>4. Defusion — Creating Distance from the Inner Critic</h4>
+      <p>From Acceptance and Commitment Therapy (ACT), defusion is the practice of stepping back from thoughts rather than being swept away by them. Applied to the inner critic, defusion means recognising that the critic's statements are thoughts — events in the mind — not facts about reality. Defusion techniques:</p>
+      <ul>
+        <li>Name the critic: "There's the critic again." Or give it a name — "that's Gerald." Personifying it creates distance.</li>
+        <li>Add a prefix: Instead of "I'm a failure," say "I'm having the thought that I'm a failure." The prefix creates immediate psychological space.</li>
+        <li>Notice the function: "My inner critic is trying to protect me by making me feel small so I won't try and fail." Understanding the function removes some of its power.</li>
+        <li>Thank it and redirect: "Thank you for trying to protect me. I'm going to try anyway."</li>
+      </ul>
+      <h4>5. The Inner Mentor — Building the Counter-Voice</h4>
+      <p>The goal is not to silence the inner critic (which rarely works) but to develop a stronger counter-voice — what some psychologists call the inner mentor, inner adult, or inner champion. This voice has the quality of the wisest, most compassionate, most clear-sighted person you can imagine speaking about you. It is honest — it acknowledges real limitations without catastrophising them. It is encouraging — not falsely positive, but genuinely supportive. It is fair — applying the same standards to you that you would apply to someone you love. Developing this voice takes practice, because for many people with low self-esteem, the inner mentor barely exists — the critic has dominated so long that the alternative voice is barely audible. The exercises this week begin building it.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Inner Critic Transcript</strong><br>For three days, keep a small notebook or phone note. Every time your inner critic speaks — particularly in moments of mistake, comparison, or challenge — write down exactly what it says. At the end of three days, read the transcript. Ask: would I say this to someone I loved? Would I allow someone else to speak to them this way? This exercise makes visible something that has been running invisibly — and visibility is the beginning of change.</p>
+      <p><strong>Exercise 2: The Distortion Detective</strong><br>Take the three most common inner critic attacks from your transcript. For each one, identify which cognitive distortion is at work (labelling, should statement, personalisation, etc.). Then write a more accurate, balanced alternative — not a false positive, but a statement that holds the full truth: "I made a mistake in that situation, and I have also handled many situations well. One mistake does not define my competence."</p>
+      <p><strong>Exercise 3: Write a Letter from Your Inner Mentor</strong><br>Imagine the wisest, most compassionate person who has ever known you — real or imagined. Have them write a letter to you about the core belief your inner critic most persistently attacks. What would they say about your worth? About your mistakes? About your potential? About what they see in you that the critic misses entirely? Read this letter when the critic is loudest.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What is your inner critic's most persistent message — and whose voice does it most resemble?</li>
+        <li>Which cognitive distortion does your inner critic most commonly use against you?</li>
+        <li>When you read your critic's transcript, what do you notice about how you speak to yourself compared to how you would speak to someone you love?</li>
+        <li>What does your inner mentor most want you to know that your critic never tells you?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🔊',title:'Inner Critic Identification Guide',desc:'Recognise your critic\'s patterns, voices, and triggers',file:'inner-critic-guide.pdf'},
+      {icon:'🧩',title:'Cognitive Distortions Reference Card',desc:'All 7 self-esteem distortions with examples and challenges',file:'distortions-reference.pdf'},
+      {icon:'🎭',title:'Defusion Techniques Worksheet',desc:'ACT-based practices for creating distance from the critic',file:'defusion-worksheet.pdf'},
+      {icon:'🦁',title:'Inner Mentor Development Guide',desc:'Build the compassionate counter-voice to your critic',file:'inner-mentor-guide.pdf'},
+      {icon:'🎧',title:'Inner Critic Transformation Audio',desc:'15-minute guided practice for working with the inner critic',file:'inner-critic-audio.mp3'},
+      {icon:'📚',title:'Inner Critic Reading List',desc:'Taming Your Gremlin, Self-Compassion (Neff), The CBT Workbook',file:'inner-critic-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the inner critic and where does it come from?",options:["Your authentic self holding you to high standards","A psychological diagnosis requiring clinical treatment","An internalised composite of critical messages absorbed from parents, teachers, peers, and culture — particularly in childhood, before you could evaluate them","A form of perfectionism that drives achievement"],correct:2},
+      {question:"What was the original function of the inner critic?",options:["To help you improve and grow","To protect you by keeping you small and safe from rejection — adaptive in its original context but now preventing growth and fulfillment in adult life","To process negative feedback from the environment","To maintain realistic expectations of yourself"],correct:1},
+      {question:"What is 'labelling' as a cognitive distortion in self-esteem?",options:["Putting names to emotions to process them","Categorising situations as positive or negative","Attaching a global negative identity label to yourself based on a specific event — 'I made a mistake' becomes 'I am a failure'","Using negative language to motivate self-improvement"],correct:2},
+      {question:"What is 'emotional reasoning' as a cognitive distortion?",options:["Making decisions based primarily on emotional responses","Reasoning about emotions to understand their triggers","Treating feelings as facts about self-worth — 'I feel inadequate, therefore I am inadequate'","Using emotional intelligence to evaluate situations"],correct:2},
+      {question:"What is the ACT defusion technique and how does it work?",options:["Fusing with the inner critic's message to understand it fully","Arguing back against the inner critic's statements","Stepping back from thoughts to recognise them as events in the mind rather than facts — creating psychological distance through naming, prefixing ('I'm having the thought that...'), and understanding function","Replacing negative thoughts with positive ones"],correct:2},
+      {question:"What does the prefix 'I'm having the thought that...' before a self-critical statement accomplish?",options:["It makes the thought more conscious so it can be examined","It creates immediate psychological space between you and the thought — moving from fusing with the statement as truth to observing it as a mental event","It weakens the neural pathway associated with the thought","It triggers the prefrontal cortex to evaluate the thought rationally"],correct:1},
+      {question:"What characterises the inner mentor as distinct from the inner critic?",options:["The inner mentor is always positive and encouraging","The inner mentor never acknowledges limitations","The inner mentor is wise, compassionate, honest about real limitations without catastrophising, and applies to you the same fair standards you would apply to someone you love","The inner mentor only speaks when you need motivation"],correct:2},
+      {question:"Why does the inner critic sound more like truth than opinion?",options:["Because it is partially correct","Because it is connected to real memories of past failures","It has been running unchallenged for so long that its voice has become the background noise of inner life — familiarity creates the illusion of accuracy","Because it uses the same voice as your parents"],correct:2},
+      {question:"What is 'disqualifying the positive' as a distortion in the inner critic's arsenal?",options:["Ignoring positive feedback to maintain focus","Criticising positive experiences as shallow","Dismissing evidence of competence, kindness, and worth — 'that doesn't count,' 'anyone could have done that,' 'they're just being nice'","Failing to notice positive events due to negative mood"],correct:2},
+      {question:"What is the recommended goal for working with the inner critic?",options:["Complete elimination of all self-critical thinking","Suppressing the critic through positive thinking","Not silencing the critic (which rarely works) but developing a stronger inner mentor — so the critic no longer dominates uncontested","Accepting all inner critic messages as useful feedback"],correct:2}
+    ]
+  },
+
+  3: {
+    tutorialVideo: "Building Real Confidence — The Competence-Confidence Loop",
+    basicVideo: "Assertiveness and the Power of Showing Up as Yourself",
+    content: `
+      <h2>Week 3: Building Genuine Confidence — Action, Competence, and Authentic Presence</h2>
+      <div class="safety-banner"><h4>💎 Confidence Is Built — Not Found</h4><p>This week moves from understanding to doing. Confidence is not a feeling you wait for — it is a quality you build through action. This week gives you the evidence-based tools for building genuine, grounded confidence that does not depend on other people's approval or perfect performance.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the competence-confidence loop and how action builds belief</li>
+        <li>Distinguish genuine confidence from performed confidence and fragile ego</li>
+        <li>Learn and practise assertiveness as the behavioural expression of self-worth</li>
+        <li>Use embodiment practices to access confidence through the body</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Competence-Confidence Loop</h4>
+      <p>One of the most important insights in confidence research is that confidence does not precede action — it follows it. The common belief "I'll do it when I feel more confident" has causality backwards. Confidence is built through the accumulation of evidence that you can handle things — and that evidence only comes through doing them. The loop works as follows:</p>
+      <ul>
+        <li>You take action (despite uncertainty and discomfort)</li>
+        <li>You accumulate experience — even imperfect experience</li>
+        <li>You build competence — actual skill and capacity, not just perception</li>
+        <li>Competence generates evidence that challenges self-doubt</li>
+        <li>Evidence builds confidence — specifically and incrementally</li>
+        <li>Confidence makes the next action more accessible</li>
+        <li>The crucial insight: you enter the loop at the action step — not the confidence step. Waiting to feel confident before acting means the loop never starts.</li>
+      </ul>
+      <h4>2. Genuine Confidence vs Fragile Ego</h4>
+      <p>Not all apparent confidence is genuine. Research by Jennifer Crocker at Ohio State University distinguishes between high self-esteem that is secure and stable versus high self-esteem that is fragile and contingent on external validation. Fragile high self-esteem — the kind that requires constant reassurance, collapses under criticism, and is defended aggressively — is more associated with narcissism than with genuine self-worth. Genuine confidence is characterised by:</p>
+      <ul>
+        <li><strong>Stability under feedback:</strong> Constructive criticism is welcomed and processed without collapse or defensiveness</li>
+        <li><strong>Non-comparative:</strong> Not dependent on being better than others — able to celebrate others' success without threat</li>
+        <li><strong>Honest about limitations:</strong> Knows what it does not know, can ask for help, can say "I was wrong"</li>
+        <li><strong>Internally referenced:</strong> Grounded in internal values and assessment rather than external approval and validation</li>
+        <li><strong>Comfortable with uncertainty:</strong> Does not need certainty of success before acting — can tolerate ambiguity and imperfection</li>
+      </ul>
+      <h4>3. Assertiveness — The Behavioural Voice of Self-Worth</h4>
+      <p>Assertiveness is the communication style that expresses your needs, opinions, feelings, and limits honestly and directly — while respecting the needs and rights of others. It sits between passivity (suppressing your needs to avoid conflict) and aggression (expressing your needs at others' expense). Assertiveness is the embodied expression of the belief that your needs matter as much as anyone else's — no more, no less:</p>
+      <ul>
+        <li><strong>Assertive communication:</strong> Clear, direct, first-person. "I feel frustrated when meetings run over the scheduled time." Not: "You always go over time" (aggressive). Not: Saying nothing (passive).</li>
+        <li><strong>The right to say no:</strong> One of the most powerful expressions of self-worth is the ability to decline requests without excessive justification, apology, or guilt. "No" is a complete sentence.</li>
+        <li><strong>Making requests:</strong> Asking for what you need clearly, without hinting, manipulating, or demanding.</li>
+        <li><strong>Receiving compliments:</strong> Accepting positive feedback without deflecting, minimising, or redirecting — simply: "Thank you, I appreciate that."</li>
+        <li>Assertiveness is a skill — it feels uncomfortable at first, particularly for those whose self-esteem has depended on people-pleasing. Like any skill, it develops through deliberate practice.</li>
+      </ul>
+      <h4>4. The Body and Confidence — Embodiment Practices</h4>
+      <p>Confidence is not only a mental state — it is a physical one. Research by Amy Cuddy and others (with some controversy around exact mechanisms) consistently shows that posture, movement, and physical presence affect not only how others perceive you but how you perceive yourself. More robustly established is the evidence for bidirectional mind-body influence on confidence:</p>
+      <ul>
+        <li><strong>Posture:</strong> Upright, open posture — shoulders back, chest open, head level — is both a signal of confidence to others and a self-regulatory practice that influences mood and self-perception</li>
+        <li><strong>Voice:</strong> Speaking at a steady pace, with appropriate volume, using pauses deliberately — communicates and creates confidence</li>
+        <li><strong>Eye contact:</strong> Sustained but natural eye contact is one of the most powerful nonverbal expressions of self-worth and respect</li>
+        <li><strong>Physical presence:</strong> Taking up appropriate space — not shrinking, not overcompensating — literally enacting the belief that you have a right to be here</li>
+        <li>The practice: before high-stakes situations, deliberately adopt the physical posture of confidence for 2 minutes. Not as performance for others — as a signal to yourself.</li>
+      </ul>
+      <h4>5. Mastery Experiences and Small Wins</h4>
+      <p>Albert Bandura's social cognitive theory identifies mastery experiences as the single most powerful source of self-efficacy (confidence in your ability to perform a specific behaviour). Mastery experiences are accomplishments — particularly those achieved through genuine effort and overcoming difficulty. The strategy for building confidence through mastery:</p>
+      <ul>
+        <li>Identify an area where you want more confidence</li>
+        <li>Break the challenge into small, sequentially more difficult steps</li>
+        <li>Begin with the step you can achieve with moderate effort — not too easy (no evidence), not too hard (risk of failure before foundation is built)</li>
+        <li>Complete it. Record it. Acknowledge it — not to the world, but to yourself</li>
+        <li>Move to the next step. Repeat. The accumulation of mastery experiences is what confidence is actually made of.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Confidence Inventory</strong><br>Write down 10 things you have accomplished — at any scale — that required courage, effort, or overcoming difficulty. These are your mastery experiences. They do not have to be impressive to others — they must be genuine challenges you navigated. Read this list. Notice the resistance to claiming these achievements. That resistance is the inner critic working. Claim them anyway — they are real.</p>
+      <p><strong>Exercise 2: One Assertive Act This Week</strong><br>Identify one specific situation this week where you will practise assertiveness — saying no to a request you want to decline, making a request you have been avoiding, accepting a compliment without deflecting, or stating a genuine opinion. Plan it in advance. After you do it, write: what happened, how it felt, what it cost you, and what it gave you.</p>
+      <p><strong>Exercise 3: The Embodiment Practice</strong><br>For the next seven days, before any situation that triggers self-doubt — a meeting, a difficult conversation, entering a social situation — spend 2 minutes consciously adopting the physical posture of a confident version of yourself. Stand or sit tall, breathe deeply and slowly, relax your shoulders, keep your chin level. Notice what shifts in how you approach the situation.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Where in your life have you been waiting to feel confident before acting — and what has that waiting cost you?</li>
+        <li>What is the difference between the genuine confidence you want and the fragile ego patterns you may have used as a substitute?</li>
+        <li>Which assertiveness skill feels most challenging — saying no, making requests, or accepting compliments — and why?</li>
+        <li>When you reviewed your Confidence Inventory, what did you notice about your own resistance to claiming your mastery experiences?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🔄',title:'Competence-Confidence Loop Guide',desc:'How action builds belief — the evidence-based framework',file:'competence-confidence.pdf'},
+      {icon:'🗣',title:'Assertiveness Skills Workbook',desc:'Scripts, practices, and scenarios for assertive communication',file:'assertiveness-workbook.pdf'},
+      {icon:'🏆',title:'Mastery Experiences Tracker',desc:'Bandura\'s self-efficacy — log and build on your wins',file:'mastery-tracker.pdf'},
+      {icon:'🧍',title:'Embodiment and Confidence Guide',desc:'Posture, voice, and presence practices for confident being',file:'embodiment-guide.pdf'},
+      {icon:'🎧',title:'Confidence Building Meditation',desc:'12-minute guided practice for embodied confidence',file:'confidence-audio.mp3'},
+      {icon:'📚',title:'Confidence Building Reading',desc:'The Confidence Code, Presence (Cuddy), Self-Efficacy (Bandura)',file:'confidence-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the competence-confidence loop and where do you enter it?",options:["You enter at the confidence step — feel confident first, then act","You enter at the competence step — develop skills before attempting","You enter at the action step — action leads to experience, which builds competence, which creates evidence that builds confidence. Waiting for confidence means the loop never starts.","You enter at the evidence step — gather information before acting"],correct:2},
+      {question:"What characterises fragile high self-esteem as distinguished by Jennifer Crocker's research?",options:["High achievement combined with low social connection","Apparent confidence that collapses under criticism, requires constant reassurance, and is defended aggressively — more associated with narcissism than genuine self-worth","High self-esteem that is only expressed in familiar environments","Self-esteem built primarily on external achievement"],correct:1},
+      {question:"What does genuine confidence look like compared to fragile ego?",options:["Genuine confidence is louder and more visible","Genuine confidence never feels doubt or uncertainty","Stable under feedback, non-comparative, honest about limitations, internally referenced, and comfortable with uncertainty — does not need others' approval to remain intact","Genuine confidence is always accompanied by high performance"],correct:2},
+      {question:"What is assertiveness and where does it sit on the communication spectrum?",options:["A more polite form of aggression","The same as self-advocacy in professional contexts","Between passivity (suppressing needs to avoid conflict) and aggression (expressing needs at others' expense) — honestly and directly expressing needs, opinions, and limits while respecting others","Calmly refusing all requests that don't serve your interests"],correct:2},
+      {question:"What is the significance of accepting compliments without deflecting as an assertiveness practice?",options:["It teaches others that you are confident","It reduces the need for validation over time","Accepting positive feedback without minimising or redirecting is an embodied expression of self-worth — 'thank you, I appreciate that' — rather than the habitual dismissal that reflects low self-esteem","It builds reciprocal complimenting behaviour in relationships"],correct:2},
+      {question:"What does Albert Bandura identify as the single most powerful source of self-efficacy?",options:["Verbal encouragement from respected others","Observing others succeed at similar tasks","Mastery experiences — accomplishments achieved through genuine effort and overcoming difficulty, which provide direct evidence of capability","Physiological states of calm and readiness"],correct:2},
+      {question:"What is the strategy for building confidence through mastery experiences?",options:["Attempt the most challenging version first to build maximum evidence","Begin with the easiest version to guarantee success","Identify the challenge, break it into steps, begin with one achievable with moderate effort, complete and acknowledge it, then move to the next step — accumulating evidence incrementally","Complete random challenges to develop general resilience"],correct:2},
+      {question:"How does body posture affect confidence beyond signalling to others?",options:["Posture only affects how others perceive confidence, not how you feel","Posture has minimal effect on self-perception","Through bidirectional mind-body influence — adopting upright, open posture is both a signal of confidence to others and a self-regulatory practice that influences your own mood and self-perception","Posture only matters in high-stakes formal situations"],correct:2},
+      {question:"What is the recommended practice before high-stakes situations using embodiment?",options:["Review your achievements to build mental confidence","Practise relaxation breathing to reduce anxiety","Deliberately adopt the physical posture of confidence for 2 minutes — not as performance for others but as a signal to yourself that activates the physical correlates of confidence","Avoid high-stakes situations until confidence is built"],correct:2},
+      {question:"Why is 'No' described as a complete sentence in assertiveness practice?",options:["Because explanations invite negotiation","Because brevity signals confidence most effectively","Because the ability to decline without excessive justification, apology, or guilt is one of the most powerful expressions of the self-worth belief that your needs and limits matter","Because lengthy refusals are passive-aggressive"],correct:2}
+    ]
+  },
+
+  4: {
+    tutorialVideo: "Owning Your Worth — Beyond Approval and Comparison",
+    basicVideo: "Overcoming the Approval Trap and Social Comparison",
+    content: `
+      <h2>Week 4: Owning Your Worth — Releasing Approval-Seeking and Comparison</h2>
+      <div class="safety-banner"><h4>💎 Your Worth Is Not Up for Vote</h4><p>This week addresses two of the most corrosive habits in low self-esteem: seeking approval from others to feel worthy, and measuring your value by comparing yourself to others. Both are understandable responses to early experiences that made worth feel conditional. Both need to end — not because other people's opinions don't matter, but because they were never designed to be the foundation of your identity.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the psychology of approval-seeking and why it backfires</li>
+        <li>Understand the social comparison trap and its effects on self-esteem</li>
+        <li>Develop internal referencing — grounding self-worth in internal values rather than external approval</li>
+        <li>Learn to receive criticism without collapse and praise without dependence</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. The Approval Trap</h4>
+      <p>Approval-seeking is the strategy of managing self-esteem from the outside — using others' positive opinions, validation, and acceptance to fill the internal sense of inadequacy. It is deeply understandable: if you grew up in an environment where love and worth were conditional on performance or behaviour, seeking approval became the natural way to secure the sense of being enough. The problem is structural: approval-seeking cannot produce lasting self-esteem because it relies on a source that is inherently unstable, unpredictable, and outside your control.</p>
+      <ul>
+        <li>When approval is given, the relief is real but temporary — and the need recurs, requiring more approval to produce the same effect</li>
+        <li>When approval is withheld or withdrawn, the crash in self-esteem is disproportionate — because the entire sense of worth was staked on the outcome</li>
+        <li>Approval-seeking also distorts behaviour: you present what you think others want to see rather than who you actually are — making authentic connection impossible and deepening the loneliness of low self-esteem</li>
+        <li>The more you seek approval, the more your self-concept becomes defined by others' perceptions — and the less access you have to your own authentic assessment of yourself</li>
+      </ul>
+      <h4>2. The Social Comparison Trap</h4>
+      <p>Social comparison — measuring your worth by comparing yourself to others — is a universal human tendency, described by Leon Festinger's Social Comparison Theory (1954). In moderation, upward comparison can motivate; downward comparison can provide perspective. But in the context of low self-esteem, social comparison becomes a relentless engine of inadequacy:</p>
+      <ul>
+        <li>You compare your insides to others' outsides — your full, private, messy reality to their curated, public presentation</li>
+        <li>Social media has made this catastrophically worse: you are now comparing yourself to the highlight reels of thousands of people simultaneously</li>
+        <li>Research by Jean Twenge shows that time spent on social media is directly correlated with reduced self-esteem, increased depression, and decreased sense of belonging — particularly in young women</li>
+        <li>The comparison is inherently unfair: you have access to all your failures, doubts, and private struggles; you only see others' successes and polished presentations</li>
+        <li>Comparison also has no endpoint — there will always be someone more successful, more beautiful, more accomplished. If your self-esteem depends on winning the comparison, it will always eventually lose.</li>
+      </ul>
+      <h4>3. Internal Referencing — Grounding Worth Within</h4>
+      <p>The alternative to external referencing (basing worth on others' approval and comparison outcomes) is internal referencing — basing your sense of worth and evaluation of yourself on your own values, standards, and honest self-assessment. Internal referencing asks different questions:</p>
+      <ul>
+        <li>Not "do they approve of me?" but "am I acting in accordance with my values?"</li>
+        <li>Not "am I better than her?" but "am I growing and moving in the direction that matters to me?"</li>
+        <li>Not "what will they think?" but "what do I think — honestly, and with appropriate compassion for myself?"</li>
+        <li>Internal referencing is not the same as ignoring feedback — constructive input from trusted others is valuable. It means that feedback is processed through your own values-based filter rather than accepted wholesale as the final word on your worth.</li>
+      </ul>
+      <h4>4. Receiving Criticism Without Collapse</h4>
+      <p>For people with low self-esteem, criticism often feels like confirmation of the core fear — "you see, I really am inadequate." This turns feedback that could be useful into evidence for the prosecution. A more self-protective and ultimately more confident approach:</p>
+      <ul>
+        <li><strong>Distinguish criticism of behaviour from criticism of worth:</strong> "Your report had factual errors" is information about a specific piece of work. It is not evidence that you are fundamentally inadequate.</li>
+        <li><strong>Consider the source:</strong> Is this person in a position to assess accurately? Are they well-intentioned? Is their feedback consistent with other trusted sources?</li>
+        <li><strong>The 24-hour rule:</strong> If criticism triggers a strong emotional response, commit to not reacting immediately. Allow 24 hours for the initial sting to subside and the useful information to emerge.</li>
+        <li><strong>Extract the data:</strong> What is factually accurate and usable in this feedback? What is the critic's opinion, bias, or projection?</li>
+        <li><strong>Respond, don't react:</strong> From a place of internal stability, you can engage with valid feedback without the identity-level collapse that low self-esteem produces.</li>
+      </ul>
+      <h4>5. Receiving Praise Without Dependence</h4>
+      <p>Just as destructive as dismissing compliments is the opposite error — relying on praise as the primary source of self-esteem fuel. The goal is to receive praise graciously (not deflect it), be genuinely pleased by it, and not need it. Genuine acknowledgment from others can inform and delight — but it should not be the scaffolding of your sense of self. The practice: when you receive praise, notice the impulse to either dismiss it or inflate it. Instead, simply receive it: "Thank you, I'm pleased with how that went." Then let it sit alongside your own honest assessment of the work — not above it.</p>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Approval Audit</strong><br>For the next week, notice every time you do something primarily to gain someone's approval or avoid their disapproval — rather than because it aligns with your values. Write it down. How often does this happen? What does it cost you — in energy, authenticity, and self-respect? Then identify one specific situation where you will act from your values rather than the need for approval, even knowing that person may not be pleased.</p>
+      <p><strong>Exercise 2: The Comparison Detox</strong><br>Choose one specific comparison pattern that you know damages your self-esteem — most often a particular social media account, a specific person in your life, or a particular metric (salary, appearance, achievement). For seven days, remove or significantly reduce exposure to that comparison trigger. At the end of seven days, write: what changed in how you felt about yourself? What do you notice about the space the comparison was occupying?</p>
+      <p><strong>Exercise 3: The Internal Scorecard</strong><br>Design your own personal evaluation criteria — five measures of how you're doing that are entirely internal and values-based, with no reference to other people. For example: "Am I treating people with kindness today?" "Did I do my honest best?" "Am I moving toward what matters to me?" Each day this week, rate yourself 1–10 on each criterion — not comparing with anyone. This is your scorecard. Only you have access to it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Where does approval-seeking show up most powerfully in your life — and what does it cost you?</li>
+        <li>Who or what do you most frequently compare yourself to — and is that comparison ever fair to you?</li>
+        <li>What would your relationship with yourself look like if others' opinions were welcomed but not required?</li>
+        <li>What five criteria would you put on your internal scorecard — and how does this week score?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🚫',title:'Approval-Seeking Patterns Guide',desc:'Identify and interrupt the approval trap',file:'approval-seeking-guide.pdf'},
+      {icon:'📊',title:'Social Comparison Detox Plan',desc:'7-day plan for reducing comparison and its effects',file:'comparison-detox.pdf'},
+      {icon:'🧭',title:'Internal Referencing Worksheet',desc:'Build your personal evaluation criteria and scorecard',file:'internal-referencing.pdf'},
+      {icon:'📨',title:'Receiving Criticism Gracefully Guide',desc:'Process feedback without identity-level collapse',file:'criticism-guide.pdf'},
+      {icon:'🎧',title:'Self-Worth Anchoring Meditation',desc:'12-minute practice for grounding worth within yourself',file:'worth-anchoring-audio.mp3'},
+      {icon:'📚',title:'Approval and Comparison Reading',desc:'The Gifts of Imperfection (Brown), Quiet (Cain), Atlas of the Heart',file:'approval-reading.pdf'}
+    ],
+    assessment: [
+      {question:"Why can approval-seeking never produce lasting self-esteem?",options:["Because most people are unwilling to give genuine approval","Because approval-seeking damages relationships over time","Because it relies on an external source that is inherently unstable and outside your control — approval given provides temporary relief, but the need recurs requiring ever more validation","Because approval from others is rarely sincere"],correct:2},
+      {question:"What is the structural flaw in approval-seeking as a self-esteem strategy?",options:["It requires too much energy","It makes you dependent on one person","The entire sense of worth is staked on an outcome outside your control — when approval is withheld, the crash is disproportionate; when given, the relief is temporary","It is socially transparent and reduces respect"],correct:2},
+      {question:"What is Leon Festinger's Social Comparison Theory?",options:["A theory about how social media affects mental health","A framework for understanding competition in workplaces","The observation that humans naturally evaluate themselves by comparing to others — in moderation useful, but in low self-esteem becoming a relentless engine of inadequacy","A theory about how groups form shared norms"],correct:2},
+      {question:"Why is social media particularly damaging to self-esteem in the context of comparison?",options:["Because it exposes you to too much information","Because social media users are typically more successful","You compare your full private reality — failures, doubts, messy insides — to others' curated highlight reels, an inherently unfair comparison that research links directly to reduced self-esteem and depression","Because social media encourages narcissistic behaviour"],correct:2},
+      {question:"What is 'internal referencing' as an alternative to external approval-seeking?",options:["Consulting your memories rather than others' opinions","A therapeutic technique for processing internal conflicts","Basing your worth and evaluation of yourself on your own values, standards, and honest self-assessment — asking 'am I acting in accordance with my values?' rather than 'do they approve of me?'","Ignoring all external feedback in favour of self-assessment"],correct:2},
+      {question:"How should criticism of behaviour be distinguished from criticism of worth?",options:["Behaviour criticism is always valid; worth criticism should be ignored","Only criticism from respected sources should be considered","Specific feedback about a piece of work or behaviour ('your report had errors') is information about performance — not evidence of fundamental inadequacy. The error is specific; your worth is not in question.","Criticism of behaviour is less important than criticism of character"],correct:2},
+      {question:"What is the '24-hour rule' for responding to criticism?",options:["Always respond to feedback within 24 hours to show engagement","Give yourself 24 hours before deciding whether to implement feedback","Commit to not reacting immediately when criticism triggers strong emotion — allowing 24 hours for the initial sting to subside and useful information to emerge","Wait 24 hours before sharing criticism with others"],correct:2},
+      {question:"What is the correct way to receive praise that supports genuine self-esteem?",options:["Express enthusiasm to encourage more positive feedback","Deflect the praise to appear humble and likeable","Accept it graciously without dismissing or inflating it — 'thank you, I'm pleased with how that went' — then let it sit alongside your own honest assessment rather than above it","Share praise with others to model gratitude"],correct:2},
+      {question:"Why does comparison have 'no endpoint' as a self-esteem strategy?",options:["Because standards keep rising over time","Because comparison is subjective and unmeasurable","There will always be someone more successful, beautiful, or accomplished — if self-esteem depends on winning the comparison, it will always eventually lose","Because others are also comparing themselves, creating an endless cycle"],correct:2},
+      {question:"What does the Internal Scorecard exercise accomplish that external comparison cannot?",options:["It provides more accurate performance data","It builds competitive motivation without social harm","It creates evaluation criteria that are entirely values-based and within your control — so self-assessment depends on how you're living by your own standards rather than how you measure against others","It eliminates the need for any external feedback"],correct:2}
+    ]
+  },
+
+  5: {
+    tutorialVideo: "Overcoming the Impostor Syndrome — For Real This Time",
+    basicVideo: "Self-Compassion as the Engine of Lasting Self-Esteem",
+    content: `
+      <h2>Week 5: Self-Compassion and the Impostor Syndrome — The Heart of Lasting Change</h2>
+      <div class="safety-banner"><h4>💎 Self-Compassion Is Not a Luxury — It Is the Foundation</h4><p>This week brings together two of the most powerful forces in genuine self-esteem transformation: self-compassion and the direct confrontation of impostor syndrome. Both require courage — the courage to treat yourself with the same care you extend to others, and the courage to act despite the voice that says you don't belong.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand self-compassion as a scientifically validated foundation for self-esteem</li>
+        <li>Apply Kristin Neff's three-component model to self-esteem work</li>
+        <li>Deeply understand the impostor syndrome and evidence-based strategies to overcome it</li>
+        <li>Integrate self-compassion and impostor syndrome work into daily life</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Why Self-Compassion Is Not What You Think It Is</h4>
+      <p>Self-compassion is one of the most misunderstood concepts in psychology. People who most need it most resist it — because it sounds like self-pity, weakness, low standards, or letting yourself off the hook. Kristin Neff's research at the University of Texas decisively refutes all of these misconceptions:</p>
+      <ul>
+        <li><strong>Not self-pity:</strong> Self-pity involves over-identification with suffering and separation from others — "why does this always happen to me?" Self-compassion recognises suffering as part of shared human experience — "this is hard, and everyone experiences something like this."</li>
+        <li><strong>Not weakness:</strong> Self-compassion is associated with greater emotional resilience, reduced anxiety and depression, and stronger motivation to improve after failure — not less.</li>
+        <li><strong>Not lower standards:</strong> Research consistently shows self-compassionate people are more motivated to correct mistakes and improve — precisely because they are not paralysed by shame and self-attack.</li>
+        <li><strong>Not self-indulgence:</strong> Self-compassion asks: "what do I genuinely need right now to support my wellbeing?" — which is often harder and more growth-oriented than what self-indulgence offers.</li>
+      </ul>
+      <h4>2. Neff's Three Components of Self-Compassion</h4>
+      <p>Self-compassion operates through three interrelated components:</p>
+      <ul>
+        <li><strong>Self-kindness:</strong> Treating yourself with the same warmth, understanding, and care you would extend to a dear friend who is suffering — rather than harsh self-judgment and criticism. Not false comfort, but genuine warmth toward your own pain and imperfection.</li>
+        <li><strong>Common humanity:</strong> Recognising that suffering, failure, and imperfection are universal human experiences — not signs of your unique deficiency. "Everyone struggles. I am not alone in this." This directly counters the isolating quality of low self-esteem.</li>
+        <li><strong>Mindful awareness:</strong> Holding painful thoughts and feelings in balanced awareness — neither suppressing them nor over-identifying with them. Seeing clearly without catastrophising. "I notice I'm feeling inadequate right now. This is a difficult moment."</li>
+        <li>Self-compassion is particularly powerful for self-esteem because it provides an unconditional foundation of self-worth — one that does not depend on performance, approval, or comparison. It is the internal equivalent of the secure, consistent, warm relationship that builds self-esteem in children.</li>
+      </ul>
+      <h4>3. The Impostor Syndrome — A Deep Dive</h4>
+      <p>First described by psychologists Pauline Clance and Suzanne Imes in 1978, the impostor phenomenon is the persistent internal experience of intellectual phoniness — believing you have fooled others about your competence, that you do not deserve your success, and that exposure as the fraud you secretly are is only a matter of time. Key characteristics:</p>
+      <ul>
+        <li>Experienced by approximately 70% of people at some point — ubiquitous despite feeling intensely private and shameful</li>
+        <li>More prevalent in high-achieving environments, among women, people from underrepresented groups, and those in new roles</li>
+        <li>Paradoxically, greater competence often intensifies impostor feelings — because greater competence means taking on greater challenges, which means greater uncertainty, which the impostor system misreads as evidence of fraud</li>
+        <li>Not cured by more qualifications, more experience, or more external success — the goalposts move. People with PhDs feel like impostors. CEOs feel like impostors. Nobel laureates have reported impostor feelings.</li>
+      </ul>
+      <h4>4. The Impostor Cycle and How to Break It</h4>
+      <p>The impostor cycle runs as follows: a new challenge triggers anxiety → you either over-prepare (working compulsively to compensate for perceived inadequacy) or procrastinate (avoiding exposure as long as possible) → you succeed → the internal attribution is "I got lucky" or "I fooled them again" → the belief that you are an impostor is reinforced rather than disproved. Breaking the cycle requires:</p>
+      <ul>
+        <li><strong>Accurate attribution:</strong> When you succeed, practice attributing it accurately — to your skill, your preparation, your experience, your qualities. Not entirely to luck. Not to fooling people.</li>
+        <li><strong>Building an evidence file:</strong> Keep a running document of achievements, compliments, successful outcomes, and specific feedback that demonstrates genuine competence. Return to it when the impostor voice is loudest.</li>
+        <li><strong>Normalising the experience:</strong> Talk about it. The impostor syndrome thrives in secrecy and shame. When you discover how universal it is, its power diminishes.</li>
+        <li><strong>Reframing uncertainty as information:</strong> "I don't know everything about this" is not evidence of fraud — it is an accurate description of any new situation. Everyone is figuring things out. The difference is that impostors interpret normal uncertainty as proof of inadequacy.</li>
+        <li><strong>Act despite it:</strong> The impostor feeling is not a stop sign. It is weather. Do the thing anyway. Accumulated action, despite the feeling, eventually builds the evidence base that quiet the impostor voice over time — though it may never disappear entirely.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: The Self-Compassion Break (Daily Practice)</strong><br>When you notice self-critical thoughts or emotional pain, pause and work through Neff's three components: (1) "This is a moment of suffering. This is hard." (mindful awareness) (2) "Suffering and self-doubt are part of being human. I am not alone in this." (common humanity) (3) Place a hand on your heart: "May I be kind to myself right now. May I give myself what I need." (self-kindness). Practice this at least once daily — particularly when the inner critic is loudest.</p>
+      <p><strong>Exercise 2: The Evidence File</strong><br>Start a dedicated document — digital or physical — titled "Evidence of My Competence and Worth." Enter into it: qualifications, achievements, specific positive feedback you have received, situations you have navigated successfully, qualities others have recognised in you, moments you are proud of. Aim for a minimum of 20 entries this week. When impostor feelings arise, open this file before making any decisions based on the feeling.</p>
+      <p><strong>Exercise 3: The Self-Compassion Letter for Impostor Moments</strong><br>Write a letter to yourself specifically for the moments when impostor syndrome is most intense — before a presentation, after making a mistake, when surrounded by people you perceive as more capable. Write it now, when you have perspective. Address: what you know about the impostor phenomenon, what the evidence actually shows about your competence, what self-compassion would say to you in this moment, and what you need to hear to continue anyway. Keep it accessible.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which of the misconceptions about self-compassion has most prevented you from practising it?</li>
+        <li>When is the impostor syndrome loudest for you — in what contexts, around which people, before what activities?</li>
+        <li>How has the impostor cycle reinforced your belief in your own fraudulence — and what accurate attribution have you been missing?</li>
+        <li>After completing the Evidence File, what did you notice about the gap between what you've actually accomplished and what your inner critic acknowledges?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'💙',title:'Self-Compassion Workbook',desc:'Neff\'s three-component model with daily practices',file:'self-compassion-workbook.pdf'},
+      {icon:'🕵️',title:'Impostor Syndrome Deep Dive',desc:'Origins, cycle, patterns, and evidence-based strategies',file:'impostor-syndrome-guide.pdf'},
+      {icon:'📁',title:'Evidence File Template',desc:'Build your documented proof of competence and worth',file:'evidence-file.pdf'},
+      {icon:'🔄',title:'Impostor Cycle Breaking Guide',desc:'Accurate attribution and practical interruption strategies',file:'impostor-cycle-guide.pdf'},
+      {icon:'🎧',title:'Self-Compassion Break Audio',desc:'12-minute guided self-compassion practice for difficult moments',file:'self-compassion-audio.mp3'},
+      {icon:'📚',title:'Self-Compassion Reading',desc:'Self-Compassion (Neff), The Gifts of Imperfection, Radical Acceptance',file:'self-compassion-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does Kristin Neff's research show about the relationship between self-compassion and motivation?",options:["Self-compassion reduces motivation because it removes the sting of failure","Self-compassion only improves motivation in people with high baseline self-esteem","Self-compassionate people are more motivated to correct mistakes and improve — precisely because they are not paralysed by shame and self-attack","Self-compassion and motivation are unrelated constructs"],correct:2},
+      {question:"What distinguishes self-compassion from self-pity?",options:["Self-pity is more intense than self-compassion","Self-pity requires external validation; self-compassion does not","Self-pity involves over-identification with suffering and separation from others ('why me?'); self-compassion recognises suffering as part of shared human experience ('this is hard, and everyone experiences something like this')","Self-compassion is temporary; self-pity is chronic"],correct:2},
+      {question:"What is the 'common humanity' component of self-compassion and why is it particularly relevant to self-esteem?",options:["Recognising that you share humanity with all people regardless of their behaviour","A philosophical stance about universal human dignity","Recognising that suffering, failure, and imperfection are universal human experiences — directly countering the isolating belief of low self-esteem that you are uniquely deficient","A practice of connecting with community when struggling"],correct:2},
+      {question:"What is the impostor cycle and what reinforces it?",options:["Anxiety about new challenges leads to withdrawal, which confirms inadequacy","Success triggers new challenges which trigger new anxiety in a never-ending cycle","New challenge triggers anxiety → over-preparation or procrastination → success attributed to luck ('I fooled them') rather than competence → the belief of being an impostor is reinforced rather than disproved","Impostor feelings lead to underperformance which confirms the original fear"],correct:2},
+      {question:"Why do more qualifications and external success not cure impostor syndrome?",options:["Because the impostor syndrome is a personality trait rather than a belief","Because qualifications only address skill deficits, not self-perception","Because the goalposts move — impostor feelings are not cured by achievement: people with PhDs, CEOs, and Nobel laureates all report them. The belief is internal and does not respond to external evidence alone.","Because high achievers face harder challenges that justify feeling like impostors"],correct:2},
+      {question:"What is 'accurate attribution' in breaking the impostor cycle?",options:["Giving credit to others for shared success","Attributing success to external factors to remain humble","Practising attributing success accurately to your skill, preparation, experience, and qualities — not entirely to luck or to fooling people","Maintaining a balanced view that acknowledges both internal and external factors equally"],correct:2},
+      {question:"What does the Evidence File accomplish in combating impostor syndrome?",options:["It provides proof to show others when they question your competence","It tracks performance over time to identify genuine improvement","It creates a documented, accessible record of achievements and positive feedback to consult when the impostor voice is loudest — providing concrete counter-evidence to the fraud belief","It helps you set realistic goals based on actual capability"],correct:2},
+      {question:"Why does greater competence sometimes paradoxically intensify impostor feelings?",options:["More competent people have higher standards and notice more imperfections","Competent people are held to higher standards by others","Greater competence means taking on greater challenges with greater uncertainty — which the impostor system misreads as evidence of inadequacy rather than normal learning-edge experience","Competence creates more opportunities for public failure and exposure"],correct:2},
+      {question:"What does the 'mindful awareness' component of self-compassion involve?",options:["Meditating on self-worth affirmations","Monitoring negative thoughts to replace them","Holding painful thoughts and feelings in balanced awareness — neither suppressing them nor over-identifying with them: 'I notice I'm feeling inadequate right now. This is a difficult moment.'","Practising present-moment awareness to escape self-critical thoughts"],correct:2},
+      {question:"What is the recommended action when impostor syndrome arises before an important performance?",options:["Postpone the task until the feeling passes","Seek reassurance from trusted others","Act despite the feeling — the impostor feeling is weather, not a stop sign. Accumulated action despite the feeling eventually builds the evidence base that quiets the impostor voice over time.","Reduce the scope of the task to match your felt competence level"],correct:2}
+    ]
+  },
+
+  6: {
+    tutorialVideo: "Owning Your Worth for Life — The Confident Person You're Becoming",
+    basicVideo: "Building Lasting Self-Esteem — Daily Habits and Long-Term Maintenance",
+    content: `
+      <h2>Week 6: Owning Your Worth — Integration and the Confident Life</h2>
+      <div class="safety-banner"><h4>💎 This Is Not the End — It Is Who You Are Becoming</h4><p>Six weeks ago you began the process of reclaiming your worth. That work does not end here — it deepens. This final week is about integration: bringing together everything you have learned and practised into a coherent, sustainable way of living with yourself. Not perfectly confident. Not immune to self-doubt. But fundamentally grounded in the truth of your worth.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Integrate the six weeks of learning into a personalised confidence and self-esteem maintenance plan</li>
+        <li>Understand what healthy, mature self-esteem actually looks like in daily life</li>
+        <li>Develop daily practices for sustaining and deepening the gains of this course</li>
+        <li>Create a compassionate, realistic vision of your continuing journey toward confident selfhood</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Healthy Self-Esteem Actually Looks Like</h4>
+      <p>Healthy self-esteem is often misrepresented as constant positivity, fearless confidence, and immunity to self-doubt. This is not realistic or even desirable — it describes narcissism, not health. Healthy self-esteem looks like:</p>
+      <ul>
+        <li><strong>Baseline security:</strong> A quiet, stable sense of being okay — not euphoric, not in crisis. The absence of the constant background anxiety of "am I enough?"</li>
+        <li><strong>Honest self-knowledge:</strong> Clear awareness of both strengths and genuine limitations — without either inflating or catastrophising either</li>
+        <li><strong>Resilience under pressure:</strong> Self-doubt arises — and passes. Criticism lands — and is processed without collapse. Failure occurs — and is recovered from without defining your worth.</li>
+        <li><strong>Authentic expression:</strong> The capacity to show up as yourself — in relationships, in work, in groups — without performing, shrinking, or defending</li>
+        <li><strong>Proportionate self-care:</strong> Attending to your needs — physical, emotional, relational — not as indulgence but as responsible stewardship of a person who matters</li>
+        <li><strong>Genuine care for others:</strong> Paradoxically, secure self-esteem makes you more genuinely available to others — because you are not preoccupied with managing their perception of you</li>
+      </ul>
+      <h4>2. The Six Pillars of Self-Esteem Revisited</h4>
+      <p>Nathaniel Branden's Six Pillars of Self-Esteem identify the practices that healthy self-esteem requires as ongoing commitments — not one-time achievements:</p>
+      <ul>
+        <li><strong>Living consciously:</strong> Bringing honest awareness to your experience, choices, and their consequences — not sleepwalking through life</li>
+        <li><strong>Self-acceptance:</strong> Claiming your experience — including the parts you find unflattering — without denial or distortion. "This is who I am right now."</li>
+        <li><strong>Self-responsibility:</strong> Owning your choices, actions, and their consequences — not as blame but as the recognition of your agency and power</li>
+        <li><strong>Self-assertiveness:</strong> Honouring your needs, values, and desires in how you live and relate to others</li>
+        <li><strong>Living purposefully:</strong> Organising your life around meaningful goals and values rather than merely reacting to circumstances</li>
+        <li><strong>Personal integrity:</strong> Closing the gap between your stated values and your actual behaviour — living congruently</li>
+      </ul>
+      <h4>3. Daily Practices for Sustaining Self-Esteem</h4>
+      <p>Self-esteem is not a destination arrived at once — it is a garden that requires tending. The practices that sustain it:</p>
+      <ul>
+        <li><strong>The daily self-compassion check-in:</strong> Morning or evening — briefly, honestly: "How am I? What do I need? Am I treating myself with the care I deserve?"</li>
+        <li><strong>The achievement acknowledgment:</strong> Each day, write one thing you did well, handled thoughtfully, or are genuinely pleased about. Not for performance — for honest record. The negativity bias will never do this automatically.</li>
+        <li><strong>Boundaries as self-respect:</strong> Each week, identify one boundary that needs to be set or maintained — and set it. Boundaries are not walls; they are the outlines of your self-respect.</li>
+        <li><strong>Exposure practice:</strong> Regularly do things that push gently against your comfort zone — not recklessly, but consistently. Confidence grows at the edge of comfort, not in the middle of it.</li>
+        <li><strong>The inner mentor check-in:</strong> When the inner critic speaks, pause and ask: "What would my inner mentor say?" Practise giving that voice equal airtime.</li>
+      </ul>
+      <h4>4. Relationships and Self-Esteem — Choosing Your Environment</h4>
+      <p>Your environment either supports or erodes your self-esteem. Relationships that consistently undermine, criticise, diminish, or control you are not neutral — they actively damage the work you are doing. Part of owning your worth is examining the environments you inhabit and making conscious choices about them:</p>
+      <ul>
+        <li>People who consistently make you feel worse about yourself are not obligatory companions — even if they are family</li>
+        <li>People who consistently challenge you, see your potential, reflect your worth back to you, and celebrate your growth are among the most valuable assets in your life</li>
+        <li>The quality of your inner circle matters enormously — not because others define you, but because humans are social creatures whose self-perception is profoundly shaped by the mirroring they receive</li>
+        <li>Choosing your relationships consciously is one of the most powerful acts of self-worth available to you</li>
+      </ul>
+      <h4>5. When Self-Esteem Dips — The Recovery Protocol</h4>
+      <p>Self-esteem is not linear. There will be periods — triggered by loss, failure, rejection, major transition, or simply the natural ebb of life — when self-doubt surges and the gains of this work feel distant. This is normal. The recovery protocol:</p>
+      <ul>
+        <li>Name it: "My self-esteem is low right now. This is a temporary state, not a permanent truth."</li>
+        <li>Return to basics: sleep, movement, connection, self-compassion practice</li>
+        <li>Open the Evidence File. Read it. Resist the impulse to dismiss it.</li>
+        <li>Reach out — to a friend, a coach, a therapist. Low self-esteem isolates; connection counteracts it.</li>
+        <li>Make one small, values-aligned action. Not to prove yourself — to remind yourself that you are still capable of choosing.</li>
+        <li>Remember: a dip is not a return to square one. You have knowledge, tools, and new neural pathways built through six weeks of practice. They do not disappear — they only need to be reactivated.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Your Personal Confidence and Self-Esteem Plan</strong><br>Design a realistic, specific maintenance plan for the coming three months. Include: one daily practice (the self-compassion check-in, the achievement acknowledgment, or the inner mentor check-in), one weekly practice (boundary-setting, one assertive act, the comparison detox), one monthly review (Evidence File update, values alignment check, inner critic transcript review). Make it small enough to actually sustain.</p>
+      <p><strong>Exercise 2: The Worth Declaration</strong><br>Write a personal statement — 1–2 paragraphs — of what you now believe to be true about your worth. Not an affirmation to convince yourself of something you don't believe. An honest statement, informed by six weeks of self-inquiry, of what you have come to understand: about where your low self-esteem came from, what you now recognise about your actual worth, and what you are committing to going forward. This is not for anyone else. It is for you — and for the version of you who will need to read it on a difficult day.</p>
+      <p><strong>Exercise 3: A Letter to Your Past Self</strong><br>Write a letter to the version of yourself who most needed to hear that they were worthy — perhaps as a child receiving messages that they were not enough, perhaps as a younger adult struggling alone with self-doubt. Tell them what you now know. Tell them what you wish someone had told them. Tell them that what was done to their sense of worth was not their fault — and that recovery is possible, and that you are evidence of it.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>How has your understanding of your own worth changed over these six weeks — even subtly?</li>
+        <li>Which of the six pillars of self-esteem most needs your attention going forward?</li>
+        <li>What environments or relationships in your life most support your self-esteem — and which most undermine it?</li>
+        <li>What will you do when self-esteem dips — and who will you reach out to?</li>
+      </ul>
+      <h3>💎 A Closing Word</h3>
+      <p>You came to this course carrying a story — one that was told to you before you had the capacity to question it, about who you were and what you were worth. That story was never the whole truth. It was never even close to the whole truth. Over six weeks, you have done the extraordinary — and difficult — work of examining it. You have traced its origins. You have challenged the voice that perpetuates it. You have begun building a different relationship with yourself: more honest, more compassionate, more grounded in evidence and values than in old wounds and others' opinions. That does not mean the self-doubt will never return. It means you now have something you did not have before: the understanding that it is not the truth. You know where it came from. You know what it costs you. And you know — because you have now begun to prove it to yourself — that a different relationship with yourself is possible. You are worthy. You always were. Now you are beginning to live as if you know that. That is everything.</p>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      {icon:'📋',title:'Confidence Maintenance Plan Template',desc:'3-month daily, weekly, and monthly practice structure',file:'maintenance-plan.pdf'},
+      {icon:'💎',title:'Worth Declaration Writing Guide',desc:'Write your honest statement of what you now know about your worth',file:'worth-declaration.pdf'},
+      {icon:'🏛',title:'Six Pillars of Self-Esteem Guide',desc:'Branden\'s framework as ongoing practice — not one-time achievement',file:'six-pillars.pdf'},
+      {icon:'🔄',title:'Self-Esteem Recovery Protocol',desc:'What to do when self-esteem dips — the step-by-step guide',file:'recovery-protocol.pdf'},
+      {icon:'🎧',title:'Worth and Integration Meditation',desc:'20-minute guided closing practice — owning your worth',file:'worth-integration-audio.mp3'},
+      {icon:'🏆',title:'Course Completion Certificate',desc:'Download your certificate of completion',file:'certificate.pdf'}
+    ],
+    assessment: [
+      {question:"What does healthy self-esteem actually look like — as distinct from narcissism?",options:["Constant positivity, fearless confidence, and immunity to self-doubt","Louder, more visible confidence than other people","A quiet, stable baseline security — honest self-knowledge of both strengths and limitations, resilience that processes setbacks without identity collapse, and authentic expression without performing or defending","Achievement of all life goals and absence of significant personal challenges"],correct:2},
+      {question:"What is Nathaniel Branden's 'living consciously' pillar of self-esteem?",options:["Practising mindfulness meditation daily","Being aware of your emotional state throughout the day","Bringing honest awareness to your experience, choices, and their consequences — not sleepwalking through life","Keeping a daily consciousness journal"],correct:2},
+      {question:"What does the 'personal integrity' pillar of self-esteem require?",options:["Being honest with others at all times","Maintaining perfect consistency between your thoughts and feelings","Closing the gap between your stated values and your actual behaviour — living congruently so that what you say matters and what you do are aligned","Never compromising your principles regardless of circumstances"],correct:2},
+      {question:"Why does healthy self-esteem paradoxically make you more genuinely available to others?",options:["Because confident people are naturally more generous","Because high self-esteem produces more positive emotions that spread to others","Because you are no longer preoccupied with managing others' perception of you — the energy previously consumed by approval-seeking becomes available for genuine care and connection","Because healthy self-esteem reduces social anxiety"],correct:2},
+      {question:"What is the first step in the self-esteem recovery protocol when it dips?",options:["Identify what triggered the dip and address it directly","Increase positive self-talk to counteract the dip","Name it: 'My self-esteem is low right now. This is a temporary state, not a permanent truth.' — separating the temporary experience from a permanent identity claim","Return immediately to intensive self-esteem building practices"],correct:2},
+      {question:"Why does self-esteem work describe itself as a 'garden that requires tending'?",options:["Because self-esteem grows slowly and unpredictably","Because like a garden, self-esteem requires the right environmental conditions","Self-esteem is not a destination arrived at once — it is sustained through ongoing daily and weekly practices, and it requires active maintenance or it deteriorates over time","Because self-esteem work is seasonal"],correct:2},
+      {question:"What does 'exposure practice' contribute to sustained confidence building?",options:["Exposing yourself to others' judgments builds resilience","Practising confident behaviour in others' presence","Regularly doing things that push gently against your comfort zone — because confidence grows at the edge of comfort, not in the middle of it, through accumulated evidence of capability","Exposure therapy for confidence-related anxieties"],correct:2},
+      {question:"How does consciously choosing your relationships relate to self-worth?",options:["Relationships do not affect self-esteem once it is established","Only toxic relationships should be consciously evaluated","Humans are social creatures whose self-perception is profoundly shaped by mirroring — people who consistently undermine you actively damage the work of self-esteem; choosing relationships consciously is one of the most powerful acts of self-worth","Relationship choice reflects self-esteem but does not build it"],correct:2},
+      {question:"Why is a self-esteem dip 'not a return to square one'?",options:["Because self-esteem never fully returns to its lowest point","Because the environment has changed even if internal state has not","Because knowledge, tools, and new neural pathways built through practice do not disappear — they only need to be reactivated. A dip is a temporary state, not evidence that progress was illusory.","Because external achievements made during recovery remain"],correct:2},
+      {question:"What is the core message of this course's closing statement about self-worth?",options:["Self-doubt will permanently disappear with enough work","Worth must be continuously earned through aligned action","The story of unworthiness told before you could question it was never the whole truth — and through this work, you now have what you lacked before: the understanding that self-doubt is not the truth, where it came from, and that a different relationship with yourself is genuinely possible","Confidence requires the absence of all self-critical thoughts"],correct:2}
+    ]
+  }
+
+};
+</script>
+</body>
+</html>
