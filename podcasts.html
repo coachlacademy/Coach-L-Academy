@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach L Academy | Live Multi-Stream</title>
+    <style>
+        :root {
+            --primary-blue: #00d2ff;
+            --accent-green: #39ff14;
+            --live-red: #ff4b2b;
+            --bg-dark: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUNDS */
+        .fixed-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000');
+            background-size: cover; background-position: center; z-index: -2;
+        }
+        .large-bg-text {
+            position: fixed; top: 30%; left: 5%; font-size: clamp(5rem, 18vw, 15rem);
+            font-weight: 900; color: rgba(255, 255, 255, 0.04); z-index: -1;
+            text-transform: uppercase; pointer-events: none; letter-spacing: -5px;
+        }
+
+        /* LIVE PULSE */
+        .pulse-dot {
+            height: 10px; width: 10px; background-color: var(--live-red);
+            border-radius: 50%; display: inline-block; margin-right: 8px;
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 75, 43, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 75, 43, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 75, 43, 0); }
+        }
+
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 50px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+        }
+        .logo { font-size: 24px; font-weight: 800; text-transform: uppercase; }
+        .logo span { color: var(--primary-blue); }
+
+        .hero { height: 70vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; position: relative; z-index: 10; }
+        .hero h1 { font-size: clamp(3rem, 10vw, 6rem); font-weight: 900; text-transform: uppercase; }
+        
+        .btn-action {
+            background-color: var(--accent-green); color: #000; padding: 18px 40px;
+            border-radius: 4px; font-weight: 900; border: none; cursor: pointer; 
+            transition: 0.4s; text-transform: uppercase; margin-top: 20px; width: fit-content;
+        }
+        .btn-action.is-playing { background-color: var(--live-red); color: #fff; }
+
+        .main-container { padding: 0 5% 100px; position: relative; z-index: 20; }
+        .row-title { font-size: 24px; margin: 40px 0 20px; border-left: 4px solid var(--primary-blue); padding-left: 15px; font-weight: 700; }
+        
+        /* GRID */
+        .podcast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+
+        .podcast-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px); border-radius: 12px; overflow: hidden;
+            transition: 0.4s; position: relative; min-height: 380px;
+        }
+
+        .thumb { width: 100%; height: 200px; position: relative; background: #111; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+        
+        .card-info { padding: 20px; }
+        .card-info h4 { margin-bottom: 8px; font-size: 18px; display: flex; align-items: center; }
+        .price-tag { font-size: 14px; color: var(--primary-blue); font-weight: 800; text-transform: uppercase; cursor: pointer; text-decoration: none; }
+
+        /* JITSI/STREAM OVERLAYS */
+        .stream-container { display:none; position: absolute; inset: 0; background:#000; z-index: 50; }
+        .jitsi-overlay {
+            position: absolute; top: 12px; right: 12px; z-index: 100;
+            display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+        }
+        .ctrl-btn {
+            background: rgba(0,0,0,0.85); border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 7px 14px; border-radius: 4px; font-size: 10px;
+            cursor: pointer; font-weight: bold; text-transform: uppercase;
+        }
+        .ctrl-btn.stop { background: var(--live-red); border: none; }
+
+        /* CAROUSEL */
+        .archive-viewport { width: 100%; overflow: hidden; padding: 20px 0; }
+        .archive-track { display: flex; gap: 25px; transition: transform 0.8s ease-in-out; }
+        .archive-track .podcast-card { flex: 0 0 300px; min-height: 320px; }
+    </style>
+</head>
+<body>
+
+    <div class="fixed-bg"></div>
+    <div class="large-bg-text">Broadcast</div>
+
+    <nav>
+        <div class="logo">Coach L <span>Academy</span></div>
+        <button class="ctrl-btn" style="padding:10px 20px;">Member Sign In</button>
+    </nav>
+
+    <audio id="radioPlayer" preload="none">
+        <source src="https://coach-l-radio.duckdns.org/listen/coach-l-radio/radio.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="hero">
+        <h1>Global Ministry</h1>
+        <h2 style="color:var(--primary-blue); font-weight:300;">Simulcast Live Studio</h2>
+        <button id="playToggle" class="btn-action">Start Radio Feed</button>
+    </div>
+
+    <div class="main-container">
+        <h3 class="row-title">Live Broadcast Hub</h3>
+        <div class="podcast-grid">
+            
+            <div class="podcast-card" id="card-jitsi">
+                <div class="poster">
+                    <div class="thumb">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500" alt="Jitsi">
+                    </div>
+                    <div class="card-info">
+                        <h4><span class="pulse-dot"></span>Interactive Ministry</h4>
+                        <p>Join the conversation. Mic/Cam disabled by default. Live chat active.</p>
+                        <a href="javascript:void(0)" onclick="startStream('jitsi')" class="price-tag">Enter Meeting Room</a>
+                    </div>
+                </div>
+                <div class="stream-container" id="stream-jitsi">
+                    <div class="jitsi-overlay">
+                        <button class="ctrl-btn stop" onclick="stopStream('jitsi')">Exit</button>
+                        <button class="ctrl-btn" onclick="goLandscape('stream-jitsi')">Fullscreen</button>
+                    </div>
+                    <iframe id="frame-jitsi" src="" allow="camera; microphone; fullscreen; autoplay; display-capture" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
+            </div>
+
+            <div class="podcast-card" id="card-youtube">
+                <div class="poster">
+                    <div class="thumb">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500" alt="YouTube">
+                    </div>
+                    <div class="card-info">
+                        <h4>YouTube Live Feed</h4>
+                        <p>High-definition view-only stream. Perfect for smart TVs and mobile.</p>
+                        <a href="javascript:void(0)" onclick="startStream('youtube')" class="price-tag">Watch on YouTube</a>
+                    </div>
+                </div>
+                <div class="stream-container" id="stream-youtube">
+                    <div class="jitsi-overlay">
+                        <button class="ctrl-btn stop" onclick="stopStream('youtube')">Close Feed</button>
+                    </div>
+                    <iframe id="frame-youtube" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="width:100%; height:100%; border:none;"></iframe>
+                </div>
+            </div>
+
+            <div class="podcast-card" id="card-facebook">
+                <div class="poster">
+                    <div class="thumb">
+                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500" alt="Facebook">
+                    </div>
+                    <div class="card-info">
+                        <h4>Facebook Live Feed</h4>
+                        <p>Stream directly through our Facebook Ministry community page.</p>
+                        <a href="javascript:void(0)" onclick="startStream('facebook')" class="price-tag">Watch on Facebook</a>
+                    </div>
+                </div>
+                <div class="stream-container" id="stream-facebook">
+                    <div class="jitsi-overlay">
+                        <button class="ctrl-btn stop" onclick="stopStream('facebook')">Close Feed</button>
+                    </div>
+                    <iframe id="frame-facebook" src="" style="width:100%; height:100%; border:none; overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </div>
+            </div>
+
+        </div>
+
+        <h3 class="row-title">Ministry Archives</h3>
+        <div class="archive-viewport">
+            <div class="archive-track" id="archiveTrack">
+                <div class="podcast-card"><div class="thumb"><img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=500"></div><div class="card-info"><h4>Session 01</h4><p>The Digital Foundation.</p></div></div>
+                <div class="podcast-card"><div class="thumb"><img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=500"></div><div class="card-info"><h4>Session 02</h4><p>Global Scaling.</p></div></div>
+                <div class="podcast-card"><div class="thumb"><img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500"></div><div class="card-info"><h4>Session 03</h4><p>Lead with AI.</p></div></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. RADIO (Locked at 65%)
+        const player = document.getElementById('radioPlayer');
+        const playBtn = document.getElementById('playToggle');
+        player.volume = 0.65;
+        playBtn.onclick = () => {
+            if (player.paused) { player.play(); playBtn.classList.add('is-playing'); playBtn.innerText = "Stop Radio Feed"; }
+            else { player.pause(); player.load(); playBtn.classList.remove('is-playing'); playBtn.innerText = "Start Radio Feed"; }
+        };
+
+        // 2. MULTI-STREAM LOGIC
+        function startStream(type) {
+            const container = document.getElementById(`stream-${type}`);
+            const frame = document.getElementById(`frame-${type}`);
+            
+            // Define URLs
+            const urls = {
+                // Jitsi: Muted, No Video, Chat Open
+                jitsi: "https://meet.jit.si/CoachLGuestRoom#config.prejoinPageEnabled=false&config.startWithAudioMuted=true&config.startWithVideoMuted=true&config.openBridgeChannel=chat",
+                // YouTube: View only (Replace YOUR_ID)
+                youtube: "https://www.youtube.com/embed/live_stream?channel=YOUR_CHANNEL_ID&autoplay=1",
+                // Facebook: View only (Replace YOUR_URL)
+                facebook: "https://www.facebook.com/plugins/video.php?href=YOUR_FB_LIVE_URL&show_text=0&width=560"
+            };
+
+            frame.src = urls[type];
+            container.style.display = 'block';
+            if (!player.paused) playBtn.click(); // Stop radio to avoid double audio
+        }
+
+        function stopStream(type) {
+            const container = document.getElementById(`stream-${type}`);
+            const frame = document.getElementById(`frame-${type}`);
+            frame.src = "";
+            container.style.display = 'none';
+            if(document.fullscreenElement) document.exitFullscreen();
+        }
+
+        async function goLandscape(id) {
+            const el = document.getElementById(id);
+            if (el.requestFullscreen) await el.requestFullscreen();
+            if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape').catch(()=>{});
+        }
+
+        // 3. CAROUSEL
+        const track = document.getElementById('archiveTrack');
+        let idx = 0;
+        setInterval(() => {
+            idx = (idx + 1) % (track.children.length);
+            track.style.transform = `translateX(-${idx * 325}px)`;
+        }, 4000);
+    </script>
+</body>
+</html>
