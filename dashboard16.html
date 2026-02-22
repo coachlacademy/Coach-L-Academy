@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Healthy Relationships - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #e91e63 0%, #9c27b0 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #e91e63; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #e91e63; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(233,30,99,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #e91e63; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #e91e63; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #9c27b0; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #e91e63; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #e91e63; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #e91e63; background: #fce4ec; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(233,30,99,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .safety-banner { background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%); border: 2px solid #e91e63; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .safety-banner h4 { color: #c2185b; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #e91e63; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #e91e63 0%, #9c27b0 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>Building Healthy Relationships</h1>
+        <p>6-Week Comprehensive Course</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#e91e63;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Building Healthy Relationships</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin your journey toward thriving connections.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#e91e63 0%,#9c27b0 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Begin My Journey 💕</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="safety-banner">
+    <h4>💕 A Note on Safety and Sensitivity</h4>
+    <p>Relationships are where our deepest joys and deepest wounds live. This course explores what makes relationships healthy and what makes them harmful — including red flags, toxic patterns, and the lasting impact of difficult relationship experiences. Some content may bring up painful memories or current situations. Please move through it with self-compassion. If you are currently in a relationship that feels unsafe, support is available: <strong>National Domestic Violence Hotline</strong>: 1-800-799-7233 | <strong>Crisis Text Line</strong>: text HOME to 741741.</p>
+  </div>
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised relationship guidance.</p>
+    <div style="background:linear-gradient(135deg,#e91e63 0%,#9c27b0 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, compassionate relationship support.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#e91e63;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#e91e63;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY     = 'CoachL2025SecureKey';
+const COURSE_NAME    = 'Building Healthy Relationships';
+const TOTAL_WEEKS    = 6;
+const STORAGE_PREFIX = 'coachL_BHR_';
+
+let currentWeek = 1;
+let studentInfo = { name: '', email: '' };
+let completedWeeks = new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks')||'[]'));
+function saveCompletedWeeks(){ localStorage.setItem(STORAGE_PREFIX+'completedWeeks', JSON.stringify([...completedWeeks])); }
+
+window.onload = function(){
+  const n=localStorage.getItem('studentName'), e=localStorage.getItem('studentEmail');
+  if(n&&e){ studentInfo.name=n; studentInfo.email=e; updateUserDisplay(); }
+  else { document.getElementById('nameModal').style.display='flex'; }
+  updateProgress(); refreshModuleButtons();
+  selectModule([1,2,3,4,5,6].find(w=>!completedWeeks.has(w))||1);
+};
+function isValidEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(), e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e){alert('Please enter your email address.');return;}
+  if(!isValidEmail(e)){alert('⚠️ "'+e+'" doesn\'t look like a valid email.\n\nExample: yourname@gmail.com');document.getElementById('studentEmail').focus();return;}
+  studentInfo.name=n; studentInfo.email=e;
+  localStorage.setItem('studentName',n); localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none'; updateUserDisplay();
+}
+function updateEmail(){
+  const cur=localStorage.getItem('studentEmail')||'', nw=prompt('Update your email address:',cur);
+  if(nw===null)return;
+  if(!isValidEmail(nw.trim())){alert('⚠️ That doesn\'t look like a valid email.');return;}
+  studentInfo.email=nw.trim(); localStorage.setItem('studentEmail',nw.trim()); alert('✅ Email updated to: '+nw.trim());
+}
+function updateUserDisplay(){ document.getElementById('userAvatar').textContent=studentInfo.name.charAt(0).toUpperCase(); document.getElementById('userName').textContent='Welcome, '+studentInfo.name+'!'; }
+function refreshModuleButtons(){
+  document.querySelectorAll('.module-btn').forEach((btn,i)=>{
+    const w=i+1; btn.classList.remove('active','completed');
+    if(completedWeeks.has(w)){btn.classList.add('completed');btn.textContent='Week '+w+' ✓';}
+    else{btn.textContent='Week '+w;}
+    if(w===currentWeek)btn.classList.add('active');
+  });
+}
+function selectModule(week){ currentWeek=week; refreshModuleButtons(); updateWeekContent(); }
+function showTab(tabName,tabBtn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if(tabBtn)tabBtn.classList.add('active');
+}
+function updateWeekContent(){
+  const w=weekData[currentWeek];
+  document.getElementById('weekTitle').textContent='📹 Week '+currentWeek+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tutorialVideo;
+  document.getElementById('basicTitle').textContent='Basic Learning: '+w.basicVideo;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='📚 Course Resources - Week '+currentWeek;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">📥 Download</span></div>`).join('');
+  renderAssessment();
+}
+function renderAssessment(){
+  const w=weekData[currentWeek], passed=completedWeeks.has(currentWeek);
+  let html=`<h2>📝 Week ${currentWeek} Assessment</h2>`;
+  if(passed){ html+=`<div class="already-passed-notice"><h3>✅ You already passed this week!</h3><p>Great work! Your score has been recorded.</p></div>`; }
+  else { html+=`<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass.</p>`; }
+  w.assessment.forEach((q,i)=>{ html+=`<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`; });
+  if(!passed) html+=`<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function submitQuiz(){
+  if(completedWeeks.has(currentWeek)){alert('You have already passed this assessment!');return;}
+  const w=weekData[currentWeek]; let correct=0,answers=[],allAnswered=true;
+  w.assessment.forEach((q,i)=>{ const sel=document.querySelector(`input[name="q${i}"]:checked`); if(!sel){allAnswered=false;return;} const ua=parseInt(sel.value),ok=ua===q.correct; if(ok)correct++; answers.push({question:q.question,userAnswer:q.options[ua],correctAnswer:q.options[q.correct],isCorrect:ok}); });
+  if(!allAnswered){alert('Please answer all questions before submitting.');return;}
+  const score=Math.round((correct/w.assessment.length)*100), passed=score>=70;
+  submitToSheets(currentWeek,score,correct,w.assessment.length,answers,passed);
+  if(passed){ completedWeeks.add(currentWeek); saveCompletedWeeks(); updateProgress(); refreshModuleButtons(); renderAssessment();
+    alert(currentWeek<TOTAL_WEEKS?`🎉 Congratulations! You passed with ${score}%!\n\nContinue to Week ${currentWeek+1} whenever you're ready.`:`🏆 Course complete! You passed with ${score}%!\n\nYour certificate will be emailed to you. 🎓`);
+  } else { alert(`You scored ${score}% (${correct}/${w.assessment.length}).\n\nYou need 70% to pass. Review the material and try again!`); }
+}
+function submitToSheets(week,score,correct,total,answers,passed){
+  const payload={secretKey:SECRET_KEY,timestamp:new Date().toLocaleString(),studentName:studentInfo.name,studentEmail:studentInfo.email,courseName:COURSE_NAME,week,score,correct,total,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).then(()=>console.log('✅')).catch(e=>console.error('❌',e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]'); all.push({...payload,answers}); localStorage.setItem('assessmentResults',JSON.stringify(all));
+}
+function updateProgress(){
+  const done=completedWeeks.size, pct=Math.round((done/TOTAL_WEEKS)*100);
+  document.getElementById('progressBar').style.width=pct+'%'; document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TOTAL_WEEKS*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TOTAL_WEEKS;
+}
+function playVideo(type,week){alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed.`);}
+function markComplete(){ showTab('assessment',document.querySelectorAll('.tab')[2]); window.scrollTo({top:0,behavior:'smooth'}); }
+function downloadResource(file,title){
+  fetch('resources/'+file,{method:'HEAD'}).then(r=>{ if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);} else{alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.');} }).catch(()=>alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src=`https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){ if(confirm('End the session?')){ document.getElementById('jitsiFrame').src=''; document.getElementById('videoCallContainer').style.display='none'; } }
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No assessment results yet.');return;}
+  const rows=all.map((r,i)=>`<div class="result-card ${r.passed==='YES'?'passed':'failed'}"><h2>Submission #${i+1} — ${r.passed==='YES'?'✅ PASSED':'❌ FAILED'}</h2><p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p><p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p><p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p><div class="details"><h3>Answers:</h3><table><tr><th>Question</th><th>Student</th><th>Correct</th><th>Result</th></tr>${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}</table></div></div>`).join('');
+  const win=window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#e91e63;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}.details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}th{background:#e91e63;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}</style></head><body><h1>📊 Results – Coach L Academy</h1><p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#e91e63;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>${rows}</body></html>`);
+  win.document.close();
+}
+
+const weekData = {
+
+  1: {
+    tutorialVideo: "What Makes Relationships Healthy — The Science of Connection",
+    basicVideo: "Attachment Theory — Why We Love the Way We Love",
+    content: `
+      <h2>Week 1: The Foundations of Healthy Relationships</h2>
+      <div class="safety-banner"><h4>💕 Every Relationship Begins With the One You Have With Yourself</h4><p>Before we look outward at relationships with others, this week establishes the foundation: what psychological research tells us about what healthy relationships actually look like, how our earliest attachment experiences shape every relationship we have as adults, and what it means to bring a grounded, whole self into connection with others.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand the psychological foundations of healthy relationships</li>
+        <li>Learn attachment theory and the four attachment styles</li>
+        <li>Recognise your own attachment patterns and how they show up in relationships</li>
+        <li>Understand the difference between healthy dependence and codependence</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Makes Relationships Healthy — The Research</h4>
+      <p>Healthy relationships are not defined by the absence of conflict, difficulty, or difference. They are defined by the presence of specific qualities that research has consistently identified as predictive of relationship satisfaction, longevity, and mutual wellbeing:</p>
+      <ul>
+        <li><strong>Mutual respect:</strong> Both people treat each other as worthy of dignity, care, and consideration — not just in easy moments but in disagreement, difficulty, and difference</li>
+        <li><strong>Trust and safety:</strong> Both people feel safe being honest, vulnerable, and imperfect — knowing that the relationship can hold the full truth of who they are</li>
+        <li><strong>Reciprocity:</strong> The giving and receiving of care, attention, support, and effort flows in both directions — not necessarily equally in every moment, but balanced over time</li>
+        <li><strong>Autonomy within connection:</strong> Both people maintain their individual identities, interests, values, and relationships while being genuinely connected. Neither loses themselves in the relationship.</li>
+        <li><strong>Honest communication:</strong> Difficulties, needs, and disappointments can be raised and heard — not perfectly, but consistently enough that problems are addressed rather than accumulated</li>
+        <li><strong>Repair:</strong> When ruptures occur — and they always do — there is willingness and capacity to acknowledge, apologise, and restore connection. The relationship can survive and even be strengthened by difficulty.</li>
+        <li>John Gottman's longitudinal research identifies the 5:1 ratio as a key predictor of relationship health: for every negative interaction, healthy relationships have at least five positive ones — affection, appreciation, playfulness, interest, and warmth.</li>
+      </ul>
+      <h4>2. Attachment Theory — The Map of How We Love</h4>
+      <p>John Bowlby and Mary Ainsworth's attachment theory proposes that patterns of connection developed in early childhood with primary caregivers become internalised as "working models" — templates for how relationships work, how safe it is to depend on others, and how worthy of love we are. These templates shape adult relationships in profound and largely unconscious ways. Four adult attachment styles:</p>
+      <ul>
+        <li><strong>Secure attachment (approximately 50-55% of adults):</strong> Developed through consistent, responsive caregiving. Comfortable with both intimacy and independence, ability to trust and be trusted, effective conflict resolution, resilience under difficulty. The relationship is a base of strength, not anxiety.</li>
+        <li><strong>Anxious-preoccupied attachment (approximately 20% of adults):</strong> Developed through inconsistent caregiving. Preoccupied with relationships, hypervigilant to rejection or abandonment, tendency toward clinginess and emotional reactivity. Relationships feel urgent and uncertain.</li>
+        <li><strong>Dismissive-avoidant attachment (approximately 25% of adults):</strong> Developed through consistently emotionally unavailable caregiving. Values independence highly, uncomfortable with emotional intimacy, withdraws when relationships become close or demanding.</li>
+        <li><strong>Fearful-avoidant (disorganised) attachment (approximately 5% of adults):</strong> Developed when the caregiver was also a source of fear. Simultaneously desires and fears closeness. May show chaotic or contradictory relationship behaviour.</li>
+      </ul>
+      <h4>3. Attachment in Adult Relationships</h4>
+      <p>Research by Cindy Hazan and Phillip Shaver confirmed adult romantic attachment mirrors infant attachment — the same fundamental system applied to a different relationship partner. Key insights:</p>
+      <ul>
+        <li>Attachment styles are not destiny — they can be modified through new relationship experiences, therapy, and conscious self-awareness</li>
+        <li>"Earned secure" attachment: people with insecure childhood attachment who develop secure patterns through a consistently safe adult relationship or therapeutic work</li>
+        <li>Attachment styles activate most strongly under stress — when you feel threatened, hurt, or vulnerable</li>
+        <li>Anxious and avoidant partners tend to activate each other's insecurities: the anxious partner pursues, the avoidant withdraws — each driving the other's pattern more intensely</li>
+      </ul>
+      <h4>4. Healthy Interdependence vs Codependence</h4>
+      <ul>
+        <li><strong>Healthy interdependence:</strong> "I want you" — choosing relationship from genuine desire with capacity to function independently. Both people maintain their own identity, friends, interests, and emotional resources.</li>
+        <li><strong>Codependence:</strong> "I need you to function" — the relationship is the primary or only source of emotional regulation and identity. One or both people have lost themselves. Signs include: difficulty deciding without approval, defining identity through the relationship, neglecting own needs, feeling responsible for managing their emotions.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Attachment Style Reflection</strong><br>Read the four attachment style descriptions and write about which you most recognise in yourself. What triggers your attachment system? How do you respond when triggered — do you pursue, withdraw, or freeze? This is self-knowledge, not diagnosis.</p>
+      <p><strong>Exercise 2: The 5:1 Ratio Audit</strong><br>Choose your most important current relationship. For one week, track the ratio of positive to negative interactions. Is the ratio at least 5:1? Which positive interactions are most absent — appreciation, affection, interest, playfulness, or warmth?</p>
+      <p><strong>Exercise 3: Interdependence Check</strong><br>In your closest relationship, honestly ask: Do I have my own identity and interests outside this relationship? Can I tolerate their displeasure without immediately fixing it? Have I maintained the things that matter to me individually?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which attachment style do you most recognise in yourself — and what early experiences might have shaped it?</li>
+        <li>Which of the six qualities of healthy relationships is most present — and which is most absent — in your most important relationship?</li>
+        <li>Where do you sit on the interdependence-codependence spectrum — and what would moving toward healthier interdependence look like?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'💕',title:'Healthy Relationships Foundations Guide',desc:'The six qualities and Gottman\'s 5:1 ratio explained',file:'healthy-relationships-guide.pdf'},
+      {icon:'🔗',title:'Attachment Styles Assessment',desc:'Identify your attachment style with detailed descriptions',file:'attachment-assessment.pdf'},
+      {icon:'🗺️',title:'Adult Attachment in Relationships',desc:'How childhood attachment shapes adult love patterns',file:'adult-attachment.pdf'},
+      {icon:'⚖️',title:'Interdependence vs Codependence Guide',desc:'The spectrum from healthy dependence to codependence',file:'interdependence-guide.pdf'},
+      {icon:'🎧',title:'Secure Attachment Meditation Audio',desc:'12-minute guided practice for building a felt sense of security',file:'secure-attachment-audio.mp3'},
+      {icon:'📚',title:'Relationships Foundations Reading',desc:'Attached (Levine & Heller), Seven Principles (Gottman), Hold Me Tight (Johnson)',file:'foundations-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does John Gottman's 5:1 ratio identify as a key predictor of relationship health?",options:["Five compliments for every one request","Five positive interactions for every one negative interaction — affection, appreciation, playfulness, interest, and warmth outweighing criticism, irritation, and withdrawal","Five areas of agreement for every one area of disagreement","Five successful conflict resolutions for every one unresolved conflict"],correct:1},
+      {question:"What is the core proposition of attachment theory?",options:["Children form attachments to all adults they interact with regularly","Romantic love is biologically determined","Patterns of connection developed with early caregivers become internalised as working models — templates for how relationships work, how safe it is to depend on others, and how worthy of love we are — that shape adult relationships","Attachment style is fixed in infancy and cannot change"],correct:2},
+      {question:"What characterises secure attachment in adult relationships?",options:["No need for emotional support from a partner","Preference for independence over intimacy","Comfort with both intimacy and independence, ability to trust and be trusted, effective conflict resolution, and resilience — using the relationship as a base of strength rather than a source of anxiety","High emotional expressiveness and frequent affirmation-seeking"],correct:2},
+      {question:"What developmental experience typically produces anxious-preoccupied attachment?",options:["Consistently cold and rejecting caregiving","Abusive or frightening caregiving","Inconsistent caregiving — sometimes responsive, sometimes not — leaving the child uncertain about availability, producing hypervigilance to rejection or abandonment in adult relationships","Early loss of the primary caregiver"],correct:2},
+      {question:"What is the characteristic pattern of dismissive-avoidant attachment in adult relationships?",options:["Intense fear of abandonment and need for reassurance","Simultaneous desire for and fear of closeness","Valuing independence highly, discomfort with emotional intimacy, and withdrawal when relationships become close or demanding — developed when caregiving was consistently emotionally unavailable","Chaotic and contradictory relationship behaviour"],correct:2},
+      {question:"What is an 'earned secure' attachment?",options:["Secure attachment earned through achievement","Security developed through reading and self-improvement","When someone with insecure childhood attachment develops secure patterns through a consistently safe adult relationship or therapeutic work — demonstrating that attachment style is not destiny","Secure attachment that develops in adulthood rather than childhood"],correct:2},
+      {question:"What predictable pattern often emerges when anxious and avoidant attachment styles are in relationship together?",options:["The avoidant partner pursues and the anxious partner withdraws","Both partners develop more secure attachment over time","The anxious partner pursues while the avoidant partner withdraws — each driving the other's pattern more intensely, creating an escalating cycle","The relationship quickly becomes untenable and ends"],correct:2},
+      {question:"What is the fundamental difference between healthy interdependence and codependence?",options:["Interdependence involves more emotional expression","Codependence is healthier in long-term relationships","Healthy interdependence is 'I want you' — choosing relationship from genuine desire while maintaining individual wholeness; codependence is 'I need you to function' — the relationship becomes the primary source of emotional regulation and identity, with loss of individual self","Interdependence requires equal contribution; codependence allows imbalance"],correct:2},
+      {question:"What is the significance of 'repair' as a quality of healthy relationships?",options:["Repair means resolving all conflicts completely","Healthy relationships have fewer ruptures","Ruptures are inevitable — what distinguishes healthy relationships is the willingness and capacity to acknowledge, apologise, and restore connection. The ability to repair predicts relationship survival more than conflict avoidance.","Repair requires professional mediation in serious conflicts"],correct:2},
+      {question:"What does research by Hazan and Shaver confirm about adult romantic attachment?",options:["Adult romantic attachment is unrelated to childhood attachment","Adult attachment is primarily determined by cultural factors","Adult romantic attachment mirrors infant attachment — the same fundamental system applied to a romantic partner, with adults using partners as safe havens and secure bases the way infants use caregivers","Adult attachment is more flexible and less predictive than infant attachment"],correct:2}
+    ]
+  },
+
+  2: {
+    tutorialVideo: "Recognising Red Flags — What Unhealthy Looks Like Before It Escalates",
+    basicVideo: "Toxic Patterns — Manipulation, Control, and How to See Them",
+    content: `
+      <h2>Week 2: Red Flags and Toxic Patterns — Recognising What Harms</h2>
+      <div class="safety-banner"><h4>💕 Knowledge Is Protection — And It Is Never Too Late to See Clearly</h4><p>This week covers some of the most important content in this course. Understanding red flags and toxic patterns is not about becoming suspicious of everyone — it is about developing the clarity to recognise when a relationship is harming you. If any of this material reflects your current situation, please reach out for support. You do not have to navigate it alone.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Identify the most common and significant red flags in relationships</li>
+        <li>Understand the psychology of manipulation, control, and coercive behaviour</li>
+        <li>Recognise the tactics used in emotionally abusive relationships</li>
+        <li>Understand why people stay in harmful relationships — and what makes leaving possible</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Red Flags Are — and Why We Miss Them</h4>
+      <p>Red flags are early warning signals that a relationship may become harmful. People miss them for understandable reasons:</p>
+      <ul>
+        <li><strong>Love bombing:</strong> Overwhelming affection, attention, and idealisation at the start makes early red flags easy to dismiss — the intensity feels like love, but is often a control tactic</li>
+        <li><strong>Gradual escalation:</strong> Harmful patterns escalate slowly — each step a small increment from the last, making it hard to identify when normal difficulty became something else</li>
+        <li><strong>Hope and investment:</strong> The longer you are in a relationship and the more invested, the more difficult it becomes to see it clearly</li>
+        <li><strong>Normalisation:</strong> If controlling or volatile behaviour was normal in your childhood home, similar patterns in adult relationships may feel familiar rather than alarming</li>
+        <li><strong>Rationalisation:</strong> "They had a difficult childhood." "They're under stress." These rationalisations are understandable — and they often extend the harm</li>
+      </ul>
+      <h4>2. Major Red Flags in Relationships</h4>
+      <ul>
+        <li><strong>Jealousy presented as love:</strong> Pathological jealousy is possessiveness, not love — it typically escalates toward control, monitoring, and isolation</li>
+        <li><strong>Rapid escalation of intimacy:</strong> Pushing for commitment or cohabitation very early, especially combined with love bombing</li>
+        <li><strong>Isolation from support networks:</strong> Gradually separating you from friends and family — increasing dependence and reducing access to outside perspective</li>
+        <li><strong>Disrespect dressed as humour:</strong> Insulting "jokes" followed by "you're too sensitive" — a form of contempt that often escalates</li>
+        <li><strong>Inability to take responsibility:</strong> Everything is always someone else's fault. You always end up apologising.</li>
+        <li><strong>Hot and cold behaviour:</strong> Cycles of intense warmth followed by coldness — keeping you off-balance and focused on winning approval</li>
+        <li><strong>Controlling behaviour:</strong> Controlling what you wear, who you see, where you go, how you spend money. Control is not care.</li>
+        <li><strong>Explosive anger:</strong> Disproportionate reactions used to intimidate or silence</li>
+      </ul>
+      <h4>3. Psychological Manipulation Tactics</h4>
+      <ul>
+        <li><strong>Gaslighting:</strong> Systematically causing someone to question their own memory and perception — "that never happened," "you're imagining things." Destroys the target's ability to trust their own experience.</li>
+        <li><strong>DARVO (Jennifer Freyd):</strong> Deny, Attack, Reverse Victim and Offender — the person who caused harm denies responsibility, attacks the concern-raiser, and positions themselves as the real victim</li>
+        <li><strong>Triangulation:</strong> Introducing a third person (an ex, a colleague) to create jealousy and maintain power</li>
+        <li><strong>Intermittent reinforcement:</strong> Unpredictable warmth and coldness. Psychologically, this produces stronger attachment than consistent positive treatment because the brain works harder to predict and secure the reward.</li>
+        <li><strong>Silent treatment:</strong> Withdrawal of communication as punishment — weaponised to create anxiety and compliance</li>
+      </ul>
+      <h4>4. Why People Stay — and What Makes Leaving Possible</h4>
+      <p>"Why don't you just leave?" reveals a fundamental misunderstanding of abusive relationship psychology. People stay because of:</p>
+      <ul>
+        <li>Intermittent reinforcement creating hope that "this time will be different"</li>
+        <li>Isolation reducing access to support and perspective</li>
+        <li>Erosion of self-esteem making it hard to believe anything better is possible</li>
+        <li>Fear — of escalation, financial instability, being alone, consequences for children</li>
+        <li>Genuine love for the person, coexisting with the harm they cause</li>
+        <li>Shame and stigma about having stayed</li>
+        <li>What makes leaving possible: restored connection to support, accurate information, rebuilding self-worth, practical safety planning, and professional support. The average person attempts to leave seven times before leaving permanently — each attempt is a step toward freedom, not a failure.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Red Flag Inventory</strong><br>Review the red flags list. For your current or most recent significant relationship: honestly note which, if any, were present. When did you first notice them? What kept you from taking them seriously? This exercise builds the clarity that protects you in future relationships.</p>
+      <p><strong>Exercise 2: The Reality Check</strong><br>Think of a confusing or troubling relationship dynamic. Write it from three perspectives: (1) Your experience, (2) The explanation you were given, (3) What a trusted outside observer might see. The gap between these perspectives is often revealing.</p>
+      <p><strong>Exercise 3: Support Network Mapping</strong><br>Map your current support network — who knows the truth of your life and genuinely cares about your wellbeing? If the map is sparse, this week's task is to re-establish one connection. Not to disclose everything — simply to begin rebuilding.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Have you ever missed a red flag that later became significant — and what made it easy to miss?</li>
+        <li>Do you recognise any manipulation tactics described this week in past or current relationships?</li>
+        <li>If a close friend described their relationship using these patterns, what would you want them to know?</li>
+        <li>How robust is your current support network — and what would it take to strengthen it?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🚩',title:'Red Flags Reference Guide',desc:'Comprehensive list with context and early recognition strategies',file:'red-flags-guide.pdf'},
+      {icon:'🎭',title:'Manipulation Tactics Explained',desc:'Gaslighting, DARVO, triangulation, and intermittent reinforcement',file:'manipulation-tactics.pdf'},
+      {icon:'🛡️',title:'Safety Planning Guide',desc:'Practical steps for those in or leaving harmful relationships',file:'safety-planning.pdf'},
+      {icon:'🗺️',title:'Support Network Mapping Worksheet',desc:'Identify and rebuild your circle of genuine support',file:'support-network.pdf'},
+      {icon:'🎧',title:'Grounding and Safety Audio',desc:'10-minute guided grounding practice for difficult emotional content',file:'grounding-audio.mp3'},
+      {icon:'📚',title:'Red Flags and Recovery Reading',desc:'Why Does He Do That? (Bancroft), The Verbally Abusive Relationship, Coercive Control',file:'redflags-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is 'love bombing' and why does it make early red flags easy to miss?",options:["Expressing love through grand gestures and gifts","Overwhelming affection and idealisation that makes the relationship feel intensely positive — causing early warning signs to be dismissed because the intensity feels like love, when it may be a control tactic","Communicating love through constant contact","An early relationship stage of intense positive feeling that naturally fades"],correct:1},
+      {question:"Why does gradual escalation make harmful patterns difficult to recognise?",options:["Each escalation is hidden from the target","People in harmful relationships stop noticing their environment","Each step is a small increment from the last — making it hard to identify the point where normal relationship difficulty became something harmful, because no single step feels dramatically different from the previous one","Gradual escalation only affects people without prior relationship experience"],correct:2},
+      {question:"What does research show about jealousy presented as love?",options:["Some degree of jealousy is a healthy sign of attachment","Jealousy is a normal part of deep romantic love","Pathological jealousy is possessiveness, not love — it typically escalates toward monitoring, control, and isolation rather than diminishing with reassurance","Jealousy indicates insecure attachment that can be resolved with consistent reassurance"],correct:2},
+      {question:"What is gaslighting and why is it particularly harmful?",options:["A form of manipulation using flattery to gain compliance","Withholding information to create dependence","Systematically causing someone to question their own memory, perception, and sanity — particularly harmful because it destroys the target's ability to trust their own experience, their primary tool for navigating reality","Aggressive criticism designed to undermine confidence"],correct:2},
+      {question:"What is the DARVO pattern identified by Jennifer Freyd?",options:["Distance, Avoidance, Resistance, Vulnerability, Openness","Deny, Argue, Redirect, Validate, Overcome","Deny, Attack, Reverse Victim and Offender — the person who caused harm denies responsibility, attacks the concern-raiser, and positions themselves as the real victim","Deflect, Accuse, Rationalise, Victimise, Overlook"],correct:2},
+      {question:"Why does intermittent reinforcement produce stronger attachment than consistent positive treatment?",options:["Unpredictability creates excitement","People value what they have to work for","The brain works harder to predict and secure the reward in unpredictable patterns — producing stronger attachment bonds than consistent positive treatment","Intermittent reinforcement mimics secure attachment"],correct:2},
+      {question:"What is 'triangulation' as a manipulation tactic?",options:["Involving a therapist to mediate conflicts","Using three communication channels simultaneously","Introducing a third person into the dynamic to create jealousy and insecurity — maintaining power by keeping the target focused on winning the manipulator's approval","A conflict pattern involving three people where two align against one"],correct:2},
+      {question:"What is the most important thing to understand about why people stay in harmful relationships?",options:["They are not aware the relationship is harmful","They have personality traits making them vulnerable","Complex psychological factors — intermittent reinforcement, isolation, eroded self-esteem, genuine love, fear, and practical constraints — all interact to make leaving genuinely difficult, not a simple choice","They stay because the good periods outweigh the bad"],correct:2},
+      {question:"What does the statistic about leaving harmful relationships (seven attempts) most importantly indicate?",options:["That leaving is virtually impossible","That people in harmful relationships are indecisive","That each attempt to leave is a step toward freedom, not a failure — repeated attempts are part of the normal process requiring support, information, self-worth restoration, and safety planning rather than judgment","That professional intervention is required for successful departure"],correct:2},
+      {question:"What makes isolation such an effective control tactic?",options:["Isolated people are easier to monitor","Isolation removes social obligations","Isolation increases dependence and reduces access to outside perspective — the target loses the reality-checking that support networks provide, making manipulation and distortion of reality far more effective","Isolation prevents the target from developing new relationships"],correct:2}
+    ]
+  },
+
+  3: {
+    tutorialVideo: "Boundaries — The Architecture of Healthy Relationships",
+    basicVideo: "How to Set and Hold Boundaries Without Guilt",
+    content: `
+      <h2>Week 3: Boundaries — The Foundation of Mutual Respect</h2>
+      <div class="safety-banner"><h4>💕 Boundaries Are Not Walls — They Are the Architecture of Genuine Connection</h4><p>Healthy boundaries are what make genuine intimacy possible — because they create the safety for both people to be fully themselves within the relationship. This week teaches you what boundaries are, why they matter, and how to establish and maintain them without guilt or aggression.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand what boundaries are and what they are not</li>
+        <li>Identify the different types of boundaries and your current relationship with each</li>
+        <li>Learn how to set boundaries clearly, kindly, and effectively</li>
+        <li>Understand what happens when boundaries are violated — and how to respond</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. What Boundaries Are — and Are Not</h4>
+      <p>Boundaries are the limits you establish for how you will allow yourself to be treated. They are NOT:</p>
+      <ul>
+        <li>Rules you impose on others' behaviour — boundaries govern your own responses, not others. You cannot control what someone does; you can only decide what you will do in response.</li>
+        <li>Punishment or rejection — a clearly stated boundary is an act of self-respect, not hostility</li>
+        <li>Selfish — prioritising your wellbeing does not deprive others; it creates conditions where both people can genuinely flourish</li>
+        <li>Permanent — they can adjust as relationships and circumstances change</li>
+        <li>A sign of not caring — clear boundaries often protect and preserve the relationship</li>
+      </ul>
+      <h4>2. Types of Boundaries</h4>
+      <ul>
+        <li><strong>Physical:</strong> Your body, personal space, and physical privacy</li>
+        <li><strong>Emotional:</strong> What you share emotionally, how much emotional weight you carry, protection from emotional manipulation</li>
+        <li><strong>Time:</strong> How you allocate your time, including the right to spend it on your own priorities</li>
+        <li><strong>Sexual:</strong> What activities you are willing to engage in, under what conditions — requiring ongoing explicit consent</li>
+        <li><strong>Financial:</strong> How money is managed and shared in relationships</li>
+        <li><strong>Digital:</strong> Access to your phone, accounts, and digital privacy</li>
+        <li><strong>Values-based:</strong> Behaviour that conflicts with your core values — requests to lie, to participate in harmful behaviour</li>
+      </ul>
+      <h4>3. The Roots of Boundary Difficulties</h4>
+      <p>People who struggle with boundaries almost always learned this in their family of origin:</p>
+      <ul>
+        <li>Families where one member's needs dominated taught children their own needs were secondary</li>
+        <li>Enmeshed families where privacy and individuality were not respected taught that having limits is a betrayal of love</li>
+        <li>Families using guilt and shame as control tools taught that disappointing others is catastrophic</li>
+        <li>Families with unpredictable anger taught that expressing needs is dangerous</li>
+      </ul>
+      <h4>4. How to Set Boundaries — The Framework</h4>
+      <ul>
+        <li><strong>Step 1 — Identify the need:</strong> What specifically is making you uncomfortable?</li>
+        <li><strong>Step 2 — Clarify the boundary:</strong> What do you need? What will you do if not respected?</li>
+        <li><strong>Step 3 — Choose the right moment:</strong> Calm and private, not in the middle of heated conflict</li>
+        <li><strong>Step 4 — State it clearly:</strong> "When you [specific behaviour], I feel [genuine feeling]. I need [specific need]. Going forward, I'm going to [consequence]."</li>
+        <li><strong>Step 5 — Follow through on consequences:</strong> A boundary without a consequence is a request. If you state consequences and don't follow through, you lose credibility — and trust in yourself.</li>
+      </ul>
+      <h4>5. When Boundaries Are Violated</h4>
+      <ul>
+        <li><strong>Healthy response:</strong> May feel disappointed, but ultimately respects the limit and adjusts. May ask questions to understand better.</li>
+        <li><strong>Concerning response:</strong> Guilt-tripping, minimising ("you're oversensitive"), arguing, or consistently "forgetting"</li>
+        <li><strong>Serious response:</strong> Retaliation, threats, or escalation in response to a reasonable boundary — itself a significant red flag</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Boundary Inventory</strong><br>Go through each type of boundary. For each, honestly assess: do you have clear boundaries? Are they respected? Where do you feel most resentful? Resentment is almost always a signal that a boundary has been crossed — either by another or by your own tendency to say yes when you mean no.</p>
+      <p><strong>Exercise 2: The Boundary Script</strong><br>Choose one boundary you need to set with a specific person. Write it using the framework: the behaviour, how it makes you feel, what you need, and what you will do if it continues. Practise saying it aloud — words uncomfortable in your head must become comfortable in your mouth first.</p>
+      <p><strong>Exercise 3: Childhood Boundary Messages</strong><br>Write about the messages you received in your family of origin about having needs and setting limits. Were your needs respected? What happened when you said no? What are you choosing to change now?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>In which area do you find it hardest to set boundaries — and what fear or belief makes it hard?</li>
+        <li>Where in your relationships do you feel most resentful — and what boundary might that be pointing toward?</li>
+        <li>What did your family of origin teach you about having needs — and how has that shaped your current relationships?</li>
+        <li>How do the most important people in your life respond when you set a boundary — and what does that reveal?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🏗️',title:'Boundaries Complete Guide',desc:'Types, foundations, and the full framework for healthy limits',file:'boundaries-guide.pdf'},
+      {icon:'✍️',title:'Boundary Setting Scripts',desc:'Word-for-word frameworks for common boundary conversations',file:'boundary-scripts.pdf'},
+      {icon:'🌱',title:'Boundary Origins Worksheet',desc:'Trace your boundary patterns to their family-of-origin roots',file:'boundary-origins.pdf'},
+      {icon:'⚡',title:'Boundary Violations Response Guide',desc:'How to respond to resistance, guilt-tripping, and violations',file:'violations-guide.pdf'},
+      {icon:'🎧',title:'Boundary Confidence Audio',desc:'12-minute guided practice for setting boundaries without guilt',file:'boundary-audio.mp3'},
+      {icon:'📚',title:'Boundaries Reading List',desc:'Boundaries (Cloud & Townsend), Set Boundaries Find Peace (Tawwab)',file:'boundaries-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the most accurate definition of a boundary in relationships?",options:["Rules you impose on other people's behaviour","A statement of what you will not tolerate from others","The limits you establish for how you will allow yourself to be treated — governing your own responses, not controlling others. You can only determine what you will do in response to others' behaviour.","A formal agreement between relationship partners"],correct:2},
+      {question:"Why is resentment described as a signal in the context of boundaries?",options:["Resentment indicates you care too deeply","Resentment is always a sign of unfair treatment","Resentment is almost always a signal that a boundary has been crossed — either by another person or by your own tendency to say yes when you mean no. It is useful information about where a limit needs to be established.","Resentment signals the need for a direct conversation"],correct:2},
+      {question:"What makes a boundary statement effective?",options:["Stating it firmly and repeatedly","Emotional intensity to communicate seriousness","Specificity (naming the behaviour), clarity (stating the need and consequence), calm delivery, and follow-through — a boundary without a consequence is a request","Always stating boundaries in writing"],correct:2},
+      {question:"What does a healthy response to a stated boundary look like?",options:["Immediate and enthusiastic compliance","No reaction at all","The person may feel disappointed or frustrated but ultimately respects the limit, adjusts behaviour, and may ask questions — without guilt-tripping, minimising, or arguing","Complete agreement and gratitude for the clarity"],correct:2},
+      {question:"What family-of-origin pattern most commonly produces adult difficulty with boundaries?",options:["Single-parent households","Families with high achievement expectations","Families where enmeshment was the norm, one member's needs dominated, guilt was used for control, or expressing needs was met with anger — teaching children that having limits is a betrayal of love or too dangerous","Families where emotional expression was discouraged"],correct:2},
+      {question:"What is the significance of how someone responds to boundaries as a relationship indicator?",options:["A single negative response is a serious red flag","How someone feels about a boundary reveals whether they care","The pattern of boundary responses — not a single instance — is the meaningful indicator. Consistent guilt-tripping, minimising, or forgetting reveals whether the other person fundamentally respects your needs.","The first response sets the pattern"],correct:2},
+      {question:"Why is setting boundaries not selfish?",options:["Because boundaries benefit the relationship","Because selfishness is defined by intent","The belief that prioritising your wellbeing deprives others is a distortion rooted in systems that taught subordination of needs. Clear boundaries create conditions where both people can genuinely flourish.","Because boundaries are communication, not self-interest"],correct:2},
+      {question:"What is an 'emotional boundary' and why is it important?",options:["Limiting how much emotion you show","Protecting yourself from others' negative emotions","Defining what you will share emotionally, how much of others' emotional weight you can carry, and protection from emotional manipulation — distinct from care, which is genuine support without taking responsibility for another's emotional state","Setting limits on how intense conversations can become"],correct:2},
+      {question:"What does 'boundaries govern your own behaviour, not others' mean?",options:["Only personal limits matter","Boundaries must be stated in first person","You cannot control what another person does — only what you will do in response. The power of a boundary lies in your follow-through, not their compliance.","Boundaries are internal commitments that don't need communication"],correct:2},
+      {question:"What is the five-step boundary-setting framework's most critical final step?",options:["Thanking the person for listening","Documenting the boundary conversation","Following through on stated consequences — without this, the boundary becomes just a repeated request, and you lose both credibility with the other person and trust in yourself","Checking in after a week to see if the boundary was respected"],correct:2}
+    ]
+  },
+
+  4: {
+    tutorialVideo: "Trust, Vulnerability, and Intimacy — The Architecture of Deep Connection",
+    basicVideo: "Love Languages and the Ongoing Work of Knowing Someone",
+    content: `
+      <h2>Week 4: Trust, Vulnerability, and Authentic Intimacy</h2>
+      <div class="safety-banner"><h4>💕 Intimacy Is Not Merger — It Is Being Truly Known and Truly Knowing</h4><p>The deepest human need after physical safety is to be genuinely known — seen fully and still accepted. This week explores the architecture of intimacy: how trust is built, how vulnerability enables depth, and what it takes to be truly close to another person without losing yourself.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand how trust is built, maintained, and rebuilt after rupture</li>
+        <li>Learn Brené Brown's research on vulnerability as the doorway to genuine intimacy</li>
+        <li>Understand Robert Sternberg's Triangular Theory of Love</li>
+        <li>Develop practices for cultivating authentic connection</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Trust — The BRAVING Framework</h4>
+      <p>Brené Brown's BRAVING framework identifies seven specific elements of trust:</p>
+      <ul>
+        <li><strong>B — Boundaries:</strong> You respect my limits and ask rather than assume when unsure</li>
+        <li><strong>R — Reliability:</strong> You do what you say you will do, consistently over time</li>
+        <li><strong>A — Accountability:</strong> You take responsibility for mistakes, apologise, and make amends</li>
+        <li><strong>V — Vault:</strong> You do not share what I've told you in confidence — and you maintain discretion with others' private information too, because if you share others' secrets, I know you'll share mine</li>
+        <li><strong>I — Integrity:</strong> You choose what is right over what is comfortable. Your actions align with your stated values.</li>
+        <li><strong>N — Non-judgment:</strong> I can ask for what I need and share my struggles without fear of ridicule</li>
+        <li><strong>G — Generosity:</strong> You extend the most generous interpretation to my words and actions</li>
+        <li>Trust is built incrementally in small consistent moments. It is lost far more quickly than it is built. And it can be rebuilt — but only through consistent demonstrated trustworthiness over time, not promises alone.</li>
+      </ul>
+      <h4>2. Vulnerability — The Doorway to Genuine Intimacy</h4>
+      <p>Brené Brown's research finding: vulnerability — the willingness to be seen and take emotional risks without guaranteed outcomes — is not weakness. It is the birthplace of love, belonging, and authentic connection. There is no genuine intimacy without it.</p>
+      <ul>
+        <li>The armour we wear to protect from vulnerability also keeps out connection. You cannot selectively protect from pain without also shutting out love.</li>
+        <li>Shame — the belief that we are fundamentally flawed and unworthy of connection — is the greatest enemy of vulnerability. "If I let you see the real me, you'll leave."</li>
+        <li>Empathy is the antidote to shame — not sympathy (feeling sorry from a distance) but entering someone's experience alongside them: "Me too." "That makes sense." "I'm here."</li>
+        <li>Vulnerability is not radical oversharing — it is appropriate, courageous sharing of genuine experience with people who have earned the right to hear it, calibrated to the depth and safety of the relationship.</li>
+      </ul>
+      <h4>3. Sternberg's Triangular Theory of Love</h4>
+      <p>Three components combine to create different forms of love:</p>
+      <ul>
+        <li><strong>Intimacy:</strong> Feelings of closeness, connectedness, and bondedness</li>
+        <li><strong>Passion:</strong> Romantic drives, physical attraction, and sexual connection</li>
+        <li><strong>Commitment:</strong> The decision to love and dedication to maintaining it</li>
+        <li>Different combinations: Intimacy alone = liking (friendship). Passion alone = infatuation. Commitment alone = empty love. Intimacy + Passion = romantic love. Intimacy + Commitment = companionate love. All three = consummate love.</li>
+        <li>Passion peaks early and diminishes naturally. Intimacy builds slowly. Long-term relationship health requires deliberate cultivation of intimacy and commitment even as passion fluctuates.</li>
+      </ul>
+      <h4>4. Cultivating Authentic Connection</h4>
+      <ul>
+        <li><strong>Turning toward bids:</strong> Gottman's research — people make small bids for connection (requests for attention or engagement). Couples who turn toward these bids at least 86% of the time remain stable; those turning toward only 33% of the time are more likely to divorce. Small, consistent responsiveness matters more than grand gestures.</li>
+        <li><strong>Love Maps:</strong> Detailed knowledge of a partner's inner world — hopes, fears, preferences, memories, dreams. Building and updating love maps is ongoing work. People change; relationships must update their knowledge to stay current.</li>
+        <li><strong>Five Love Languages (Chapman):</strong> Words of affirmation, acts of service, receiving gifts, quality time, and physical touch. Mismatched love languages create the feeling of not being loved even when love is genuinely expressed in an unrecognised form.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: BRAVING Trust Assessment</strong><br>Choose the relationship you most want to deepen. Rate it (and yourself) on each BRAVING element (1–10). Which are strongest? Which need most development? For the lowest-scoring elements, what specific behaviours would raise the score?</p>
+      <p><strong>Exercise 2: Vulnerability Practice</strong><br>This week, share one genuine, slightly vulnerable truth with someone who has earned the right to hear it. Not a dramatic confession — something real you'd normally keep to yourself. Write about what happened before, during, and after. What did their response reveal?</p>
+      <p><strong>Exercise 3: Love Language Discovery</strong><br>Identify your primary love language — and ask or observe your most important relationship partner's. Where are they aligned? Where do they differ? Do one specific thing this week to express love in their language, even if it doesn't come naturally to you.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Which BRAVING element is most present — and most absent — in your most trusted relationship?</li>
+        <li>What armour do you most use to protect yourself from vulnerability — and what connection has that cost you?</li>
+        <li>Where does your most important relationship sit in Sternberg's triangle — and which component needs cultivation?</li>
+        <li>How well do you know the current inner world of the most important person in your life?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'🤝',title:'BRAVING Trust Framework Guide',desc:'Brown\'s seven elements with self-assessment and building strategies',file:'braving-trust.pdf'},
+      {icon:'💝',title:'Vulnerability and Intimacy Workbook',desc:'Brown\'s research applied to deepening connection',file:'vulnerability-workbook.pdf'},
+      {icon:'△',title:'Sternberg\'s Triangle of Love',desc:'Understanding the three components and their combinations',file:'love-triangle.pdf'},
+      {icon:'💌',title:'Five Love Languages Guide',desc:'Identify and apply love languages in your relationships',file:'love-languages.pdf'},
+      {icon:'🎧',title:'Intimacy and Connection Meditation',desc:'12-minute guided practice for opening to genuine connection',file:'intimacy-audio.mp3'},
+      {icon:'📚',title:'Trust and Intimacy Reading',desc:'Daring Greatly (Brown), Seven Principles (Gottman), The 5 Love Languages (Chapman)',file:'intimacy-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does the 'V — Vault' element of Brown's BRAVING trust framework mean?",options:["Protecting your own private information","Keeping financial information private","You do not share information told to you in confidence — and you maintain discretion with others' private information too, because if you share others' secrets with me, I know you will share mine","Storing relationship memories safely"],correct:2},
+      {question:"What is Brown's central finding about vulnerability?",options:["Vulnerability should be reserved for therapy","Vulnerability is a sign of insecure attachment","Vulnerability — the willingness to be seen and take emotional risks without guaranteed outcomes — is not weakness but the birthplace of love, belonging, and authentic connection. There is no genuine intimacy without it.","Vulnerability is only appropriate in long-established relationships"],correct:2},
+      {question:"What distinguishes vulnerability from oversharing?",options:["Vulnerability involves deeper emotions","Oversharing is vulnerability with the wrong person","Vulnerability is appropriate, courageous sharing of genuine experience with people who have earned the right to hear it — calibrated to relationship depth and safety; oversharing dumps content without discernment","Vulnerability is always planned; oversharing is spontaneous"],correct:2},
+      {question:"What is the role of shame in blocking intimacy?",options:["Shame motivates improvement","Shame is a healthy signal that limits were crossed","Shame — the belief that you are flawed and therefore unworthy of connection — is the greatest enemy of vulnerability: 'if I let you see the real me, you'll leave.' It prevents the genuine self-disclosure intimacy requires.","Shame is primarily relevant to sexual intimacy"],correct:2},
+      {question:"What distinguishes empathy from sympathy in the context of shame and intimacy?",options:["Empathy involves more emotional investment","Sympathy is for strangers; empathy for close relationships","Sympathy feels sorry for someone from a safe distance; empathy enters their experience alongside them — 'me too,' 'that makes sense,' 'I'm here.' Empathy is the antidote to shame that enables vulnerability.","Empathy requires shared experience"],correct:2},
+      {question:"In Sternberg's Triangular Theory, what produces consummate love?",options:["Passion and commitment without needing intimacy","Long-term commitment and deep friendship","All three components — intimacy, passion, and commitment — present together. The rarest and most complete form of love.","Intimacy and commitment developed over many years"],correct:2},
+      {question:"What does Gottman's research on 'turning toward' show?",options:["Grand gestures are the most important predictors of satisfaction","Conflict resolution quality determines relationship health","Couples turning toward each other's bids for connection at least 86% of the time were in stable relationships — compared to 33% in relationships that later divorced. Small, consistent responsiveness matters more than grand gestures.","Turning toward is only relevant in romantic relationships"],correct:2},
+      {question:"What is a 'bid for connection' in Gottman's research?",options:["A request for significant commitment","An explicit request for emotional support","A small request for attention, response, or engagement — which the other person can turn toward (engage), turn away from (ignore), or turn against (respond negatively). These micro-interactions are the building blocks of connection.","A conscious attempt to deepen intimacy"],correct:2},
+      {question:"What is the practical implication of passion peaking early in Sternberg's framework?",options:["Passion-based relationships are inherently temporary","Long-term relationships should be based on commitment alone","Long-term health requires deliberately cultivating intimacy and commitment even as passion naturally fluctuates — relationships relying on passion alone will struggle when it diminishes","Couples should separate periodically to reignite passion"],correct:2},
+      {question:"What does the 'G — Generosity' element of BRAVING trust mean?",options:["Being financially generous in the relationship","Giving more than you receive over time","Extending the most generous possible interpretation to the other person's words and actions — assuming good intent unless evidence clearly indicates otherwise","Offering support without being asked"],correct:2}
+    ]
+  },
+
+  5: {
+    tutorialVideo: "Relationships Across Contexts — Family, Friendship, Work, and Self",
+    basicVideo: "Navigating Relationship Transitions and Growth",
+    content: `
+      <h2>Week 5: Relationships Across Contexts — Family, Friendship, and Growth</h2>
+      <div class="safety-banner"><h4>💕 Every Relationship in Your Life Teaches You Something About Connection</h4><p>This week broadens the lens beyond romantic relationships to examine the full ecosystem of your connections: family systems, friendship, and relationship transitions — including the dynamics unique to each, and the skills that serve all of them.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Understand family systems theory and how family roles shape adult relationships</li>
+        <li>Learn what makes friendships thrive and how to cultivate them as adults</li>
+        <li>Navigate relationship transitions — growing apart, grief, and intentional endings</li>
+        <li>Understand the relationship between self-relationship and all other relationships</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Family Systems — The Original Relationship School</h4>
+      <p>Murray Bowen's Family Systems Theory proposes the family is an emotional unit — a system where each member's behaviour affects all others. Understanding your family system illuminates patterns that almost certainly recur in adult relationships:</p>
+      <ul>
+        <li><strong>Differentiation of self:</strong> Maintaining a clear, stable sense of identity, values, and feelings while remaining genuinely connected — neither fusing (losing yourself in the family emotional atmosphere) nor cutting off (escaping closeness through distance). Differentiation is the developmental goal and the foundation of all healthy adult relationships.</li>
+        <li><strong>Triangulation:</strong> When tension between two family members is managed by involving a third — a child absorbs parental anxiety, a sibling is recruited to take sides. This reduces anxiety between the original two but harms the third.</li>
+        <li><strong>Family roles:</strong> Hero (high achiever), scapegoat (carries family's identified problems), lost child (disappears to reduce burden), mascot (uses humour to diffuse tension). These childhood roles can persist into adult relationships and significantly shape how we relate.</li>
+        <li><strong>Multigenerational transmission:</strong> Relational patterns transmit across generations — your parents' patterns, shaped by their parents' patterns, form the default template you bring to your own relationships.</li>
+      </ul>
+      <h4>2. Friendship — The Undervalued Relationship</h4>
+      <p>Research by William Chopik shows friendships become increasingly important to wellbeing in adulthood — sometimes more predictive of late-life health and happiness than family relationships. Yet adult friendships are consistently the most neglected relationship type.</p>
+      <ul>
+        <li>Adult friendships lack the structural scaffolding of earlier life — shared institutions (school, university, workplace) that facilitate proximity and repeated contact, the primary driver of friendship formation</li>
+        <li>Adult life creates competing demands on time and energy that friendship often loses to</li>
+        <li>What sustains adult friendships: frequency of contact (even brief), reciprocity of investment, genuine mutual knowledge of each other's lives, and showing up during difficulty — not only good times</li>
+        <li>Research shows most people dramatically underestimate how positively others respond to friendly overtures — fear of seeming needy keeps many adult friendships at a superficial level or allows them to fade unnecessarily</li>
+      </ul>
+      <h4>3. Navigating Relationship Transitions</h4>
+      <ul>
+        <li><strong>Growing apart:</strong> Some relationships naturally lose their central relevance as lives, values, and priorities diverge. Recognising this without guilt is healthier than maintaining a hollow or obligatory connection.</li>
+        <li><strong>Relationship grief:</strong> The end of any significant relationship is a genuine loss that deserves genuine grief. Estrangement grief is particularly complex — mourning a loss with no death, no ceremony, and no social acknowledgment.</li>
+        <li><strong>Ending relationships intentionally:</strong> Some relationships need to be ended — for safety, wellbeing, or the reality that the connection no longer serves either person. Ending with respect, honesty, and clarity is kinder than gradual withdrawal or ghosting.</li>
+        <li><strong>Repair and return:</strong> Some relationships that ended or became strained can be repaired — with time, growth, honest communication, and mutual willingness. Not all can, and not all should be. Discernment requires honesty about what changed, what remains, and what is genuinely possible.</li>
+      </ul>
+      <h4>4. The Relationship With Yourself — The Foundation of All Others</h4>
+      <p>Every relationship you have with another person reflects and is shaped by the relationship you have with yourself:</p>
+      <ul>
+        <li>Your self-esteem determines how much respect and genuine care you allow yourself to receive — and what treatment you are prepared to tolerate</li>
+        <li>Your self-knowledge determines how clearly you can communicate needs and take responsibility for your role in relational dynamics</li>
+        <li>Your self-compassion determines how you recover from relationship ruptures and disappointments</li>
+        <li>Your relationship with solitude — the ability to be with yourself without anxiety — is the foundation of being genuinely present with others rather than using relationships to escape yourself</li>
+        <li>People comfortable alone make better relationship partners — they choose connection from genuine desire rather than fear of being without it. The relationship enhances a life already worth living.</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Family Role Reflection</strong><br>Which family role did you most occupy as a child — hero, scapegoat, lost child, mascot, or caretaker? How does this role show up in your adult relationships? In which relationships do you still play the same role — and what might it free to step out of it?</p>
+      <p><strong>Exercise 2: Friendship Audit</strong><br>List your five most important friendships. For each: how long since you were last genuinely in contact? Is the effort reciprocal? Do they know the current truth of your life? Choose one neglected friendship that matters and reach out this week — not to explain the absence, simply to reconnect.</p>
+      <p><strong>Exercise 3: Relationship Transition Journal</strong><br>Write about a significant relationship transition — one that ended, changed form, or went through a major shift. What was lost? What was learned? What does this transition still need from you — grief, closure, acceptance, or action?</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>What family system patterns do you most recognise recurring in your adult relationships?</li>
+        <li>Which of your friendships most needs your investment right now — and what has been preventing you from offering it?</li>
+        <li>Is there a relationship transition in your life that has not been fully processed?</li>
+        <li>What is the quality of your relationship with yourself — and how does it shape the relationships you attract and maintain?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'👨‍👩‍👧',title:'Family Systems Theory Guide',desc:'Bowen\'s framework, differentiation, roles, and multigenerational patterns',file:'family-systems.pdf'},
+      {icon:'🤗',title:'Adult Friendship Guide',desc:'Why friendships fade and how to cultivate them intentionally',file:'adult-friendship.pdf'},
+      {icon:'🔄',title:'Relationship Transitions Workbook',desc:'Navigating growing apart, endings, grief, and return',file:'transitions-workbook.pdf'},
+      {icon:'🪞',title:'Self-Relationship Assessment',desc:'How your relationship with yourself shapes all your relationships',file:'self-relationship.pdf'},
+      {icon:'🎧',title:'Relationship Ecosystem Meditation',desc:'12-minute guided reflection on the full landscape of your connections',file:'relationship-ecosystem-audio.mp3'},
+      {icon:'📚',title:'Relationships Contexts Reading',desc:'Family Ties That Bind (Richardson), Frientimacy (McGonigal), Adult Children of Emotionally Immature Parents',file:'contexts-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is 'differentiation of self' in Bowen's Family Systems Theory?",options:["The process of establishing your own household","Recognising which traits come from family versus your own development","The ability to maintain a clear, stable sense of identity and feelings while remaining genuinely connected — neither fusing (losing yourself in the family emotional atmosphere) nor cutting off (escaping closeness through distance)","Separating your family role from your professional identity"],correct:2},
+      {question:"What is 'triangulation' in family systems?",options:["Three-party mediation to resolve family conflict","A communication pattern involving three members simultaneously","When tension between two family members is managed by involving a third — a child absorbs parental anxiety, a sibling is recruited to take sides — reducing anxiety between the original two but harming the third","A healthy coping strategy for family stress"],correct:2},
+      {question:"What does research by William Chopik show about friendship and adult wellbeing?",options:["Romantic relationships are the strongest predictor of adult wellbeing","Family relationships matter more than friendships in later life","Friendships become increasingly important to wellbeing in adulthood — sometimes more predictive of late-life health and happiness than family relationships — yet are consistently the most neglected relationship type","Friendships decline in importance after forming a committed partnership"],correct:2},
+      {question:"What do researchers identify as the primary driver of friendship formation that adult life lacks?",options:["Shared values and personality traits","Geographic proximity","Structural scaffolding — shared institutions like school or workplace that facilitate proximity and repeated contact. Adult life lacks these automatic mechanisms, requiring more intentional effort.","Having free time and social opportunities"],correct:2},
+      {question:"What does research show about fear of initiating contact in adult friendship?",options:["Fear of initiating is justified — most prefer to be contacted","Initiating more than once is perceived as excessive","Most people dramatically underestimate how positively others respond to friendly overtures — fear of seeming needy keeps many friendships superficial or allows them to fade unnecessarily","Initiating contact is culturally inappropriate in many adult contexts"],correct:2},
+      {question:"What is the 'scapegoat' family role and how can it affect adult relationships?",options:["The family member who takes on leadership and conflict resolution","The family member who achieves highly to bring pride","The family member who carries the family's identified problems — absorbing blame for dysfunction. This role can persist into adult relationships as patterns of accepting unfair blame.","The family member who escapes through withdrawal"],correct:2},
+      {question:"What makes grief at the end of an estrangement particularly complex?",options:["Estrangement endings are usually mutual and less painful","Anger in estrangement prevents genuine grief","It is mourning a loss with no death, no ceremony, and no social acknowledgment — the person may still be alive and the relationship ambiguously defined, creating disenfranchised grief that society does not recognise or support","Estrangement grief is only experienced by the person left"],correct:2},
+      {question:"What does research show about comfort with solitude and relationship quality?",options:["People preferring solitude make worse relationship partners","Comfort with solitude indicates avoidant attachment","People comfortable alone make better relationship partners — they choose connection from genuine desire rather than fear of being without it. The relationship enhances a life already worth living.","Comfort with solitude is primarily relevant to introverts"],correct:2},
+      {question:"What is 'multigenerational transmission' in family systems theory?",options:["Family knowledge and traditions passed to children","Financial inheritance across generations","Relational patterns transmitting across generations — the way parents related, shaped by their parents' patterns, creates the default template you bring to your own relationships","The biological transmission of personality traits"],correct:2},
+      {question:"What does differentiation of self protect against in adult relationships?",options:["Becoming too dependent on professional relationships","Inheriting parents' specific conflicts","Both fusion (losing yourself in another's identity or needs) and cut-off (escaping closeness through distance) — enabling genuine connection without loss of self, the foundation of healthy adult relationships","Repeating the exact conflicts of your family of origin"],correct:2}
+    ]
+  },
+
+  6: {
+    tutorialVideo: "The Relationship You Deserve — Building Your Relational Future",
+    basicVideo: "Love as a Practice — The Long View on Connection",
+    content: `
+      <h2>Week 6: Integration — Building the Relationships Your Life Deserves</h2>
+      <div class="safety-banner"><h4>💕 Every Relationship Is an Ongoing Invitation to Grow</h4><p>Six weeks of learning, reflection, and courageous honesty bring us here. The goal is not to arrive at perfect relationships — they do not exist. The goal is to bring more awareness, skill, intention, and self-knowledge to every connection in your life, and to keep growing in your capacity to love and be loved well.</p></div>
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Integrate six weeks of learning into a personal relationship philosophy and practice</li>
+        <li>Understand relationship maintenance as an ongoing practice, not a destination</li>
+        <li>Develop your personal relationship vision and the commitments that support it</li>
+        <li>Learn to approach all relationships with curiosity, compassion, and realistic expectation</li>
+      </ul>
+      <h3>📖 Key Concepts</h3>
+      <h4>1. Relationships as Practice — Not Achievement</h4>
+      <p>One of the most liberating reframes in relationship psychology is moving from relationships as something you get right to something you practise. This shift changes everything:</p>
+      <ul>
+        <li>Practice means no endpoint at which you have "arrived" — only ongoing attention, learning, and adjustment</li>
+        <li>Practice means failure — mistakes, ruptures, misunderstandings — is informative rather than catastrophic</li>
+        <li>Practice means showing up consistently, not perfectly — accumulated small acts of care, honesty, and repair build lasting connection</li>
+        <li>Practice means being a student of the people you love — genuinely curious about who they are becoming, not only who they were when you first met them</li>
+        <li>Erich Fromm's "The Art of Loving" (1956): love is not primarily a feeling — it is an activity, a practice, a repeated choice. "Love is an act of will — both an intention and an action." The feeling follows the practice.</li>
+      </ul>
+      <h4>2. The Qualities of a Relationally Mature Person</h4>
+      <p>Not a perfect person — a growing one. Integration of this course points toward:</p>
+      <ul>
+        <li><strong>Self-aware:</strong> Knows their attachment patterns, family roles, communication defaults, and emotional triggers — and how these shape relationships</li>
+        <li><strong>Boundaried:</strong> Knows what they need, can communicate it clearly, and follows through on the limits they set</li>
+        <li><strong>Discerning:</strong> Can distinguish between healthy relationship difficulty and warning signs of harm — and acts on that discernment</li>
+        <li><strong>Vulnerable:</strong> Willing to be genuinely known with people who have earned it</li>
+        <li><strong>Repairing:</strong> When they hurt others — and they will — can acknowledge it, apologise genuinely, and work to restore connection</li>
+        <li><strong>Curious:</strong> Genuinely interested in the other person as a continuously evolving human being</li>
+        <li><strong>Accountable:</strong> Takes responsibility for their choices, patterns, and impact — without excessive self-blame or defensive denial</li>
+        <li><strong>Patient:</strong> Understands that trust, intimacy, and healing take time — and does not demand more speed than relationships can sustain</li>
+      </ul>
+      <h4>3. Realistic Expectations — The Myth of the Perfect Relationship</h4>
+      <p>Unrealistic relationship expectations are one of the most common sources of unnecessary suffering in relationships. Common myths worth dismantling:</p>
+      <ul>
+        <li><strong>The myth of effortless compatibility:</strong> The belief that the right relationship should feel easy, natural, and conflict-free. In reality, all genuine relationships require ongoing effort, negotiation, and repair — not because something is wrong but because two different people are sharing a life.</li>
+        <li><strong>The myth of the one:</strong> The belief in a single perfect partner destined for you — whose existence means you don't need to do any work. Good relationships are made, not found.</li>
+        <li><strong>The myth of permanent passion:</strong> The belief that romantic love should remain at peak intensity indefinitely. Research consistently shows passion diminishes over time in all long-term relationships — this is not failure but a transition from early-stage infatuation to deeper, more stable love.</li>
+        <li><strong>The myth of the relationship solving you:</strong> The belief that the right relationship will heal your wounds, complete your identity, and fulfil your deepest needs. Relationships can support growth and healing — but they cannot do the work of self-development for you.</li>
+      </ul>
+      <h4>4. Your Personal Relationship Philosophy</h4>
+      <p>A personal relationship philosophy is your considered, articulated understanding of what you believe about relationships — what you are committed to bringing to them, what you need from them, and what you will and will not accept within them. It is grounded in:</p>
+      <ul>
+        <li>Your core values — what genuinely matters to you in how you live and love</li>
+        <li>Your honest self-knowledge — your patterns, tendencies, attachment style, and growth edges</li>
+        <li>Your non-negotiables — the qualities of treatment without which a relationship cannot flourish for you</li>
+        <li>Your commitments — what you are prepared to give, practise, and work toward</li>
+        <li>Your vision — the kind of relational life you are building, in all its dimensions</li>
+      </ul>
+      <h4>5. The Ongoing Practice — Maintenance, Growth, and Grace</h4>
+      <p>Every relationship worth having requires maintenance — not because it is failing but because it is alive. The ongoing practices that sustain relational health:</p>
+      <ul>
+        <li>Regular, honest check-ins — "How are we doing?" asked and genuinely received, not as performance</li>
+        <li>Continued curiosity about the other person — updating your love map as they grow and change</li>
+        <li>Expressing appreciation consistently — not assuming people know they are valued</li>
+        <li>Addressing difficulties when they are small rather than letting them accumulate into crises</li>
+        <li>Repair, quickly and genuinely, when you hurt someone — without requiring them to pursue you for it</li>
+        <li>Bringing your best self into relationships more often than your worst — while allowing both to be seen</li>
+        <li>Grace — extending to others, and to yourself, the patience and understanding that every imperfect human needs to love and be loved well</li>
+      </ul>
+      <h3>💡 Practical Exercises</h3>
+      <p><strong>Exercise 1: Write Your Personal Relationship Philosophy</strong><br>Drawing on six weeks of reflection, write your personal relationship philosophy in 3-5 paragraphs. Include: what you believe about what makes relationships healthy; what you are committed to bringing to your relationships; your non-negotiables; what you are still working on; and your vision for the relational life you are building. This is a living document — return to it in six months.</p>
+      <p><strong>Exercise 2: Relationship Inventory</strong><br>List the five most important relationships in your current life. For each: what is working well? What needs attention? What is one specific thing you could do in the next 30 days to strengthen this relationship? Choose one relationship from the list and take that action this week.</p>
+      <p><strong>Exercise 3: A Letter to Your Future Relational Self</strong><br>Write a letter to yourself to be read in one year's time. Tell that future version of you: what you are learning about relationships, what you are committed to changing, what you hope they have done differently, and what you most want them to know about love — including love for themselves. Seal it and put it somewhere you'll find it in twelve months.</p>
+      <h3>📝 Reflection Questions</h3>
+      <ul>
+        <li>Looking across six weeks of learning — what single insight has most changed how you think about relationships?</li>
+        <li>Which quality of a relationally mature person feels most within reach — and which requires the most work?</li>
+        <li>Which relationship myth has caused you the most unnecessary suffering — and what does dismantling it make possible?</li>
+        <li>Six weeks ago, what was your relationship to the idea of genuine connection — and how has that relationship shifted?</li>
+      </ul>
+      <h3>💕 A Closing Word</h3>
+      <p>Relationships are not a problem to be solved. They are the medium through which we become fully human — the place where we are most challenged, most changed, and most alive. Over six weeks, you have done something genuinely courageous: you have looked honestly at how you love and how you are loved, at the patterns that have served you and the ones that have not, at the red flags you may have missed and the boundaries you may have struggled to hold, at the vulnerability you may have armoured against and the trust you may have found difficult to extend. That kind of honest self-inquiry is not comfortable — but it is the specific work that makes growth possible. You are not the same person who began this course. You know more about yourself, about what you need, about what you will accept and what you will not, about the specific and irreplaceable quality of genuine connection. Carry that knowledge with you. Into your relationships, your conversations, your moments of conflict and your moments of care. The relationships you deserve are built from exactly this — not perfection, but honesty, courage, and the consistent willingness to try again.</p>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      {icon:'📋',title:'Personal Relationship Philosophy Template',desc:'Write your values, commitments, non-negotiables, and vision',file:'relationship-philosophy.pdf'},
+      {icon:'🔍',title:'Relationship Inventory Worksheet',desc:'Assess and strengthen each of your five most important relationships',file:'relationship-inventory.pdf'},
+      {icon:'💭',title:'Relationship Myths Dismantled',desc:'Common unrealistic expectations and what replacing them makes possible',file:'relationship-myths.pdf'},
+      {icon:'🌱',title:'Ongoing Relationship Maintenance Guide',desc:'Daily, weekly, and monthly practices for relational health',file:'maintenance-guide.pdf'},
+      {icon:'🎧',title:'Relationships Integration Meditation',desc:'20-minute closing guided practice for your relational life',file:'integration-audio.mp3'},
+      {icon:'🏆',title:'Course Completion Certificate',desc:'Download your certificate of completion',file:'certificate.pdf'}
+    ],
+    assessment: [
+      {question:"What does Erich Fromm mean when he describes love as 'an act of will — both an intention and an action'?",options:["Love requires constant romantic gestures","Love is primarily a decision made once at commitment","Love is not primarily a feeling but an ongoing practice and repeated choice — the feeling follows the practice rather than precluding it. This reframes relationships from something you get right to something you practise.","Love requires suppressing feelings in favour of rational decision-making"],correct:2},
+      {question:"What does 'relationships as practice rather than achievement' mean for handling mistakes and ruptures?",options:["Mistakes in relationships are unacceptable and must be avoided","Relationships end when enough mistakes accumulate","Failure — mistakes, ruptures, misunderstandings — becomes informative rather than catastrophic. Practice has no endpoint at which you've 'arrived'; it involves ongoing attention, learning, and adjustment.","Practice means prioritising effort over outcomes"],correct:2},
+      {question:"What is 'the myth of effortless compatibility' and why is it harmful?",options:["The belief that compatible people share all the same interests","The expectation that relationships should require no compromise","The belief that the right relationship should feel easy and conflict-free — harmful because all genuine relationships require ongoing effort, negotiation, and repair, not because something is wrong but because two different people are sharing a life","The idea that compatibility can be determined in early dating"],correct:2},
+      {question:"What does 'the myth of the relationship solving you' mean?",options:["The belief that therapy is unnecessary in a good relationship","The expectation that your partner should anticipate all your needs","The belief that the right relationship will heal your wounds, complete your identity, and fulfil your deepest needs — when in reality relationships can support growth but cannot do the work of self-development for you","The idea that relationship problems can always be resolved internally"],correct:2},
+      {question:"What characterises a 'relationally mature' person according to this course?",options:["Someone who has resolved all their relationship wounds","Someone who never experiences conflict or difficulty in relationships","Not a perfect person but a growing one — self-aware, boundaried, discerning, vulnerable with those who've earned it, repairing when they cause hurt, curious about others, accountable, and patient with the pace of genuine growth","Someone with secure attachment in all relationship contexts"],correct:2},
+      {question:"What does maintaining 'realistic expectations' about passion in long-term relationships mean?",options:["Accepting that passion inevitably fades completely","Prioritising friendship over romantic connection","Research shows passion diminishes over time in all long-term relationships — this is not failure but a transition from early-stage infatuation to deeper, more stable love. Expecting permanent peak intensity causes unnecessary suffering.","Accepting that romantic relationships are primarily practical partnerships"],correct:2},
+      {question:"What does a 'personal relationship philosophy' include?",options:["A list of qualities you want in an ideal partner","Rules for how others must treat you","Your considered understanding of what you believe about relationships — grounded in core values, honest self-knowledge, non-negotiables, commitments you are prepared to make, and your vision for the relational life you are building","A formal agreement established with relationship partners"],correct:2},
+      {question:"What does 'grace' mean in the context of ongoing relationship practice?",options:["Maintaining elegant communication even during conflict","Forgiving others quickly and without processing","Extending patience and understanding to others — and to yourself — that every imperfect human needs to love and be loved well. Grace is what sustains relationships through the inevitable imperfections of being human.","Prioritising the other person's needs over your own"],correct:2},
+      {question:"What is the significance of 'addressing difficulties when they are small' as a maintenance practice?",options:["Small issues are less painful to discuss than large ones","Regular conflict keeps both people engaged","Difficulties accumulate — addressing them early prevents the compounding of unresolved issues into crises that are far harder to repair. Consistent small maintenance is less painful and more effective than periodic emergency repair.","Small difficulties are easier to resolve because they require less skill"],correct:2},
+      {question:"What is the course's closing message about the nature of relationship work?",options:["Perfect relationships are achievable with the right skills and partner","The most important relationship is the one with yourself","Relationships are the medium through which we become fully human — honest self-inquiry about how we love and are loved is courageous, uncomfortable, and the specific work that makes growth possible. Not perfection, but honesty, courage, and the willingness to try again.","Relationship skills are primarily learned through direct experience rather than reflection"],correct:2}
+    ]
+  }
+
+};
+</script>
+</body>
+</html>
