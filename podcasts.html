@@ -36,6 +36,21 @@
             background-attachment: fixed;
         }
 
+        /* THE LARGE WATERMARK TEXT (Floating behind mic) */
+        .large-bg-text {
+            position: fixed;
+            top: 20%;
+            left: 5%;
+            font-size: clamp(5rem, 18vw, 15rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.04);
+            z-index: -1;
+            text-transform: uppercase;
+            pointer-events: none;
+            line-height: 0.8;
+            letter-spacing: -5px;
+        }
+
         /* NAVIGATION */
         nav {
             position: fixed;
@@ -51,7 +66,26 @@
         .nav-left { display: flex; align-items: center; gap: 30px; }
         .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
         .logo span { color: var(--primary-blue); }
-        .nav-menu { display: flex; gap: 25px; list-style: none; font-size: 13px; opacity: 0.7; font-weight: 500; }
+
+        /* GLASS MEMBER LOGIN BUTTON */
+        .btn-member-glass {
+            padding: 10px 24px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-member-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-blue);
+        }
 
         /* HERO AREA */
         .hero {
@@ -61,7 +95,6 @@
             justify-content: center;
             padding: 0 10%;
         }
-        /* UPDATED: PODCASTS Text Styling */
         .hero h1 { 
             font-size: clamp(4rem, 12vw, 8rem); 
             font-weight: 900; 
@@ -94,14 +127,12 @@
         }
         .row-title { font-size: 24px; margin: 60px 0 25px; font-weight: 700; border-left: 4px solid var(--primary-blue); padding-left: 15px; }
 
-        /* GRID SYSTEM */
         .podcast-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 25px;
         }
 
-        /* GLASS CARD */
         .podcast-card {
             background: var(--glass);
             border: 1px solid var(--glass-border);
@@ -120,7 +151,6 @@
             background: #111;
         }
         .thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.3s; }
-        .podcast-card:hover .thumb img { opacity: 0.9; }
         
         .card-tag {
             position: absolute;
@@ -160,19 +190,14 @@
 <body>
 
     <div class="fixed-bg"></div>
+    <div class="large-bg-text">Podcasts</div>
 
     <nav>
         <div class="nav-left">
             <div class="logo">Coach L <span>Academy</span></div>
-            <ul class="nav-menu">
-                <li>Leadership</li>
-                <li>Digital Skills</li>
-                <li>Mentorship</li>
-                <li>Global Radio</li>
-            </ul>
-        </div>
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <button style="padding: 8px 20px; border: 1px solid #444; background: transparent; color:#fff; border-radius: 4px; font-size: 12px; cursor: pointer;">Member Login</button>
+            </div>
+        <div>
+            <button class="btn-member-glass">Member Sign In</button>
         </div>
     </nav>
 
