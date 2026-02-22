@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach L Academy | Live & Archives</title>
+    <style>
+        :root {
+            --primary-blue: #00d2ff;
+            --accent-green: #39ff14;
+            --live-red: #ff4b2b;
+            --bg-dark: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* FIXED BACKGROUND EFFECT */
+        .fixed-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4)), 
+                        url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            background-attachment: fixed;
+        }
+
+        .large-bg-text {
+            position: fixed;
+            top: 30%; 
+            left: 5%;
+            font-size: clamp(5rem, 18vw, 15rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.04);
+            z-index: -1;
+            text-transform: uppercase;
+            pointer-events: none;
+            line-height: 0.8;
+            letter-spacing: -5px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+        }
+        .logo { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
+        .logo span { color: var(--primary-blue); }
+
+        .btn-member-glass {
+            padding: 10px 24px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10%;
+        }
+        .hero h1 { 
+            font-size: clamp(4rem, 12vw, 8rem); 
+            font-weight: 900; 
+            margin-bottom: -10px; 
+            line-height: 1; 
+            text-transform: uppercase;
+            letter-spacing: -2px;
+        }
+        .hero h2 { font-size: 28px; font-weight: 300; margin-bottom: 35px; color: var(--primary-blue); opacity: 0.9; }
+        
+        /* PLAYER BUTTON STYLING */
+        .btn-action {
+            background-color: var(--accent-green);
+            color: #000;
+            padding: 16px 35px;
+            border-radius: 4px;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            width: fit-content;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* STOP STATE STYLE */
+        .btn-action.is-playing {
+            background-color: var(--live-red);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 75, 43, 0.4);
+        }
+
+        .main-container {
+            padding: 0 5% 100px;
+            background: linear-gradient(to bottom, transparent, #0a0a0a 150px);
+            position: relative;
+            z-index: 10;
+        }
+        .row-title { font-size: 24px; margin: 60px 0 25px; font-weight: 700; border-left: 4px solid var(--primary-blue); padding-left: 15px; }
+
+        .archive-scroll-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 25px;
+            padding: 20px 0;
+            scrollbar-width: none;
+        }
+
+        .podcast-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            overflow: hidden;
+            flex: 0 0 280px;
+        }
+
+        .thumb { width: 100%; height: 160px; background: #111; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .card-info { padding: 20px; }
+        .price-tag { font-size: 14px; color: var(--primary-blue); font-weight: 800; }
+
+    </style>
+</head>
+<body>
+
+    <div class="fixed-bg"></div>
+    <div class="large-bg-text">Podcasts</div>
+
+    <nav>
+        <div class="logo">Coach L <span>Academy</span></div>
+        <button class="btn-member-glass">Member Sign In</button>
+    </nav>
+
+    <audio id="radioPlayer" preload="none">
+        <source src="https://your-azuracast-ip/radio/8000/radio.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="hero">
+        <h1>PODCASTS</h1>
+        <h2>Live Streams & Archives</h2>
+        <p style="max-width: 500px; font-size: 14px; opacity: 0.6; margin-bottom: 30px; line-height: 1.6;">
+            Empowering the next generation of digital leaders. Access our live AzuraCast broadcast or unlock premium video masterclasses.
+        </p>
+        <button id="playToggle" class="btn-action">
+            <span id="btnIcon">▶</span> <span id="btnText">START LISTENING</span>
+        </button>
+    </div>
+
+    <div class="main-container">
+        <h3 class="row-title">Live This Week</h3>
+        </div>
+
+    <script>
+        const player = document.getElementById('radioPlayer');
+        const playBtn = document.getElementById('playToggle');
+        const btnText = document.getElementById('btnText');
+        const btnIcon = document.getElementById('btnIcon');
+
+        // Set default volume to 65% as requested
+        player.volume = 0.65;
+
+        playBtn.addEventListener('click', () => {
+            if (player.paused) {
+                // Play Audio
+                player.play();
+                playBtn.classList.add('is-playing');
+                btnText.innerText = "STOP LISTENING";
+                btnIcon.innerText = "■";
+            } else {
+                // Stop/Pause Audio
+                player.pause();
+                // We reload the source for Live Radio so it doesn't "buffer" old audio when restarting
+                player.load(); 
+                playBtn.classList.remove('is-playing');
+                btnText.innerText = "START LISTENING";
+                btnIcon.innerText = "▶";
+            }
+        });
+    </script>
+
+</body>
+</html>
