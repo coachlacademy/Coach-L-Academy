@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L Academy | Live & Archives</title>
+
+<style>
+:root {
+    --primary-blue: #00d2ff;
+    --accent-green: #39ff14;
+    --live-red: #ff4b2b;
+    --bg-dark: #0a0a0a;
+    --glass: rgba(255,255,255,0.05);
+    --glass-border: rgba(255,255,255,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg-dark);
+    color:#fff;
+    overflow-x:hidden;
+}
+.fixed-bg{
+    position:fixed;top:0;left:0;width:100%;height:100vh;
+    background:linear-gradient(to right,rgba(0,0,0,0.85)30%,rgba(0,0,0,0.4)),
+    url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000');
+    background-size:cover;background-position:center;z-index:-2;
+}
+.large-bg-text{
+    position:fixed;top:30%;left:5%;
+    font-size:clamp(5rem,18vw,15rem);
+    font-weight:900;color:rgba(255,255,255,0.04);
+    z-index:-1;text-transform:uppercase;pointer-events:none;
+}
+nav{
+    position:fixed;top:0;width:100%;
+    padding:25px 50px;display:flex;
+    justify-content:space-between;align-items:center;
+    z-index:1000;
+    background:linear-gradient(to bottom,rgba(0,0,0,0.9),transparent);
+}
+.logo{font-size:24px;font-weight:800;text-transform:uppercase;}
+.logo span{color:var(--primary-blue);}
+.hero{
+    height:80vh;display:flex;flex-direction:column;
+    justify-content:center;padding:0 10%;z-index:10;
+}
+.hero h1{
+    font-size:clamp(4rem,12vw,8rem);
+    font-weight:900;text-transform:uppercase;
+}
+.hero h2{
+    font-size:24px;color:var(--primary-blue);
+    margin-bottom:30px;font-weight:300;
+}
+.btn-action{
+    background:var(--accent-green);
+    color:#000;padding:18px 40px;
+    border-radius:4px;font-weight:900;
+    border:none;cursor:pointer;
+    text-transform:uppercase;
+}
+.btn-action.is-playing{
+    background:var(--live-red);
+    color:#fff;
+}
+.main-container{
+    padding:0 5% 100px;z-index:20;
+}
+.row-title{
+    font-size:24px;margin:60px 0 25px;
+    border-left:4px solid var(--primary-blue);
+    padding-left:15px;font-weight:700;
+}
+.podcast-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:25px;
+}
+.podcast-card{
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(12px);
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+}
+.thumb{width:100%;height:180px;background:#111;}
+.thumb img{width:100%;height:100%;object-fit:cover;opacity:0.6;}
+.card-info{padding:20px;}
+.price-tag{
+    font-size:14px;color:var(--primary-blue);
+    font-weight:800;text-transform:uppercase;
+    cursor:pointer;display:block;
+}
+.jitsi-overlay{
+    position:absolute;top:12px;right:12px;
+    display:flex;flex-direction:column;gap:8px;
+}
+.ctrl-btn{
+    background:rgba(0,0,0,0.85);
+    border:1px solid rgba(255,255,255,0.2);
+    color:#fff;padding:7px 14px;
+    border-radius:4px;font-size:10px;
+    cursor:pointer;font-weight:bold;
+}
+.ctrl-btn.stop{background:var(--live-red);border:none;}
+.archive-viewport{overflow:hidden;padding:20px 0;}
+.archive-track{
+    display:flex;gap:25px;
+    transition:transform .8s cubic-bezier(.65,0,.35,1);
+}
+.archive-track .podcast-card{flex:0 0 280px;}
+</style>
+</head>
+
+<body>
+
+<div class="fixed-bg"></div>
+<div class="large-bg-text">Podcasts</div>
+
+<nav>
+<div class="logo">Coach L <span>Academy</span></div>
+<button class="ctrl-btn" style="padding:10px 20px;">Member Sign In</button>
+</nav>
+
+<audio id="radioPlayer" preload="none">
+<source src="https://coach-l-radio.duckdns.org/listen/coach-l-radio/radio.mp3" type="audio/mpeg">
+</audio>
+
+<div class="hero">
+<h1>PODCASTS</h1>
+<h2>Live Streams & Archives</h2>
+<button id="playToggle" class="btn-action">Start Listening</button>
+</div>
+
+<div class="main-container">
+
+<h3 class="row-title">Live This Week</h3>
+<div class="podcast-grid">
+
+<div class="podcast-card" id="card-youtube" style="min-height:360px;">
+<div id="minPoster-youtube">
+<div class="thumb">
+<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500">
+</div>
+<div class="card-info">
+<h4>YouTube Latest Teachings</h4>
+<p>Auto-updates to latest upload from channel.</p>
+<a href="javascript:void(0)" onclick="launchStream('youtube')" class="price-tag">
+Watch Latest / Live
+</a>
+</div>
+</div>
+
+<div id="container-youtube" style="display:none;position:absolute;inset:0;background:#000;">
+<div class="jitsi-overlay">
+<button class="ctrl-btn stop" onclick="stopStream('youtube')">Close Feed</button>
+<button id="fsBtn-youtube" class="ctrl-btn"
+onclick="toggleFullscreen('container-youtube','fsBtn-youtube')">
+Fullscreen
+</button>
+</div>
+<iframe id="iframe-youtube"
+allow="autoplay; fullscreen"
+style="width:100%;height:100%;border:none;"></iframe>
+</div>
+</div>
+
+</div>
+
+<h3 class="row-title">Recent Archives</h3>
+<div class="archive-viewport">
+<div class="archive-track" id="archiveTrack">
+<div class="podcast-card"><div class="thumb"></div><div class="card-info"><h4>Archive 1</h4></div></div>
+<div class="podcast-card"><div class="thumb"></div><div class="card-info"><h4>Archive 2</h4></div></div>
+<div class="podcast-card"><div class="thumb"></div><div class="card-info"><h4>Archive 3</h4></div></div>
+<div class="podcast-card"><div class="thumb"></div><div class="card-info"><h4>Archive 4</h4></div></div>
+</div>
+</div>
+
+</div>
+
+<script>
+const player=document.getElementById('radioPlayer');
+const playBtn=document.getElementById('playToggle');
+player.volume=0.65;
+
+playBtn.onclick=()=>{
+if(player.paused){
+player.play().catch(()=>{});
+playBtn.classList.add('is-playing');
+playBtn.innerText="Stop Listening";
+}else{
+player.pause();
+player.currentTime=0;
+playBtn.classList.remove('is-playing');
+playBtn.innerText="Start Listening";
+}
+};
+
+function launchStream(type){
+const container=document.getElementById(`container-${type}`);
+const poster=document.getElementById(`minPoster-${type}`);
+const frame=document.getElementById(`iframe-${type}`);
+
+let url="";
+
+if(type==='youtube'){
+url="https://www.youtube.com/embed?listType=playlist&list=UUaiYEOdH76vck0iwC4vt1IQ&autoplay=1&mute=1";
+}
+
+frame.src=url;
+poster.style.display='none';
+container.style.display='block';
+if(!player.paused)playBtn.click();
+}
+
+function stopStream(type){
+const container=document.getElementById(`container-${type}`);
+const poster=document.getElementById(`minPoster-${type}`);
+const frame=document.getElementById(`iframe-${type}`);
+frame.src="";
+container.style.display='none';
+poster.style.display='block';
+if(document.fullscreenElement)document.exitFullscreen();
+}
+
+async function toggleFullscreen(id,btnId){
+const el=document.getElementById(id);
+const btn=document.getElementById(btnId);
+if(!document.fullscreenElement){
+await el.requestFullscreen();
+btn.innerText="Exit Fullscreen";
+}else{
+document.exitFullscreen();
+btn.innerText="Fullscreen";
+}
+}
+
+const track=document.getElementById('archiveTrack');
+let index=0;
+setInterval(()=>{
+index=(index+1)%track.children.length;
+track.style.transform=`translateX(-${index*305}px)`;
+},3000);
+</script>
+
+</body>
+</html>
