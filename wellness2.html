@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach L | Wellness Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --dark2: #111;
+  --dark3: #161616;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+  --muted: #555;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--dark); color: #fff;
+  min-height: 100vh; overflow-x: hidden;
+}
+
+/* ── BG ── */
+.bg-fixed {
+  position: fixed; inset: 0; z-index: -2;
+  background: radial-gradient(ellipse at 15% 20%, rgba(0,210,255,0.05) 0%, transparent 55%),
+              radial-gradient(ellipse at 85% 80%, rgba(168,85,247,0.04) 0%, transparent 55%),
+              #0a0a0a;
+}
+.bg-grid {
+  position: fixed; inset: 0; z-index: -1; opacity: 0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  position: fixed; left: 0; top: 0; bottom: 0; width: 72px;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 20px 0; gap: 6px; z-index: 200;
+  transition: width 0.3s ease;
+}
+.sidebar:hover { width: 200px; }
+.sidebar-logo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--blue);
+  margin-bottom: 16px; white-space: nowrap; overflow: hidden;
+  width: 100%; text-align: center; padding: 0 10px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 14px;
+  width: 100%; padding: 11px 20px; cursor: pointer;
+  transition: 0.25s; border-left: 2px solid transparent;
+  color: var(--muted); white-space: nowrap; overflow: hidden;
+  font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.nav-item:hover { color: #fff; background: var(--glass); }
+.nav-item.active { color: var(--blue); border-left-color: var(--blue); background: rgba(0,210,255,0.05); }
+.nav-icon { font-size: 18px; flex-shrink: 0; width: 32px; text-align: center; }
+.nav-label { opacity: 0; transition: opacity 0.2s; }
+.sidebar:hover .nav-label { opacity: 1; }
+.nav-spacer { flex: 1; }
+
+/* ── MAIN ── */
+.main {
+  margin-left: 72px;
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,0.9); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 16px 36px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.topbar-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
+}
+.topbar-right { display: flex; align-items: center; gap: 14px; }
+.user-chip {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  padding: 8px 16px; border-radius: 30px; font-size: 13px;
+}
+.user-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 900; color: #000;
+}
+.btn-glass-sm {
+  padding: 8px 16px; background: var(--glass); border: 1px solid var(--glass-border);
+  color: #fff; border-radius: 6px; font-size: 11px; font-weight: 700;
+  cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
+}
+.btn-glass-sm:hover { border-color: var(--red); color: var(--red); }
+
+/* ── SECTIONS ── */
+.section { display: none; padding: 36px; max-width: 1200px; }
+.section.active { display: block; }
+
+.section-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+  text-transform: uppercase; letter-spacing: -1px; line-height: 0.9;
+  margin-bottom: 24px;
+}
+
+/* ── GRID ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.full { grid-column: 1/-1; }
+
+/* ── CARD ── */
+.card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 26px; backdrop-filter: blur(12px);
+  transition: border-color 0.3s; position: relative; overflow: hidden;
+}
+.card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
+}
+.card:hover { border-color: rgba(0,210,255,0.2); }
+.card-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 6px;
+}
+.card-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 20px; font-weight: 700; text-transform: uppercase;
+  margin-bottom: 18px; letter-spacing: 0.5px;
+}
+
+/* ── ACCENT CARDS ── */
+.card-red { border-color: rgba(255,75,43,0.2); }
+.card-red .card-label { color: var(--red); }
+.card-gold { border-color: rgba(245,197,24,0.2); }
+.card-gold .card-label { color: var(--gold); }
+.card-purple { border-color: rgba(168,85,247,0.2); }
+.card-purple .card-label { color: var(--purple); }
+.card-green { border-color: rgba(57,255,20,0.15); }
+.card-green .card-label { color: var(--green); }
+
+/* ── INPUTS ── */
+textarea {
+  width: 100%; background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border); border-radius: 10px;
+  color: #fff; padding: 13px; font-size: 14px;
+  font-family: 'Barlow', sans-serif; resize: vertical; min-height: 90px;
+  transition: 0.3s; line-height: 1.6;
+}
+textarea:focus { outline: none; border-color: var(--blue); background: rgba(0,210,255,0.04); }
+textarea::placeholder { color: #333; }
+
+select {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border); border-radius: 8px;
+  color: #fff; padding: 11px 14px; font-size: 13px;
+  font-family: 'Barlow', sans-serif; cursor: pointer; transition: 0.3s;
+  appearance: none;
+}
+select:focus { outline: none; border-color: var(--blue); }
+select option { background: #111; }
+
+input[type=text], input[type=email] {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border); border-radius: 8px;
+  color: #fff; padding: 11px 14px; font-size: 13px;
+  font-family: 'Barlow', sans-serif; transition: 0.3s;
+}
+input[type=text]:focus, input[type=email]:focus { outline: none; border-color: var(--blue); }
+input::placeholder { color: #333; }
+
+input[type=range] {
+  width: 100%; -webkit-appearance: none; height: 4px; border-radius: 4px;
+  outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px;
+  border-radius: 50%; background: #fff; cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,210,255,0.5); border: 2px solid var(--blue);
+}
+
+label {
+  display: block; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted); margin-bottom: 8px;
+}
+
+/* ── BUTTONS ── */
+.btn {
+  padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+}
+.btn-blue { background: var(--blue); color: #000; }
+.btn-blue:hover { filter: brightness(1.1); transform: translateY(-1px); }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { filter: brightness(1.1); }
+.btn-outline { background: var(--glass); border: 1px solid var(--glass-border); color: #fff; }
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+.btn-green { background: var(--green); color: #000; }
+.btn-green:hover { filter: brightness(1.1); }
+
+/* ── MOOD / RATING ── */
+.mood-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.mood-pill {
+  padding: 8px 16px; border-radius: 20px; cursor: pointer;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: #666; transition: 0.25s; white-space: nowrap;
+}
+.mood-pill:hover, .mood-pill.active { border-color: var(--blue); background: rgba(0,210,255,0.1); color: #fff; }
+.mood-pill.danger.active { border-color: var(--red); background: rgba(255,75,43,0.1); color: var(--red); }
+
+/* ── ANGER METER ── */
+.anger-meter {
+  position: relative; height: 12px; border-radius: 12px;
+  background: linear-gradient(to right, #39ff14 0%, #f5c518 40%, #ff8c00 70%, #ff4b2b 100%);
+  margin: 12px 0;
+}
+.anger-thumb {
+  position: absolute; top: 50%; transform: translate(-50%,-50%);
+  width: 24px; height: 24px; border-radius: 50%; background: #fff;
+  border: 3px solid #fff; box-shadow: 0 0 12px rgba(255,75,43,0.6);
+  transition: left 0.3s;
+}
+
+/* ── CONFLICT CARDS ── */
+.conflict-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.conflict-card {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+  border-radius: 12px; padding: 20px; cursor: pointer; transition: 0.3s;
+  position: relative; overflow: hidden;
+}
+.conflict-card:hover { transform: translateY(-3px); border-color: rgba(255,75,43,0.3); }
+.conflict-card .cc-icon { font-size: 28px; margin-bottom: 10px; }
+.conflict-card .cc-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px; font-weight: 700; text-transform: uppercase; margin-bottom: 6px;
+}
+.conflict-card .cc-desc { font-size: 12px; color: #666; line-height: 1.5; }
+.conflict-card .cc-expand { display: none; margin-top: 14px; font-size: 13px; color: #aaa; line-height: 1.7; border-top: 1px solid var(--glass-border); padding-top: 14px; }
+.conflict-card.open .cc-expand { display: block; }
+.conflict-card.open { border-color: rgba(255,75,43,0.4); background: rgba(255,75,43,0.04); }
+
+/* ── TECHNIQUE CARDS ── */
+.technique-list { display: flex; flex-direction: column; gap: 10px; }
+.technique {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+  border-radius: 10px; padding: 16px 18px; cursor: pointer; transition: 0.3s;
+}
+.technique:hover { border-color: rgba(0,210,255,0.3); background: rgba(0,210,255,0.04); }
+.technique-top { display: flex; justify-content: space-between; align-items: center; }
+.technique-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px; font-weight: 700; text-transform: uppercase;
+}
+.technique-tag {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+  padding: 3px 10px; border-radius: 20px; background: rgba(0,210,255,0.1); color: var(--blue);
+}
+.technique-tag.fast { background: rgba(57,255,20,0.1); color: var(--green); }
+.technique-tag.deep { background: rgba(168,85,247,0.1); color: var(--purple); }
+.technique-body { display: none; margin-top: 12px; font-size: 13px; color: #aaa; line-height: 1.7; }
+.technique.open .technique-body { display: block; }
+
+/* ── EPISODE LOG ── */
+.episode-item {
+  background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 10px;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+}
+.ep-left { flex: 1; }
+.ep-date { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.ep-trigger { font-size: 14px; color: #ddd; margin-bottom: 4px; }
+.ep-level { font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.ep-del { background: none; border: none; color: #333; cursor: pointer; font-size: 18px; transition: 0.2s; }
+.ep-del:hover { color: var(--red); }
+
+/* ── WELLBEING STARS ── */
+.wb-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.wb-label { font-size: 13px; color: #ccc; }
+.wb-stars { display: flex; gap: 4px; }
+.star { font-size: 20px; cursor: pointer; color: #222; transition: 0.2s; line-height: 1; }
+.star.on { color: var(--gold); }
+
+/* ── BREATHING ── */
+.breath-wrap { text-align: center; padding: 10px 0; }
+.breath-outer { position: relative; width: 140px; height: 140px; margin: 0 auto 16px; }
+.breath-ring { position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(0,210,255,0.2); }
+.breath-inner {
+  position: absolute; inset: 12px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,210,255,0.25), rgba(0,210,255,0.03));
+  border: 1px solid rgba(0,210,255,0.35);
+  display: flex; align-items: center; justify-content: center; transition: transform 0.2s;
+}
+.breath-word { font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blue); }
+.breath-num { font-family: 'Barlow Condensed', sans-serif; font-size: 44px; font-weight: 900; color: var(--blue); }
+.breath-phase-label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); min-height: 16px; margin-bottom: 16px; }
+
+/* ── GOAL ── */
+.goal-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+.goal-chk { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--glass-border); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; transition: 0.3s; }
+.goal-chk.done { background: var(--green); border-color: var(--green); color: #000; }
+.goal-txt { flex: 1; font-size: 14px; }
+.goal-txt.done { text-decoration: line-through; color: var(--muted); }
+.goal-del { background: none; border: none; color: #333; cursor: pointer; font-size: 16px; transition: 0.2s; }
+.goal-del:hover { color: var(--red); }
+
+/* ── AFFIRMATION ── */
+.affirm-box {
+  background: rgba(0,210,255,0.05); border: 1px solid rgba(0,210,255,0.15);
+  border-radius: 12px; padding: 20px; text-align: center; min-height: 80px;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 16px;
+}
+.affirm-text { font-size: 15px; line-height: 1.6; color: #ddd; font-style: italic; transition: opacity 0.4s; }
+
+/* ── STATS ── */
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.stat-box { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; padding: 16px; text-align: center; }
+.stat-num { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 900; color: var(--blue); line-height: 1; }
+.stat-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+.trend-row { margin-bottom: 14px; }
+.trend-top { display: flex; justify-content: space-between; font-size: 12px; color: #aaa; margin-bottom: 6px; }
+.trend-bar { height: 6px; border-radius: 6px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.trend-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--green); color: #000; padding: 11px 26px; border-radius: 30px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 1px; z-index: 999; white-space: nowrap;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── DATE BAR ── */
+.date-nav { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+.date-btn { background: var(--glass); border: 1px solid var(--glass-border); color: #fff; width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 16px; transition: 0.3s; flex-shrink: 0; }
+.date-btn:hover { border-color: var(--blue); color: var(--blue); }
+.date-str { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 700; text-transform: uppercase; }
+.week-strip { display: flex; gap: 6px; }
+.wday { display: flex; flex-direction: column; align-items: center; gap: 3px; width: 38px; padding: 7px 0; border-radius: 8px; cursor: pointer; background: var(--glass); border: 1px solid var(--glass-border); transition: 0.3s; }
+.wday.active { background: var(--blue); border-color: var(--blue); color: #000; }
+.wday-n { font-size: 13px; font-weight: 700; }
+.wday-d { font-size: 9px; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; }
+.wday.active .wday-d { opacity: 1; }
+
+@media (max-width: 768px) {
+  .sidebar { width: 0; overflow: hidden; }
+  .main { margin-left: 0; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .full { grid-column: 1; }
+  .section { padding: 20px 16px; }
+  .stat-grid { grid-template-columns: repeat(3,1fr); }
+  .topbar { padding: 14px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-logo">CL</div>
+  <div class="nav-item active" onclick="showSection('home')">
+    <span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span>
+  </div>
+  <div class="nav-item" onclick="showSection('checkin')">
+    <span class="nav-icon">📋</span><span class="nav-label">Daily Check-In</span>
+  </div>
+  <div class="nav-item" onclick="showSection('journal')">
+    <span class="nav-icon">📓</span><span class="nav-label">Journal</span>
+  </div>
+  <div class="nav-item" onclick="showSection('goals')">
+    <span class="nav-icon">🎯</span><span class="nav-label">Goals</span>
+  </div>
+  <div class="nav-item" onclick="showSection('anger')">
+    <span class="nav-icon">🔥</span><span class="nav-label">Anger In / Out</span>
+  </div>
+  <div class="nav-item" onclick="showSection('conflict')">
+    <span class="nav-icon">⚡</span><span class="nav-label">Conflict</span>
+  </div>
+  <div class="nav-item" onclick="showSection('breathe')">
+    <span class="nav-icon">🌬</span><span class="nav-label">Breathe</span>
+  </div>
+  <div class="nav-item" onclick="showSection('affirm')">
+    <span class="nav-icon">✨</span><span class="nav-label">Affirmations</span>
+  </div>
+  <div class="nav-item" onclick="showSection('summary')">
+    <span class="nav-icon">📊</span><span class="nav-label">My Summary</span>
+  </div>
+  <div class="nav-item" onclick="showSection('boundaries')">
+    <span class="nav-icon">🛡</span><span class="nav-label">Boundaries</span>
+  </div>
+  <div class="nav-item" onclick="showSection('parenting')">
+    <span class="nav-icon">👶</span><span class="nav-label">Parenting</span>
+  </div>
+  <div class="nav-item" onclick="showSection('gbv')">
+    <span class="nav-icon">🚨</span><span class="nav-label">GBV</span>
+  </div>
+  <div class="nav-item" onclick="showSection('mjolo')">
+    <span class="nav-icon">💔</span><span class="nav-label">Mjolo</span>
+  </div>
+  <div class="nav-item" onclick="showSection('roles')">
+    <span class="nav-icon">🎭</span><span class="nav-label">Rel. Roles</span>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-item" onclick="logout()" style="color:#ff4b2b;">
+    <span class="nav-icon">🚪</span><span class="nav-label">Sign Out</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    <div class="topbar-right">
+      <div class="user-chip">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <span id="userName" style="font-size:13px;">Loading...</span>
+      </div>
+      <button class="btn-glass-sm" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       HOME DASHBOARD
+  ══════════════════════════════════════════════════ -->
+  <div class="section active" id="sec-home">
+    <div class="section-eyebrow">Welcome Back</div>
+    <div class="section-title" id="homeGreeting">Good Morning</div>
+
+    <div class="stat-grid" style="margin-bottom:24px;">
+      <div class="stat-box">
+        <div class="stat-num" id="h_streak">0</div>
+        <div class="stat-lbl">Day Streak</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="h_checkins">0</div>
+        <div class="stat-lbl">Check-ins</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="h_goals">0</div>
+        <div class="stat-lbl">Goals Done</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card" style="cursor:pointer;" onclick="showSection('checkin')">
+        <div class="card-label">Daily</div>
+        <div class="card-title">Today's Check-In</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">How are you feeling today? Rate your mood, stress, and wellbeing.</p>
+        <button class="btn btn-blue" style="font-size:14px;padding:10px 20px;">Start Check-In →</button>
+      </div>
+      <div class="card card-red" style="cursor:pointer;" onclick="showSection('anger')">
+        <div class="card-label">Process It</div>
+        <div class="card-title">Anger In / Anger Out</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Name it. Track it. Release it. Real tools for real rage.</p>
+        <button class="btn btn-red" style="font-size:14px;padding:10px 20px;">Open →</button>
+      </div>
+      <div class="card card-gold" style="cursor:pointer;" onclick="showSection('conflict')">
+        <div class="card-label">Understand</div>
+        <div class="card-title">Conflict Resolution</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Colleagues. Family. Black tax. Financial abuse. Traffic rage. Name the triggers.</p>
+        <button class="btn" style="background:var(--gold);color:#000;font-size:14px;padding:10px 20px;">Explore →</button>
+      </div>
+      <div class="card card-purple" style="cursor:pointer;" onclick="showSection('journal')">
+        <div class="card-label">Reflect</div>
+        <div class="card-title">Daily Journal</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Progress. Gratitude. Free thoughts. Your private space.</p>
+        <button class="btn" style="background:var(--purple);color:#fff;font-size:14px;padding:10px 20px;">Write →</button>
+      </div>
+    </div>
+
+    <div class="card full" style="margin-top:20px;">
+      <div class="card-label">Daily Affirmation</div>
+      <div class="affirm-box" style="margin-bottom:12px;">
+        <div class="affirm-text" id="homeAffirm"></div>
+      </div>
+      <button class="btn btn-outline" onclick="newAffirm('homeAffirm')" style="font-size:13px;padding:9px 20px;">✦ New Affirmation</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       CHECK-IN
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-checkin">
+    <div class="section-eyebrow">Daily Wellness</div>
+    <div class="section-title">Check-In</div>
+
+    <div class="date-nav">
+      <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+      <div class="date-str" id="ciDate"></div>
+      <button class="date-btn" onclick="shiftDate(1)">›</button>
+      <div class="week-strip" id="ciWeek"></div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">Step 1</div>
+        <div class="card-title">Today's Mood</div>
+        <div class="mood-row">
+          <div class="mood-pill" onclick="pick(this,'mood','🌟 Thriving')">🌟 Thriving</div>
+          <div class="mood-pill" onclick="pick(this,'mood','😊 Good')">😊 Good</div>
+          <div class="mood-pill" onclick="pick(this,'mood','😐 Okay')">😐 Okay</div>
+          <div class="mood-pill danger" onclick="pick(this,'mood','😔 Low')">😔 Low</div>
+          <div class="mood-pill danger" onclick="pick(this,'mood','😞 Struggling')">😞 Struggling</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Step 2</div>
+        <div class="card-title">Rate the Day</div>
+        <div class="mood-row">
+          <div class="mood-pill" onclick="pick(this,'dayrate','Excellent')">Excellent</div>
+          <div class="mood-pill" onclick="pick(this,'dayrate','Good')">Good</div>
+          <div class="mood-pill" onclick="pick(this,'dayrate','Average')">Average</div>
+          <div class="mood-pill danger" onclick="pick(this,'dayrate','Tough')">Tough</div>
+          <div class="mood-pill danger" onclick="pick(this,'dayrate','Rough')">Rough</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Step 3</div>
+        <div class="card-title">Stress Level</div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">
+          <span>Calm</span><span>Moderate</span><span>High</span>
+        </div>
+        <input type="range" min="1" max="10" value="5" id="ciStress"
+          style="background:linear-gradient(to right,var(--green),var(--gold),var(--red));"
+          oninput="ciState.stress=parseInt(this.value); document.getElementById('ciStressVal').textContent=this.value+'/10';">
+        <div style="text-align:center;margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--blue);" id="ciStressVal">5/10</div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Step 4</div>
+        <div class="card-title">Wellbeing</div>
+        <div id="wbRows"></div>
+      </div>
+
+      <div class="card full">
+        <div style="text-align:center;">
+          <button class="btn btn-blue" style="font-size:18px;padding:14px 48px;" onclick="saveCheckin()">✓ Save Check-In</button>
+          &nbsp;
+          <button class="btn btn-outline" onclick="loadCheckin()">↺ Load Today</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       JOURNAL
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-journal">
+    <div class="section-eyebrow">Private & Safe</div>
+    <div class="section-title">Daily Journal</div>
+
+    <div class="date-nav">
+      <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+      <div class="date-str" id="jDate"></div>
+      <button class="date-btn" onclick="shiftDate(1)">›</button>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-label">Progress</div>
+        <div class="card-title">Wins Today</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;">3 things you succeeded at or made progress with</p>
+        <textarea id="j1" placeholder="e.g. Finished the report, stayed calm in a tense meeting..."></textarea>
+      </div>
+      <div class="card">
+        <div class="card-label">Resilience</div>
+        <div class="card-title">What Took Courage</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;">Something that required you to push through</p>
+        <textarea id="j2" placeholder="e.g. Had a hard conversation, kept going when I wanted to quit..."></textarea>
+      </div>
+      <div class="card">
+        <div class="card-label">Gratitude</div>
+        <div class="card-title">I'm Grateful For</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;">One thing — big or small</p>
+        <textarea id="j3" placeholder="e.g. A moment of quiet, someone who checked in on me..."></textarea>
+      </div>
+      <div class="card full">
+        <div class="card-label">Free Write</div>
+        <div class="card-title">What's On My Mind</div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;">No rules. No judgment. Just write.</p>
+        <textarea id="j4" placeholder="Anything at all..." style="min-height:120px;"></textarea>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-blue" onclick="saveJournal()">Save Entry</button>
+          <button class="btn btn-outline" onclick="loadJournal()">Load Today</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       GOALS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-goals">
+    <div class="section-eyebrow">Focus</div>
+    <div class="section-title">Goal Tracker</div>
+
+    <div class="date-nav">
+      <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+      <div class="date-str" id="gDate"></div>
+      <button class="date-btn" onclick="shiftDate(1)">›</button>
+    </div>
+
+    <div class="card full" style="max-width:680px;">
+      <div class="card-label">Today's Goals</div>
+      <div class="card-title">What I'm Working Towards</div>
+      <div id="goalList" style="margin-bottom:14px;"></div>
+      <div style="display:flex;gap:10px;">
+        <input type="text" id="goalInp" placeholder="Add a goal or intention..." onkeydown="if(event.key==='Enter') addGoal()">
+        <button class="btn btn-blue" style="white-space:nowrap;padding:10px 20px;font-size:14px;" onclick="addGoal()">+ Add</button>
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn btn-blue" onclick="saveGoals()">Save Goals</button>
+        <button class="btn btn-outline" onclick="loadGoals()">Load Today</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       ANGER IN / ANGER OUT
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-anger">
+    <div class="section-eyebrow">Anger In • Anger Out</div>
+    <div class="section-title">Name It.<br>Track It.<br>Release It.</div>
+
+    <p style="color:var(--muted);font-size:15px;max-width:600px;margin-bottom:36px;line-height:1.7;">
+      Anger is not the problem. Unprocessed anger is. This tool helps you identify what's really going on, track your patterns, and find your way back to calm — without suppressing what's real.
+    </p>
+
+    <div class="grid-2">
+      <!-- LOG EPISODE -->
+      <div class="card card-red">
+        <div class="card-label">🔥 Anger In</div>
+        <div class="card-title">Log an Episode</div>
+
+        <label>What triggered you?</label>
+        <textarea id="a_trigger" placeholder="Be specific. What exactly happened? What was said or done?" style="margin-bottom:14px;"></textarea>
+
+        <label>Who was involved?</label>
+        <select id="a_who" style="margin-bottom:14px;">
+          <option value="">— Select —</option>
+          <option>A colleague</option>
+          <option>My boss/manager</option>
+          <option>A family member</option>
+          <option>A stranger/public</option>
+          <option>A driver/traffic</option>
+          <option>A partner</option>
+          <option>A friend</option>
+          <option>Myself</option>
+          <option>A system/institution</option>
+          <option>Financial pressure</option>
+          <option>Other</option>
+        </select>
+
+        <label>Anger Level — <span id="aLevelLabel">5/10</span></label>
+        <input type="range" min="1" max="10" value="5" id="aLevel"
+          style="background:linear-gradient(to right,var(--green),var(--gold),var(--red));margin-bottom:6px;"
+          oninput="document.getElementById('aLevelLabel').textContent=this.value+'/10'">
+        <div class="anger-meter" style="margin-bottom:14px;">
+          <div class="anger-thumb" id="angerThumb" style="left:50%;"></div>
+        </div>
+
+        <label>How did your body feel?</label>
+        <div class="mood-row" style="margin-bottom:14px;">
+          <div class="mood-pill" onclick="toggleBodySign(this)">Tight chest</div>
+          <div class="mood-pill" onclick="toggleBodySign(this)">Hot face</div>
+          <div class="mood-pill" onclick="toggleBodySign(this)">Clenched jaw</div>
+          <div class="mood-pill" onclick="toggleBodySign(this)">Shaking</div>
+          <div class="mood-pill" onclick="toggleBodySign(this)">Raised voice</div>
+          <div class="mood-pill" onclick="toggleBodySign(this)">Shut down</div>
+          <div class="mood-pill" onclick="toggleBodySign(this)">Crying</div>
+          <div class="mood-pill" onclick="toggleBodySign(this)">Racing heart</div>
+        </div>
+
+        <label>What did you do in that moment?</label>
+        <textarea id="a_response" placeholder="What did you say, do, or feel like doing?" style="margin-bottom:14px;"></textarea>
+
+        <button class="btn btn-red" onclick="logAnger()">Log This Episode</button>
+      </div>
+
+      <!-- RELEASE -->
+      <div class="card card-green">
+        <div class="card-label">💨 Anger Out</div>
+        <div class="card-title">Release & Reset</div>
+
+        <div class="technique-list" id="techList"></div>
+      </div>
+
+      <!-- EPISODE HISTORY -->
+      <div class="card full">
+        <div class="card-label">Your Pattern</div>
+        <div class="card-title">Anger History</div>
+        <div id="episodeLog">
+          <p style="color:var(--muted);font-size:14px;">No episodes logged yet. That's a good day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       CONFLICT RESOLUTION
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-conflict">
+    <div class="section-eyebrow">Conflict Resolution</div>
+    <div class="section-title">The Real Stuff<br>People Do.</div>
+
+    <p style="color:var(--muted);font-size:15px;max-width:640px;margin-bottom:36px;line-height:1.7;">
+      Let's call it what it is. People trigger you — sometimes deliberately, sometimes obliviously. Understanding where the conflict is coming from is the first step to dealing with it.
+    </p>
+
+    <div class="conflict-grid" id="conflictGrid"></div>
+
+    <div class="card full" style="margin-top:30px;">
+      <div class="card-label">My Conflict Journal</div>
+      <div class="card-title">What Happened & How I Handled It</div>
+      <label>Describe the conflict situation</label>
+      <textarea id="cj1" placeholder="Who, what, where. Be specific — this is private." style="margin-bottom:14px;"></textarea>
+      <label>How did it make you feel?</label>
+      <textarea id="cj2" placeholder="Angry, hurt, disrespected, exhausted..." style="margin-bottom:14px;"></textarea>
+      <label>What did you do / want to do?</label>
+      <textarea id="cj3" placeholder="What was your response?" style="margin-bottom:14px;"></textarea>
+      <label>What would a healthy response look like?</label>
+      <textarea id="cj4" placeholder="Reflect on what Coach L would say..." style="margin-bottom:16px;"></textarea>
+      <button class="btn btn-blue" onclick="saveConflict()">Save Reflection</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       BREATHING
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-breathe">
+    <div class="section-eyebrow">Mindfulness</div>
+    <div class="section-title">Breathing<br>Reset</div>
+
+    <div class="grid-2" style="max-width:800px;">
+      <div class="card" style="text-align:center;">
+        <div class="card-label">4-7-8 Technique</div>
+        <div class="card-title">The Calming Breath</div>
+        <div class="breath-wrap">
+          <div class="breath-outer">
+            <div class="breath-ring"></div>
+            <div class="breath-inner" id="bCircle">
+              <div class="breath-word" id="bWord">Ready</div>
+            </div>
+          </div>
+          <div class="breath-num" id="bNum">—</div>
+          <div class="breath-phase-label" id="bPhase">Inhale 4 · Hold 7 · Exhale 8</div>
+          <div style="display:flex;gap:10px;justify-content:center;">
+            <button class="btn btn-blue" id="bBtn" onclick="toggleBreath()">Start</button>
+            <button class="btn btn-outline" onclick="resetBreath()">Reset</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-label">Box Breathing</div>
+        <div class="card-title">The Focus Breath</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.6;">Used by Navy SEALs and surgeons. Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Repeat 4 times.</p>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--glass-border);border-radius:12px;padding:20px;text-align:center;margin-bottom:16px;">
+          <div style="font-size:80px;line-height:1;" id="boxSquare">⬜</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;margin-top:10px;" id="boxLabel">Press Start</div>
+          <div style="font-size:40px;font-weight:900;font-family:'Barlow Condensed',sans-serif;color:var(--blue);margin-top:4px;" id="boxNum">—</div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;">
+          <button class="btn btn-blue" id="boxBtn" onclick="toggleBox()">Start</button>
+          <button class="btn btn-outline" onclick="resetBox()">Reset</button>
+        </div>
+      </div>
+      <div class="card full">
+        <div class="card-label">Grounding</div>
+        <div class="card-title">5-4-3-2-1 Technique</div>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.6;">When you're overwhelmed or spiralling, ground yourself by engaging your five senses. This pulls you out of your head and back into the present moment.</p>
+        <div class="grid-3" style="gap:12px;">
+          <div style="background:rgba(0,210,255,0.05);border:1px solid rgba(0,210,255,0.15);border-radius:10px;padding:16px;">
+            <div style="font-size:24px;margin-bottom:6px;">👁</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;">5 Things You SEE</div>
+            <textarea placeholder="Look around and name 5 things..." style="min-height:70px;font-size:12px;"></textarea>
+          </div>
+          <div style="background:rgba(57,255,20,0.04);border:1px solid rgba(57,255,20,0.12);border-radius:10px;padding:16px;">
+            <div style="font-size:24px;margin-bottom:6px;">🤚</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;">4 Things You TOUCH</div>
+            <textarea placeholder="What textures are around you?" style="min-height:70px;font-size:12px;"></textarea>
+          </div>
+          <div style="background:rgba(245,197,24,0.04);border:1px solid rgba(245,197,24,0.12);border-radius:10px;padding:16px;">
+            <div style="font-size:24px;margin-bottom:6px;">👂</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;">3 Things You HEAR</div>
+            <textarea placeholder="Listen carefully..." style="min-height:70px;font-size:12px;"></textarea>
+          </div>
+          <div style="background:rgba(168,85,247,0.04);border:1px solid rgba(168,85,247,0.12);border-radius:10px;padding:16px;">
+            <div style="font-size:24px;margin-bottom:6px;">👃</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;">2 Things You SMELL</div>
+            <textarea placeholder="What can you smell right now?" style="min-height:70px;font-size:12px;"></textarea>
+          </div>
+          <div style="background:rgba(255,140,0,0.04);border:1px solid rgba(255,140,0,0.12);border-radius:10px;padding:16px;">
+            <div style="font-size:24px;margin-bottom:6px;">👅</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;">1 Thing You TASTE</div>
+            <textarea placeholder="What taste is in your mouth?" style="min-height:70px;font-size:12px;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       AFFIRMATIONS
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-affirm">
+    <div class="section-eyebrow">Encourage Yourself</div>
+    <div class="section-title">Affirmations</div>
+
+    <div class="grid-2" style="max-width:900px;">
+      <div class="card">
+        <div class="card-label">Today's Word</div>
+        <div class="card-title">Your Affirmation</div>
+        <div class="affirm-box" style="min-height:120px;">
+          <div class="affirm-text" id="mainAffirm"></div>
+        </div>
+        <button class="btn btn-outline" onclick="newAffirm('mainAffirm')" style="width:100%;margin-bottom:16px;">✦ New Affirmation</button>
+        <label>Write Your Own</label>
+        <textarea id="myAffirm" placeholder="I am... / I choose... / I deserve..." style="min-height:80px;"></textarea>
+      </div>
+      <div class="card">
+        <div class="card-label">Categories</div>
+        <div class="card-title">By Theme</div>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="affirmCategories"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════
+       SUMMARY
+  ══════════════════════════════════════════════════ -->
+  <div class="section" id="sec-summary">
+    <div class="section-eyebrow">Monthly Report</div>
+    <div class="section-title">My Summary</div>
+
+    <div class="stat-grid" style="margin-bottom:24px;">
+      <div class="stat-box"><div class="stat-num" id="s_ci">0</div><div class="stat-lbl">Check-ins</div></div>
+      <div class="stat-box"><div class="stat-num" id="s_str">0</div><div class="stat-lbl">Streak</div></div>
+      <div class="stat-box"><div class="stat-num" id="s_mood">—</div><div class="stat-lbl">Avg Mood</div></div>
+    </div>
+
+    <div class="card full" style="max-width:680px;margin-bottom:20px;">
+      <div class="card-title">Trends This Month</div>
+      <div class="trend-row"><div class="trend-top"><span>Average Stress</span><span id="ts_stress">—</span></div><div class="trend-bar"><div class="trend-fill" id="tf_stress" style="width:0%;background:linear-gradient(to right,var(--green),var(--gold),var(--red));"></div></div></div>
+      <div class="trend-row"><div class="trend-top"><span>Overall Wellbeing</span><span id="ts_wb">—</span></div><div class="trend-bar"><div class="trend-fill" id="tf_wb" style="width:0%;background:var(--blue);"></div></div></div>
+      <div class="trend-row"><div class="trend-top"><span>Goals Completed</span><span id="ts_goals">—</span></div><div class="trend-bar"><div class="trend-fill" id="tf_goals" style="width:0%;background:var(--green);"></div></div></div>
+      <div class="trend-row"><div class="trend-top"><span>Anger Episodes</span><span id="ts_anger">—</span></div><div class="trend-bar"><div class="trend-fill" id="tf_anger" style="width:0%;background:var(--red);"></div></div></div>
+      <p style="font-size:12px;color:var(--muted);margin-top:16px;line-height:1.6;">📊 All data is stored locally on this device under your account. Private and anonymous.</p>
+    </div>
+  </div>
+
+  <!-- BOUNDARIES -->
+  <div class="section" id="sec-boundaries">
+    <div class="section-eyebrow">Know Your Limits</div>
+    <div class="section-title">Boundaries.</div>
+    <p style="color:var(--muted);font-size:15px;max-width:640px;margin-bottom:36px;line-height:1.7;">A boundary is not a wall — it's a door. You decide who opens it and when. Setting boundaries is not selfish. It is how you protect your peace, your energy, and your self-respect.</p>
+    <div class="grid-2">
+      <div class="card card-purple">
+        <div class="card-label">🛡 Log a Boundary</div>
+        <div class="card-title">What Boundary Did You Set?</div>
+        <label>Type of boundary</label>
+        <select id="b_type" style="margin-bottom:14px;">
+          <option value="">— Select —</option>
+          <option>Emotional — protecting how I feel</option>
+          <option>Physical — my body and personal space</option>
+          <option>Time — my hours and energy</option>
+          <option>Financial — my money and resources</option>
+          <option>Digital — phone, social media, messages</option>
+          <option>Sexual — my body and intimacy</option>
+          <option>Work — professional limits</option>
+          <option>Family — relatives and obligations</option>
+        </select>
+        <label>Who crossed or tried to cross it?</label>
+        <select id="b_who" style="margin-bottom:14px;">
+          <option value="">— Select —</option>
+          <option>Partner / spouse</option>
+          <option>Parent or sibling</option>
+          <option>Extended family</option>
+          <option>Friend</option>
+          <option>Colleague</option>
+          <option>Boss / manager</option>
+          <option>Stranger</option>
+          <option>Myself</option>
+        </select>
+        <label>What did they do?</label>
+        <textarea id="b_crossed" placeholder="Be specific — what exactly happened?" style="margin-bottom:14px;"></textarea>
+        <label>What boundary did you set (or wish you had set)?</label>
+        <textarea id="b_set" placeholder="What did you say, do, or need to say?" style="margin-bottom:14px;"></textarea>
+        <label>How did it go?</label>
+        <div class="mood-row" style="margin-bottom:16px;">
+          <div class="mood-pill" onclick="bOutcome='They respected it';this.parentElement.querySelectorAll('.mood-pill').forEach(x=>x.classList.remove('active'));this.classList.add('active')">They respected it</div>
+          <div class="mood-pill" onclick="bOutcome='They pushed back';this.parentElement.querySelectorAll('.mood-pill').forEach(x=>x.classList.remove('active'));this.classList.add('active')">They pushed back</div>
+          <div class="mood-pill danger" onclick="bOutcome='They violated it';this.parentElement.querySelectorAll('.mood-pill').forEach(x=>x.classList.remove('active'));this.classList.add('active')">They violated it</div>
+          <div class="mood-pill" onclick="bOutcome='I couldn&apos;t set it';this.parentElement.querySelectorAll('.mood-pill').forEach(x=>x.classList.remove('active'));this.classList.add('active')">I couldn't set it</div>
+        </div>
+        <button class="btn btn-outline" style="border-color:var(--purple);color:var(--purple);width:100%;" onclick="logBoundary()">Log This Boundary</button>
+      </div>
+      <div class="card">
+        <div class="card-label">Know This</div>
+        <div class="card-title">How People Cross Boundaries</div>
+        <div style="display:flex;flex-direction:column;gap:10px;" id="boundaryTactics"></div>
+      </div>
+      <div class="card full">
+        <div class="card-label">Your Boundary History</div>
+        <div class="card-title">Patterns &amp; Progress</div>
+        <div id="boundaryLog"><p style="color:var(--muted);font-size:14px;">No boundaries logged yet.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARENTING -->
+  <div class="section" id="sec-parenting">
+    <div class="section-eyebrow">Parenting &amp; Child Safety</div>
+    <div class="section-title">Raising Them<br>Safe &amp; Strong.</div>
+    <p style="color:var(--muted);font-size:15px;max-width:640px;margin-bottom:36px;line-height:1.7;">The conversations you have — or don't have — shape how your children understand their bodies, their rights, and the world. This section helps you have the right conversations at the right age, with confidence.</p>
+    <div class="card full" style="max-width:500px;margin-bottom:24px;">
+      <div class="card-label">Start Here</div>
+      <div class="card-title">Your Child's Details</div>
+      <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
+        <div><label>Age</label><input type="number" id="childAge" placeholder="e.g. 8" min="0" max="18" style="max-width:90px;" oninput="renderParenting()"></div>
+        <div><label>Gender</label><select id="childGender" style="max-width:160px;" onchange="renderParenting()"><option value="">Any / Both</option><option value="boy">Boy</option><option value="girl">Girl</option></select></div>
+        <button class="btn btn-blue" style="padding:10px 20px;font-size:14px;" onclick="renderParenting()">Show Guidance</button>
+      </div>
+    </div>
+    <div id="parentingContent"></div>
+  </div>
+
+  <!-- GBV -->
+  <div class="section" id="sec-gbv">
+    <div class="section-eyebrow">Gender-Based Violence</div>
+    <div class="section-title">Are You<br>a Victim?</div>
+    <p style="color:var(--muted);font-size:15px;max-width:640px;margin-bottom:36px;line-height:1.7;">GBV does not always look like bruises. It looks like control. Like fear. Like walking on eggshells every single day. This tool helps you name what's happening and know your options.</p>
+    <div class="grid-2">
+      <div class="card card-red">
+        <div class="card-label">🚨 Self-Assessment</div>
+        <div class="card-title">Answer Honestly</div>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:20px;line-height:1.6;">Tick any that apply. Your answers stay on this device only.</p>
+        <div id="gbvChecklist" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;"></div>
+        <button class="btn btn-red" onclick="assessGBV()" style="width:100%;">Show My Assessment</button>
+        <div id="gbvResult" style="margin-top:20px;display:none;"></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Types of GBV</div>
+        <div class="card-title">It Takes Many Forms</div>
+        <div id="gbvTypes" style="display:flex;flex-direction:column;gap:10px;"></div>
+      </div>
+      <div class="card full">
+        <div class="card-label">You Are Not Alone</div>
+        <div class="card-title">Where to Get Help — South Africa</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;" id="gbvResources"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MJOLO -->
+  <div class="section" id="sec-mjolo">
+    <div class="section-eyebrow">Mjolo — The Pandemic</div>
+    <div class="section-title">Relationships<br>&amp; How to<br>Survive Them.</div>
+    <p style="color:var(--muted);font-size:15px;max-width:640px;margin-bottom:36px;line-height:1.7;">Mjolo is hard. Nobody tells you how complicated it gets — the situationships, the talking stages, the heartbreak, the games, the mixed signals. Let's call it exactly what it is.</p>
+    <div class="conflict-grid" id="mjoloPanels"></div>
+    <div class="card full" style="margin-top:24px;">
+      <div class="card-label">Relationship Journal</div>
+      <div class="card-title">What's Happening in Your Mjolo?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <div><label>How are you feeling about your relationship?</label><textarea id="mj1" placeholder="Be honest. No judgement here..." style="min-height:90px;"></textarea></div>
+        <div><label>What's one thing you need that you're not getting?</label><textarea id="mj2" placeholder="e.g. Consistency, communication, effort..." style="min-height:90px;"></textarea></div>
+        <div><label>What are you tolerating that you shouldn't be?</label><textarea id="mj3" placeholder="Name it without excusing it..." style="min-height:90px;"></textarea></div>
+        <div><label>What would a healthy version of this look like?</label><textarea id="mj4" placeholder="Describe your ideal relationship dynamic..." style="min-height:90px;"></textarea></div>
+      </div>
+      <button class="btn btn-blue" onclick="saveMjolo()">Save Reflection</button>
+    </div>
+  </div>
+
+  <!-- RELATIONSHIP ROLES -->
+  <div class="section" id="sec-roles">
+    <div class="section-eyebrow">Relationship Roles</div>
+    <div class="section-title">The Roles<br>We Play.</div>
+    <p style="color:var(--muted);font-size:15px;max-width:640px;margin-bottom:36px;line-height:1.7;">Every relationship has dynamics — some healthy, some not. Understanding the role you play — and the role others play — is how you start changing patterns that don't serve you.</p>
+    <div class="conflict-grid" id="rolesPanels"></div>
+    <div class="card full" style="margin-top:24px;">
+      <div class="card-label">Self-Reflection</div>
+      <div class="card-title">Which Roles Do You Play?</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">Select any roles you recognise in yourself</p>
+      <div class="mood-row" style="margin-bottom:20px;" id="roleSelector"></div>
+      <label>What role do you most want to change, and why?</label>
+      <textarea id="roleReflect" placeholder="Reflect honestly. What pattern are you ready to break?" style="min-height:100px;margin-bottom:16px;"></textarea>
+      <button class="btn btn-blue" onclick="saveRoles()">Save Reflection</button>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session') || '{}');
+if (!session.loggedIn) window.location.href = 'wellness1.html';
+
+const userEmail = session.email;
+const userName  = session.name || 'Friend';
+document.getElementById('userName').textContent = userName;
+document.getElementById('userAvatar').textContent = userName.charAt(0).toUpperCase();
+
+function logout() {
+  localStorage.removeItem('wl_session');
+  window.location.href = 'wellness1.html';
+}
+
+function key(suffix) { return `wl_${userEmail}_${suffix}`; }
+
+// ── EMAILJS ───────────────────────────────────────────────────────────
+emailjs.init('ax7861jmhczsf');
+function sendWellnessEmail(subject, details) {
+  emailjs.send('ax7861jmhczsf', 'template_06vcelp', {
+    studentName:    userName,
+    studentEmail:   userEmail,
+    courseName:     subject,
+    coursePrice:    'N/A',
+    courseDuration: 'Wellness Portal',
+    sessionType:    'Online',
+    paymentMethod:  'Free Access',
+    additionalInfo: details,
+    dashboardUrl:   window.location.href
+  }).catch(err => console.log('Email note:', err));
+}
+
+// ── NAV ──────────────────────────────────────────────────────────────
+const SECTION_TITLES = {
+  home:'Dashboard', checkin:'Daily Check-In', journal:'Journal',
+  goals:'Goal Tracker', anger:'Anger In / Out', conflict:'Conflict Resolution',
+  breathe:'Breathe', affirm:'Affirmations', summary:'My Summary',
+  boundaries:'Boundaries', parenting:'Parenting & Child Safety',
+  gbv:'GBV — Are You a Victim?', mjolo:'Mjolo (Relationships)', roles:'Relationship Roles'
+};
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  const navSections = ['home','checkin','journal','goals','anger','conflict','breathe','affirm','summary','boundaries','parenting','gbv','mjolo','roles'];
+  const navIdx = navSections.indexOf(id);
+  if (navIdx >= 0) document.querySelectorAll('.nav-item')[navIdx].classList.add('active');
+  document.getElementById('topbarTitle').textContent = SECTION_TITLES[id];
+  if (id==='checkin') { renderDate(); renderWbRows(); loadCheckin(); }
+  if (id==='journal') { renderDateJ(); loadJournal(); }
+  if (id==='goals')   { renderDateG(); loadGoals(); }
+  if (id==='summary') updateSummary();
+  if (id==='parenting') renderParenting();
+}
+
+// ── DATE ──────────────────────────────────────────────────────────────
+let currentDate = new Date();
+function dk(d) { return d.toISOString().slice(0,10); }
+function fmt(d) { return d.toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short',year:'numeric'}); }
+function shiftDate(n) { currentDate.setDate(currentDate.getDate()+n); renderDate(); renderDateJ(); renderDateG(); loadCheckin(); }
+
+function renderDate() {
+  const el = document.getElementById('ciDate');
+  if (el) el.textContent = fmt(currentDate);
+  const jel = document.getElementById('jDate');
+  if (jel) jel.textContent = fmt(currentDate);
+  const gel = document.getElementById('gDate');
+  if (gel) gel.textContent = fmt(currentDate);
+  renderWeek();
+}
+function renderDateJ() { const el=document.getElementById('jDate'); if(el) el.textContent=fmt(currentDate); }
+function renderDateG() { const el=document.getElementById('gDate'); if(el) el.textContent=fmt(currentDate); }
+
+function renderWeek() {
+  const strip = document.getElementById('ciWeek');
+  if (!strip) return;
+  strip.innerHTML='';
+  for(let i=-3;i<=3;i++){
+    const d=new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip=document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadCheckin(); };
+    strip.appendChild(chip);
+  }
+}
+
+// ── CHECK-IN ──────────────────────────────────────────────────────────
+let ciState = { mood:'', dayrate:'', stress:5, stars:{sleep:0,energy:0,work:0,personal:0,physical:0} };
+const WB_KEYS = ['sleep','energy','work','personal','physical'];
+const WB_LABELS = ['Sleep Quality','Energy Levels','Work Satisfaction','Personal Life','Physical Health'];
+
+function renderWbRows() {
+  const wrap = document.getElementById('wbRows');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  WB_KEYS.forEach((k,i)=>{
+    const row = document.createElement('div');
+    row.className = 'wb-row';
+    row.innerHTML=`<span class="wb-label">${WB_LABELS[i]}</span><div class="wb-stars" data-key="${k}">
+      ${[1,2,3,4,5].map(n=>`<span class="star" onclick="rateStar('${k}',${n})">★</span>`).join('')}
+    </div>`;
+    wrap.appendChild(row);
+  });
+}
+function rateStar(k,v) {
+  ciState.stars[k]=v;
+  document.querySelectorAll(`.wb-stars[data-key="${k}"] .star`).forEach((s,i)=>s.classList.toggle('on',i<v));
+}
+function pick(el,field,val) {
+  const siblings = el.parentElement.querySelectorAll('.mood-pill');
+  siblings.forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  ciState[field]=val;
+}
+function saveCheckin() {
+  const data = { ...ciState, ts: new Date().toISOString() };
+  localStorage.setItem(key('ci_'+dk(currentDate)), JSON.stringify(data));
+  updateDashStats();
+  sendWellnessEmail(
+    'Daily Check-In — ' + fmt(currentDate),
+    `Mood: ${data.mood || 'Not set'}\nDay Rating: ${data.dayrate || 'Not set'}\nStress: ${data.stress}/10\nSleep: ${data.stars.sleep||0}/5 ★\nEnergy: ${data.stars.energy||0}/5 ★\nWork Satisfaction: ${data.stars.work||0}/5 ★\nPersonal Life: ${data.stars.personal||0}/5 ★\nPhysical Health: ${data.stars.physical||0}/5 ★`
+  );
+  showToast('✓ Check-in saved');
+}
+function loadCheckin() {
+  const raw = localStorage.getItem(key('ci_'+dk(currentDate)));
+  if (!raw) return;
+  const d = JSON.parse(raw);
+  ciState = d;
+  document.querySelectorAll('#sec-checkin .mood-pill').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('#sec-checkin .mood-pill').forEach(p=>{
+    if(p.textContent.trim()===d.mood||p.textContent.trim()===d.dayrate) p.classList.add('active');
+  });
+  document.getElementById('ciStress').value = d.stress;
+  document.getElementById('ciStressVal').textContent = d.stress+'/10';
+  WB_KEYS.forEach(k=>{ if(d.stars&&d.stars[k]) rateStar(k,d.stars[k]); });
+  showToast('Loaded');
+}
+
+// ── JOURNAL ──────────────────────────────────────────────────────────
+let freeThoughts = [];
+function addFreeThought() {
+  const inp = document.getElementById('j4');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  freeThoughts.push({ text: txt, ts: new Date().toLocaleTimeString('en-ZA', {hour:'2-digit',minute:'2-digit'}) });
+  inp.value = '';
+  renderFreeThoughts();
+}
+function renderFreeThoughts() {
+  const el = document.getElementById('freeThoughts');
+  if (!el) return;
+  el.innerHTML = '';
+  freeThoughts.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 12px;';
+    div.innerHTML = `<span style="font-size:10px;color:#555;white-space:nowrap;margin-top:2px;">${t.ts}</span><span style="flex:1;font-size:13px;color:#ccc;line-height:1.5;">${t.text}</span><button onclick="delThought(${i})" style="background:none;border:none;color:#333;cursor:pointer;font-size:14px;transition:0.2s;" onmouseover="this.style.color='#ff4b2b'" onmouseout="this.style.color='#333'">×</button>`;
+    el.appendChild(div);
+  });
+}
+function delThought(i) { freeThoughts.splice(i,1); renderFreeThoughts(); }
+
+function saveJournal() {
+  const data={ j1:document.getElementById('j1').value, j2:document.getElementById('j2').value, j3:document.getElementById('j3').value, j4:document.getElementById('j4').value, thoughts: freeThoughts };
+  localStorage.setItem(key('jn_'+dk(currentDate)), JSON.stringify(data));
+  showToast('✓ Journal saved');
+}
+function loadJournal() {
+  const raw=localStorage.getItem(key('jn_'+dk(currentDate)));
+  if(!raw) return;
+  const d=JSON.parse(raw);
+  ['j1','j2','j3','j4'].forEach(id=>{ document.getElementById(id).value=d[id]||''; });
+  freeThoughts = d.thoughts || [];
+  renderFreeThoughts();
+  showToast('Loaded');
+}
+
+// ── GOALS ────────────────────────────────────────────────────────────
+let goals=[];
+function renderGoals() {
+  const list=document.getElementById('goalList');
+  list.innerHTML='';
+  goals.forEach((g,i)=>{
+    const el=document.createElement('div'); el.className='goal-item';
+    el.innerHTML=`<div class="goal-chk ${g.done?'done':''}" onclick="toggleGoal(${i})">${g.done?'✓':''}</div><span class="goal-txt ${g.done?'done':''}">${g.text}</span><button class="goal-del" onclick="delGoal(${i})">×</button>`;
+    list.appendChild(el);
+  });
+}
+function addGoal() {
+  const inp=document.getElementById('goalInp');
+  if(!inp.value.trim()) return;
+  goals.push({text:inp.value.trim(),done:false}); inp.value=''; renderGoals();
+}
+function toggleGoal(i) { goals[i].done=!goals[i].done; renderGoals(); }
+function delGoal(i) { goals.splice(i,1); renderGoals(); }
+function saveGoals() {
+  localStorage.setItem(key('gl_'+dk(currentDate)), JSON.stringify(goals));
+  showToast('✓ Goals saved');
+}
+function loadGoals() {
+  const raw=localStorage.getItem(key('gl_'+dk(currentDate)));
+  goals=raw?JSON.parse(raw):[];
+  renderGoals(); if(raw) showToast('Loaded');
+}
+
+// ── ANGER ────────────────────────────────────────────────────────────
+let bodySigns=[];
+function toggleBodySign(el) { el.classList.toggle('active'); bodySigns=Array.from(document.querySelectorAll('#sec-anger .mood-pill.active')).map(e=>e.textContent.trim()); }
+
+const TECHNIQUES = [
+  { name:'The 10-Second Pause', tag:'fast', body:'Before you say or do anything — count to 10 slowly. You are not delaying the conversation. You are giving your prefrontal cortex time to catch up with your amygdala. One breath per second.' },
+  { name:'Walk It Out', tag:'fast', body:'Physically remove yourself. Walk away — not as avoidance, but as regulation. Movement burns off adrenaline and cortisol. Even 5 minutes changes your body chemistry.' },
+  { name:'Name It To Tame It', tag:'fast', body:'Say out loud or write: "I feel angry because..." Naming the emotion activates the thinking brain and reduces the intensity of the feeling. Be specific — not "I\'m angry" but "I feel disrespected because..."' },
+  { name:'Cold Water Reset', tag:'fast', body:'Splash cold water on your face or wrists. This activates the mammalian dive reflex, which slows your heart rate and lowers your physiological arousal within seconds.' },
+  { name:'Write It All Down', tag:'deep', body:'Write everything you would say if there were no consequences. Don\'t hold back. Then decide: what of this is worth voicing, and what is yours to process? Do not send this to anyone.' },
+  { name:'The Empty Chair', tag:'deep', body:'Imagine the person who triggered you sitting across from you. Say everything you need to say — out loud if possible. Then sit in their chair and try to articulate what they might say back. This builds empathy and clarity.' },
+  { name:'Unpack the Root', tag:'deep', body:'Ask: Is this about what just happened, or is this familiar? Old wounds often disguise themselves as new conflicts. If this triggers a 10 when a 5 is more appropriate — go deeper.' },
+  { name:'Physical Release', tag:'fast', body:'Punch a pillow. Scream in your car. Sprint around the block. Your body stored the anger as physical energy — you need to discharge it safely before you can think clearly.' },
+];
+
+function renderTechniques() {
+  const el=document.getElementById('techList');
+  el.innerHTML='';
+  TECHNIQUES.forEach((t,i)=>{
+    const div=document.createElement('div'); div.className='technique';
+    div.innerHTML=`<div class="technique-top"><span class="technique-name">${t.name}</span><span class="technique-tag ${t.tag}">${t.tag==='fast'?'Quick Release':t.tag==='deep'?'Deep Work':'Tool'}</span></div><div class="technique-body">${t.body}</div>`;
+    div.onclick=()=>div.classList.toggle('open');
+    el.appendChild(div);
+  });
+}
+
+let episodes=[];
+function logAnger() {
+  const trigger=document.getElementById('a_trigger').value.trim();
+  if(!trigger) return showToast('⚠ Describe what triggered you');
+  const ep={
+    trigger, who:document.getElementById('a_who').value,
+    level:parseInt(document.getElementById('aLevel').value),
+    body:bodySigns.join(', '),
+    response:document.getElementById('a_response').value,
+    date:new Date().toISOString()
+  };
+  episodes.unshift(ep);
+  localStorage.setItem(key('anger'), JSON.stringify(episodes));
+  document.getElementById('a_trigger').value='';
+  document.getElementById('a_response').value='';
+  bodySigns=[];
+  document.querySelectorAll('#sec-anger .mood-pill.active').forEach(p=>p.classList.remove('active'));
+  renderEpisodes();
+  sendWellnessEmail(
+    'Anger Episode Logged',
+    `Trigger: ${ep.trigger}\nInvolved: ${ep.who||'Not specified'}\nAnger Level: ${ep.level}/10\nBody Signs: ${ep.body||'None noted'}\nResponse: ${ep.response||'Not noted'}\nDate: ${new Date(ep.date).toLocaleString('en-ZA')}`
+  );
+  showToast('Episode logged');
+  updateSummary();
+}
+function renderEpisodes() {
+  const el=document.getElementById('episodeLog');
+  if(!episodes.length){ el.innerHTML='<p style="color:var(--muted);font-size:14px;">No episodes logged yet. That\'s a good day.</p>'; return; }
+  el.innerHTML='';
+  episodes.forEach((ep,i)=>{
+    const d=new Date(ep.date);
+    const col=ep.level<=3?'var(--green)':ep.level<=6?'var(--gold)':'var(--red)';
+    const item=document.createElement('div'); item.className='episode-item';
+    item.innerHTML=`<div class="ep-left">
+      <div class="ep-date">${d.toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})} · ${ep.who||'Unknown'}</div>
+      <div class="ep-trigger">${ep.trigger}</div>
+      ${ep.body?`<div style="font-size:11px;color:var(--muted);margin-top:3px;">${ep.body}</div>`:''}
+    </div>
+    <div style="text-align:right;flex-shrink:0;">
+      <div class="ep-level" style="color:${col};">${ep.level}/10</div>
+      <button class="ep-del" onclick="delEpisode(${i})">×</button>
+    </div>`;
+    el.appendChild(item);
+  });
+}
+function delEpisode(i) { episodes.splice(i,1); localStorage.setItem(key('anger'),JSON.stringify(episodes)); renderEpisodes(); }
+function loadEpisodes() { const r=localStorage.getItem(key('anger')); episodes=r?JSON.parse(r):[]; renderEpisodes(); }
+
+// ── CONFLICT ──────────────────────────────────────────────────────────
+const CONFLICTS = [
+  { icon:'💼', title:'Colleagues', desc:'The passive-aggressive ones. The credit-stealers. The ones who CC your boss on everything.', expand:`<strong>What they do:</strong><br>• Take credit for your ideas in meetings<br>• Give you the silent treatment or cold shoulders<br>• Go behind your back to management<br>• Make sarcastic "jokes" at your expense<br>• Undermine your confidence in front of others<br>• Exclude you from important conversations<br>• Create cliques and gossip<br><br><strong>What you can do:</strong><br>Document everything. Stay professional in public. Address it directly in private when safe to do so. Know your HR policies. Set boundaries early — silence signals acceptance.<br><br><em>Remember: Their behaviour is a reflection of their insecurities, not your value.</em>` },
+  { icon:'👔', title:'Management & Bosses', desc:'Micromanaging, favouritism, impossible expectations, and taking credit for your work.', expand:`<strong>What they do:</strong><br>• Micromanage and distrust your judgment<br>• Set impossible deadlines with no resources<br>• Take credit for your output<br>• Play favourites openly<br>• Give feedback that's vague or contradictory<br>• Create fear-based workplace cultures<br>• Dismiss your mental health and personal challenges<br><br><strong>What you can do:</strong><br>Get feedback in writing. Know your employment rights. Build a paper trail. Have upward conversations professionally. Identify allies. Know when a workplace is toxic vs. challenging — there is a difference.<br><br><em>You deserve a manager who develops you, not depletes you.</em>` },
+  { icon:'👨‍👩‍👧', title:'Family & Black Tax', desc:'The money requests. The guilt trips. The expectations you never agreed to carry.', expand:`<strong>What they do:</strong><br>• Expect financial support as a given — without asking<br>• Make you feel guilty for having more than them<br>• Undermine your life choices ("Why are you doing that fancy job?")<br>• Use family occasions to make requests or comparisons<br>• Dismiss your own financial goals and needs<br>• Apply generational pressure ("We sacrificed for you")<br>• Make you the family fixer — emotionally and financially<br><br><strong>Black Tax is real:</strong> In many African communities, success comes with an unspoken bill. You're expected to fund siblings' school fees, parents' medical costs, extended family events — while building nothing for yourself.<br><br><strong>What you can do:</strong><br>Set a monthly family budget you can genuinely afford — and stick to it. Have the hard conversation: "I love you and I have limits." It's not selfish. It's sustainable.<br><br><em>You cannot pour from an empty cup. Even the plane says: put on your own mask first.</em>` },
+  { icon:'💸', title:'Financial Abuse', desc:'When someone controls, manipulates, or exploits your money — in relationships or families.', expand:`<strong>Signs of financial abuse:</strong><br>• Partner controls all finances and gives you an "allowance"<br>• You're prevented from working or earning independently<br>• Someone borrows money repeatedly and never repays<br>• Your name or credit is used without consent<br>• You're threatened, guilted, or manipulated into giving money<br>• Your earnings are taken or "managed" by someone else<br>• You're blamed for financial problems you didn't cause<br><br><strong>Financial abuse is abuse — full stop.</strong><br><br><strong>What you can do:</strong><br>Open your own account. Document all transactions. Speak to a financial counsellor or social worker. Know that economic independence is a right. If you're in a dangerous situation, contact a local shelter or DV support line.<br><br><em>Money is one of the most common forms of control. Recognising it is the first step to reclaiming your power.</em>` },
+  { icon:'🚕', title:'Strangers & Public', desc:'Taxi drivers. Queue jumpers. Rude cashiers. The strangers who ruin your day.', expand:`<strong>What they do:</strong><br>• Cut you off in traffic without care<br>• Jump queues and act entitled<br>• Speak to you rudely in service settings<br>• Make racist, sexist, or demeaning comments<br>• Aggressive driving that puts you in danger<br>• Public disrespect — loud music, littering, harassment<br><br><strong>What's really happening:</strong><br>Most people acting out in public are carrying enormous stress themselves. This doesn't excuse their behaviour — but it stops you from internalising it as being about you.<br><br><strong>What you can do:</strong><br>The 10-second pause. Let the car go. It costs you 10 seconds. The alternative — a confrontation, an accident, or a terrible mood for the rest of the day — costs you far more. You cannot control others. You can control your response.<br><br><em>Protecting your peace from strangers is not weakness. It's wisdom.</em>` },
+  { icon:'💔', title:'Partners & Relationships', desc:'Emotional unavailability, gaslighting, unmet needs, and the slow erosion of who you are.', expand:`<strong>What they do:</strong><br>• Dismiss your feelings ("You're too sensitive")<br>• Gaslight you — make you question your own reality<br>• Use love as leverage ("If you loved me, you would...")<br>• Create cycles of tension, explosion, and honeymoon<br>• Isolate you from your support network<br>• Refuse to communicate or take accountability<br>• Weaponise your vulnerabilities against you<br><br><strong>What you can do:</strong><br>Name what you're experiencing. A healthy relationship is built on safety, respect, and growth. Couples therapy is not defeat — it's investment. If the relationship is unsafe, your safety comes first. Always.<br><br><em>You deserve a love that doesn't require you to shrink.</em>` },
+  { icon:'🏥', title:'Systems & Institutions', desc:'Government offices, hospitals, banks — the endless frustration of systems that fail people.', expand:`<strong>What they do:</strong><br>• Make you wait for hours with no communication<br>• Lose your documents repeatedly<br>• Give you contradictory information<br>• Treat you as a number, not a person<br>• Create barriers that feel deliberately designed to exhaust you<br>• Use jargon to confuse and disempower<br><br><strong>What you can do:</strong><br>Go with a plan: documents, copies, reference numbers. Go early. Ask for names and write them down. Escalate through official channels. Know your consumer and citizen rights. Take breaks — fighting a system in a rage never helps.<br><br><em>Institutional frustration is collective trauma. You are not crazy for being exhausted by it.</em>` },
+  { icon:'🧠', title:'Yourself', desc:'Perfectionism, self-sabotage, imposter syndrome, and the hardest battles — the internal ones.', expand:`<strong>What you do to yourself:</strong><br>• Hold yourself to impossible standards<br>• Replay mistakes on a loop<br>• Compare your chapter 3 to someone else's chapter 20<br>• Shrink to make others comfortable<br>• Sabotage good things because deep down you don't feel worthy<br>• Tolerate less than you deserve<br>• Neglect your own needs while tending to everyone else's<br><br><strong>What you can do:</strong><br>Therapy is not a last resort. It's maintenance. The inner critic is often the loudest voice — but it's not the truest one. Self-compassion is not self-indulgence. You would not speak to a friend the way you speak to yourself.<br><br><em>The relationship you have with yourself sets the tone for every other relationship in your life.</em>` },
+];
+
+function renderConflicts() {
+  const grid=document.getElementById('conflictGrid');
+  CONFLICTS.forEach(c=>{
+    const el=document.createElement('div'); el.className='conflict-card';
+    el.innerHTML=`<div class="cc-icon">${c.icon}</div><div class="cc-title">${c.title}</div><div class="cc-desc">${c.desc}</div><div class="cc-expand">${c.expand}</div>`;
+    el.onclick=()=>{ el.classList.toggle('open'); };
+    grid.appendChild(el);
+  });
+}
+function saveConflict() {
+  const d={ cj1:document.getElementById('cj1').value, cj2:document.getElementById('cj2').value, cj3:document.getElementById('cj3').value, cj4:document.getElementById('cj4').value, date:new Date().toISOString() };
+  const all=JSON.parse(localStorage.getItem(key('conflicts'))||'[]');
+  all.unshift(d); localStorage.setItem(key('conflicts'),JSON.stringify(all));
+  showToast('✓ Reflection saved');
+}
+
+// ── BREATHING ────────────────────────────────────────────────────────
+let bRunning=false,bInt=null,bPhaseIdx=0,bCount=0,bCycles=0;
+const bPhases=[{name:'Inhale',dur:4,scale:1.35},{name:'Hold',dur:7,scale:1.35},{name:'Exhale',dur:8,scale:1.0}];
+function toggleBreath() {
+  if(bRunning){ clearInterval(bInt); bRunning=false; document.getElementById('bBtn').textContent='Resume'; }
+  else { bRunning=true; document.getElementById('bBtn').textContent='Pause'; runBreath(); bInt=setInterval(runBreath,1000); }
+}
+function runBreath() {
+  const p=bPhases[bPhaseIdx];
+  document.getElementById('bPhase').textContent=p.name;
+  document.getElementById('bNum').textContent=p.dur-bCount;
+  document.getElementById('bWord').textContent=p.name;
+  document.getElementById('bCircle').style.transform=`scale(${p.scale})`;
+  bCount++; if(bCount>=p.dur){ bCount=0; bPhaseIdx=(bPhaseIdx+1)%3; if(bPhaseIdx===0){ bCycles++; if(bCycles>=3){ resetBreath(); showToast('Breathing complete 🌿'); return; } } }
+}
+function resetBreath() {
+  clearInterval(bInt); bRunning=false; bPhaseIdx=0; bCount=0; bCycles=0;
+  document.getElementById('bBtn').textContent='Start';
+  document.getElementById('bPhase').textContent='Inhale 4 · Hold 7 · Exhale 8';
+  document.getElementById('bNum').textContent='—';
+  document.getElementById('bWord').textContent='Ready';
+  document.getElementById('bCircle').style.transform='scale(1)';
+}
+
+let boxRunning=false,boxInt=null,boxPhaseIdx=0,boxCount=0,boxCycles=0;
+const boxPhases=[{name:'Inhale',emoji:'⬜'},{name:'Hold',emoji:'🟦'},{name:'Exhale',emoji:'🟦'},{name:'Hold',emoji:'⬜'}];
+function toggleBox() {
+  if(boxRunning){ clearInterval(boxInt); boxRunning=false; document.getElementById('boxBtn').textContent='Resume'; }
+  else{ boxRunning=true; document.getElementById('boxBtn').textContent='Pause'; runBox(); boxInt=setInterval(runBox,1000); }
+}
+function runBox() {
+  const p=boxPhases[boxPhaseIdx];
+  document.getElementById('boxLabel').textContent=p.name;
+  document.getElementById('boxNum').textContent=4-boxCount;
+  document.getElementById('boxSquare').textContent=p.emoji;
+  boxCount++; if(boxCount>=4){ boxCount=0; boxPhaseIdx=(boxPhaseIdx+1)%4; if(boxPhaseIdx===0){ boxCycles++; if(boxCycles>=4){ resetBox(); showToast('Box breathing complete ✓'); return; } } }
+}
+function resetBox() {
+  clearInterval(boxInt); boxRunning=false; boxPhaseIdx=0; boxCount=0; boxCycles=0;
+  document.getElementById('boxBtn').textContent='Start';
+  document.getElementById('boxLabel').textContent='Press Start';
+  document.getElementById('boxNum').textContent='—';
+  document.getElementById('boxSquare').textContent='⬜';
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────
+const AFFIRMATIONS = {
+  general:['I am capable of handling whatever comes my way today.','Progress, not perfection. I am enough.','I deserve balance between work and the life I love.','I bring something unique that no one else can.','My feelings are valid. I give myself permission to feel.'],
+  anger:['I choose my response. Anger visits me — it does not own me.','I am bigger than this moment.','I release what I cannot control and focus on what I can.','My peace is not negotiable.','I respond. I do not react.'],
+  work:['My work has value and my presence matters.','I set healthy boundaries and they protect my energy.','I deserve a workplace where I am respected.','I do not carry other people\'s chaos.','I am allowed to say no.'],
+  family:['I love my family and I have limits. Both are true.','I cannot pour from an empty cup.','Boundaries are not walls. They are doors — I choose who enters.','Generosity that destroys me helps no one.','My needs matter too.'],
+  growth:['I am growing every day, even when it doesn\'t feel like it.','Each breath grounds me in this present moment.','I am resilient. I have overcome challenges before.','Today I choose growth over comfort.','I am becoming the best version of myself.'],
+};
+
+const AFFIRM_CATEGORY_LABELS = { general:'General', anger:'Anger & Calm', work:'Work Life', family:'Family & Limits', growth:'Growth' };
+
+function newAffirm(elId) {
+  const all = Object.values(AFFIRMATIONS).flat();
+  const txt = all[Math.floor(Math.random()*all.length)];
+  const el = document.getElementById(elId);
+  el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=txt; el.style.transition='opacity 0.4s'; el.style.opacity=1; },250);
+}
+
+function renderAffirmCategories() {
+  const el=document.getElementById('affirmCategories');
+  if(!el) return;
+  el.innerHTML='';
+  Object.entries(AFFIRMATIONS).forEach(([cat,list])=>{
+    const btn=document.createElement('button');
+    btn.className='btn btn-outline';
+    btn.style.cssText='text-align:left;padding:10px 16px;font-size:13px;font-family:Barlow,sans-serif;font-weight:600;text-transform:none;letter-spacing:0;';
+    btn.textContent=AFFIRM_CATEGORY_LABELS[cat];
+    btn.onclick=()=>{
+      const txt=list[Math.floor(Math.random()*list.length)];
+      const aEl=document.getElementById('mainAffirm');
+      aEl.style.opacity=0;
+      setTimeout(()=>{ aEl.textContent=txt; aEl.style.transition='opacity 0.4s'; aEl.style.opacity=1; },250);
+    };
+    el.appendChild(btn);
+  });
+}
+
+// ── SUMMARY ──────────────────────────────────────────────────────────
+function updateSummary() {
+  const now=new Date();
+  const keys=[];
+  for(let i=1;i<=now.getDate();i++){ const d=new Date(now.getFullYear(),now.getMonth(),i); keys.push(dk(d)); }
+  const entries=keys.map(k2=>localStorage.getItem(key('ci_'+k2))).filter(Boolean).map(v=>JSON.parse(v));
+  const checkins=entries.length;
+
+  document.getElementById('s_ci').textContent=checkins;
+  document.getElementById('h_checkins').textContent=checkins;
+
+  let streak=0;
+  for(let i=0;i<31;i++){ const d=new Date(); d.setDate(d.getDate()-i); if(localStorage.getItem(key('ci_'+dk(d)))) streak++; else break; }
+  document.getElementById('s_str').textContent=streak;
+  document.getElementById('h_streak').textContent=streak;
+
+  const moodMap={'🌟 Thriving':5,'😊 Good':4,'😐 Okay':3,'😔 Low':2,'😞 Struggling':1};
+  const moods=entries.filter(e=>e.mood).map(e=>moodMap[e.mood]||3);
+  const avgMood=moods.length?moods.reduce((a,b)=>a+b,0)/moods.length:null;
+  const moodEmoji=['','😞','😔','😐','😊','🌟'];
+  document.getElementById('s_mood').textContent=avgMood?moodEmoji[Math.round(avgMood)]:'—';
+
+  if(checkins>0){
+    const avgS=entries.reduce((a,e)=>a+(e.stress||5),0)/checkins;
+    set('tf_stress','ts_stress',avgS*10,avgS.toFixed(1)+'/10');
+    const wbVals=entries.map(e=>{ const v=Object.values(e.stars||{}).filter(x=>x>0); return v.length?v.reduce((a,b)=>a+b,0)/v.length:0; }).filter(v=>v>0);
+    if(wbVals.length){ const avg=wbVals.reduce((a,b)=>a+b,0)/wbVals.length; set('tf_wb','ts_wb',avg*20,avg.toFixed(1)+'/5'); }
+    const allGoals=keys.flatMap(k2=>{ const r=localStorage.getItem(key('gl_'+k2)); return r?JSON.parse(r):[]; });
+    const doneG=allGoals.filter(g=>g.done).length;
+    document.getElementById('h_goals').textContent=doneG;
+    if(allGoals.length) set('tf_goals','ts_goals',Math.round(doneG/allGoals.length*100),`${doneG}/${allGoals.length}`);
+    const ep=JSON.parse(localStorage.getItem(key('anger'))||'[]');
+    const thisMonth=ep.filter(e=>new Date(e.date).getMonth()===now.getMonth());
+    set('tf_anger','ts_anger',Math.min(thisMonth.length*10,100),thisMonth.length+' this month');
+  }
+}
+function set(barId,lblId,pct,txt){ document.getElementById(barId).style.width=pct+'%'; document.getElementById(lblId).textContent=txt; }
+
+function updateDashStats() { updateSummary(); }
+
+// ── TOAST ────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ── GREETING ──────────────────────────────────────────────────────────
+function setGreeting() {
+  const h=new Date().getHours();
+  const g=h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening';
+  document.getElementById('homeGreeting').textContent=`${g},\n${userName}.`;
+}
+
+
+// ── BOUNDARY DATA ─────────────────────────────────────────────────────
+const BOUNDARY_TACTICS = [
+  { t:'Guilt tripping', d:'Making you feel bad for having needs. "After everything I've done for you..." is a classic opener.' },
+  { t:'Minimising', d:'"You're so sensitive." "It's not a big deal." They shrink your boundary to make it disappear.' },
+  { t:'Persistence / wearing you down', d:'Asking the same thing repeatedly until you cave out of exhaustion.' },
+  { t:'DARVO', d:'Deny, Attack, Reverse Victim and Offender. Suddenly you're the problem for setting the limit.' },
+  { t:'Silent treatment', d:'Punishing you with withdrawal to make you regret your boundary.' },
+  { t:'Going around you', d:'They don't ask you — they ask someone else, or just do it anyway.' },
+  { t:'Love bombing after violation', d:'Excessive affection after crossing a line. Designed to make you forget what happened.' },
+];
+let bOutcome = '';
+let boundaryLog = [];
+
+function renderBoundaryTactics() {
+  const el = document.getElementById('boundaryTactics');
+  if (!el) return;
+  el.innerHTML = '';
+  BOUNDARY_TACTICS.forEach(t => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px;cursor:pointer;transition:0.3s;';
+    div.innerHTML = `<div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;margin-bottom:4px;color:#ddd;">${t.t}</div><div style="font-size:12px;color:#666;line-height:1.5;display:none;">${t.d}</div>`;
+    div.onclick = () => { const body = div.querySelector('div:last-child'); const open = body.style.display === 'block'; body.style.display = open ? 'none' : 'block'; div.style.borderColor = open ? 'rgba(168,85,247,0.2)' : 'rgba(168,85,247,0.5)'; };
+    el.appendChild(div);
+  });
+}
+
+function logBoundary() {
+  const type = document.getElementById('b_type').value;
+  const who  = document.getElementById('b_who').value;
+  const crossed = document.getElementById('b_crossed').value.trim();
+  const bset = document.getElementById('b_set').value.trim();
+  if (!crossed) return showToast('⚠ Describe what happened');
+  const entry = { type, who, crossed, bset, outcome: bOutcome, date: new Date().toISOString() };
+  boundaryLog.unshift(entry);
+  localStorage.setItem(key('boundaries'), JSON.stringify(boundaryLog));
+  document.getElementById('b_crossed').value = '';
+  document.getElementById('b_set').value = '';
+  bOutcome = '';
+  document.querySelectorAll('#sec-boundaries .mood-pill').forEach(p => p.classList.remove('active'));
+  renderBoundaryLog();
+  showToast('Boundary logged');
+}
+
+function renderBoundaryLog() {
+  const el = document.getElementById('boundaryLog');
+  if (!el) return;
+  if (!boundaryLog.length) { el.innerHTML = '<p style="color:var(--muted);font-size:14px;">No boundaries logged yet.</p>'; return; }
+  el.innerHTML = '';
+  boundaryLog.forEach((b, i) => {
+    const d = new Date(b.date);
+    const outcomeColor = b.outcome === 'They respected it' ? 'var(--green)' : b.outcome === 'They violated it' ? 'var(--red)' : 'var(--gold)';
+    const div = document.createElement('div');
+    div.className = 'episode-item';
+    div.innerHTML = `<div class="ep-left"><div class="ep-date">${d.toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})} · ${b.type||'General'} · ${b.who||''}</div><div class="ep-trigger">${b.crossed}</div>${b.bset?`<div style="font-size:12px;color:#aaa;margin-top:4px;font-style:italic;">Set: ${b.bset}</div>`:''}</div><div style="text-align:right;flex-shrink:0;"><div style="font-size:11px;font-weight:700;text-transform:uppercase;color:${outcomeColor};">${b.outcome||'—'}</div><button class="ep-del" onclick="delBoundary(${i})">×</button></div>`;
+    el.appendChild(div);
+  });
+}
+
+function delBoundary(i) { boundaryLog.splice(i,1); localStorage.setItem(key('boundaries'), JSON.stringify(boundaryLog)); renderBoundaryLog(); }
+function loadBoundaries() { const r = localStorage.getItem(key('boundaries')); boundaryLog = r ? JSON.parse(r) : []; renderBoundaryLog(); }
+
+// ── PARENTING ─────────────────────────────────────────────────────────
+function renderParenting() {
+  const age = parseInt(document.getElementById('childAge')?.value);
+  const gender = document.getElementById('childGender')?.value || '';
+  const el = document.getElementById('parentingContent');
+  if (!el) return;
+  if (!age && age !== 0) { el.innerHTML = '<p style="color:var(--muted);">Enter your child's age above to get guidance.</p>'; return; }
+
+  let blocks = [];
+
+  if (age <= 4) {
+    blocks = [
+      { label:'Body Safety (Age 0–4)', icon:'🧒', color:'var(--blue)', content:`<p style="margin-bottom:10px;">At this age, children learn through simple, consistent language. Start with body autonomy — their body belongs to them.</p><ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Teach the correct names for all body parts — no nicknames</li><li>"Your body belongs to you. Nobody touches your private parts except a doctor with me present."</li><li>Practice: "Can I hug you?" — let them say no even to family. This teaches consent.</li><li>Teach the difference between safe touch (a hug they want) and unsafe touch (anything that feels wrong)</li><li>Teach: "If anyone touches you and says it's a secret — you ALWAYS tell Mummy/Daddy."</li><li>Read: <em>My Body Belongs to Me</em> — age-perfect picture book</li></ul>` },
+      { label:'Emotional Safety', icon:'💛', color:'var(--gold)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Name emotions: "You look angry. That's okay."</li><li>Never punish crying — validate first, then redirect</li><li>Create a "safe word" your child can use if they're scared</li></ul>` },
+    ];
+  } else if (age <= 8) {
+    blocks = [
+      { label:'Body Safety & Consent (Age 5–8)', icon:'🧒', color:'var(--blue)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Reinforce: Private parts are covered by a swimsuit — no one touches them</li><li>Teach the "no secret touches" rule — safe adults don't ask for secrets</li><li>Role-play scenarios: "What do you do if someone tries to touch you?"</li><li>Empower them to say NO loudly and run — even to an adult</li><li>Teach: Tell a trusted adult immediately. Keep telling until someone listens.</li><li>Discuss online safety — no sharing photos, real names, or location</li></ul>` },
+      { label:'Understanding Grooming', icon:'⚠️', color:'var(--red)', content:`<p style="margin-bottom:10px;color:var(--muted);font-size:13px;">Groomers target children this age. Teach these warning signs:</p><ul style="margin-left:16px;line-height:2;color:#ccc;"><li>An adult who always wants to be alone with them</li><li>Someone who gives them lots of gifts for "no reason"</li><li>Someone who tells them not to tell their parents things</li><li>Anyone who makes them feel uncomfortable or confused</li></ul><p style="color:var(--red);font-size:13px;margin-top:10px;font-weight:600;">Abusers are most often known to the family — not strangers.</p>` },
+    ];
+  } else if (age <= 12) {
+    blocks = [
+      { label:'Puberty & Body Changes (Age 9–12)', icon:'🌱', color:'var(--green)', content:`<p style="margin-bottom:10px;">Have the puberty talk before it happens — not after. Children who are prepared cope better.</p><ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Explain physical changes for their gender honestly and without shame</li><li>For girls: periods, bra wearing, body hair — normalise all of it</li><li>For boys: voice breaking, erections, wet dreams — normalise all of it</li><li>Teach: these changes are normal, healthy, and nobody's business but their own</li><li>Open the door: "You can always ask me anything about your body."</li></ul>` },
+      { label:'What Rape Is (Age 9–12)', icon:'🚨', color:'var(--red)', content:`<p style="margin-bottom:10px;color:var(--muted);font-size:13px;">Children this age need clear, honest language — not graphic detail, but real truth.</p><ul style="margin-left:16px;line-height:2;color:#ccc;"><li><strong>Rape means someone touches your private parts or forces you to touch theirs — without your consent.</strong></li><li>It is ALWAYS wrong. It is NEVER the child's fault.</li><li>Teach: consent means a free, clear YES — not silence, not fear, not pressure</li><li>Even if they know the person. Even if they've met before. Even if they're family.</li><li>If it happens: tell a trusted adult immediately. Go to a clinic or hospital.</li><li>Teach boys: a girl saying no means no. Full stop. No matter what.</li></ul>` },
+      { label:'Online Safety', icon:'📱', color:'var(--blue)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>No photos of their body — clothed or not — shared online ever</li><li>No meeting online contacts in person</li><li>If someone online asks for photos, tells them to keep secrets, or makes them uncomfortable — screenshot and tell a parent immediately</li><li>Sexting: explain what it is, the legal consequences, and why it can never be "taken back"</li></ul>` },
+    ];
+    if (gender === 'girl') blocks.push({ label:'For Girls: Your Body, Your Rights', icon:'👧', color:'var(--purple)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Your body is yours. No one is entitled to touch it — not a boyfriend, not a male relative, not a teacher.</li><li>If something feels wrong, it probably is — trust your gut</li><li>You have the right to say no to any touch, any time, with anyone</li><li>No one can pressure you into sexual activity — that is abuse</li><li>You will never be in trouble for reporting what someone did to you</li></ul>` });
+    if (gender === 'boy') blocks.push({ label:'For Boys: Respect & Responsibility', icon:'👦', color:'var(--orange)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>No means no — always, immediately, without argument</li><li>A girl not saying no is not the same as her saying yes</li><li>You are never entitled to someone else's body</li><li>Being pressured into something is also wrong — speak up</li><li>Real men do not force, coerce, or manipulate</li></ul>` });
+  } else if (age <= 17) {
+    blocks = [
+      { label:'Consent — The Full Picture (Teen)', icon:'🗣', color:'var(--blue)', content:`<p style="margin-bottom:10px;">Teenagers need a sophisticated understanding of consent — not just "no means no."</p><ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Consent is enthusiastic, freely given, reversible, informed, and specific (FRIES)</li><li>Saying yes to one thing is not saying yes to everything</li><li>Consent given under pressure, alcohol, or drugs is not valid consent</li><li>You can change your mind at any point — mid-way through, even</li><li>In South Africa: the age of consent is 16, but it's more complex than that. Teach them the law.</li></ul>` },
+      { label:'Types of Rape (Teen Education)', icon:'🚨', color:'var(--red)', content:`<p style="margin-bottom:10px;color:#aaa;font-size:13px;">Being clear about what constitutes rape removes the grey areas abusers rely on.</p><ul style="margin-left:16px;line-height:2;color:#ccc;"><li><strong>Acquaintance/date rape:</strong> The most common. Perpetrated by someone they know and trusted.</li><li><strong>Statutory rape:</strong> Sexual activity with someone below the age of consent, even if they "agreed."</li><li><strong>Marital rape:</strong> Yes — a partner/husband can rape their spouse. Consent is required every time.</li><li><strong>Gang rape:</strong> Multiple perpetrators. Often used as control or punishment.</li><li><strong>Digital/tech-facilitated rape:</strong> Coerced sexting, non-consensual sharing of images (revenge porn).</li><li><strong>Drug-facilitated rape:</strong> Incapacitating someone with substances to assault them.</li></ul><p style="color:var(--red);font-size:13px;margin-top:10px;font-weight:600;">If it happened to you or someone you know: go to Thuthuzela Care Centre immediately. Evidence within 72 hours matters.</p>` },
+      { label:'Healthy vs Unhealthy Relationships', icon:'💔', color:'var(--gold)', content:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;"><div style="background:rgba(57,255,20,0.05);border:1px solid rgba(57,255,20,0.2);border-radius:10px;padding:14px;"><div style="color:var(--green);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:16px;text-transform:uppercase;margin-bottom:8px;">Healthy</div><ul style="margin-left:14px;font-size:12px;line-height:1.9;color:#bbb;"><li>Mutual respect</li><li>You can spend time apart</li><li>Disagreements don't become threats</li><li>Your friends and family still exist</li><li>You feel safe to say no</li></ul></div><div style="background:rgba(255,75,43,0.05);border:1px solid rgba(255,75,43,0.2);border-radius:10px;padding:14px;"><div style="color:var(--red);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:16px;text-transform:uppercase;margin-bottom:8px;">Warning Signs</div><ul style="margin-left:14px;font-size:12px;line-height:1.9;color:#bbb;"><li>Jealousy framed as love</li><li>Isolating you from friends/family</li><li>Reading your phone without asking</li><li>Threats when you try to leave</li><li>Pressure for sex or photos</li></ul></div></div>` },
+    ];
+    if (gender === 'girl') blocks.push({ label:'For Teenage Girls: Know Your Power', icon:'👩', color:'var(--purple)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>You are not responsible for a boy's feelings, urges, or behaviour — ever</li><li>"He couldn't help himself" is a lie. He made a choice.</li><li>What you wear, where you go, how you dress — these are never an invitation</li><li>You have the right to report. You will be believed.</li><li>Rape is never your fault. Not even 1% of it.</li><li>Thuthuzela Care Centres provide free, confidential support 24/7</li></ul>` });
+    if (gender === 'boy') blocks.push({ label:'For Teenage Boys: Lead With Respect', icon:'👨', color:'var(--orange)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Locker room talk that degrades women makes you part of the problem</li><li>If your boys are planning or boasting about sexual coercion — call it out or walk away</li><li>Your sexual desire is real and normal. Acting on it without consent is assault.</li><li>You can also be a victim. Being assaulted by a woman or man is still assault.</li><li>Being a man means protecting — not taking. Lead by example.</li></ul>` });
+  } else {
+    blocks = [
+      { label:'Your Child Is 18+ — Adult Conversations', icon:'🧑', color:'var(--blue)', content:`<ul style="margin-left:16px;line-height:2;color:#ccc;"><li>Keep the door open — adults still need parents who don't judge</li><li>Talk about relationship health, financial independence, and consent in adult relationships</li><li>Discuss cohabitation, marriage, and co-parenting honestly</li><li>Share your own lessons — vulnerability builds trust</li><li>Know the signs of GBV so you can recognise them if needed</li></ul>` },
+    ];
+  }
+
+  el.innerHTML = '';
+  const title = document.createElement('div');
+  title.innerHTML = `<div class="section-eyebrow" style="margin-bottom:16px;">Guidance for a ${age}-year-old ${gender || 'child'}</div>`;
+  el.appendChild(title);
+  const grid = document.createElement('div');
+  grid.className = 'conflict-grid';
+  blocks.forEach(b => {
+    const card = document.createElement('div');
+    card.className = 'conflict-card';
+    card.style.borderColor = b.color.replace('var(--','rgba(').replace(')',',0.25)').replace('blue','0,210,255').replace('green','57,255,20').replace('red','255,75,43').replace('gold','245,197,24').replace('purple','168,85,247').replace('orange','255,140,0');
+    card.innerHTML = `<div class="cc-icon">${b.icon}</div><div class="cc-title" style="color:${b.color};">${b.label}</div><div class="cc-desc" style="color:#666;font-size:12px;">Click to expand</div><div class="cc-expand">${b.content}</div>`;
+    card.onclick = () => card.classList.toggle('open');
+    grid.appendChild(card);
+  });
+  el.appendChild(grid);
+}
+
+// ── GBV ──────────────────────────────────────────────────────────────
+const GBV_QUESTIONS = [
+  'My partner controls where I go, who I see, and what I do',
+  'I feel afraid of my partner's moods or reactions',
+  'My partner has hit, slapped, pushed, kicked, or choked me',
+  'My partner threatens to hurt me, the children, or themselves if I leave',
+  'My partner checks my phone, emails, or social media without permission',
+  'My partner controls all the money and I have no financial independence',
+  'My partner forces or pressures me into sex when I don't want to',
+  'My partner humiliates, insults, or degrades me — in private or in front of others',
+  'My partner has threatened to take the children away from me',
+  'I have to ask permission to see friends or family',
+  'My partner destroys my property, belongings, or things I love',
+  'I walk on eggshells to avoid upsetting my partner',
+  'My partner blames me for their abusive behaviour',
+  'I have been forced to sign documents or take loans against my will',
+  'My partner threatens to expose private photos or information about me',
+];
+
+const GBV_TYPES = [
+  { t:'Physical GBV', d:'Hitting, slapping, kicking, choking, pushing, burning, using weapons. Any deliberate physical harm.' },
+  { t:'Emotional & Psychological', d:'Constant criticism, humiliation, threats, gaslighting, isolation, controlling behaviour, silent treatment used as punishment.' },
+  { t:'Sexual GBV', d:'Any sexual act without full, free consent — including within marriage. Coercion, manipulation, or force.' },
+  { t:'Economic / Financial', d:'Controlling access to money, preventing work, taking earnings, forcing loans or debt, withholding basic needs.' },
+  { t:'Digital GBV', d:'Non-consensual sharing of intimate images (revenge porn), online harassment, tracking via phone, monitoring messages.' },
+  { t:'Femicide', d:'The murder of women because of their gender. South Africa has one of the highest femicide rates in the world.' },
+];
+
+const GBV_RESOURCES = [
+  { name:'GBV Command Centre', detail:'24/7 helpline', contact:'0800 428 428 (toll-free)' },
+  { name:'Thuthuzela Care Centres', detail:'Free medical & legal support after rape', contact:'Visit nearest public hospital' },
+  { name:'SAPS Family Violence Unit', detail:'Report abuse to police', contact:'10111' },
+  { name:'Stop Gender Violence Helpline', detail:'24/7 counselling & referrals', contact:'0800 150 150' },
+  { name:'People Opposing Women Abuse (POWA)', detail:'Shelter, legal aid, counselling', contact:'011 642 4345' },
+  { name:'Childline SA', detail:'Child abuse reporting', contact:'0800 055 555' },
+];
+
+function renderGBVChecklist() {
+  const el = document.getElementById('gbvChecklist');
+  if (!el) return;
+  el.innerHTML = '';
+  GBV_QUESTIONS.forEach((q, i) => {
+    const div = document.createElement('label');
+    div.style.cssText = 'display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:10px;background:rgba(255,75,43,0.04);border:1px solid rgba(255,75,43,0.15);border-radius:8px;transition:0.2s;';
+    div.innerHTML = `<input type="checkbox" id="gbv_${i}" style="width:16px;height:16px;margin-top:2px;flex-shrink:0;accent-color:var(--red);"><span style="font-size:13px;color:#ccc;line-height:1.5;">${q}</span>`;
+    el.appendChild(div);
+  });
+}
+
+function renderGBVTypes() {
+  const el = document.getElementById('gbvTypes');
+  if (!el) return;
+  el.innerHTML = '';
+  GBV_TYPES.forEach(t => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid rgba(255,75,43,0.2);border-radius:10px;padding:14px;cursor:pointer;transition:0.3s;';
+    div.innerHTML = `<div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:var(--red);text-transform:uppercase;margin-bottom:4px;">${t.t}</div><div style="font-size:12px;color:#666;line-height:1.5;">${t.d}</div>`;
+    el.appendChild(div);
+  });
+}
+
+function renderGBVResources() {
+  const el = document.getElementById('gbvResources');
+  if (!el) return;
+  el.innerHTML = '';
+  GBV_RESOURCES.forEach(r => {
+    const div = document.createElement('div');
+    div.style.cssText = 'background:rgba(57,255,20,0.04);border:1px solid rgba(57,255,20,0.2);border-radius:12px;padding:18px;';
+    div.innerHTML = `<div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:4px;">${r.name}</div><div style="font-size:12px;color:#666;margin-bottom:8px;">${r.detail}</div><div style="font-size:14px;font-weight:700;color:var(--green);">${r.contact}</div>`;
+    el.appendChild(div);
+  });
+}
+
+function assessGBV() {
+  let count = 0;
+  GBV_QUESTIONS.forEach((q, i) => { if (document.getElementById('gbv_'+i)?.checked) count++; });
+  const el = document.getElementById('gbvResult');
+  el.style.display = 'block';
+  let level, color, msg, advice;
+  if (count === 0) {
+    level = 'No immediate indicators'; color = 'var(--green)';
+    msg = 'None of the listed signs apply to your situation right now.';
+    advice = 'Keep trusting your instincts. If anything changes, come back. Knowing the signs is itself protection.';
+  } else if (count <= 3) {
+    level = 'Some warning signs present'; color = 'var(--gold)';
+    msg = `You ticked ${count} indicator${count>1?'s':''}. This warrants attention.`;
+    advice = 'These may be early warning signs. Trust your gut. Talk to someone you trust — or call the helpline for guidance. You don't have to be in crisis to reach out.';
+  } else if (count <= 8) {
+    level = 'Significant signs of GBV'; color = 'var(--orange)';
+    msg = `You ticked ${count} indicators. What you are describing is abuse.`;
+    advice = 'What is happening to you is not okay and is not your fault. Please reach out to the GBV Command Centre (0800 428 428) or POWA (011 642 4345). You deserve safety.';
+  } else {
+    level = 'High risk situation'; color = 'var(--red)';
+    msg = `You ticked ${count} indicators. You are describing a serious and dangerous situation.`;
+    advice = 'Your safety is the priority. Please contact the GBV helpline NOW: 0800 428 428 (free, 24/7). If you are in immediate danger, call 10111. You are not alone and this is not your fault.';
+  }
+  el.innerHTML = `<div style="background:rgba(255,255,255,0.04);border:1px solid ${color};border-radius:12px;padding:20px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:${color};text-transform:uppercase;margin-bottom:8px;">${level}</div><p style="font-size:14px;color:#ccc;margin-bottom:10px;line-height:1.6;">${msg}</p><p style="font-size:13px;color:#aaa;line-height:1.7;">${advice}</p></div>`;
+}
+
+// ── MJOLO ─────────────────────────────────────────────────────────────
+const MJOLO_PANELS = [
+  { icon:'💬', title:'The Talking Stage', desc:'That limbo between strangers and something real.', expand:`<strong>What it is:</strong> You're texting every day, maybe seeing each other, but nobody has said what this is. It feels like a relationship — but has no commitment, no label, and no protection.<br><br><strong>The problem:</strong> The talking stage can go on indefinitely. If someone is comfortable staying in the talking stage for months, they are either keeping their options open, or you are a backup.<br><br><strong>What you can do:</strong> After 4–6 weeks of consistent contact and time spent together, it is completely reasonable to ask: "What are we doing?" Anyone who responds to that with anger or avoidance has told you exactly who they are.<br><br><em>You deserve clarity, not confusion.</em>` },
+  { icon:'👻', title:'Ghosting', desc:'When they disappear without a word. No closure. No explanation.', expand:`<strong>What it is:</strong> Someone who was present suddenly stops responding — to messages, calls, everything — without explanation.<br><br><strong>Why they do it:</strong> Cowardice. Avoidance of conflict. Sometimes they've moved on. Sometimes they're keeping you as a backup option.<br><br><strong>What it does to you:</strong> Leaves you questioning yourself. Replaying conversations. Wondering what you did wrong. This is exactly the psychological damage ghosting causes — and it is not your fault.<br><br><strong>The truth:</strong> Ghosting says everything about their character and nothing about your worth. A person who cannot communicate that they're no longer interested is emotionally unavailable — and you deserve someone who communicates.<br><br><em>Closure comes from within. Stop waiting for it from someone who has already shown you they won't give it.</em>` },
+  { icon:'🔄', title:'The Situationship', desc:'More than friends. Less than a relationship. Stuck in between.', expand:`<strong>What it is:</strong> You do relationship things — time together, affection, sometimes sex — but without any real commitment or defined future.<br><br><strong>Who stays in situationships:</strong> One person usually wants more but is afraid to say so. The other is comfortable with the arrangement because they get what they want without accountability.<br><br><strong>The cost:</strong> Situationships waste emotional energy. You cannot heal, grow, or fully move forward while you are half in something that cannot hold you.<br><br><strong>How to leave:</strong> "I need clarity on what we are. If we're not working towards something real, I need to step back." Say it once. If they hesitate or avoid the question — that IS your answer.<br><br><em>You cannot negotiate your way into someone wanting to commit to you. Either they want to — or they don't.</em>` },
+  { icon:'🎭', title:'Love Bombing', desc:'Overwhelming you with attention, affection, and intensity — then withdrawing it.', expand:`<strong>What it is:</strong> Excessive compliments, constant messages, grand gestures, and declarations of love — very early, and very fast.<br><br><strong>Why it happens:</strong> Love bombing is often a manipulation tactic — conscious or not. It creates a sense of deep connection and dependency before you've had time to see who this person really is.<br><br><strong>The cycle:</strong> Love bombing → Devalue (the intensity drops, they become cold or critical) → Discard (they pull away completely). Then it cycles back. This is a hallmark of narcissistic relationship patterns.<br><br><strong>How to protect yourself:</strong> Be suspicious of anyone who moves too fast. Healthy relationships build over time. Love that arrives all at once — before you've been tested or truly known — is often not love. It's a performance.<br><br><em>Real love is consistent. It doesn't need to overwhelm you in the first week.</em>` },
+  { icon:'📱', title:'The Mixed Signals Pandemic', desc:'Hot one day, cold the next. Always leaving you unsure.', expand:`<strong>What it means:</strong> If someone's actions are inconsistent — sometimes available, sometimes silent; sometimes warm, sometimes cold — they are either unsure about you, managing multiple options, or emotionally avoidant.<br><br><strong>What we do:</strong> We explain the cold behaviour away. We focus on the warm moments as evidence they care. We keep hoping the "real" them will come back.<br><br><strong>The truth:</strong> Consistency is a decision. Anyone who consistently sends mixed signals is consistently choosing not to be clear with you. That is a decision.<br><br><strong>What to do:</strong> Stop chasing the version of them that showed up on the good days. Look at the overall pattern. A person who is genuinely interested in you will make it clear — not leave you guessing.<br><br><em>Confusion is not romance. It is anxiety in disguise.</em>` },
+  { icon:'💸', title:'Transactional Relationships', desc:'When love becomes a transaction. Keeping score. Conditional care.', expand:`<strong>What it is:</strong> A relationship where affection, time, and care are conditional on what you provide — financially, sexually, emotionally, or socially.<br><br><strong>In South African context:</strong> Blessers/Blessee dynamics, sugar dating, relationships where one person's financial contribution buys them control or sexual access.<br><br><strong>The danger:</strong> Transactional relationships erode self-worth. When someone treats your love like a commodity, you start to believe that's all you are worth. It is not.<br><br><strong>Healthy vs transactional:</strong> In a healthy relationship, you give because you want to — not because you must to keep someone around. Gifts and gestures are expressions of love, not leverage.<br><br><em>You are not a service. You deserve to be loved for who you are, not what you provide.</em>` },
+  { icon:'🔁', title:'The On-Again Off-Again', desc:'Breaking up and getting back together. The cycle that never ends.', expand:`<strong>What it is:</strong> A relationship that repeatedly ends and restarts — usually with the same unresolved problems each time.<br><br><strong>Why we stay:</strong> The reconnection feels like proof that the love is real. The chemistry when you get back together is intense — because the time apart creates longing, not healing.<br><br><strong>What research shows:</strong> On-off relationships have higher rates of physical violence, emotional abuse, and psychological distress than relationships that end cleanly. The pattern itself is damaging.<br><br><strong>Breaking the cycle:</strong> The next time you break up — treat it as final. Give yourself the full grieving process. Block if you need to. Get support. The urge to go back will pass if you don't feed it.<br><br><em>The definition of insanity is doing the same thing and expecting different results.</em>` },
+  { icon:'🧩', title:'Surviving the Heartbreak', desc:'How to actually heal — not just cope.', expand:`<strong>What heartbreak really is:</strong> Loss — of the person, the future you imagined, and the version of yourself you were in that relationship. All three need to be grieved.<br><br><strong>What doesn't work:</strong> Rushing into another relationship, staying friends immediately, checking their social media, hoping they'll come back if you just wait long enough.<br><br><strong>What does work:</strong><br>• Let yourself feel it fully — suppressed grief resurfaces later<br>• Tell the story to people who will hold it well<br>• Rebuild your identity outside of the relationship — who were you before?<br>• Move your body — grief is stored physically<br>• Create a no-contact period: 90 days minimum<br><br><strong>Coach L says:</strong> You don't get over someone. You get through them. And on the other side, if you've done the work, you meet a clearer, stronger version of yourself.<br><br><em>The goal isn't to stop loving them. It's to love yourself more.</em>` },
+];
+
+const ROLES_PANELS = [
+  { icon:'🪟', title:'The Giver', desc:'You give everything — time, energy, love, money — often at your own expense.', expand:`<strong>What it looks like:</strong> You always show up. You always help. You prioritise everyone else's needs above your own, and feel guilty when you don't.<br><br><strong>The shadow side:</strong> Giving can become a way to earn love — or to control relationships by making yourself indispensable. If you stop giving, do people still show up for you?<br><br><strong>The shift:</strong> Give from abundance, not fear. Receive with as much grace as you give. Your value is not in what you do — it is in who you are.` },
+  { icon:'🧲', title:'The Fixer', desc:'You see potential in broken people and try to save them.', expand:`<strong>What it looks like:</strong> You're attracted to people who need help. You believe your love, patience, or support can change them. You stay through things others wouldn't.<br><br><strong>The shadow side:</strong> Fixers often grew up in environments where love had to be earned through caretaking. The fixer role keeps you busy focusing on someone else so you don't have to face your own healing.<br><br><strong>The truth:</strong> You cannot fix anyone who doesn't want to be fixed — and it's not your job to. The most loving thing you can do is let people take responsibility for themselves.` },
+  { icon:'🧊', title:'The Avoider', desc:'Emotional distance is your default. Closeness feels dangerous.', expand:`<strong>What it looks like:</strong> You pull away when things get too intense. You struggle to express feelings. You'd rather end a relationship than have a difficult conversation.<br><br><strong>Why it happens:</strong> Usually rooted in early experiences where vulnerability led to pain, rejection, or abandonment. Avoidance became protection.<br><br><strong>The cost:</strong> Real intimacy requires vulnerability. If you avoid getting close, you stay safe — but also alone in the ways that matter most.<br><br><strong>The work:</strong> Practice small doses of vulnerability. Start with low-stakes honesty. Build tolerance for closeness gradually.` },
+  { icon:'🔥', title:'The Pursuer', desc:'The more they pull away, the harder you chase.', expand:`<strong>What it looks like:</strong> You text repeatedly when they go quiet. You interpret withdrawal as rejection. You escalate to get a response — reassurance, connection, anything.<br><br><strong>Why it happens:</strong> Often rooted in anxious attachment — a deep fear that you are unlovable, and that if someone leaves, it confirms your worst fears about yourself.<br><br><strong>The problem:</strong> Pursuing an avoider creates a painful cycle. Your pursuit pushes them further away, which increases your anxiety, which intensifies the pursuit.<br><br><strong>The shift:</strong> Regulate your own emotions before reaching out. Create your own security. The right person won't need to be chased.` },
+  { icon:'👑', title:'The Narcissist', desc:'Everything is about them — even when it isn't.', expand:`<strong>What it looks like:</strong> Lack of empathy. Constant need for admiration. Believing rules don't apply to them. Inability to tolerate criticism. Exploiting others for personal gain.<br><br><strong>Important nuance:</strong> True narcissistic personality disorder is a clinical diagnosis — not everyone with selfish behaviour is a narcissist. But narcissistic traits exist on a spectrum.<br><br><strong>If you're with one:</strong> Their behaviour will not change through love or loyalty. Your suffering is not proof of your commitment — it's information. You deserve someone who sees you.` },
+  { icon:'🪞', title:'The People Pleaser', desc:'Saying yes when you mean no. Shrinking to keep the peace.', expand:`<strong>What it looks like:</strong> Agreeing to avoid conflict. Hiding your real opinions. Feeling responsible for other people's emotions. Resentment that builds quietly beneath the surface.<br><br><strong>Why it develops:</strong> Usually, the environment you grew up in made it unsafe to have needs, opinions, or disagreements. You learned that approval = safety.<br><br><strong>The truth:</strong> People-pleasing is a form of dishonesty — to yourself and to others. The relationships built on your performance are not built on you. They're built on the character you play.<br><br><strong>The practice:</strong> One honest no per week. Tolerance of discomfort when someone is upset with you. Over time — your own voice gets louder.` },
+  { icon:'🌀', title:'The Codependent', desc:'Your identity is so wrapped up in the other person that you don't know where they end and you begin.', expand:`<strong>What it looks like:</strong> Your mood depends on their mood. Their problems become your problems. You feel responsible for their happiness — and guilty when they're not.<br><br><strong>The root:</strong> Often developed in families where children had to manage a parent's emotional state. You learned: their needs come first. Always.<br><br><strong>Recovery:</strong> Developing a self that exists independently of any relationship. Knowing your own preferences, opinions, and moods — separate from anyone else's. This is learnable.` },
+  { icon:'🦋', title:'The Secure Partner', desc:'The goal. Emotionally available, consistent, and boundaried.', expand:`<strong>What it looks like:</strong> They communicate clearly. They can handle conflict without shutting down or escalating. They respect your needs and voice their own. Their love is consistent — not hot and cold.<br><br><strong>Important truth:</strong> Secure attachment is a skill — not a personality type you're born with. It is built through self-awareness, therapy, healthy relationships, and practice.<br><br><strong>The goal:</strong> To become a secure partner — and to choose one. Two secure people together creates something rare and real.<br><br><em>Healing is choosing, every day, to show up as the person you needed someone to be for you.</em>` },
+];
+
+function renderMjolo() {
+  const el = document.getElementById('mjoloPanels');
+  if (!el || el.children.length > 0) return;
+  MJOLO_PANELS.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'conflict-card';
+    card.innerHTML = `<div class="cc-icon">${p.icon}</div><div class="cc-title">${p.title}</div><div class="cc-desc">${p.desc}</div><div class="cc-expand">${p.expand}</div>`;
+    card.onclick = () => card.classList.toggle('open');
+    el.appendChild(card);
+  });
+}
+
+function renderRoles() {
+  const el = document.getElementById('rolesPanels');
+  if (el && el.children.length === 0) {
+    ROLES_PANELS.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'conflict-card';
+      card.innerHTML = `<div class="cc-icon">${p.icon}</div><div class="cc-title">${p.title}</div><div class="cc-desc">${p.desc}</div><div class="cc-expand">${p.expand}</div>`;
+      card.onclick = () => card.classList.toggle('open');
+      el.appendChild(card);
+    });
+  }
+  const sel = document.getElementById('roleSelector');
+  if (sel && sel.children.length === 0) {
+    ROLES_PANELS.forEach(p => {
+      const pill = document.createElement('div');
+      pill.className = 'mood-pill';
+      pill.textContent = p.icon + ' ' + p.title;
+      pill.onclick = () => pill.classList.toggle('active');
+      sel.appendChild(pill);
+    });
+  }
+}
+
+function saveMjolo() {
+  const d = { mj1:document.getElementById('mj1').value, mj2:document.getElementById('mj2').value, mj3:document.getElementById('mj3').value, mj4:document.getElementById('mj4').value, date:new Date().toISOString() };
+  localStorage.setItem(key('mjolo'), JSON.stringify(d));
+  showToast('✓ Reflection saved');
+}
+
+function saveRoles() {
+  const selected = Array.from(document.querySelectorAll('#roleSelector .mood-pill.active')).map(p => p.textContent);
+  const reflect = document.getElementById('roleReflect').value;
+  localStorage.setItem(key('roles'), JSON.stringify({ selected, reflect, date: new Date().toISOString() }));
+  showToast('✓ Saved');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+setGreeting();
+renderDate();
+renderWbRows();
+renderTechniques();
+renderConflicts();
+renderAffirmCategories();
+loadEpisodes();
+loadBoundaries();
+renderBoundaryTactics();
+renderGBVChecklist();
+renderGBVTypes();
+renderGBVResources();
+renderMjolo();
+renderRoles();
+renderParenting();
+newAffirm('homeAffirm');
+newAffirm('mainAffirm');
+updateSummary();
+</script>
+</body>
+</html>
