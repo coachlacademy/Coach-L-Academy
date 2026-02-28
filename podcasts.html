@@ -1,0 +1,351 @@
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Coach L Academy | Live & Archives</title>  
+    <style>  
+        :root {  
+            --primary-blue: #00d2ff;  
+            --accent-green: #39ff14;  
+            --live-red: #ff4b2b;  
+            --bg-dark: #0a0a0a;  
+            --glass: rgba(255, 255, 255, 0.05);  
+            --glass-border: rgba(255, 255, 255, 0.1);  
+        }  * { margin: 0; padding: 0; box-sizing: border-box; }  
+    body {  
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;  
+        background-color: var(--bg-dark);  
+        color: #fff;  
+        overflow-x: hidden;  
+    }  
+
+    /* FIXED BACKGROUND */  
+    .fixed-bg {  
+        position: fixed; top: 0; left: 0; width: 100%; height: 100vh;  
+        background: linear-gradient(to right, rgba(0,0,0,0.85) 30%, rgba(0,0,0,0.4)),   
+                    url('https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000');  
+        background-size: cover; background-position: center; z-index: -2;   
+    }  
+
+    /* NAV & BUTTONS */  
+    nav {  
+        position: fixed; top: 0; width: 100%; padding: 25px 50px;  
+        display: flex; justify-content: space-between; align-items: center; z-index: 1000;  
+        background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);  
+    }  
+    .logo { font-size: 24px; font-weight: 800; text-transform: uppercase; }  
+    .logo span { color: var(--primary-blue); }  
+
+    .btn-glass {
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 10px 25px;
+        border-radius: 4px;
+        font-weight: 700;
+        cursor: pointer;
+        text-transform: uppercase;
+        font-size: 11px;
+        transition: 0.3s;
+    }
+    .btn-glass:hover { background: rgba(255, 255, 255, 0.1); }
+
+    .btn-action {  
+        background-color: var(--accent-green); color: #000; padding: 18px 40px;  
+        border-radius: 4px; font-weight: 900; border: none; cursor: pointer;   
+        transition: 0.3s; text-transform: uppercase; font-size: 14px;
+    }  
+
+    /* CONTENT LAYOUT */  
+    .main-container { padding: 0 5% 100px; position: relative; z-index: 20; }  
+    .row-title { font-size: 24px; margin: 60px 0 25px; border-left: 4px solid var(--primary-blue); padding-left: 15px; font-weight: 700; }  
+
+    .podcast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }  
+
+    .podcast-card {  
+        background: var(--glass); border: 1px solid var(--glass-border);  
+        backdrop-filter: blur(12px); border-radius: 12px; overflow: hidden;  
+        transition: 0.4s; position: relative;  
+    }  
+
+    .thumb { width: 100%; height: 180px; position: relative; background: #111; overflow: hidden; }  
+    .thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }  
+    .card-tag { position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.7); padding: 4px 10px; font-size: 11px; border-radius: 3px; font-weight: 700; }  
+    .card-info { padding: 20px; }  
+    .card-info h4 { margin-bottom: 8px; font-size: 18px; color: #fff; }  
+    .card-info p { font-size: 13px; color: #aaa; margin-bottom: 15px; line-height: 1.4; }
+    .price-tag { font-size: 13px; color: var(--primary-blue); font-weight: 800; text-transform: uppercase; text-decoration: none; cursor: pointer; }  
+
+    /* IN-APP OVERLAYS (FOR SOCIAL CARDS) */
+    .in-app-container {
+        display:none; position: absolute; inset: 0; background:#000; z-index: 50;
+    }
+    .ctrl-layer {
+        position: absolute; top: 12px; right: 12px; z-index: 60; display: flex; gap: 8px;
+    }
+    .mini-btn {
+        background: rgba(0,0,0,0.8); color: #fff; border: 1px solid #444; padding: 5px 10px; border-radius: 4px; font-size: 10px; cursor: pointer;
+    }
+
+    /* VIDEO STAGE */
+    #viewerStage { display:grid; grid-template-columns:1fr; background:#000; min-height:420px; position:relative; }
+    .slot { position:relative; min-height:420px; display:flex; align-items:center; justify-content:center; background:#050505; }
+    .slot video { width:100%; height:100%; object-fit:cover; position:absolute; inset:0; display:none; }
+    .slot-label { position:absolute; top:12px; left:12px; background:rgba(0,0,0,0.8); padding:5px 12px; border-radius:4px; font-size:10px; font-weight:900; z-index:10; }
+
+    /* CAROUSEL */  
+    .archive-viewport { width: 100%; overflow: hidden; padding: 20px 0; }  
+    .archive-track { display: flex; gap: 25px; transition: transform 0.6s ease; width: max-content; }  
+    .archive-track .podcast-card { flex: 0 0 300px; width: 300px; }  
+
+    .pulse-dot { height: 8px; width: 8px; background: var(--accent-green); border-radius: 50%; display: inline-block; margin-right: 6px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+</style>
+
+</head>  
+<body>  <div class="fixed-bg"></div>  
+
+<nav>  
+    <div class="logo">Coach L <span>Academy</span></div>  
+    <button class="btn-glass">Member Sign In</button>  
+</nav>  
+
+<div class="hero" style="height: 60vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%;">  
+    <h1 style="font-size: clamp(3rem, 10vw, 6rem); font-weight: 900;">PODCASTS</h1>  
+    <h2 style="color: var(--primary-blue); font-weight: 300;">Live Streams & Archive Access</h2>  
+</div>  
+
+<div class="main-container">  
+      
+    <h3 class="row-title">Live Global Ministry</h3>  
+    <div class="podcast-card" style="margin-bottom: 40px;">  
+        <div id="viewerStage">
+            <div class="slot" id="hostSlot">
+                <div class="slot-label" id="hostLabel" style="color:#555;">🎙 HOST OFFLINE</div>
+                <video id="hostVideo" autoplay playsinline></video>
+            </div>
+            <div class="slot" id="guestSlot" style="display:none; border-left:1px solid #222;">
+                <div class="slot-label" id="guestLabel" style="color:#555;">🎤 GUEST OFFLINE</div>
+                <video id="guestVideo" autoplay playsinline></video>
+            </div>
+        </div>
+
+        <div style="padding:20px; background:rgba(0,0,0,0.8); display: flex; gap:15px; border-top:1px solid #222;">
+            <button onclick="watchLive('host')" id="hostWatchBtn" class="btn-action" style="flex:1; padding:15px; font-size:12px; background: #1a1a1a; color:#fff; border: 1px solid #333;">Connect Host</button>
+            <button onclick="watchLive('guest')" id="guestWatchBtn" class="btn-action" style="flex:1; padding:15px; font-size:12px; background: #1a1a1a; color:#fff; border: 1px solid #333;">Connect Guest</button>
+        </div>
+
+        <div style="background: #000; border-top: 1px solid #222;">
+            <div id="liveChatMsgs" style="height:120px; overflow-y:auto; padding:15px; font-size:13px; color:#777;">
+                System: Connection status updated every 5s.
+            </div>
+            <div style="display:flex; padding:10px; gap:10px;">
+                <input type="text" id="liveChatInput" placeholder="Write a message..." style="flex:1; background:#111; border:1px solid #222; color:#fff; padding:10px; border-radius:4px; outline:none;">
+                <button onclick="sendLiveChat()" style="background:var(--primary-blue); color:#000; border:none; padding:0 20px; border-radius:4px; font-weight:900; cursor:pointer;">SEND</button>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="row-title">In-App Channels</h3>
+    <div class="podcast-grid">
+        
+        <div class="podcast-card" id="card-youtube">  
+            <div id="poster-youtube">  
+                <div class="thumb">  
+                    <div class="card-tag">YouTube</div>  
+                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500" alt="YouTube">  
+                </div>  
+                <div class="card-info">  
+                    <h4>Kingdom Teachings</h4>  
+                    <p>Access our library of visual sermons and live YouTube sessions.</p>
+                    <a href="javascript:void(0)" onclick="openInApp('youtube', 'https://www.youtube.com/embed?listType=playlist&list=UUaiYEOdH76vck0iwC4vt1IQ&autoplay=1')" class="price-tag">Open Player</a>  
+                </div>  
+            </div>  
+            <div id="app-youtube" class="in-app-container">  
+                <div class="ctrl-layer">
+                    <button class="mini-btn" onclick="toggleFS('app-youtube')">Fullscreen</button>
+                    <button class="mini-btn" style="background:red;" onclick="closeInApp('youtube')">Close</button>
+                </div>
+                <iframe id="frame-youtube" style="width:100%; height:100%; border:none;"></iframe>  
+            </div>  
+        </div>  
+
+        <div class="podcast-card" id="card-facebook">  
+            <div id="poster-facebook">
+                <div class="thumb">  
+                    <div class="card-tag">Facebook</div>  
+                    <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=500" alt="Facebook">  
+                </div>  
+                <div class="card-info">  
+                    <h4>Facebook Live</h4>  
+                    <p>Connect with our growing social community for daily updates.</p>
+                    <a href="javascript:void(0)" onclick="openInApp('facebook', 'https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffacebook&tabs=timeline')" class="price-tag">Connect Social</a>  
+                </div>  
+            </div>
+            <div id="app-facebook" class="in-app-container">  
+                <div class="ctrl-layer"><button class="mini-btn" onclick="closeInApp('facebook')">Close</button></div>
+                <iframe id="frame-facebook" style="width:100%; height:100%; border:none; background:white;"></iframe>  
+            </div>
+        </div>
+
+        <div class="podcast-card" id="card-tiktok">  
+            <div id="poster-tiktok">
+                <div class="thumb">  
+                    <div class="card-tag">TikTok</div>  
+                    <img src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=500" alt="TikTok">  
+                </div>  
+                <div class="card-info">  
+                    <h4>Quick Words</h4>  
+                    <p>Short, powerful insights for your daily spiritual growth.</p>
+                    <a href="javascript:void(0)" onclick="openInApp('tiktok', 'https://www.tiktok.com')" class="price-tag">Watch Shorts</a>  
+                </div>  
+            </div>
+            <div id="app-tiktok" class="in-app-container">  
+                <div class="ctrl-layer"><button class="mini-btn" onclick="closeInApp('tiktok')">Close</button></div>
+                <iframe id="frame-tiktok" style="width:100%; height:100%; border:none;"></iframe>  
+            </div>
+        </div>
+    </div>
+
+    <h3 class="row-title">Recent Archives</h3>  
+    <div class="archive-viewport">  
+        <div class="archive-track" id="archiveTrack">  
+            <div class="podcast-card">
+                <div class="thumb"><div class="card-tag">NEW</div><img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=400"></div>
+                <div class="card-info">
+                    <h4>The New Beginning</h4>
+                    <p>Deep dive into the 2026 spiritual vision for the academy.</p>
+                    <a href="#" class="price-tag">View Archive</a>
+                </div>
+            </div>  
+            <div class="podcast-card">
+                <div class="thumb"><div class="card-tag">DEC</div><img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400"></div>
+                <div class="card-info">
+                    <h4>Faith & Action</h4>
+                    <p>Practical steps to building your ministry in a digital world.</p>
+                    <a href="#" class="price-tag">View Archive</a>
+                </div>
+            </div>  
+            <div class="podcast-card">
+                <div class="thumb"><div class="card-tag">NOV</div><img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400"></div>
+                <div class="card-info">
+                    <h4>Digital Harvest</h4>
+                    <p>Exploring the potential of global outreach via technology.</p>
+                    <a href="#" class="price-tag">View Archive</a>
+                </div>
+            </div>
+        </div>  
+    </div>  
+
+    <div style="margin-top: 80px; text-align: center;">
+        <button onclick="location.href='index.html'" style="background:#000; color:#fff; border: 1px solid #333; padding: 15px 40px; border-radius: 50px; cursor:pointer; font-weight:700; text-transform:uppercase; font-size:12px;">
+            ← Exit Podcasts
+        </button>
+    </div>
+</div>  
+
+<script>  
+    const PEER_IDS = { host: 'coachl-host-live', guest: 'coachl-guest-live' };
+    let viewerPeers = { host: null, guest: null };
+    let chatConns = { host: null, guest: null };
+
+    // AUTO-PING
+    setInterval(() => {
+        ['host', 'guest'].forEach(role => {
+            if (!viewerPeers[role]) {
+                const checker = new Peer('c-' + role + '-' + Math.floor(Math.random()*999));
+                checker.on('open', () => {
+                    const conn = checker.connect(PEER_IDS[role]);
+                    conn.on('open', () => {
+                        const lbl = document.getElementById(role + 'Label');
+                        lbl.innerHTML = `<span class="pulse-dot"></span> ${role.toUpperCase()} IS LIVE`;
+                        lbl.style.color = 'var(--accent-green)';
+                        checker.destroy();
+                    });
+                    setTimeout(() => checker.destroy(), 2000);
+                });
+            }
+        });
+    }, 5000);
+
+    // WATCH LIVE
+    function watchLive(role) {
+        if (viewerPeers[role]) { viewerPeers[role].destroy(); viewerPeers[role] = null; resetSlot(role); return; }
+        const vp = new Peer('v-' + role + '-' + Math.floor(Math.random()*999));
+        viewerPeers[role] = vp;
+        vp.on('open', () => {
+            const call = vp.call(PEER_IDS[role], null);
+            if (!call) return;
+            call.on('stream', s => {
+                const v = document.getElementById(role + 'Video');
+                v.srcObject = s; v.style.display = "block";
+                document.getElementById(role + 'Label').innerHTML = `<span class="pulse-dot"></span> LIVE ${role.toUpperCase()}`;
+                const btn = document.getElementById(role + 'WatchBtn');
+                btn.innerText = "DISCONNECT"; btn.style.background = "#ff4b2b";
+                if (role === 'guest') {
+                    document.getElementById('guestSlot').style.display = "flex";
+                    document.getElementById('viewerStage').style.gridTemplateColumns = "1fr 1fr";
+                }
+            });
+            const cn = vp.connect(PEER_IDS[role]); chatConns[role] = cn;
+            cn.on('data', d => addChat(role, d, role === 'host' ? '#ff4b2b' : '#a855f7'));
+        });
+    }
+
+    function resetSlot(role) {
+        const v = document.getElementById(role + 'Video'); v.srcObject = null; v.style.display = "none";
+        document.getElementById(role + 'Label').innerText = role.toUpperCase() + " OFFLINE";
+        document.getElementById(role + 'Label').style.color = "#555";
+        const btn = document.getElementById(role + 'WatchBtn');
+        btn.innerText = "CONNECT " + role; btn.style.background = "#1a1a1a";
+        if (role === 'guest') {
+            document.getElementById('guestSlot').style.display = "none";
+            document.getElementById('viewerStage').style.gridTemplateColumns = "1fr";
+        }
+    }
+
+    // CHAT
+    function addChat(who, msg, color) {
+        const a = document.getElementById('liveChatMsgs');
+        const d = document.createElement('div');
+        d.innerHTML = `<b style="color:${color}">${who.toUpperCase()}:</b> ${msg}`;
+        a.appendChild(d); a.scrollTop = a.scrollHeight;
+    }
+    function sendLiveChat() {
+        const i = document.getElementById('liveChatInput');
+        if (!i.value) return;
+        ['host', 'guest'].forEach(r => { if (chatConns[r] && chatConns[r].open) chatConns[r].send(i.value); });
+        addChat('You', i.value, '#fff'); i.value = '';
+    }
+
+    // IN-APP LOGIC
+    function openInApp(type, url) {
+        document.getElementById('poster-' + type).style.display = 'none';
+        document.getElementById('app-' + type).style.display = 'block';
+        document.getElementById('frame-' + type).src = url;
+    }
+    function closeInApp(type) {
+        document.getElementById('poster-' + type).style.display = 'block';
+        document.getElementById('app-' + type).style.display = 'none';
+        document.getElementById('frame-' + type).src = '';
+    }
+    function toggleFS(id) {
+        const el = document.getElementById(id);
+        if (!document.fullscreenElement) el.requestFullscreen();
+        else document.exitFullscreen();
+    }
+
+    // CAROUSEL
+    const track = document.getElementById('archiveTrack');
+    let idx = 0;
+    setInterval(() => {
+        idx = (idx + 1) % track.children.length;
+        track.style.transform = `translateX(-${idx * 325}px)`;
+    }, 4000);
+</script>
+
+</body>  
+</html>
