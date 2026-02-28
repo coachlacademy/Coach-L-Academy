@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 2 — Anger & Conflict | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #ff4b2b;
+  --accent-glow: rgba(255,75,43,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background: radial-gradient(ellipse at 20% 20%, rgba(255,75,43,0.07) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 80%, rgba(255,140,0,0.04) 0%, transparent 55%), #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--red); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass {
+  padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border);
+  color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;
+  transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-glass:hover { border-color:var(--red); color:var(--red); }
+.user-chip {
+  display:flex; align-items:center; gap:8px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:6px 14px; border-radius:30px; font-size:13px;
+}
+.avatar {
+  width:26px; height:26px; border-radius:50%;
+  background:linear-gradient(135deg,var(--red),var(--orange));
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:900; color:#fff;
+}
+
+/* PAGE HEADER */
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--red); margin-bottom:8px; }
+.page-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,8vw,5.5rem); font-weight:900;
+  text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px;
+}
+.page-title span { color:var(--red); }
+.page-sub { font-size:15px; color:#bbb; max-width:560px; line-height:1.7; }
+
+/* TIME GREETING */
+.time-greeting {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc;
+  margin-bottom:20px;
+}
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--red); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* DATE NAV */
+.date-nav {
+  display:flex; align-items:center; gap:14px; margin:0 auto 40px;
+  max-width:1100px; padding:0 40px; flex-wrap:wrap;
+}
+.date-btn {
+  background:var(--glass); border:1px solid var(--glass-border); color:#fff;
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s;
+}
+.date-btn:hover { border-color:var(--red); color:var(--red); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--red); border-color:var(--red); color:#fff; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+
+/* MAIN */
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+/* STEP */
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase;
+  color:var(--red); background:rgba(255,75,43,0.12); border:1px solid rgba(255,75,43,0.35);
+  padding:4px 12px; border-radius:20px; white-space:nowrap;
+}
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+/* CARD */
+.card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:28px; backdrop-filter:blur(12px);
+  position:relative; overflow:hidden; transition:border-color 0.3s;
+}
+.card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent);
+}
+.card:hover { border-color:rgba(255,75,43,0.2); }
+.card-red { border-color:rgba(255,75,43,0.25); background:rgba(255,75,43,0.05); }
+.card-orange { border-color:rgba(255,140,0,0.25); background:rgba(255,140,0,0.04); }
+.card-gold { border-color:rgba(245,197,24,0.25); background:rgba(245,197,24,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* ANGER LEVEL METER */
+.anger-meter-wrap { margin-bottom:20px; }
+.anger-tiles { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+.anger-tile {
+  flex:1; min-width:70px; padding:14px 8px; border-radius:10px; text-align:center;
+  background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.25s;
+  font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900;
+  text-transform:uppercase; letter-spacing:0.5px;
+}
+.anger-tile .at-num { font-size:28px; font-weight:900; display:block; line-height:1; margin-bottom:4px; }
+.anger-tile .at-label { font-size:10px; color:#666; text-transform:uppercase; letter-spacing:1px; }
+.anger-tile.active { transform:translateY(-4px); }
+.anger-tile[data-level="1"]:hover,.anger-tile[data-level="1"].active{border-color:#55bb00;background:rgba(85,187,0,0.12);color:#55bb00;}
+.anger-tile[data-level="2"]:hover,.anger-tile[data-level="2"].active{border-color:#aadd00;background:rgba(170,221,0,0.1);color:#aadd00;}
+.anger-tile[data-level="3"]:hover,.anger-tile[data-level="3"].active{border-color:#f5c518;background:rgba(245,197,24,0.1);color:#f5c518;}
+.anger-tile[data-level="4"]:hover,.anger-tile[data-level="4"].active{border-color:#ffaa00;background:rgba(255,170,0,0.1);color:#ffaa00;}
+.anger-tile[data-level="5"]:hover,.anger-tile[data-level="5"].active{border-color:#ff8c00;background:rgba(255,140,0,0.12);color:#ff8c00;}
+.anger-tile[data-level="6"]:hover,.anger-tile[data-level="6"].active{border-color:#ff6b2b;background:rgba(255,107,43,0.12);color:#ff6b2b;}
+.anger-tile[data-level="7"]:hover,.anger-tile[data-level="7"].active{border-color:#ff5519;background:rgba(255,85,25,0.12);color:#ff5519;}
+.anger-tile[data-level="8"]:hover,.anger-tile[data-level="8"].active{border-color:#ff4b2b;background:rgba(255,75,43,0.15);color:#ff4b2b;}
+.anger-tile[data-level="9"]:hover,.anger-tile[data-level="9"].active{border-color:#ff2200;background:rgba(255,34,0,0.15);color:#ff2200;}
+.anger-tile[data-level="10"]:hover,.anger-tile[data-level="10"].active{border-color:#cc0000;background:rgba(204,0,0,0.2);color:#cc0000;}
+
+/* ANGER BAR */
+.anger-bar-wrap { height:10px; border-radius:10px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:8px; }
+.anger-bar-fill { height:100%; border-radius:10px; transition:width 0.5s,background 0.5s; }
+.anger-label-row { display:flex; justify-content:space-between; font-size:11px; color:#555; }
+
+/* TRIGGER TAGS */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag {
+  padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700;
+  background:var(--glass); border:1px solid var(--glass-border);
+  cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px;
+}
+.ttag:hover { border-color:rgba(255,75,43,0.5); color:var(--red); }
+.ttag.active { border-color:rgba(255,75,43,0.6); background:rgba(255,75,43,0.1); color:var(--red); }
+
+/* BODY SIGNS */
+.body-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; }
+.body-zone {
+  padding:12px; border-radius:10px; text-align:center; cursor:pointer; transition:0.3s;
+  background:var(--glass); border:1px solid var(--glass-border);
+  font-size:12px; color:#bbb; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;
+}
+.body-zone .bz-icon { font-size:22px; display:block; margin-bottom:6px; }
+.body-zone:hover,.body-zone.active { border-color:rgba(255,75,43,0.45); background:rgba(255,75,43,0.08); color:#fff; }
+
+/* RELEASE TOOLS */
+.release-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+.release-card {
+  background:var(--glass); border:1px solid var(--glass-border); border-radius:12px; padding:20px;
+  cursor:pointer; transition:0.3s; position:relative; overflow:hidden;
+}
+.release-card:hover { border-color:rgba(255,75,43,0.35); transform:translateY(-3px); }
+.release-card.open { border-color:rgba(255,75,43,0.5); background:rgba(255,75,43,0.07); }
+.rc-icon { font-size:28px; margin-bottom:10px; display:block; line-height:1; }
+.rc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; margin-bottom:4px; }
+.rc-teaser { font-size:12px; color:#666; }
+.rc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.08); padding-top:14px; font-size:13px; color:#ccc; line-height:1.7; }
+.release-card.open .rc-expand { display:block; }
+.rc-step { display:flex; gap:10px; align-items:flex-start; margin-bottom:8px; }
+.rc-step-num { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; color:var(--red); min-width:22px; }
+
+/* CONFLICT CARDS */
+.conflict-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.conflict-card {
+  background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px;
+  cursor:pointer; transition:0.3s;
+}
+.conflict-card:hover { border-color:rgba(255,75,43,0.3); transform:translateY(-3px); }
+.conflict-card.open { border-color:rgba(255,75,43,0.5); background:rgba(255,75,43,0.06); }
+.cc-icon { font-size:30px; margin-bottom:10px; display:block; }
+.cc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; color:#fff; margin-bottom:4px; }
+.cc-desc { font-size:12px; color:#666; margin-bottom:0; line-height:1.5; }
+.cc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.conflict-card.open .cc-expand { display:block; }
+
+/* EPISODE LOG */
+.episode-item {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  gap:16px; padding:16px; margin-bottom:10px;
+  background:rgba(255,75,43,0.05); border:1px solid rgba(255,75,43,0.15);
+  border-radius:10px; transition:0.3s;
+}
+.episode-item:hover { border-color:rgba(255,75,43,0.3); }
+.ep-left { flex:1; }
+.ep-date { font-size:11px; color:#666; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.ep-trigger { font-size:14px; color:#ddd; font-weight:600; margin-bottom:4px; line-height:1.5; }
+.ep-level { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--red); line-height:1; }
+.ep-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; padding:0 4px; }
+.ep-del:hover { color:var(--red); }
+
+/* JOURNAL */
+textarea {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:14px; font-size:14px;
+  font-family:'Barlow',sans-serif; resize:vertical; min-height:90px;
+  transition:0.3s; line-height:1.6;
+}
+textarea:focus { outline:none; border-color:var(--red); background:rgba(255,75,43,0.04); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+select, input[type="text"] {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:12px 14px; font-size:14px;
+  font-family:'Barlow',sans-serif; transition:0.3s; margin-bottom:14px; outline:none;
+}
+select:focus, input[type="text"]:focus { border-color:var(--red); }
+select option { background:#111; color:#fff; }
+
+/* AFFIRMATION (anger-specific) */
+.affirm-box {
+  background:rgba(255,75,43,0.06); border:1px solid rgba(255,75,43,0.2);
+  border-radius:12px; padding:24px; text-align:center; min-height:90px;
+  display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+}
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* BUTTONS */
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-red:hover { filter:brightness(1.15); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--red); color:var(--red); }
+.btn-green { background:var(--green); color:#000; }
+.btn-green:hover { filter:brightness(1.1); }
+
+/* THOUGHT ITEMS */
+.thought-item {
+  display:flex; align-items:flex-start; gap:10px;
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-border);
+  border-radius:8px; padding:10px 12px; margin-bottom:8px;
+}
+.thought-time { font-size:10px; color:#555; white-space:nowrap; margin-top:2px; }
+.thought-text { flex:1; font-size:13px; color:#ccc; line-height:1.5; }
+.thought-del { background:none; border:none; color:#333; cursor:pointer; font-size:16px; transition:0.2s; }
+.thought-del:hover { color:var(--red); }
+
+/* DIVIDER */
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+/* STICKY SUMMARY */
+.summary-strip {
+  position:fixed; bottom:0; width:100%; z-index:50;
+  background:rgba(0,0,0,0.93); backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,75,43,0.2);
+  padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap;
+}
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--red); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--red); color:#fff; padding:11px 26px; border-radius:30px;
+  font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap;
+  transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* RANGE INPUT */
+input[type=range] {
+  width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer;
+  background:linear-gradient(to right,var(--green),var(--gold),var(--red));
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff;
+  cursor:pointer; box-shadow:0 0 10px rgba(255,75,43,0.5); border:2px solid var(--red);
+}
+.gauge-num {
+  text-align:center; font-family:'Barlow Condensed',sans-serif;
+  font-size:48px; font-weight:900; line-height:1; margin-top:8px;
+}
+
+/* CHECKLIST */
+.check-item {
+  display:flex; align-items:flex-start; gap:12px;
+  padding:12px 14px; border-radius:8px; cursor:pointer; transition:0.25s;
+  background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
+  margin-bottom:8px;
+}
+.check-item:hover { border-color:rgba(255,75,43,0.3); background:rgba(255,75,43,0.05); }
+.check-item.checked { border-color:rgba(57,255,20,0.35); background:rgba(57,255,20,0.05); }
+.check-box {
+  width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px;
+  display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s;
+}
+.check-item.checked .check-box { background:var(--green); border-color:var(--green); color:#000; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#aaa; text-decoration:line-through; }
+
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .anger-tiles{gap:4px;}
+  .anger-tile{min-width:52px;}
+  .anger-tile .at-num{font-size:22px;}
+  .summary-strip{padding:12px 16px;gap:14px;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--red);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 2 · Anger &amp; Conflict</div>
+  <h1 class="page-title">Name It.<br>Track It.<br><span>Release It.</span></h1>
+  <p class="page-sub">Anger is not the problem. Unprocessed anger is. This space helps you understand what's really going on — so you can move through it, not just react to it.</p>
+</div>
+
+<!-- DATE NAV -->
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STEP 1: ANGER LEVEL -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Anger Level Right Now</div>
+        <div class="step-desc">Rate yourself honestly. 1 = mildly irritated. 10 = explosive. No judgment — just truth.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="anger-tiles" id="angerTiles"></div>
+      <div class="anger-bar-wrap">
+        <div class="anger-bar-fill" id="angerBarFill" style="width:0%;"></div>
+      </div>
+      <div class="anger-label-row">
+        <span>Mild irritation</span>
+        <span id="angerLevelLabel" style="color:var(--red);font-weight:700;font-family:'Barlow Condensed',sans-serif;font-size:15px;">Select a level</span>
+        <span>Explosive rage</span>
+      </div>
+      <div class="gauge-num" id="angerNum" style="color:#333;margin-top:16px;">—</div>
+    </div>
+  </div>
+
+  <!-- STEP 2: WHAT TRIGGERED YOU -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">What Triggered You?</div>
+        <div class="step-desc">Name the trigger, who was involved, and what actually happened. Be specific — vague anger stays vague.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-red">
+        <label>🔥 What exactly triggered you?</label>
+        <p style="font-size:12px;color:#bbb;margin-bottom:10px;font-style:italic;">What was said, done, or left undone. Be specific — this is for your eyes only.</p>
+        <textarea id="triggerDesc" placeholder="e.g. My manager took credit for my work in front of the whole team without acknowledging me..." style="min-height:110px;"></textarea>
+
+        <label style="margin-top:14px;">🧑 Who was involved?</label>
+        <select id="triggerWho">
+          <option value="">— Select —</option>
+          <option>A colleague / coworker</option>
+          <option>My manager / boss</option>
+          <option>A family member</option>
+          <option>My partner / spouse</option>
+          <option>My child / children</option>
+          <option>A friend</option>
+          <option>A stranger</option>
+          <option>Traffic / driving</option>
+          <option>Myself</option>
+          <option>A situation / system</option>
+          <option>Social media / news</option>
+          <option>Money / finances</option>
+        </select>
+
+        <label>⚡ Category</label>
+        <select id="triggerCategory">
+          <option value="">— Select —</option>
+          <option>Disrespect / being dismissed</option>
+          <option>Unfairness / injustice</option>
+          <option>Betrayal / broken trust</option>
+          <option>Being controlled / micromanaged</option>
+          <option>Feeling unheard / invisible</option>
+          <option>Embarrassment / humiliation</option>
+          <option>Overload / too much on my plate</option>
+          <option>Financial stress</option>
+          <option>Family conflict</option>
+          <option>Relationship conflict</option>
+          <option>Traffic / environment</option>
+          <option>Past trauma triggered</option>
+          <option>General frustration</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <label>🏷️ Quick trigger tags — select all that apply</label>
+        <p style="font-size:12px;color:#bbb;margin-bottom:12px;font-style:italic;">What was the core wound underneath it?</p>
+        <div class="tag-grid" id="triggerTags"></div>
+
+        <label style="margin-top:18px;">What did you want in that moment that you didn't get?</label>
+        <textarea id="triggerNeed" placeholder="e.g. I wanted to be seen. I wanted an apology. I wanted it to just stop." style="min-height:80px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: BODY SIGNS -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Where Do You Feel It In Your Body?</div>
+        <div class="step-desc">Anger lives in the body before it reaches the mouth. Recognising your physical signs is the first step to catching it early.</div>
+      </div>
+    </div>
+    <div class="card">
+      <p style="font-size:13px;color:#bbb;margin-bottom:16px;line-height:1.7;">When you're triggered, your body activates before your mind catches up. Cortisol spikes. Heart rate climbs. Blood flows to your muscles. This is your body preparing to fight or flee — not a sign that you're broken. It's biology. But you can learn to catch it.</p>
+      <div class="body-grid" id="bodyGrid"></div>
+      <div style="margin-top:16px;">
+        <label>What other physical sensations are you noticing?</label>
+        <textarea id="bodyNote" placeholder="e.g. My hands are shaking. My jaw is locked. I have a pounding headache. I want to cry but I can't..." style="min-height:70px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: HOW DID YOU RESPOND? -->
+  <div class="step" style="animation-delay:0.4s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">How Did You Respond?</div>
+        <div class="step-desc">Honest reflection — not self-judgement. Understanding your response pattern is how you change it.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>What did you actually do or say?</label>
+        <textarea id="responseActual" placeholder="e.g. I went silent. I snapped at them. I left the room. I said things I regret. I scrolled my phone for hours..." style="min-height:100px;margin-bottom:14px;"></textarea>
+
+        <label>Response pattern — which fits?</label>
+        <select id="responsePattern">
+          <option value="">— Select —</option>
+          <option>Exploded — said/did something in the heat of the moment</option>
+          <option>Shut down — went silent, withdrew, went numb</option>
+          <option>Passive — said nothing but stewed inside</option>
+          <option>Displaced — took it out on someone else (partner, kids, etc.)</option>
+          <option>Suppressed — bottled it, moved on, it's still there</option>
+          <option>Processed — felt it, named it, responded calmly</option>
+          <option>Walked away — removed myself from the situation</option>
+        </select>
+
+        <label>How do you feel about how you responded?</label>
+        <select id="responseFeeling">
+          <option value="">— Select —</option>
+          <option>Regret — I wish I'd responded differently</option>
+          <option>Justified — I stand by how I handled it</option>
+          <option>Conflicted — partly okay, partly not</option>
+          <option>Ashamed — I don't like who I was in that moment</option>
+          <option>Numb — I don't know how I feel yet</option>
+          <option>Proud — I handled it well</option>
+        </select>
+      </div>
+
+      <div class="card card-orange">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--orange);margin-bottom:16px;">The 4 Anger Responses</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#ff4b2b;font-size:14px;text-transform:uppercase;margin-bottom:4px;">🔥 Explode</div>
+            <div style="font-size:12px;color:#bbb;line-height:1.6;">Anger out — fast and loud. Short-term relief but often leaves damage. The words said cannot be unsaid.</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#ff8c00;font-size:14px;text-transform:uppercase;margin-bottom:4px;">🧊 Freeze / Shut Down</div>
+            <div style="font-size:12px;color:#bbb;line-height:1.6;">Anger in — you go cold, quiet, or numb. The anger doesn't disappear. It compounds until it forces its way out.</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#f5c518;font-size:14px;text-transform:uppercase;margin-bottom:4px;">🌀 Displace</div>
+            <div style="font-size:12px;color:#bbb;line-height:1.6;">Anger sideways — it lands on someone safer. Your partner. Your kids. Your dog. Not the source of the anger.</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;color:#39ff14;font-size:14px;text-transform:uppercase;margin-bottom:4px;">✅ Process</div>
+            <div style="font-size:12px;color:#bbb;line-height:1.6;">Feel it → name it → pause → respond. Not suppress. Not explode. The goal: be honest without doing damage.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: RELEASE TOOLS -->
+  <div class="step" style="animation-delay:0.5s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Release Tools — Anger Out</div>
+        <div class="step-desc">Pick a technique to actually move the anger through you. Click any card to expand the full guide.</div>
+      </div>
+    </div>
+    <div class="card">
+      <p style="font-size:13px;color:#bbb;margin-bottom:20px;line-height:1.7;">Anger is energy. It needs somewhere to go. Suppressing it doesn't work — it resurfaces later with more force. These tools help you discharge the energy in your body safely, so you can return to yourself.</p>
+      <div class="release-grid" id="releaseGrid"></div>
+    </div>
+  </div>
+
+  <!-- STEP 6: CONFLICT TYPES -->
+  <div class="step" style="animation-delay:0.6s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Understand the Conflict</div>
+        <div class="step-desc">Naming what type of conflict you're in changes how you approach it. Click any type that resonates.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="conflict-grid" id="conflictGrid"></div>
+    </div>
+  </div>
+
+  <!-- STEP 7: REFLECT + LOG -->
+  <div class="step" style="animation-delay:0.7s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Reflect &amp; Log</div>
+        <div class="step-desc">Close the loop. What did this episode teach you? What do you need now?</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>💡 What is this anger really about?</label>
+        <p style="font-size:12px;color:#bbb;margin-bottom:10px;font-style:italic;">Anger is often a signal for something deeper — fear, grief, a boundary violation, a need not met.</p>
+        <textarea id="r_root" placeholder="e.g. I think it's really about feeling like my contribution doesn't matter. Like I'm invisible..." style="min-height:90px;margin-bottom:14px;"></textarea>
+
+        <label>🔄 What would you do differently?</label>
+        <textarea id="r_different" placeholder="e.g. I'd take a breath before responding. I'd ask for a private conversation instead of reacting publicly..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>🛡️ What boundary needs to be set or maintained?</label>
+        <textarea id="r_boundary" placeholder="e.g. I need to tell my manager that I will not accept my name being left off work I produced..." style="min-height:80px;"></textarea>
+      </div>
+
+      <div class="card card-gold" style="display:flex;flex-direction:column;gap:16px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:16px;">Your Calm-Down Plan</div>
+          <p style="font-size:12px;color:#bbb;margin-bottom:12px;line-height:1.6;">Tick what you commit to doing next time you feel anger rising:</p>
+          <div id="calmChecklist"></div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">🔥 Anger Out Affirmation</div>
+          <div class="affirm-box" id="affirmBox">
+            <div class="affirm-text" id="affirmText"></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="affirmByLevel()" style="flex:1;font-size:13px;padding:9px;">✦ Match Level</button>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <label>What do you need right now to truly feel better?</label>
+          <textarea id="r_need" placeholder="e.g. A walk. A cry. Someone to hear me. To write it out. To do something physical..." style="min-height:70px;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:16px;">📋 Episode Log — This Month</div>
+        <div id="episodeLog" style="margin-bottom:16px;"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-red" onclick="saveEntry()">🔥 Save This Episode</button>
+          <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+
+  <!-- SAVE -->
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-red" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">🔥 Save Episode</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+
+</div>
+
+<!-- STICKY SUMMARY -->
+<div class="summary-strip">
+  <div class="summary-item"><div class="summary-val" id="s_level">—</div><div class="summary-key">Anger Level</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_who">—</div><div class="summary-key">Involved</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_category">—</div><div class="summary-key">Category</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_tags">0</div><div class="summary-key">Tags</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_body">0</div><div class="summary-key">Body Signs</div></div>
+  <div class="summary-save">
+    <button class="btn btn-green" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session') || '{}');
+if (!session.loggedIn) window.location.href = 'wellness1.html';
+const userEmail = session.email;
+const userName  = session.name || 'Friend';
+const firstName = userName.split(' ')[0];
+
+const navName   = document.getElementById('navName');
+const navAvatar = document.getElementById('navAvatar');
+navName.textContent   = firstName;
+navAvatar.textContent = firstName.charAt(0).toUpperCase();
+navName.style.opacity = '1';
+navAvatar.style.opacity = '1';
+function key(s) { return `wl_${userEmail}_${s}`; }
+
+// ── TIME GREETING ─────────────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours();
+  const greet = h < 12 ? `Good morning, ${firstName}` : h < 17 ? `Good afternoon, ${firstName}` : `Good evening, ${firstName}`;
+  document.getElementById('timeGreeting').textContent = greet;
+  const hh = String(h).padStart(2,'0'), mm = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('clockTime').textContent = `${hh}:${mm}`;
+}
+updateClock(); setInterval(updateClock, 30000);
+
+// ── DATE ──────────────────────────────────────────────────────────────────────
+let currentDate = new Date();
+function dk(d) { return d.toISOString().slice(0,10); }
+function fmt(d) { return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+function shiftDate(n) { currentDate.setDate(currentDate.getDate()+n); renderDate(); loadEntry(); }
+
+function renderDate() {
+  document.getElementById('dateStr').textContent = fmt(currentDate);
+  const strip = document.getElementById('weekStrip');
+  strip.innerHTML = '';
+  for (let i=-3;i<=3;i++) {
+    const d = new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip = document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadEntry(); };
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {
+  angerLevel: 0, triggerDesc:'', triggerWho:'', triggerCategory:'', triggerTags:[],
+  triggerNeed:'', body:[], bodyNote:'', responseActual:'', responsePattern:'', responseFeeling:'',
+  r_root:'', r_different:'', r_boundary:'', r_need:'', calmChecked:[], ts:''
+};
+
+// ── ANGER TILES ───────────────────────────────────────────────────────────────
+const LEVEL_LABELS = {
+  1:'Just a flicker',2:'Noticeable irritation',3:'Simmering',4:'Clearly annoyed',
+  5:'Frustrated & tense',6:'Angry',7:'Very angry',8:'Furious',9:'Rage',10:'Explosive'
+};
+const ANGER_COLORS = {
+  1:'#55bb00',2:'#aadd00',3:'#d4e000',4:'#f5c518',5:'#ffaa00',
+  6:'#ff8c00',7:'#ff6b2b',8:'#ff4b2b',9:'#ff2200',10:'#cc0000'
+};
+
+function renderAngerTiles() {
+  const wrap = document.getElementById('angerTiles');
+  for (let i=1;i<=10;i++) {
+    const d = document.createElement('div');
+    d.className='anger-tile'; d.dataset.level=i;
+    d.innerHTML=`<span class="at-num">${i}</span><span class="at-label">${i===1?'Low':i===5?'Mid':i===10?'Max':''}</span>`;
+    d.onclick=()=>selectAngerLevel(i);
+    wrap.appendChild(d);
+  }
+}
+function selectAngerLevel(v) {
+  state.angerLevel = v;
+  document.querySelectorAll('.anger-tile').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`.anger-tile[data-level="${v}"]`).classList.add('active');
+  const color = ANGER_COLORS[v];
+  document.getElementById('angerBarFill').style.width = (v*10)+'%';
+  document.getElementById('angerBarFill').style.background = `linear-gradient(to right,#55bb00,${color})`;
+  document.getElementById('angerNum').textContent = v;
+  document.getElementById('angerNum').style.color = color;
+  document.getElementById('angerLevelLabel').textContent = LEVEL_LABELS[v];
+  document.getElementById('angerLevelLabel').style.color = color;
+  document.getElementById('s_level').textContent = v+'/10';
+  document.getElementById('s_level').style.color = color;
+}
+
+// ── TRIGGER TAGS ──────────────────────────────────────────────────────────────
+const TRIGGER_TAGS = [
+  'Disrespect','Not heard','Injustice','Betrayal','Loss of control',
+  'Humiliation','Overload','Financial pressure','Being lied to',
+  'Broken promise','Black tax','Feeling used','Abandonment',
+  'Gaslighting','Discrimination','Family drama','Relationship pain'
+];
+function renderTriggerTags() {
+  const wrap = document.getElementById('triggerTags');
+  TRIGGER_TAGS.forEach(tag => {
+    const t = document.createElement('div'); t.className='ttag'; t.textContent=tag; t.dataset.tag=tag;
+    t.onclick=()=>{
+      t.classList.toggle('active');
+      if (t.classList.contains('active')) { if(!state.triggerTags.includes(tag)) state.triggerTags.push(tag); }
+      else state.triggerTags=state.triggerTags.filter(x=>x!==tag);
+      document.getElementById('s_tags').textContent=state.triggerTags.length;
+    };
+    wrap.appendChild(t);
+  });
+}
+
+// ── BODY SIGNS ────────────────────────────────────────────────────────────────
+const BODY_ZONES = [
+  {icon:'🤯',label:'Head / Pounding'},
+  {icon:'👁',label:'Eyes Narrowing'},
+  {icon:'😤',label:'Jaw Clenching'},
+  {icon:'🔴',label:'Face Flushing'},
+  {icon:'🫀',label:'Heart Racing'},
+  {icon:'🫁',label:'Shallow Breath'},
+  {icon:'🌋',label:'Chest Tight'},
+  {icon:'🔥',label:'Stomach Burning'},
+  {icon:'💪',label:'Muscles Tensing'},
+  {icon:'🙌',label:'Fists Clenching'},
+  {icon:'🦵',label:'Legs Restless'},
+  {icon:'⚡',label:'Whole Body Shaking'},
+];
+function renderBodyGrid() {
+  const g = document.getElementById('bodyGrid');
+  BODY_ZONES.forEach(z=>{
+    const d=document.createElement('div'); d.className='body-zone';
+    d.innerHTML=`<span class="bz-icon">${z.icon}</span>${z.label}`;
+    d.onclick=()=>{
+      d.classList.toggle('active');
+      if(d.classList.contains('active')) { if(!state.body.includes(z.label)) state.body.push(z.label); }
+      else state.body=state.body.filter(x=>x!==z.label);
+      document.getElementById('s_body').textContent=state.body.length;
+    };
+    g.appendChild(d);
+  });
+}
+
+// ── RELEASE TOOLS ─────────────────────────────────────────────────────────────
+const RELEASE_TOOLS = [
+  {
+    icon:'💨', title:'Box Breathing', teaser:'Regulate your nervous system in 4 minutes.',
+    steps:[
+      {n:'1',t:'Breathe IN for 4 counts — slowly through your nose.'},
+      {n:'2',t:'HOLD for 4 counts — lungs full, don\'t tense up.'},
+      {n:'3',t:'Breathe OUT for 4 counts — slow exhale through your mouth.'},
+      {n:'4',t:'HOLD for 4 counts — lungs empty. Repeat 4–8 times.'},
+      {n:'💡',t:'The exhale activates your parasympathetic nervous system — this is science, not soft. It works.'},
+    ]
+  },
+  {
+    icon:'🚶', title:'Walk It Out', teaser:'Move the cortisol through your body.',
+    steps:[
+      {n:'1',t:'Get up and walk — outside if possible. Even 5 minutes counts.'},
+      {n:'2',t:'Walk faster than normal. Let your legs carry the intensity.'},
+      {n:'3',t:'No phone. No podcasts. Let your mind drift.'},
+      {n:'4',t:'Come back when you feel the heat dropping in your body.'},
+      {n:'💡',t:'Physical movement metabolises cortisol. This is why people "walk it off" — it\'s not avoidance, it\'s biology.'},
+    ]
+  },
+  {
+    icon:'✍️', title:'Rage Write', teaser:'Get it all out on paper. Don\'t filter.',
+    steps:[
+      {n:'1',t:'Set a timer for 10 minutes. Write everything you feel without editing.'},
+      {n:'2',t:'Say the things you can\'t say out loud. All of them. Every word.'},
+      {n:'3',t:'Write in first person: "I feel..." / "I am furious because..."'},
+      {n:'4',t:'When the timer ends, STOP. Read it back once. Then close it or tear it up.'},
+      {n:'💡',t:'You are not publishing this. Rage writing is a pressure release valve — not a draft for sending.'},
+    ]
+  },
+  {
+    icon:'🥊', title:'Physical Release', teaser:'Discharge the energy safely from your body.',
+    steps:[
+      {n:'1',t:'Do 20 jumping jacks or 10 push-ups RIGHT NOW.'},
+      {n:'2',t:'Put on loud music and dance alone for 3 minutes.'},
+      {n:'3',t:'Squeeze a pillow, punch a mattress, or scream into a pillow.'},
+      {n:'4',t:'Heavy exercise: run, cycle, gym. Burn the energy out.'},
+      {n:'⚠️',t:'Never direct physical release toward another person or property. The goal is safe discharge, not destruction.'},
+    ]
+  },
+  {
+    icon:'🌊', title:'The 10-Second Rule', teaser:'When you\'re about to explode — do nothing first.',
+    steps:[
+      {n:'1',t:'The moment you feel the anger rising — say nothing. Do nothing.'},
+      {n:'2',t:'Count to 10 inside your head. Slowly.'},
+      {n:'3',t:'Take a deep breath between each count.'},
+      {n:'4',t:'After 10, ask: "Is what I\'m about to say/do going to make this better or worse?"'},
+      {n:'💡',t:'Anger peaks at seconds 6–8. If you can get past 10, you\'ve missed the explosion window. Words said in rage cannot be unsaid.'},
+    ]
+  },
+  {
+    icon:'🤲', title:'Body Reset', teaser:'Ground yourself back in the present moment.',
+    steps:[
+      {n:'1',t:'Place both feet flat on the floor. Feel the ground beneath you.'},
+      {n:'2',t:'Press your palms together firmly and hold for 10 seconds.'},
+      {n:'3',t:'Name 5 things you can SEE right now. Say them quietly.'},
+      {n:'4',t:'Name 4 things you can TOUCH, 3 you can HEAR, 2 you can SMELL.'},
+      {n:'💡',t:'This technique interrupts the anger loop by pulling your brain out of threat-mode and back into the present. It works for panic and rage alike.'},
+    ]
+  },
+  {
+    icon:'📞', title:'Call Someone Safe', teaser:'Not to vent without end — to be witnessed.',
+    steps:[
+      {n:'1',t:'Choose someone who won\'t add fuel — someone calm, honest, and safe.'},
+      {n:'2',t:'Say: "I\'m angry and I need 10 minutes to talk it through. Can you listen?"'},
+      {n:'3',t:'Tell them what happened. Let them reflect back what they hear.'},
+      {n:'4',t:'Ask: "What am I not seeing?" Listen to their answer.'},
+      {n:'💡',t:'Being witnessed without judgement is deeply calming. Choose wisely — the wrong person makes it worse.'},
+    ]
+  },
+  {
+    icon:'🙏', title:'The Forgiveness Decision', teaser:'Not for them. For you.',
+    steps:[
+      {n:'1',t:'This step is not about excusing what happened. It is about setting yourself free.'},
+      {n:'2',t:'Ask: "Is continuing to hold this anger hurting me more than the person who hurt me?"'},
+      {n:'3',t:'Write: "I choose to release my attachment to this anger because I deserve peace."'},
+      {n:'4',t:'Forgiveness is a decision, not a feeling. Make the decision. The feeling follows over time.'},
+      {n:'💡',t:'"Unforgiveness is like drinking poison and waiting for the other person to die." — Maya Angelou.'},
+    ]
+  },
+];
+
+function renderReleaseGrid() {
+  const g = document.getElementById('releaseGrid');
+  RELEASE_TOOLS.forEach(tool => {
+    const card = document.createElement('div'); card.className='release-card';
+    const stepsHtml = tool.steps.map(s=>`<div class="rc-step"><div class="rc-step-num">${s.n}</div><div>${s.t}</div></div>`).join('');
+    card.innerHTML=`<span class="rc-icon">${tool.icon}</span><div class="rc-title">${tool.title}</div><div class="rc-teaser">${tool.teaser}</div><div class="rc-expand">${stepsHtml}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── CONFLICT TYPES ────────────────────────────────────────────────────────────
+const CONFLICT_TYPES = [
+  {
+    icon:'🏢', title:'Workplace Conflict', desc:'Colleagues, managers, credit, respect.',
+    expand:`<strong>Common patterns:</strong> Being dismissed in meetings, having credit taken, unfair treatment, micromanagement, bullying, toxic culture.<br><br>
+    <strong>What usually drives it:</strong> Power imbalances, unclear roles, poor management, unspoken resentment building over time.<br><br>
+    <strong>What helps:</strong><br>
+    • Document everything — emails, dates, conversations<br>
+    • Use "I" statements in confrontation: "When X happened, I felt Y, and I need Z."<br>
+    • Go to HR only once you have documentation and a clear ask<br>
+    • Decide: is this worth fighting, or is it time to leave?<br><br>
+    <em>Not every battle is worth fighting. But some are worth winning.</em>`
+  },
+  {
+    icon:'👨‍👩‍👧', title:'Family Conflict', desc:'Parents, siblings, black tax, expectations.',
+    expand:`<strong>Common patterns:</strong> Black tax (financial pressure from extended family), boundary violations, favouritism, intergenerational trauma, unspoken expectations.<br><br>
+    <strong>What makes it hard:</strong> Love and pain come from the same source. The people who hurt us most are often the ones we need most.<br><br>
+    <strong>What helps:</strong><br>
+    • Name what you can and cannot contribute — clearly, once, without guilt<br>
+    • Understand that you can love someone and still limit your exposure to them<br>
+    • Healing generational patterns starts with you refusing to carry what isn't yours<br>
+    • A family therapist is not a luxury — it is a tool<br><br>
+    <em>You did not choose your family. You do choose how much of yourself you give to dynamics that hurt you.</em>`
+  },
+  {
+    icon:'💔', title:'Relationship Conflict', desc:'Partner, trust, communication, recurring fights.',
+    expand:`<strong>Common patterns:</strong> Recurring arguments (same fight, different day), stonewalling, contempt, criticism, defensiveness — the 4 Horsemen of relationship breakdown.<br><br>
+    <strong>The real issue:</strong> Most couples fight about money, sex, chores, or time — but those are proxies. The real fight is usually about feeling unseen, unvalued, or unsafe.<br><br>
+    <strong>What helps:</strong><br>
+    • Ask: "What is this fight really about?" — say it out loud to each other<br>
+    • Agree on a 20-minute cool-down rule when voices rise<br>
+    • Replace "You always..." with "When this happens, I feel..."<br>
+    • Couples therapy is strength, not surrender<br><br>
+    <em>You cannot fight your way to intimacy. But you can learn to fight better.</em>`
+  },
+  {
+    icon:'💰', title:'Financial Conflict', desc:'Money, debt, inequality, survival stress.',
+    expand:`<strong>What it looks like:</strong> Arguments about spending, debt, who earns more, financial abuse, keeping financial secrets, stress about bills and survival.<br><br>
+    <strong>The deeper truth:</strong> Money fights are rarely about money. They're about power, security, fairness, and fear. Financial stress activates the same threat response as physical danger.<br><br>
+    <strong>What helps:</strong><br>
+    • Have a "money meeting" — structured, not reactive — once a month<br>
+    • Agree on a joint visibility principle: both partners see all accounts<br>
+    • Financial abuse (controlling access to money) is a form of GBV — name it<br>
+    • Get a budget on paper. What you can see, you can manage.<br><br>
+    <em>Financial stress doesn't ruin relationships. Secrets about money do.</em>`
+  },
+  {
+    icon:'🚗', title:'Situational / Environmental', desc:'Traffic, queues, noise, things beyond your control.',
+    expand:`<strong>What it is:</strong> Anger triggered by situations rather than people — Gauteng traffic, load shedding, bad service, bureaucracy, noise.<br><br>
+    <strong>Why it hits hard:</strong> These triggers feel completely out of your control. And loss of control is one of the primary anger drivers.<br><br>
+    <strong>What helps:</strong><br>
+    • Build in time buffers for situations you know will frustrate you (traffic, queues)<br>
+    • Create a car playlist specifically for calming down after traffic<br>
+    • Identify your top 3 situational triggers and make a specific plan for each<br>
+    • Ask: "In 3 hours, will this matter?" — most situational triggers don't survive that question<br><br>
+    <em>You cannot control the load shedding. You can control what you do during it.</em>`
+  },
+  {
+    icon:'🔁', title:'Recurring / Chronic Anger', desc:'Always angry. The anger never fully leaves.',
+    expand:`<strong>Signs this is you:</strong> You're often described as having a short fuse. You feel angry more days than not. Small things trigger big responses. You're exhausted by how much you feel.<br><br>
+    <strong>What may be underneath:</strong> Unresolved grief or loss. Untreated depression or anxiety. Unprocessed trauma. Chronic stress without recovery. A deep sense of injustice with no outlet.<br><br>
+    <strong>What helps:</strong><br>
+    • Track your triggers for 30 days using this tool — patterns will emerge<br>
+    • Speak to a psychologist or counsellor — anger as a chronic state is a mental health matter<br>
+    • Examine sleep, diet, and exercise — these affect emotional regulation dramatically<br>
+    • Ask: "Who or what am I actually angry at that I've never allowed myself to address?"<br><br>
+    <em>Chronic anger is often grief wearing a mask. Something was lost — and it needs to be mourned.</em>`
+  },
+  {
+    icon:'🌀', title:'Self-Directed Anger', desc:'Angry at yourself. Regret, self-criticism, shame.',
+    expand:`<strong>What it sounds like inside:</strong> "I'm so stupid." "I should have known better." "I always mess things up." "I hate myself for what I did."<br><br>
+    <strong>The danger:</strong> Self-directed anger, when sustained, becomes depression. It erodes self-worth and creates a loop of shame that is very hard to break alone.<br><br>
+    <strong>What helps:</strong><br>
+    • Talk to yourself the way you'd talk to your best friend in the same situation<br>
+    • Distinguish between guilt (I did something wrong) and shame (I am wrong)<br>
+    • Make repair where repair is possible. Then let it go.<br>
+    • Write a letter of self-forgiveness. You are allowed to be human.<br><br>
+    <em>You cannot hate yourself into becoming someone better. Only compassion does that work.</em>`
+  },
+  {
+    icon:'⚡', title:'Injustice Anger', desc:'Systemic, political, social — the anger of "this is not right."',
+    expand:`<strong>What it is:</strong> Anger at systems, institutions, inequity, racism, sexism, corruption, poverty, GBV — the rage of living in a world that consistently fails people who look like you, love like you, or live like you.<br><br>
+    <strong>Why it's valid:</strong> Injustice anger is appropriate. It is the correct emotional response to an incorrect situation. It has built movements. Do not suppress it.<br><br>
+    <strong>What helps:</strong><br>
+    • Channel it into action — no matter how small. Action counters helplessness.<br>
+    • Protect your energy: you cannot sustain rage 24/7. Set limits on news consumption.<br>
+    • Find community — bearing this anger alone is unsustainable<br>
+    • Distinguish between what you can influence and what you cannot. Focus on the former.<br><br>
+    <em>Your anger at injustice is not a problem. Burning yourself out on it is. Be strategic with your fire.</em>`
+  },
+];
+
+function renderConflictGrid() {
+  const g = document.getElementById('conflictGrid');
+  CONFLICT_TYPES.forEach(c=>{
+    const card=document.createElement('div'); card.className='conflict-card';
+    card.innerHTML=`<span class="cc-icon">${c.icon}</span><div class="cc-title">${c.title}</div><div class="cc-desc">${c.desc}</div><div class="cc-expand">${c.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── CALM CHECKLIST ────────────────────────────────────────────────────────────
+const CALM_PLAN = [
+  'Pause and count to 10 before responding',
+  'Take 3 deep breaths before saying anything',
+  'Leave the room if I feel the heat rising',
+  'Go for a walk before reacting',
+  'Write it down before speaking it out',
+  'Wait 24 hours before sending an angry message',
+  'Name the emotion out loud: "I am angry right now"',
+  'Text instead of calling when I\'m activated',
+  'Call a safe person first to process',
+];
+function renderCalmChecklist() {
+  const wrap = document.getElementById('calmChecklist');
+  CALM_PLAN.forEach((item,i) => {
+    const div=document.createElement('div'); div.className='check-item'; div.dataset.idx=i;
+    div.innerHTML=`<div class="check-box" id="chk_${i}"></div><div class="check-text">${item}</div>`;
+    div.onclick=()=>{
+      div.classList.toggle('checked');
+      const box=document.getElementById('chk_'+i);
+      box.textContent = div.classList.contains('checked') ? '✓' : '';
+      if(div.classList.contains('checked')) { if(!state.calmChecked.includes(i)) state.calmChecked.push(i); }
+      else state.calmChecked=state.calmChecked.filter(x=>x!==i);
+    };
+    wrap.appendChild(div);
+  });
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────────────
+const AFFIRMATIONS = {
+  general:[
+    'I feel this anger. I do not have to become it.',
+    'My anger is information. I listen to it without letting it lead.',
+    'I am safe to feel this. I choose how I respond.',
+    'I release what I cannot control. I focus on what I can.',
+    'I am bigger than this moment. I will not be defined by it.',
+  ],
+  low:[
+    'Something bothered me. I notice it. I let it pass.',
+    'This is minor. I choose not to carry it.',
+    'I can name this without escalating it.',
+  ],
+  mid:[
+    'I feel this clearly. I choose to respond, not react.',
+    'My anger is valid. My actions are still my choice.',
+    'I will not let this moment cost me more than it already has.',
+  ],
+  high:[
+    'I am this angry and I am STILL in control of what I do next.',
+    'The anger is real. The damage is optional.',
+    'I breathe through this. My future self will be grateful.',
+    'I do not have to win this argument. I choose my peace over being right.',
+  ],
+};
+function newAffirm() {
+  const all=Object.values(AFFIRMATIONS).flat();
+  setAffirm(all[Math.floor(Math.random()*all.length)]);
+}
+function affirmByLevel() {
+  const lvl=state.angerLevel;
+  const list = lvl<=3 ? AFFIRMATIONS.low : lvl<=6 ? AFFIRMATIONS.mid : AFFIRMATIONS.high;
+  setAffirm(list[Math.floor(Math.random()*list.length)]);
+}
+function setAffirm(txt) {
+  const el=document.getElementById('affirmText');
+  el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=txt; el.style.transition='opacity 0.4s'; el.style.opacity=1; },250);
+}
+
+// ── EPISODE LOG ───────────────────────────────────────────────────────────────
+let episodes = [];
+function loadEpisodes() {
+  const raw = localStorage.getItem(key('life2_episodes'));
+  episodes = raw ? JSON.parse(raw) : [];
+  renderEpisodeLog();
+}
+function renderEpisodeLog() {
+  const el = document.getElementById('episodeLog');
+  if (!episodes.length) { el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No episodes logged yet this month.</p>'; return; }
+  el.innerHTML='';
+  episodes.slice(0,5).forEach((ep,i)=>{
+    const color = ANGER_COLORS[ep.level] || '#ff4b2b';
+    const d = document.createElement('div'); d.className='episode-item';
+    d.innerHTML=`
+      <div class="ep-left">
+        <div class="ep-date">${new Date(ep.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})} · ${ep.who||'Unknown'} · ${ep.category||'General'}</div>
+        <div class="ep-trigger">${ep.trigger||'—'}</div>
+        ${ep.tags&&ep.tags.length?`<div style="font-size:11px;color:#555;margin-top:4px;">${ep.tags.join(' · ')}</div>`:''}
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div class="ep-level" style="color:${color};">${ep.level}/10</div>
+        <button class="ep-del" onclick="delEpisode(${i})">×</button>
+      </div>`;
+    el.appendChild(d);
+  });
+  if (episodes.length > 5) {
+    const more = document.createElement('p');
+    more.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;';
+    more.textContent=`+ ${episodes.length-5} more episodes logged this session`;
+    el.appendChild(more);
+  }
+}
+function delEpisode(i) { episodes.splice(i,1); localStorage.setItem(key('life2_episodes'),JSON.stringify(episodes)); renderEpisodeLog(); }
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry() {
+  state.triggerDesc    = document.getElementById('triggerDesc').value;
+  state.triggerWho     = document.getElementById('triggerWho').value;
+  state.triggerCategory= document.getElementById('triggerCategory').value;
+  state.triggerNeed    = document.getElementById('triggerNeed').value;
+  state.bodyNote       = document.getElementById('bodyNote').value;
+  state.responseActual = document.getElementById('responseActual').value;
+  state.responsePattern= document.getElementById('responsePattern').value;
+  state.responseFeeling= document.getElementById('responseFeeling').value;
+  state.r_root         = document.getElementById('r_root').value;
+  state.r_different    = document.getElementById('r_different').value;
+  state.r_boundary     = document.getElementById('r_boundary').value;
+  state.r_need         = document.getElementById('r_need').value;
+  state.ts             = new Date().toISOString();
+
+  // Save today's state
+  localStorage.setItem(key('life2_'+dk(currentDate)), JSON.stringify(state));
+
+  // Add to episode log if there's a trigger
+  if (state.triggerDesc || state.angerLevel > 0) {
+    const ep = {
+      level: state.angerLevel, trigger: state.triggerDesc.slice(0,120),
+      who: state.triggerWho, category: state.triggerCategory,
+      tags: state.triggerTags, date: state.ts
+    };
+    episodes.unshift(ep);
+    localStorage.setItem(key('life2_episodes'), JSON.stringify(episodes));
+    renderEpisodeLog();
+  }
+
+  // Update summary bar from selects
+  const whoEl = document.getElementById('triggerWho');
+  const whoText = whoEl.options[whoEl.selectedIndex]?.text || '—';
+  document.getElementById('s_who').textContent = whoText.length > 12 ? whoText.slice(0,12)+'…' : whoText;
+  const catEl = document.getElementById('triggerCategory');
+  const catText = catEl.options[catEl.selectedIndex]?.text || '—';
+  document.getElementById('s_category').textContent = catText.length > 12 ? catText.slice(0,12)+'…' : catText;
+
+  // Email
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{
+    studentName: userName, studentEmail: userEmail,
+    courseName: `Life 2 Anger Log — ${fmt(currentDate)}`,
+    coursePrice:'N/A', courseDuration:'Wellness Portal', sessionType:'Online', paymentMethod:'Free',
+    additionalInfo:`Anger Level: ${state.angerLevel}/10\nTrigger: ${state.triggerDesc.slice(0,200)||'—'}\nWho: ${state.triggerWho||'—'}\nCategory: ${state.triggerCategory||'—'}\nBody Signs: ${state.body.join(', ')||'None'}\nResponse Pattern: ${state.responsePattern||'—'}\nRoot Cause: ${state.r_root.slice(0,200)||'—'}\nBoundary Needed: ${state.r_boundary.slice(0,200)||'—'}`,
+    dashboardUrl: window.location.href
+  }).catch(()=>{});
+
+  showToast('🔥 Episode saved');
+}
+
+function loadEntry() {
+  const raw = localStorage.getItem(key('life2_'+dk(currentDate)));
+  if (!raw) return;
+  const s = JSON.parse(raw);
+
+  if (s.angerLevel) selectAngerLevel(s.angerLevel);
+
+  document.getElementById('triggerDesc').value     = s.triggerDesc||'';
+  document.getElementById('triggerWho').value      = s.triggerWho||'';
+  document.getElementById('triggerCategory').value = s.triggerCategory||'';
+  document.getElementById('triggerNeed').value     = s.triggerNeed||'';
+  document.getElementById('bodyNote').value        = s.bodyNote||'';
+  document.getElementById('responseActual').value  = s.responseActual||'';
+  document.getElementById('responsePattern').value = s.responsePattern||'';
+  document.getElementById('responseFeeling').value = s.responseFeeling||'';
+  document.getElementById('r_root').value          = s.r_root||'';
+  document.getElementById('r_different').value     = s.r_different||'';
+  document.getElementById('r_boundary').value      = s.r_boundary||'';
+  document.getElementById('r_need').value          = s.r_need||'';
+
+  // Trigger tags
+  state.triggerTags = s.triggerTags||[];
+  document.querySelectorAll('.ttag').forEach(t=>{
+    if(state.triggerTags.includes(t.dataset.tag)) t.classList.add('active');
+  });
+  document.getElementById('s_tags').textContent=state.triggerTags.length;
+
+  // Body zones
+  state.body = s.body||[];
+  document.querySelectorAll('.body-zone').forEach(d=>{
+    if(state.body.includes(d.querySelector('.bz-icon').nextSibling?.textContent?.trim())) d.classList.add('active');
+  });
+  document.getElementById('s_body').textContent=state.body.length;
+
+  // Calm checklist
+  state.calmChecked = s.calmChecked||[];
+  state.calmChecked.forEach(i=>{
+    const item=document.querySelector(`.check-item[data-idx="${i}"]`);
+    if(item){item.classList.add('checked'); document.getElementById('chk_'+i).textContent='✓';}
+  });
+
+  state = {...state,...s};
+  showToast('Entry loaded');
+}
+
+// ── SUMMARY BAR LIVE UPDATES ──────────────────────────────────────────────────
+document.getElementById('triggerWho').addEventListener('change', function() {
+  const txt = this.options[this.selectedIndex]?.text||'—';
+  document.getElementById('s_who').textContent = txt.length>12?txt.slice(0,12)+'…':txt;
+});
+document.getElementById('triggerCategory').addEventListener('change', function() {
+  const txt = this.options[this.selectedIndex]?.text||'—';
+  document.getElementById('s_category').textContent = txt.length>12?txt.slice(0,12)+'…':txt;
+});
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderAngerTiles();
+renderTriggerTags();
+renderBodyGrid();
+renderReleaseGrid();
+renderConflictGrid();
+renderCalmChecklist();
+loadEpisodes();
+newAffirm();
+</script>
+</body>
+</html>
