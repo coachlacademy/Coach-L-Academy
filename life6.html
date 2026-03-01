@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 6 — Daily Practice | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --cyan: #00d2ff;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #00d2ff;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse at 15% 25%, rgba(0,210,255,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(168,85,247,0.05) 0%, transparent 55%),
+    #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image:
+    linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--cyan); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass {
+  padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border);
+  color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;
+  transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-glass:hover { border-color:var(--cyan); color:var(--cyan); }
+.user-chip {
+  display:flex; align-items:center; gap:8px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:6px 14px; border-radius:30px; font-size:13px;
+}
+.avatar {
+  width:26px; height:26px; border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:900; color:#000;
+}
+
+/* PAGE HEADER */
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--cyan); margin-bottom:8px; }
+.page-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,8vw,5.5rem); font-weight:900;
+  text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px;
+}
+.page-title span { color:var(--cyan); }
+.page-sub { font-size:15px; color:#bbb; max-width:560px; line-height:1.7; }
+
+.time-greeting {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px;
+}
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--cyan); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* DATE NAV */
+.date-nav {
+  display:flex; align-items:center; gap:14px; margin:0 auto 40px;
+  max-width:1100px; padding:0 40px; flex-wrap:wrap;
+}
+.date-btn {
+  background:var(--glass); border:1px solid var(--glass-border); color:#fff;
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s;
+}
+.date-btn:hover { border-color:var(--cyan); color:var(--cyan); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--cyan); border-color:var(--cyan); color:#000; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+.wday.active .wday-d { opacity:1; }
+
+/* MAIN */
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num {
+  font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--cyan); background:rgba(0,210,255,0.1); border:1px solid rgba(0,210,255,0.35);
+  padding:4px 12px; border-radius:20px; white-space:nowrap;
+}
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+/* CARD */
+.card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:28px; backdrop-filter:blur(12px);
+  position:relative; overflow:hidden; transition:border-color 0.3s;
+}
+.card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent);
+}
+.card:hover { border-color:rgba(0,210,255,0.15); }
+.card-cyan   { border-color:rgba(0,210,255,0.25);  background:rgba(0,210,255,0.04); }
+.card-purple { border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.04); }
+.card-gold   { border-color:rgba(245,197,24,0.25); background:rgba(245,197,24,0.04); }
+.card-green  { border-color:rgba(57,255,20,0.2);   background:rgba(57,255,20,0.04); }
+.card-red    { border-color:rgba(255,75,43,0.2);   background:rgba(255,75,43,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* BIG AFFIRMATION DISPLAY */
+.affirm-hero {
+  background:linear-gradient(135deg,rgba(0,210,255,0.08),rgba(168,85,247,0.08));
+  border:1px solid rgba(0,210,255,0.25); border-radius:20px;
+  padding:48px 40px; text-align:center; position:relative; overflow:hidden;
+  min-height:200px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:24px;
+}
+.affirm-hero::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at center,rgba(0,210,255,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.affirm-hero-text {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(22px,4vw,34px); font-weight:700; line-height:1.35;
+  color:#fff; letter-spacing:0.5px; transition:opacity 0.5s;
+  max-width:700px;
+}
+.affirm-hero-attr { font-size:12px; color:#555; text-transform:uppercase; letter-spacing:2px; }
+.affirm-hero-controls { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+
+/* THEME TABS */
+.theme-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+.theme-tab {
+  padding:9px 20px; border-radius:20px;
+  font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  cursor:pointer; transition:0.25s; color:#888;
+}
+.theme-tab:hover { color:#fff; border-color:rgba(0,210,255,0.4); }
+.theme-tab.active { background:rgba(0,210,255,0.12); border-color:var(--cyan); color:var(--cyan); }
+
+/* AFFIRMATION CARDS GRID */
+.affirm-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:14px; }
+.affirm-card {
+  background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px; padding:20px; cursor:pointer; transition:0.3s; position:relative;
+}
+.affirm-card:hover { border-color:rgba(0,210,255,0.3); background:rgba(0,210,255,0.04); transform:translateY(-2px); }
+.affirm-card.favourited { border-color:rgba(245,197,24,0.4); background:rgba(245,197,24,0.05); }
+.affirm-card-text { font-size:14px; color:#ddd; line-height:1.7; margin-bottom:12px; font-style:italic; }
+.affirm-card-footer { display:flex; justify-content:space-between; align-items:center; }
+.affirm-card-theme { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:#555; }
+.affirm-card-fav { background:none; border:none; cursor:pointer; font-size:16px; padding:2px; transition:0.2s; opacity:0.4; }
+.affirm-card.favourited .affirm-card-fav { opacity:1; }
+.affirm-card-fav:hover { opacity:1; transform:scale(1.2); }
+
+/* CUSTOM AFFIRMATION */
+.custom-affirm-item {
+  background:rgba(0,210,255,0.04); border:1px solid rgba(0,210,255,0.15);
+  border-radius:10px; padding:16px; margin-bottom:10px;
+  display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+  transition:0.3s;
+}
+.custom-affirm-item:hover { border-color:rgba(0,210,255,0.3); }
+.ca-text { font-size:14px; color:#ddd; line-height:1.6; flex:1; font-style:italic; }
+.ca-actions { display:flex; gap:6px; flex-shrink:0; }
+.ca-btn { background:none; border:none; cursor:pointer; font-size:15px; padding:4px; transition:0.2s; opacity:0.4; }
+.ca-btn:hover { opacity:1; transform:scale(1.15); }
+
+/* STREAK / PROGRESS */
+.streak-display {
+  display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-bottom:20px;
+}
+.streak-dot {
+  width:34px; height:34px; border-radius:8px; display:flex; align-items:center;
+  justify-content:center; font-size:11px; font-weight:700; text-transform:uppercase;
+  transition:0.3s; flex-shrink:0;
+}
+.streak-dot.done { background:var(--cyan); color:#000; }
+.streak-dot.today { background:rgba(0,210,255,0.2); border:2px solid var(--cyan); color:var(--cyan); }
+.streak-dot.missed { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:#333; }
+
+/* MORNING / EVENING RITUAL */
+.ritual-card {
+  background:rgba(255,255,255,0.02); border:1px solid var(--glass-border);
+  border-radius:12px; padding:18px; margin-bottom:10px; cursor:pointer; transition:0.3s;
+  display:flex; gap:14px; align-items:flex-start;
+}
+.ritual-card:hover { border-color:rgba(0,210,255,0.25); background:rgba(0,210,255,0.04); }
+.ritual-card.done { border-color:rgba(0,210,255,0.4); background:rgba(0,210,255,0.06); }
+.ritual-check {
+  width:22px; height:22px; border-radius:50%; border:2px solid #333;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:900; flex-shrink:0; margin-top:2px; transition:0.2s;
+}
+.ritual-card.done .ritual-check { background:var(--cyan); border-color:var(--cyan); color:#000; }
+.ritual-body { flex:1; }
+.ritual-title { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900; text-transform:uppercase; color:#fff; margin-bottom:3px; }
+.ritual-card.done .ritual-title { color:#555; }
+.ritual-desc { font-size:12px; color:#666; line-height:1.5; }
+
+/* MOOD AFFIRMATION MATCH */
+.mood-match-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+.mood-match-tile {
+  padding:16px 12px; border-radius:12px; text-align:center;
+  background:var(--glass); border:2px solid var(--glass-border);
+  cursor:pointer; transition:0.3s;
+}
+.mood-match-tile:hover,.mood-match-tile.active { transform:translateY(-3px); }
+.mood-match-tile .mm-emoji { font-size:28px; display:block; margin-bottom:8px; }
+.mood-match-tile .mm-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; text-transform:uppercase; }
+.mood-match-tile[data-mood="Thriving"]:hover,.mood-match-tile[data-mood="Thriving"].active{border-color:#39ff14;background:rgba(57,255,20,0.08);color:#39ff14;}
+.mood-match-tile[data-mood="Grateful"]:hover,.mood-match-tile[data-mood="Grateful"].active{border-color:var(--gold);background:rgba(245,197,24,0.08);color:var(--gold);}
+.mood-match-tile[data-mood="Anxious"]:hover,.mood-match-tile[data-mood="Anxious"].active{border-color:var(--orange);background:rgba(255,140,0,0.08);color:var(--orange);}
+.mood-match-tile[data-mood="Angry"]:hover,.mood-match-tile[data-mood="Angry"].active{border-color:var(--red);background:rgba(255,75,43,0.08);color:var(--red);}
+.mood-match-tile[data-mood="Sad"]:hover,.mood-match-tile[data-mood="Sad"].active{border-color:var(--blue);background:rgba(0,210,255,0.08);color:var(--blue);}
+.mood-match-tile[data-mood="Stuck"]:hover,.mood-match-tile[data-mood="Stuck"].active{border-color:#888;background:rgba(255,255,255,0.06);color:#aaa;}
+.mood-match-tile[data-mood="Healing"]:hover,.mood-match-tile[data-mood="Healing"].active{border-color:var(--purple);background:rgba(168,85,247,0.08);color:var(--purple);}
+.mood-match-tile[data-mood="Motivated"]:hover,.mood-match-tile[data-mood="Motivated"].active{border-color:var(--cyan);background:rgba(0,210,255,0.08);color:var(--cyan);}
+
+/* JOURNAL / FORMS */
+textarea {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:14px; font-size:14px;
+  font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6;
+}
+textarea:focus { outline:none; border-color:var(--cyan); background:rgba(0,210,255,0.03); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+input[type=text] {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:12px 14px; font-size:14px;
+  font-family:'Barlow',sans-serif; transition:0.3s; outline:none;
+}
+input[type=text]:focus { border-color:var(--cyan); background:rgba(0,210,255,0.03); }
+input[type=text]::placeholder { color:#555; }
+select {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:12px 14px; font-size:14px;
+  font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:14px;
+}
+select:focus { border-color:var(--cyan); }
+select option { background:#111; color:#fff; }
+
+/* BUTTONS */
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-cyan { background:var(--cyan); color:#000; }
+.btn-cyan:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--cyan); color:var(--cyan); }
+.btn-gold { background:var(--gold); color:#000; }
+.btn-green { background:var(--green); color:#000; }
+.btn-sm { padding:8px 16px; font-size:13px; }
+
+/* LOG */
+.log-item {
+  display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
+  padding:14px; border-radius:10px; margin-bottom:10px;
+  background:rgba(0,210,255,0.03); border:1px solid rgba(0,210,255,0.12); transition:0.3s;
+}
+.log-item:hover { border-color:rgba(0,210,255,0.25); }
+.li-left { flex:1; }
+.li-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.li-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--cyan); }
+.li-note { font-size:13px; color:#777; margin-top:4px; line-height:1.5; font-style:italic; }
+.li-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; }
+.li-del:hover { color:var(--red); }
+
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+/* STICKY SUMMARY */
+.summary-strip {
+  position:sticky; bottom:0; z-index:50;
+  background:rgba(0,0,0,0.93); backdrop-filter:blur(20px);
+  border-top:1px solid rgba(0,210,255,0.2);
+  padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap;
+}
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--cyan); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+.toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--cyan); color:#000; padding:11px 26px; border-radius:30px;
+  font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap;
+  transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* MOBILE */
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .affirm-hero{padding:32px 20px;}
+  .summary-strip{
+    position:fixed; bottom:0; left:0; right:0;
+    transform:translateY(100%);
+    transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    padding:16px; gap:16px; flex-wrap:wrap; z-index:200;
+  }
+  .summary-strip.open{transform:translateY(0);}
+  .summary-toggle{display:flex !important;}
+  .main{padding-bottom:80px !important;}
+}
+.summary-toggle{
+  display:none; position:fixed; bottom:16px; right:16px; z-index:201;
+  width:52px; height:52px; border-radius:50%; border:none; cursor:pointer; font-size:20px;
+  background:var(--cyan); color:#000; box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  align-items:center; justify-content:center; transition:transform 0.2s;
+}
+.summary-toggle:active{transform:scale(0.92);}
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--cyan);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 6 · Daily Practice</div>
+  <h1 class="page-title">Speak It<br>Until You<br><span>Become</span> It</h1>
+  <p class="page-sub">Words are not just words — they are instructions to your brain. What you repeat daily becomes your reality. This is your daily practice space. Show up for yourself here, every single day.</p>
+</div>
+
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: TODAY'S WORD -->
+  <div class="step" style="animation-delay:0.05s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Today's Word</div>
+        <div class="step-desc">Your affirmation for today. Read it. Say it out loud. Mean it.</div>
+      </div>
+    </div>
+
+    <div class="affirm-hero" id="heroBox">
+      <div class="affirm-hero-text" id="heroText">Loading your daily word...</div>
+      <div class="affirm-hero-attr" id="heroTheme">Daily Practice</div>
+      <div class="affirm-hero-controls">
+        <button class="btn btn-outline" onclick="heroNew()" style="font-size:13px;padding:10px 22px;">✦ New Word</button>
+        <button class="btn btn-outline" onclick="heroByMood()" style="font-size:13px;padding:10px 22px;">✦ Match My Mood</button>
+        <button class="btn btn-gold" onclick="saveAsDaily()" style="font-size:13px;padding:10px 22px;">★ Save as Today's Word</button>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;" class="card card-cyan">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;">📖 Why Affirmations Work — The Science</div>
+      <div class="grid-2">
+        <p style="font-size:13px;color:#ccc;line-height:1.8;">Affirmations activate the brain's reward system and work through a concept called <strong style="color:#fff;">self-affirmation theory</strong> — when we affirm our values and identity, we reduce the threat response in the brain, making us more open to change and growth. Research shows that people who practise affirmations regularly show decreased activity in the threat-response regions of the brain and increased activity in self-processing and valuation circuits.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--cyan);">Say it out loud.</strong> Sub-vocalization activates more neural pathways than reading silently. Your brain processes spoken words differently — more deeply.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--cyan);">Use "I am" — not "I will."</strong> Present tense creates present identity. "I am worthy" rewires now. "I will be worthy" keeps it in the future.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--cyan);">Repetition is the mechanism.</strong> 21–66 days of consistent repetition begins to create new neural pathways. You are literally rewriting your brain.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: MOOD-MATCHED AFFIRMATIONS -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">How Are You Feeling? Get a Matched Affirmation</div>
+        <div class="step-desc">Tap your current mood and receive an affirmation that speaks directly to where you are right now.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="mood-match-grid" style="margin-bottom:20px;">
+        <div class="mood-match-tile" data-mood="Thriving" onclick="matchMood(this)"><span class="mm-emoji">🌟</span><div class="mm-label">Thriving</div></div>
+        <div class="mood-match-tile" data-mood="Grateful" onclick="matchMood(this)"><span class="mm-emoji">🙏</span><div class="mm-label">Grateful</div></div>
+        <div class="mood-match-tile" data-mood="Motivated" onclick="matchMood(this)"><span class="mm-emoji">🔥</span><div class="mm-label">Motivated</div></div>
+        <div class="mood-match-tile" data-mood="Anxious" onclick="matchMood(this)"><span class="mm-emoji">😟</span><div class="mm-label">Anxious</div></div>
+        <div class="mood-match-tile" data-mood="Angry" onclick="matchMood(this)"><span class="mm-emoji">😤</span><div class="mm-label">Angry</div></div>
+        <div class="mood-match-tile" data-mood="Sad" onclick="matchMood(this)"><span class="mm-emoji">😔</span><div class="mm-label">Sad</div></div>
+        <div class="mood-match-tile" data-mood="Stuck" onclick="matchMood(this)"><span class="mm-emoji">🧱</span><div class="mm-label">Stuck</div></div>
+        <div class="mood-match-tile" data-mood="Healing" onclick="matchMood(this)"><span class="mm-emoji">🌱</span><div class="mm-label">Healing</div></div>
+      </div>
+
+      <div id="moodResult" style="display:none;">
+        <div style="background:rgba(0,210,255,0.06);border:1px solid rgba(0,210,255,0.2);border-radius:14px;padding:28px;text-align:center;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#555;margin-bottom:12px;" id="moodResultLabel">For when you're feeling...</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,3vw,26px);font-weight:700;color:#fff;line-height:1.45;margin-bottom:16px;font-style:italic;" id="moodResultText"></div>
+          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-outline btn-sm" onclick="nextMoodAffirm()">✦ Another</button>
+            <button class="btn btn-gold btn-sm" onclick="saveMoodToDaily()">★ Use as Today's Word</button>
+            <button class="btn btn-outline btn-sm" onclick="addMoodToFavs()">♡ Save to Favourites</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: THEMED LIBRARY -->
+  <div class="step" style="animation-delay:0.15s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Affirmation Library — By Theme</div>
+        <div class="step-desc">Browse by what you need most today. Tap any affirmation to feature it. Star it to save to your favourites.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="theme-tabs" id="themeTabs"></div>
+      <div class="affirm-grid" id="affirmGrid"></div>
+    </div>
+  </div>
+
+  <!-- STEP 4: WRITE YOUR OWN -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">Write Your Own Affirmations</div>
+        <div class="step-desc">The most powerful affirmations are the ones you write yourself. They are specific to your life, your wounds, and your becoming.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-cyan">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;">✍️ Add Your Own</div>
+
+        <div style="margin-bottom:14px;">
+          <label>Your affirmation (start with "I am", "I have", or "I choose")</label>
+          <textarea id="customText" placeholder='e.g. "I am building a life I am proud of — one brave decision at a time."&#10;e.g. "I am not what happened to me. I am what I choose to become."&#10;e.g. "I have everything I need to handle today."' style="min-height:100px;margin-bottom:10px;"></textarea>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label>Category (optional)</label>
+          <select id="customCat">
+            <option value="Personal">Personal</option>
+            <option value="Career">Career</option>
+            <option value="Relationships">Relationships</option>
+            <option value="Health">Health</option>
+            <option value="Finance">Finance</option>
+            <option value="Family">Family</option>
+            <option value="Faith">Faith</option>
+            <option value="Healing">Healing</option>
+          </select>
+        </div>
+
+        <button class="btn btn-cyan" onclick="addCustomAffirm()">+ Add Affirmation</button>
+
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08);">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;color:#555;margin-bottom:12px;">How to Write Powerful Affirmations</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;font-size:13px;color:#bbb;line-height:1.6;"><strong style="color:var(--cyan);">✓ Present tense.</strong> "I am" not "I will be"</div>
+            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;font-size:13px;color:#bbb;line-height:1.6;"><strong style="color:var(--cyan);">✓ Positive framing.</strong> "I am calm" not "I am not anxious"</div>
+            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;font-size:13px;color:#bbb;line-height:1.6;"><strong style="color:var(--cyan);">✓ Specific to you.</strong> Name the exact thing you're working on</div>
+            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;font-size:13px;color:#bbb;line-height:1.6;"><strong style="color:var(--cyan);">✓ Emotionally charged.</strong> If it makes you feel something — keep it</div>
+            <div style="background:rgba(255,255,255,0.03);border-radius:8px;padding:10px;font-size:13px;color:#bbb;line-height:1.6;"><strong style="color:var(--cyan);">✓ Slightly beyond where you are.</strong> A stretch, not a lie</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📚 My Affirmations</div>
+        <div id="customList"></div>
+        <div id="customEmpty" style="color:#444;font-size:13px;font-style:italic;padding:20px 0;text-align:center;">Your personal affirmations will appear here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: MORNING & EVENING RITUAL -->
+  <div class="step" style="animation-delay:0.25s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Morning &amp; Evening Ritual</div>
+        <div class="step-desc">How you start and end your day shapes everything in between. Build a practice that anchors you.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">☀️ Morning Ritual</div>
+        <p style="font-size:12px;color:#555;margin-bottom:16px;line-height:1.6;">Tick each practice as you complete it. Your morning sets the emotional tone for your entire day.</p>
+        <div id="morningRitual"></div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:6px;">🌙 Evening Ritual</div>
+        <p style="font-size:12px;color:#555;margin-bottom:16px;line-height:1.6;">End with intention. How you close your day determines how tomorrow starts.</p>
+        <div id="eveningRitual"></div>
+      </div>
+      <div class="card full card-cyan">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;">🧠 The Power of Ritual — Why Consistency Beats Intensity</div>
+        <div class="grid-2">
+          <p style="font-size:13px;color:#ccc;line-height:1.8;">A 5-minute daily practice done consistently for 90 days creates more change than an intense weekend retreat done once. The brain learns through repetition and pattern. When you do the same thing at the same time every day, it stops requiring conscious effort — it becomes automatic. This is neuroplasticity working for you instead of against you.<br><br>Your ritual doesn't have to be long. It has to be <strong style="color:#fff;">non-negotiable.</strong></p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--cyan);">Morning = direction.</strong> Your first thoughts set your brain's filter for the day. Intentional mornings mean you look for evidence that your affirmations are true — all day.</div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--cyan);">Evening = consolidation.</strong> Sleep is when memories and learning consolidate. What you think about before sleep is what your brain processes overnight.</div>
+            <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--cyan);">The 66-day rule.</strong> Research shows 66 days — not 21 — is the average time to form a habit. Give your practice the time it deserves before deciding it "isn't working."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: STREAK & CONSISTENCY -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Your Practice Streak</div>
+        <div class="step-desc">Every day you show up counts. Track your consistency — celebrate your commitment.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-cyan">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;">📅 Last 30 Days</div>
+        <div class="streak-display" id="streakDisplay"></div>
+        <div style="display:flex;gap:30px;justify-content:center;margin-top:16px;">
+          <div style="text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:var(--cyan);line-height:1;" id="streakCount">0</div>
+            <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;">Current Streak</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#fff;line-height:1;" id="totalDays">0</div>
+            <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;">Total Days</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:var(--gold);line-height:1;" id="bestStreak">0</div>
+            <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;">Best Streak</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">★ Favourited Affirmations</div>
+        <p style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.5;">Your saved affirmations from the library and mood matches. Tap any to feature it as today's word.</p>
+        <div id="favsList"></div>
+        <div id="favsEmpty" style="color:#444;font-size:13px;font-style:italic;padding:20px 0;text-align:center;">Star affirmations from the library to save them here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: DAILY REFLECTION + LOG -->
+  <div class="step" style="animation-delay:0.35s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Daily Reflection</div>
+        <div class="step-desc">Close your practice with words. What are you taking into the rest of your day?</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>🌅 I am grateful for...</label>
+        <textarea id="r_grateful" placeholder="Three things — big or small. The warmth of your bed. A text from a friend. The fact that you woke up." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>⚡ Today I choose to be...</label>
+        <textarea id="r_intention" placeholder='e.g. "Patient with myself and others. Present in the moment. Brave enough to begin."' style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <label>🔮 I am becoming...</label>
+        <textarea id="r_becoming" placeholder='e.g. "Someone who finishes what they start. A person who leads with calm. A woman who does not shrink."' style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <label>📝 Free write — anything on your heart today</label>
+        <textarea id="r_free" placeholder="No filter. No structure. Just what's true for you right now." style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="card card-cyan" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;">✨ Today's Saved Word</div>
+          <div style="background:rgba(0,210,255,0.07);border:1px solid rgba(0,210,255,0.2);border-radius:12px;padding:24px;text-align:center;min-height:80px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <div style="font-size:16px;line-height:1.7;color:#ddd;font-style:italic;" id="savedDailyWord">Not saved yet — tap "Save as Today's Word" above.</div>
+          </div>
+          <p style="font-size:12px;color:#555;line-height:1.5;text-align:center;">Say this out loud 3 times before you close the app. Once more before you sleep.</p>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📅 Practice Journal — Recent Entries</div>
+          <div id="practiceLog" style="margin-bottom:16px;"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-cyan" onclick="saveEntry()">✨ Save Today's Practice</button>
+            <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-cyan" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">✨ Save Today's Practice</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+
+</div>
+
+<!-- MOBILE TOGGLE -->
+<button class="summary-toggle" id="summaryToggle" onclick="toggleSummary()" data-icon="✨">✨</button>
+
+<!-- STICKY SUMMARY -->
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_streak">0</div><div class="summary-key">Day Streak</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_ritual">0%</div><div class="summary-key">Ritual Done</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_favs">0</div><div class="summary-key">Favourites</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_custom">0</div><div class="summary-key">My Affirmations</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_mood">—</div><div class="summary-key">Today's Mood</div></div>
+  <div class="summary-save">
+    <button class="btn btn-green" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session') || '{}');
+if (!session.loggedIn) window.location.href = 'wellness1.html';
+const userEmail = session.email, userName = session.name||'Friend', firstName = userName.split(' ')[0];
+document.getElementById('navName').textContent = firstName;
+document.getElementById('navAvatar').textContent = firstName.charAt(0).toUpperCase();
+document.getElementById('navName').style.opacity = document.getElementById('navAvatar').style.opacity = '1';
+function key(s){ return `wl_${userEmail}_${s}`; }
+
+function updateClock(){
+  const now=new Date(), h=now.getHours();
+  document.getElementById('timeGreeting').textContent =
+    h<12?`Good morning, ${firstName}`:h<17?`Good afternoon, ${firstName}`:`Good evening, ${firstName}`;
+  document.getElementById('clockTime').textContent =
+    String(h).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock,30000);
+
+let currentDate=new Date();
+function dk(d){ return d.toISOString().slice(0,10); }
+function fmt(d){ return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+function shiftDate(n){ currentDate.setDate(currentDate.getDate()+n); renderDate(); loadEntry(); }
+function renderDate(){
+  document.getElementById('dateStr').textContent=fmt(currentDate);
+  const strip=document.getElementById('weekStrip'); strip.innerHTML='';
+  for(let i=-3;i<=3;i++){
+    const d=new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip=document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadEntry(); };
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {
+  dailyWord:'', currentMood:'',
+  morningDone:[], eveningDone:[],
+  r_grateful:'', r_intention:'', r_becoming:'', r_free:'', ts:''
+};
+let customAffirms = [];
+let favAffirms = [];
+let currentMoodIdx = 0;
+let currentTheme = 'Identity';
+
+// ── AFFIRMATION LIBRARY ───────────────────────────────────────────────────────
+const LIBRARY = {
+  'Identity': [
+    'I am enough — not almost enough, not close to enough. Exactly and completely enough.',
+    'I am not defined by my past. I am defined by what I choose to do with it.',
+    'I belong in every room I walk into. I have something valuable to contribute.',
+    'I am worthy of the things I want. Not when I improve. Right now.',
+    'I do not need anyone\'s permission to take up space.',
+    'I am becoming the person I was always meant to be.',
+    'My value is not determined by my productivity or my performance.',
+    'I am the author of my story — not the victim of it.',
+    'I release the need to be perfect. I embrace the power of being real.',
+    'I trust myself. My instincts, my voice, and my direction.',
+  ],
+  'Healing': [
+    'I give myself permission to heal at my own pace — not the pace others expect.',
+    'What broke me also opened me. I choose to grow through what I went through.',
+    'I am healing. That is the bravest thing I have ever done.',
+    'The pain I carry is not a sign of weakness — it is proof I loved deeply.',
+    'I forgive myself for the times I didn\'t know better. I know better now.',
+    'I release what I cannot control. I trust what I cannot yet see.',
+    'My past is not my permanent address. I am moving forward every single day.',
+    'I deserve the same compassion I give to everyone else.',
+    'I am not broken. I am rebuilding — and what I\'m building is stronger.',
+    'Healing is not linear. I celebrate every step forward, however small.',
+  ],
+  'Strength': [
+    'I have survived every difficult day so far. I will survive this one too.',
+    'I am stronger than the fear that tries to hold me back.',
+    'Pressure creates diamonds. I am being made into something extraordinary.',
+    'I do not quit when it gets hard. I get harder when it gets hard.',
+    'I have the courage to try, and the resilience to keep going when I fail.',
+    'Nothing in my path is bigger than the power that is inside me.',
+    'I face my challenges head-on. I do not run from what needs to be confronted.',
+    'Every time I have been knocked down, I have gotten back up. Every single time.',
+    'I am not defined by how many times I fall. I am defined by how many times I rise.',
+    'I am built for this season. Everything I have been through prepared me for right now.',
+  ],
+  'Abundance': [
+    'Money flows to me easily and consistently as I create value in the world.',
+    'I am worthy of financial freedom and I am actively building it.',
+    'There is more than enough for me. Abundance is my birthright.',
+    'I release scarcity thinking. My mind is open to unlimited possibility.',
+    'I attract opportunities, resources, and the right people into my life.',
+    'I am good with money. I save, I grow, and I give generously.',
+    'The wealth I am building will create options for me and for my family.',
+    'I do not have to choose between doing good and doing well.',
+    'Every financial decision I make takes me closer to the life I am building.',
+    'I am not just surviving — I am moving toward thriving.',
+  ],
+  'Career': [
+    'I bring unique value to my work that nobody else can replicate.',
+    'I am worthy of the salary I want. I will ask for it.',
+    'My career is not defined by one role, one company, or one season.',
+    'I continue to grow, learn, and evolve — professionally and personally.',
+    'I am building a reputation for excellence, integrity, and consistency.',
+    'I do not shrink in meetings. My ideas deserve to be heard.',
+    'I belong in leadership. I bring the skills, the vision, and the heart.',
+    'I invest in my own development as seriously as I invest in anything else.',
+    'I am not just employed — I am purposeful. My work has meaning.',
+    'I choose to be the hardest working person in the room — and the wisest.',
+  ],
+  'Relationships': [
+    'I attract and maintain relationships built on respect, honesty, and love.',
+    'I communicate my needs clearly and without apology.',
+    'I set boundaries not because I don\'t love people — but because I do.',
+    'I choose people who choose me back — consistently, not occasionally.',
+    'I deserve a love that is secure, steady, and safe.',
+    'I release relationships that require me to be less than I am.',
+    'I am lovable exactly as I am — not as I hope to be one day.',
+    'I protect my peace. That is not selfishness. That is wisdom.',
+    'The right people are drawn to my authenticity — not my performance.',
+    'I give love freely and I receive it with equal grace.',
+  ],
+  'Family': [
+    'I break cycles that do not serve my family\'s future.',
+    'I parent with presence, not perfection.',
+    'I am allowed to have limits with family and still love them completely.',
+    'I choose what I pass on to the next generation with intention.',
+    'My home is a place of safety, warmth, and honest love.',
+    'I release the weight of being everything to everyone. I am one person.',
+    'I love my family deeply and I protect my own wellbeing with equal care.',
+    'Black tax is real — and I can honour my family while also building my future.',
+    'I communicate with my family with honesty and respect.',
+    'I choose to be the change in my family line that those after me will be grateful for.',
+  ],
+  'Faith': [
+    'I trust the process even when I cannot see the outcome.',
+    'I am held, guided, and never alone — even in the middle of the storm.',
+    'My faith is not dependent on my circumstances. It is my anchor in them.',
+    'What is meant for me will not pass me by.',
+    'I surrender what I cannot control to the One who holds all things.',
+    'I walk by faith, not by what I see in front of me right now.',
+    'Every setback is a setup. God is not done with my story.',
+    'I am protected. I am covered. I am not afraid.',
+    'My peace is not found in having all the answers — it is found in trusting the One who does.',
+    'God works all things together for my good. I hold on to this — especially today.',
+  ],
+  'Anxiety': [
+    'I am safe right now. In this breath. In this moment.',
+    'I cannot control everything — and I release the need to try.',
+    'My anxiety is not my identity. It is a signal, not a sentence.',
+    'I breathe in calm. I breathe out what I cannot carry.',
+    'This feeling will pass. It always does. I can be with it until it does.',
+    'I am not my worst-case scenario. I am stronger than my fears.',
+    'I choose one thing I can do right now. Just one thing.',
+    'My body is safe. My mind is finding its way back to calm.',
+    'I do not have to solve everything today. I only have to handle today.',
+    'I am learning to be gentle with myself — especially on the hard days.',
+  ],
+  'Gratitude': [
+    'I am alive, and that is already a miracle worth acknowledging.',
+    'I find beauty in ordinary moments — they are not ordinary at all.',
+    'I am grateful for the version of me that kept going when it was hard.',
+    'I have been through difficult things — and I have survived every one.',
+    'There are people in this world who would trade anything for what I have.',
+    'Gratitude turns what I have into enough — and enough into more.',
+    'I notice the small gifts: the light, the breath, the people I love.',
+    'I am thankful for the lessons that came disguised as pain.',
+    'I choose to look for evidence that life is working for me.',
+    'The fact that I am still here is the evidence I need that I have not been forgotten.',
+  ],
+};
+
+const MOOD_AFFIRMATIONS = {
+  Thriving:[
+    'I am in alignment. I protect this energy and I keep building.',
+    'This season of flow is the result of every hard day I pushed through.',
+    'I lead from this place of strength — and I bring others with me.',
+  ],
+  Grateful:[
+    'Gratitude is my superpower. The more I acknowledge, the more I receive.',
+    'I am deeply thankful — for where I am, who I have become, and what is still coming.',
+    'Counting my blessings is not naive. It is how I train my brain to find what is good.',
+  ],
+  Motivated:[
+    'This fire inside me is a gift. I protect it, feed it, and act on it.',
+    'I move. I begin. I do not wait to feel ready — I get ready by starting.',
+    'My energy is purposeful. I direct it toward what matters most.',
+  ],
+  Anxious:[
+    'I am safe right now. In this breath. In this body. In this moment.',
+    'Anxiety is a signal — not a sentence. I hear it, and I choose calm.',
+    'I cannot control what I cannot control. I focus only on what I can.',
+    'I breathe in peace. I breathe out what is not mine to carry.',
+    'This feeling will pass. It always passes. I can be with it until it does.',
+  ],
+  Angry:[
+    'My feelings are valid. My response is my choice. I choose wisely.',
+    'I pause before I react. The pause is where my power lives.',
+    'I can be angry and still act with dignity. I choose dignity.',
+    'I channel this energy into clarity, not destruction.',
+    'I protect my peace — even when others threaten it.',
+  ],
+  Sad:[
+    'I allow myself to feel this fully. Grief is love with nowhere to go.',
+    'I am not weak for feeling. I am human — and beautifully so.',
+    'This sadness is temporary. I have been through dark seasons before — and I emerged.',
+    'I do not have to be okay right now. I just have to be here.',
+    'I am held, even when I cannot feel it. I am not alone in this.',
+  ],
+  Stuck:[
+    'Being stuck is temporary. Quitting is the only way it becomes permanent.',
+    'I take one small step today. Just one. That is enough.',
+    'Clarity comes from movement, not from waiting to feel clear.',
+    'I am not behind. I am in the exact position I need to be to learn what this season is teaching me.',
+    'I am not failing. I am gathering data. The next attempt will be wiser.',
+  ],
+  Healing:[
+    'I am healing. That is the bravest thing I do every single day.',
+    'I give myself the same tenderness I would give to someone I love deeply.',
+    'What broke me also cracked me open. Light is getting in.',
+    'I do not rush my healing. I honour the pace my soul needs.',
+    'I am not who I was. I am not yet who I will be. I am becoming.',
+  ],
+};
+
+// ── HERO AFFIRMATION ──────────────────────────────────────────────────────────
+function setHeroText(text, theme){
+  const el=document.getElementById('heroText');
+  el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=text; el.style.opacity=1; },300);
+  document.getElementById('heroTheme').textContent=theme||'Daily Practice';
+}
+function heroNew(){
+  const themes=Object.keys(LIBRARY);
+  const theme=themes[Math.floor(Math.random()*themes.length)];
+  const list=LIBRARY[theme];
+  setHeroText(list[Math.floor(Math.random()*list.length)], theme);
+}
+function heroByMood(){
+  if(!state.currentMood){ heroNew(); return; }
+  const list=MOOD_AFFIRMATIONS[state.currentMood]||MOOD_AFFIRMATIONS.Thriving;
+  setHeroText(list[Math.floor(Math.random()*list.length)], 'For: '+state.currentMood);
+}
+function saveAsDaily(){
+  const txt=document.getElementById('heroText').textContent;
+  state.dailyWord=txt;
+  document.getElementById('savedDailyWord').textContent=txt;
+  showToast('✨ Saved as today\'s word');
+}
+
+// ── MOOD MATCH ────────────────────────────────────────────────────────────────
+let moodAffirmIdx={};
+function matchMood(el){
+  document.querySelectorAll('.mood-match-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const mood=el.dataset.mood; state.currentMood=mood;
+  document.getElementById('s_mood').textContent=mood;
+  moodAffirmIdx[mood]=0;
+  showMoodAffirm(mood);
+}
+function showMoodAffirm(mood){
+  const list=MOOD_AFFIRMATIONS[mood];
+  if(!list) return;
+  const idx=moodAffirmIdx[mood]||0;
+  document.getElementById('moodResultLabel').textContent='For when you\'re feeling '+mood.toLowerCase()+'...';
+  const resultEl=document.getElementById('moodResultText');
+  resultEl.style.opacity=0;
+  setTimeout(()=>{ resultEl.textContent=list[idx]; resultEl.style.opacity=1; },200);
+  document.getElementById('moodResult').style.display='block';
+}
+function nextMoodAffirm(){
+  const mood=state.currentMood; if(!mood) return;
+  const list=MOOD_AFFIRMATIONS[mood];
+  moodAffirmIdx[mood]=((moodAffirmIdx[mood]||0)+1)%list.length;
+  showMoodAffirm(mood);
+}
+function saveMoodToDaily(){
+  const txt=document.getElementById('moodResultText').textContent;
+  state.dailyWord=txt;
+  document.getElementById('heroText').textContent=txt;
+  document.getElementById('savedDailyWord').textContent=txt;
+  document.getElementById('heroTheme').textContent='For: '+state.currentMood;
+  showToast('✨ Set as today\'s word');
+}
+function addMoodToFavs(){
+  const txt=document.getElementById('moodResultText').textContent;
+  addFav(txt,'Mood: '+state.currentMood);
+}
+
+// ── THEME LIBRARY ─────────────────────────────────────────────────────────────
+function renderThemeTabs(){
+  const wrap=document.getElementById('themeTabs');
+  wrap.innerHTML='';
+  Object.keys(LIBRARY).forEach(theme=>{
+    const t=document.createElement('div');
+    t.className='theme-tab'+(theme===currentTheme?' active':'');
+    t.textContent=theme; t.dataset.theme=theme;
+    t.onclick=()=>{ currentTheme=theme; renderThemeTabs(); renderAffirmGrid(); };
+    wrap.appendChild(t);
+  });
+}
+function renderAffirmGrid(){
+  const g=document.getElementById('affirmGrid'); g.innerHTML='';
+  const list=LIBRARY[currentTheme]||[];
+  list.forEach((txt,i)=>{
+    const isFav=favAffirms.some(f=>f.text===txt);
+    const card=document.createElement('div'); card.className='affirm-card'+(isFav?' favourited':'');
+    card.innerHTML=`
+      <div class="affirm-card-text">"${txt}"</div>
+      <div class="affirm-card-footer">
+        <span class="affirm-card-theme">${currentTheme}</span>
+        <button class="affirm-card-fav" onclick="toggleFav(event,'${txt.replace(/'/g,"\\'")}','${currentTheme}')" title="Save to favourites">${isFav?'★':'☆'}</button>
+      </div>
+    `;
+    card.onclick=(e)=>{ if(e.target.classList.contains('affirm-card-fav')) return; setHeroText(txt,currentTheme); window.scrollTo({top:0,behavior:'smooth'}); };
+    g.appendChild(card);
+  });
+}
+function toggleFav(e,txt,theme){
+  e.stopPropagation();
+  const idx=favAffirms.findIndex(f=>f.text===txt);
+  if(idx>-1){ favAffirms.splice(idx,1); showToast('Removed from favourites'); }
+  else { favAffirms.push({text:txt,theme}); showToast('★ Added to favourites'); }
+  saveFavs(); renderAffirmGrid(); renderFavsList();
+  document.getElementById('s_favs').textContent=favAffirms.length;
+}
+function addFav(txt,theme){
+  if(!favAffirms.some(f=>f.text===txt)){
+    favAffirms.push({text:txt,theme}); saveFavs(); renderFavsList();
+    document.getElementById('s_favs').textContent=favAffirms.length;
+    showToast('★ Added to favourites');
+  }
+}
+function saveFavs(){ localStorage.setItem(key('life6_favs'),JSON.stringify(favAffirms)); }
+function loadFavs(){ const r=localStorage.getItem(key('life6_favs')); favAffirms=r?JSON.parse(r):[]; }
+function renderFavsList(){
+  const el=document.getElementById('favsList');
+  const empty=document.getElementById('favsEmpty');
+  if(!favAffirms.length){ el.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none'; el.innerHTML='';
+  favAffirms.forEach((f,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:rgba(245,197,24,0.05);border:1px solid rgba(245,197,24,0.15);border-radius:10px;padding:14px;margin-bottom:8px;cursor:pointer;transition:0.3s;display:flex;gap:10px;align-items:flex-start;';
+    d.innerHTML=`<div style="flex:1;"><div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">${f.theme}</div><div style="font-size:13px;color:#ddd;line-height:1.6;font-style:italic;">"${f.text}"</div></div><button style="background:none;border:none;color:#333;cursor:pointer;font-size:16px;flex-shrink:0;" onclick="removeFav(${i})">×</button>`;
+    d.querySelector('div').onclick=()=>{ setHeroText(f.text,f.theme); window.scrollTo({top:0,behavior:'smooth'}); };
+    el.appendChild(d);
+  });
+}
+function removeFav(i){ favAffirms.splice(i,1); saveFavs(); renderFavsList(); renderAffirmGrid(); document.getElementById('s_favs').textContent=favAffirms.length; }
+
+// ── CUSTOM AFFIRMATIONS ───────────────────────────────────────────────────────
+function addCustomAffirm(){
+  const txt=document.getElementById('customText').value.trim();
+  if(!txt) return;
+  customAffirms.push({ text:txt, cat:document.getElementById('customCat').value, date:new Date().toISOString() });
+  document.getElementById('customText').value='';
+  saveCustom(); renderCustomList();
+  document.getElementById('s_custom').textContent=customAffirms.length;
+  showToast('✦ Affirmation added');
+}
+function renderCustomList(){
+  const el=document.getElementById('customList');
+  const empty=document.getElementById('customEmpty');
+  if(!customAffirms.length){ el.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none'; el.innerHTML='';
+  customAffirms.forEach((a,i)=>{
+    const d=document.createElement('div'); d.className='custom-affirm-item';
+    d.innerHTML=`<div class="ca-text">"${a.text}"<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-top:6px;">${a.cat}</div></div>
+    <div class="ca-actions">
+      <button class="ca-btn" onclick="useCustom(${i})" title="Use as today's word">▶</button>
+      <button class="ca-btn" onclick="deleteCustom(${i})" title="Delete" style="color:#333;">×</button>
+    </div>`;
+    el.appendChild(d);
+  });
+}
+function useCustom(i){ setHeroText(customAffirms[i].text,'My Affirmation'); window.scrollTo({top:0,behavior:'smooth'}); }
+function deleteCustom(i){ customAffirms.splice(i,1); saveCustom(); renderCustomList(); document.getElementById('s_custom').textContent=customAffirms.length; }
+function saveCustom(){ localStorage.setItem(key('life6_custom'),JSON.stringify(customAffirms)); }
+function loadCustom(){ const r=localStorage.getItem(key('life6_custom')); customAffirms=r?JSON.parse(r):[]; }
+
+// ── MORNING / EVENING RITUAL ──────────────────────────────────────────────────
+const MORNING_STEPS = [
+  { title:'Read your daily affirmation', desc:'Speak it out loud — 3 times. Own every word.' },
+  { title:'3 minutes of stillness', desc:'No phone. No news. Just you and your breath before the day begins.' },
+  { title:'Set your intention', desc:'One word or one sentence: what kind of person are you choosing to be today?' },
+  { title:'Write 3 things you\'re grateful for', desc:'Activates the reward centre and orients your brain toward the positive.' },
+  { title:'Move your body for 5 minutes', desc:'Walk, stretch, dance — signal to your nervous system that you\'re alive and capable.' },
+  { title:'Review your top goal for the day', desc:'What\'s the one thing that would make today a win? Focus on that first.' },
+];
+const EVENING_STEPS = [
+  { title:'Reflect on one win from today', desc:'No matter how small. Naming progress builds momentum.' },
+  { title:'Forgive something from today', desc:'The mistake you made. The reaction you regret. Put it down before you sleep.' },
+  { title:'Read your affirmation again', desc:'Let it be the last intentional thought before your brain consolidates overnight.' },
+  { title:'Disconnect from screens 30 minutes before bed', desc:'Blue light disrupts melatonin. Protect your sleep like it\'s money.' },
+  { title:'Write tomorrow\'s most important task', desc:'So your mind can stop holding it. It\'s written down — it won\'t be forgotten.' },
+  { title:'End with one sentence of gratitude', desc:'"Today I am grateful for..." — spoken or written. Close the day intentionally.' },
+];
+function renderRituals(){
+  renderRitualList('morningRitual', MORNING_STEPS, 'morning');
+  renderRitualList('eveningRitual', EVENING_STEPS, 'evening');
+}
+function renderRitualList(elId, steps, type){
+  const wrap=document.getElementById(elId); wrap.innerHTML='';
+  steps.forEach((s,i)=>{
+    const isDone=(state[type+'Done']||[]).includes(i);
+    const d=document.createElement('div'); d.className='ritual-card'+(isDone?' done':'');
+    d.innerHTML=`<div class="ritual-check">${isDone?'✓':''}</div><div class="ritual-body"><div class="ritual-title">${s.title}</div><div class="ritual-desc">${s.desc}</div></div>`;
+    d.onclick=()=>{
+      const arr=state[type+'Done']||[];
+      if(arr.includes(i)) state[type+'Done']=arr.filter(x=>x!==i);
+      else{ arr.push(i); state[type+'Done']=arr; }
+      renderRituals(); updateRitualSummary();
+    };
+    wrap.appendChild(d);
+  });
+}
+function updateRitualSummary(){
+  const total=MORNING_STEPS.length+EVENING_STEPS.length;
+  const done=(state.morningDone||[]).length+(state.eveningDone||[]).length;
+  document.getElementById('s_ritual').textContent=Math.round(done/total*100)+'%';
+}
+
+// ── STREAK ────────────────────────────────────────────────────────────────────
+function buildStreak(){
+  const raw=localStorage.getItem(key('life6_streak_data'));
+  const data=raw?JSON.parse(raw):{};
+  const today=dk(new Date());
+  const el=document.getElementById('streakDisplay'); el.innerHTML='';
+  let streak=0, best=0, run=0, total=0;
+  const days=[];
+  for(let i=29;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i); days.push(dk(d));
+  }
+  days.forEach((d,idx)=>{
+    const done=!!data[d];
+    if(done) total++;
+    const chip=document.createElement('div');
+    chip.className='streak-dot'+(done?' done':d===today?' today':' missed');
+    chip.textContent=new Date(d+'T12:00:00').getDate();
+    chip.title=d; el.appendChild(chip);
+  });
+  // Calculate current streak (from today backwards)
+  let cur=0;
+  for(let i=0;i<days.length;i++){
+    const d=days[days.length-1-i];
+    if(data[d]){ cur++; } else break;
+  }
+  // Best streak
+  let b=0, br=0;
+  days.forEach(d=>{ if(data[d]){ br++; b=Math.max(b,br); } else br=0; });
+  document.getElementById('streakCount').textContent=cur;
+  document.getElementById('totalDays').textContent=total;
+  document.getElementById('bestStreak').textContent=b;
+  document.getElementById('s_streak').textContent=cur;
+}
+function markTodayPracticed(){
+  const raw=localStorage.getItem(key('life6_streak_data'));
+  const data=raw?JSON.parse(raw):{};
+  data[dk(new Date())]=true;
+  localStorage.setItem(key('life6_streak_data'),JSON.stringify(data));
+  buildStreak();
+}
+
+// ── PRACTICE LOG ─────────────────────────────────────────────────────────────
+let practiceLog=[];
+function loadPracticeLog(){ const r=localStorage.getItem(key('life6_log')); practiceLog=r?JSON.parse(r):[]; renderPracticeLog(); }
+function renderPracticeLog(){
+  const el=document.getElementById('practiceLog');
+  if(!practiceLog.length){ el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to begin your practice journal.</p>'; return; }
+  el.innerHTML='';
+  practiceLog.slice(0,4).forEach((e,i)=>{
+    const d=document.createElement('div'); d.className='log-item';
+    d.innerHTML=`<div class="li-left">
+      <div class="li-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div>
+      <div class="li-title">${e.mood||'Practice'} · ${e.streak||0} day streak</div>
+      ${e.word?`<div class="li-note">"${e.word.slice(0,100)}${e.word.length>100?'…':''}"</div>`:''}
+    </div>
+    <button class="li-del" onclick="delLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(practiceLog.length>4){ const m=document.createElement('p'); m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;'; m.textContent=`+ ${practiceLog.length-4} earlier entries`; el.appendChild(m); }
+}
+function delLog(i){ practiceLog.splice(i,1); localStorage.setItem(key('life6_log'),JSON.stringify(practiceLog)); renderPracticeLog(); }
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry(){
+  state.r_grateful  = document.getElementById('r_grateful').value;
+  state.r_intention = document.getElementById('r_intention').value;
+  state.r_becoming  = document.getElementById('r_becoming').value;
+  state.r_free      = document.getElementById('r_free').value;
+  state.ts          = new Date().toISOString();
+
+  localStorage.setItem(key('life6_'+dk(currentDate)), JSON.stringify(state));
+  markTodayPracticed();
+
+  const raw=localStorage.getItem(key('life6_streak_data'));
+  const data=raw?JSON.parse(raw):{};
+  let streak=0;
+  for(let i=0;i<30;i++){
+    const d=new Date(); d.setDate(d.getDate()-i);
+    if(data[dk(d)]) streak++; else break;
+  }
+
+  practiceLog.unshift({ mood:state.currentMood||'—', word:state.dailyWord, streak, date:state.ts });
+  localStorage.setItem(key('life6_log'),JSON.stringify(practiceLog));
+  renderPracticeLog();
+
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{
+    studentName:userName, studentEmail:userEmail,
+    courseName:`Life 6 Daily Practice — ${fmt(currentDate)}`,
+    coursePrice:'N/A', courseDuration:'Wellness Portal', sessionType:'Online', paymentMethod:'Free',
+    additionalInfo:`Mood: ${state.currentMood||'—'}\nDaily Word: ${state.dailyWord||'—'}\nStreak: ${streak} days\nFavourites: ${favAffirms.length}\nGratitude: ${state.r_grateful.slice(0,200)||'—'}\nIntention: ${state.r_intention.slice(0,150)||'—'}\nBecoming: ${state.r_becoming.slice(0,150)||'—'}`,
+    dashboardUrl:window.location.href
+  }).catch(()=>{});
+
+  showToast('✨ Practice saved — '+streak+' day streak!');
+}
+
+function loadEntry(){
+  const raw=localStorage.getItem(key('life6_'+dk(currentDate)));
+  if(!raw) return;
+  const s=JSON.parse(raw);
+
+  document.getElementById('r_grateful').value  = s.r_grateful||'';
+  document.getElementById('r_intention').value = s.r_intention||'';
+  document.getElementById('r_becoming').value  = s.r_becoming||'';
+  document.getElementById('r_free').value      = s.r_free||'';
+
+  if(s.dailyWord){ state.dailyWord=s.dailyWord; document.getElementById('savedDailyWord').textContent=s.dailyWord; setHeroText(s.dailyWord,'Saved'); }
+  if(s.currentMood){ state.currentMood=s.currentMood; document.getElementById('s_mood').textContent=s.currentMood; document.querySelectorAll('.mood-match-tile').forEach(t=>{ if(t.dataset.mood===s.currentMood) t.classList.add('active'); }); }
+
+  state.morningDone=s.morningDone||[]; state.eveningDone=s.eveningDone||[];
+  renderRituals(); updateRitualSummary();
+  state={...state,...s};
+  showToast('Entry loaded');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+function toggleSummary(){
+  const strip=document.getElementById('summaryStrip'), btn=document.getElementById('summaryToggle');
+  strip.classList.toggle('open');
+  btn.textContent=strip.classList.contains('open')?'✕':btn.dataset.icon;
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+loadFavs();
+loadCustom();
+renderThemeTabs();
+renderAffirmGrid();
+renderRituals();
+renderFavsList();
+renderCustomList();
+loadPracticeLog();
+buildStreak();
+heroNew();
+loadEntry();
+document.getElementById('s_favs').textContent=favAffirms.length;
+document.getElementById('s_custom').textContent=customAffirms.length;
+</script>
+</body>
+</html>
