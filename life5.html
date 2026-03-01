@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 5 — Goals & Growth | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #39ff14;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background: radial-gradient(ellipse at 20% 30%, rgba(57,255,20,0.05) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 70%, rgba(168,85,247,0.05) 0%, transparent 55%), #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--green); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass {
+  padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border);
+  color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;
+  transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-glass:hover { border-color:var(--green); color:var(--green); }
+.user-chip {
+  display:flex; align-items:center; gap:8px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:6px 14px; border-radius:30px; font-size:13px;
+}
+.avatar {
+  width:26px; height:26px; border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--blue));
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:900; color:#000;
+}
+
+/* PAGE HEADER */
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--green); margin-bottom:8px; }
+.page-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,8vw,5.5rem); font-weight:900;
+  text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px;
+}
+.page-title span { color:var(--green); }
+.page-sub { font-size:15px; color:#bbb; max-width:560px; line-height:1.7; }
+
+.time-greeting {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px;
+}
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* DATE NAV */
+.date-nav {
+  display:flex; align-items:center; gap:14px; margin:0 auto 40px;
+  max-width:1100px; padding:0 40px; flex-wrap:wrap;
+}
+.date-btn {
+  background:var(--glass); border:1px solid var(--glass-border); color:#fff;
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s;
+}
+.date-btn:hover { border-color:var(--green); color:var(--green); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--green); border-color:var(--green); color:#000; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+.wday.active .wday-d { opacity:1; }
+
+/* MAIN */
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num {
+  font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--green); background:rgba(57,255,20,0.1); border:1px solid rgba(57,255,20,0.35);
+  padding:4px 12px; border-radius:20px; white-space:nowrap;
+}
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+/* CARD */
+.card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:28px; backdrop-filter:blur(12px);
+  position:relative; overflow:hidden; transition:border-color 0.3s;
+}
+.card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent);
+}
+.card:hover { border-color:rgba(57,255,20,0.15); }
+.card-green  { border-color:rgba(57,255,20,0.25);   background:rgba(57,255,20,0.04); }
+.card-purple { border-color:rgba(168,85,247,0.25);  background:rgba(168,85,247,0.04); }
+.card-gold   { border-color:rgba(245,197,24,0.25);  background:rgba(245,197,24,0.04); }
+.card-blue   { border-color:rgba(0,210,255,0.25);   background:rgba(0,210,255,0.04); }
+.card-red    { border-color:rgba(255,75,43,0.2);    background:rgba(255,75,43,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* GROWTH STATUS TILES */
+.status-tiles { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.status-tile {
+  flex:1; min-width:120px; padding:16px 12px; border-radius:12px; text-align:center;
+  background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s;
+}
+.status-tile:hover,.status-tile.active { transform:translateY(-3px); }
+.status-tile .st-emoji { font-size:26px; display:block; margin-bottom:8px; }
+.status-tile .st-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; text-transform:uppercase; letter-spacing:0.5px; }
+.status-tile .st-desc { font-size:10px; color:#666; margin-top:3px; }
+.status-tile[data-s="Locked In"]:hover,.status-tile[data-s="Locked In"].active{border-color:var(--green);background:rgba(57,255,20,0.08);color:var(--green);}
+.status-tile[data-s="Building"]:hover,.status-tile[data-s="Building"].active{border-color:var(--blue);background:rgba(0,210,255,0.08);color:var(--blue);}
+.status-tile[data-s="Figuring It Out"]:hover,.status-tile[data-s="Figuring It Out"].active{border-color:var(--gold);background:rgba(245,197,24,0.08);color:var(--gold);}
+.status-tile[data-s="Stuck"]:hover,.status-tile[data-s="Stuck"].active{border-color:var(--orange);background:rgba(255,140,0,0.08);color:var(--orange);}
+.status-tile[data-s="Starting Over"]:hover,.status-tile[data-s="Starting Over"].active{border-color:var(--purple);background:rgba(168,85,247,0.08);color:var(--purple);}
+.status-tile[data-s="Resting"]:hover,.status-tile[data-s="Resting"].active{border-color:#aaa;background:rgba(255,255,255,0.06);color:#aaa;}
+
+/* TAG GRID */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag {
+  padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700;
+  background:var(--glass); border:1px solid var(--glass-border);
+  cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px;
+}
+.ttag:hover { border-color:rgba(57,255,20,0.5); color:var(--green); }
+.ttag.active { border-color:rgba(57,255,20,0.6); background:rgba(57,255,20,0.1); color:var(--green); }
+
+/* GOAL CARDS */
+.goal-list { display:flex; flex-direction:column; gap:12px; }
+.goal-item {
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-border);
+  border-radius:12px; padding:18px; transition:0.3s;
+}
+.goal-item:hover { border-color:rgba(57,255,20,0.2); }
+.goal-item.done { border-color:rgba(57,255,20,0.35); background:rgba(57,255,20,0.04); }
+.goal-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.goal-check {
+  width:24px; height:24px; border-radius:50%; border:2px solid #333;
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:0.2s; font-size:13px; font-weight:900;
+}
+.goal-item.done .goal-check { background:var(--green); border-color:var(--green); color:#000; }
+.goal-title-wrap { flex:1; }
+.goal-title { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:900; text-transform:uppercase; color:#fff; }
+.goal-item.done .goal-title { color:#555; text-decoration:line-through; }
+.goal-cat { font-size:10px; color:#555; text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+.goal-del { background:none; border:none; color:#333; cursor:pointer; font-size:16px; transition:0.2s; padding:4px; }
+.goal-del:hover { color:var(--red); }
+.goal-progress { }
+.goal-progress-label { display:flex; justify-content:space-between; font-size:11px; color:#666; margin-bottom:6px; }
+.goal-bar-wrap { height:6px; border-radius:6px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:8px; }
+.goal-bar-fill { height:100%; border-radius:6px; background:var(--green); transition:width 0.4s; }
+.goal-note { font-size:12px; color:#777; line-height:1.5; }
+.add-goal-form {
+  background:rgba(57,255,20,0.04); border:1px dashed rgba(57,255,20,0.2);
+  border-radius:12px; padding:20px;
+}
+
+/* EXPANDABLE PANELS */
+.panel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.panel-card {
+  background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px;
+  cursor:pointer; transition:0.3s;
+}
+.panel-card:hover { border-color:rgba(57,255,20,0.3); transform:translateY(-3px); }
+.panel-card.open { border-color:rgba(57,255,20,0.5); background:rgba(57,255,20,0.04); }
+.pc-icon { font-size:28px; margin-bottom:10px; display:block; }
+.pc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; margin-bottom:4px; }
+.pc-desc { font-size:12px; color:#666; line-height:1.5; }
+.pc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.panel-card.open .pc-expand { display:block; }
+
+/* HABIT TRACKER */
+.habit-row {
+  display:flex; align-items:center; gap:12px; padding:14px;
+  background:rgba(255,255,255,0.02); border:1px solid var(--glass-border);
+  border-radius:10px; margin-bottom:10px; transition:0.3s;
+}
+.habit-row:hover { border-color:rgba(57,255,20,0.2); }
+.habit-emoji { font-size:22px; flex-shrink:0; width:36px; text-align:center; }
+.habit-info { flex:1; min-width:0; }
+.habit-name { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; color:#fff; }
+.habit-streak { font-size:11px; color:#555; margin-top:2px; }
+.habit-days { display:flex; gap:5px; }
+.habit-day {
+  width:32px; height:32px; border-radius:6px; border:1px solid #222;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px; font-weight:700; color:#444; cursor:pointer; transition:0.2s;
+  flex-shrink:0;
+}
+.habit-day.done { background:var(--green); border-color:var(--green); color:#000; }
+.habit-day.today { border-color:rgba(57,255,20,0.4); color:#888; }
+.habit-del { background:none; border:none; color:#222; cursor:pointer; font-size:14px; transition:0.2s; }
+.habit-del:hover { color:var(--red); }
+
+/* WINS/LOSSES */
+.win-item {
+  display:flex; gap:12px; align-items:flex-start; padding:14px;
+  border-radius:10px; margin-bottom:10px; transition:0.3s;
+}
+.win-item.win { background:rgba(57,255,20,0.05); border:1px solid rgba(57,255,20,0.2); }
+.win-item.loss { background:rgba(255,75,43,0.05); border:1px solid rgba(255,75,43,0.15); }
+.win-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+.win-body { flex:1; }
+.win-title { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; margin-bottom:3px; }
+.win-item.win .win-title { color:var(--green); }
+.win-item.loss .win-title { color:var(--red); }
+.win-text { font-size:13px; color:#888; line-height:1.5; }
+.win-del { background:none; border:none; color:#222; cursor:pointer; font-size:14px; margin-top:2px; transition:0.2s; }
+.win-del:hover { color:var(--red); }
+
+/* PROGRESS SLIDERS */
+input[type=range] {
+  width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer;
+  background:linear-gradient(to right,rgba(255,255,255,0.06),var(--green));
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff;
+  cursor:pointer; box-shadow:0 0 10px rgba(57,255,20,0.5); border:2px solid var(--green);
+}
+.bar-wrap { height:10px; border-radius:10px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:4px; }
+.bar-fill { height:100%; border-radius:10px; transition:width 0.4s; }
+
+/* FORMS */
+textarea {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:14px; font-size:14px;
+  font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6;
+}
+textarea:focus { outline:none; border-color:var(--green); background:rgba(57,255,20,0.03); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+input[type=text], input[type=number] {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:12px 14px; font-size:14px;
+  font-family:'Barlow',sans-serif; transition:0.3s; outline:none;
+}
+input[type=text]:focus, input[type=number]:focus { border-color:var(--green); background:rgba(57,255,20,0.03); }
+input[type=text]::placeholder, input[type=number]::placeholder { color:#555; }
+select {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:12px 14px; font-size:14px;
+  font-family:'Barlow',sans-serif; transition:0.3s; outline:none;
+}
+select:focus { border-color:var(--green); }
+select option { background:#111; color:#fff; }
+
+/* AFFIRMATION */
+.affirm-box {
+  background:rgba(57,255,20,0.05); border:1px solid rgba(57,255,20,0.2);
+  border-radius:12px; padding:24px; text-align:center; min-height:90px;
+  display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+}
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* CHECK ITEM */
+.check-item {
+  display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px;
+  cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px;
+}
+.check-item:hover { border-color:rgba(57,255,20,0.3); background:rgba(57,255,20,0.04); }
+.check-item.checked { border-color:rgba(57,255,20,0.4); background:rgba(57,255,20,0.07); }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.check-item.checked .check-box { background:var(--green); border-color:var(--green); color:#000; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#666; text-decoration:line-through; }
+
+/* BUTTONS */
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-green { background:var(--green); color:#000; }
+.btn-green:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--green); color:var(--green); }
+.btn-purple { background:var(--purple); color:#fff; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-sm { padding:8px 16px; font-size:13px; }
+
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+/* LOG */
+.log-item {
+  display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
+  padding:14px; border-radius:10px; margin-bottom:10px;
+  background:rgba(57,255,20,0.03); border:1px solid rgba(57,255,20,0.12); transition:0.3s;
+}
+.log-item:hover { border-color:rgba(57,255,20,0.25); }
+.li-left { flex:1; }
+.li-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.li-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--green); }
+.li-note { font-size:13px; color:#777; margin-top:4px; line-height:1.5; }
+.li-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; }
+.li-del:hover { color:var(--red); }
+
+/* STICKY SUMMARY */
+.summary-strip {
+  position:sticky; bottom:0; z-index:50;
+  background:rgba(0,0,0,0.93); backdrop-filter:blur(20px);
+  border-top:1px solid rgba(57,255,20,0.2);
+  padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap;
+}
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--green); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+.toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--green); color:#000; padding:11px 26px; border-radius:30px;
+  font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap;
+  transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* MOBILE */
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .habit-days{flex-wrap:wrap;}
+  .summary-strip{
+    position:fixed; bottom:0; left:0; right:0;
+    transform:translateY(100%);
+    transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    padding:16px; gap:16px; flex-wrap:wrap; z-index:200;
+  }
+  .summary-strip.open{transform:translateY(0);}
+  .summary-toggle{display:flex !important;}
+  .main{padding-bottom:80px !important;}
+}
+.summary-toggle{
+  display:none;
+  position:fixed; bottom:16px; right:16px; z-index:201;
+  width:52px; height:52px; border-radius:50%;
+  border:none; cursor:pointer; font-size:20px;
+  background:var(--green); color:#000;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  align-items:center; justify-content:center;
+  transition:transform 0.2s;
+}
+.summary-toggle:active{transform:scale(0.92);}
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--green);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 5 · Goals &amp; Growth</div>
+  <h1 class="page-title">Your<br><span>Next</span><br>Level</h1>
+  <p class="page-sub">Growth is not an accident. It's a daily decision — made in the small moments, the boring work, and the quiet discipline that nobody sees. This space is where you track it, honour it, and keep going.</p>
+</div>
+
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: GROWTH STATUS -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Where Are You in Your Growth Right Now?</div>
+        <div class="step-desc">Your honest growth status today. Not where you want to be — where you actually are.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="status-tiles">
+        <div class="status-tile" data-s="Locked In" onclick="selectStatus(this)">
+          <span class="st-emoji">🔒</span>
+          <div class="st-label">Locked In</div>
+          <div class="st-desc">Focused, disciplined, moving</div>
+        </div>
+        <div class="status-tile" data-s="Building" onclick="selectStatus(this)">
+          <span class="st-emoji">🏗️</span>
+          <div class="st-label">Building</div>
+          <div class="st-desc">Laying foundations, steady</div>
+        </div>
+        <div class="status-tile" data-s="Figuring It Out" onclick="selectStatus(this)">
+          <span class="st-emoji">🧭</span>
+          <div class="st-label">Figuring It Out</div>
+          <div class="st-desc">Unclear direction, exploring</div>
+        </div>
+        <div class="status-tile" data-s="Stuck" onclick="selectStatus(this)">
+          <span class="st-emoji">🧱</span>
+          <div class="st-label">Stuck</div>
+          <div class="st-desc">Blocked, spinning, frustrated</div>
+        </div>
+        <div class="status-tile" data-s="Starting Over" onclick="selectStatus(this)">
+          <span class="st-emoji">🌱</span>
+          <div class="st-label">Starting Over</div>
+          <div class="st-desc">Reset, rebuilding from scratch</div>
+        </div>
+        <div class="status-tile" data-s="Resting" onclick="selectStatus(this)">
+          <span class="st-emoji">🌙</span>
+          <div class="st-label">Resting</div>
+          <div class="st-desc">Recovering, recharging</div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>What's really going on with your goals right now?</label>
+          <textarea id="statusNote" placeholder="e.g. I've been consistent with the gym but I've completely let my side business slide. I feel like I'm doing everything at 60% instead of one thing at 100%..." style="min-height:100px;"></textarea>
+        </div>
+        <div>
+          <label>🏷️ What areas of growth are active for you right now?</label>
+          <div class="tag-grid" id="growthTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: VISION -->
+  <div class="step" style="animation-delay:0.15s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">Your Vision — Where Are You Going?</div>
+        <div class="step-desc">Before tactics, you need a direction. Goals without a vision are just a to-do list.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-green">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:16px;">🔮 The 5-Year Vision</div>
+        <label>Describe your life in 5 years if everything goes right. Be specific. Where are you living? What are you doing? Who is around you? What does your average Tuesday look like?</label>
+        <textarea id="vision5yr" placeholder="e.g. I own my first property. I've built a team in my business and it runs without me being present every day. I wake up without an alarm. My kids see me present and not stressed. I've paid off my student debt and I have 6 months of savings..." style="min-height:140px;margin-bottom:14px;"></textarea>
+
+        <label>What is the ONE thing — if you achieved it in the next 12 months — that would make everything else easier or unnecessary?</label>
+        <textarea id="visionOneThng" placeholder="e.g. Getting my first 10 paying clients. Finishing my qualification. Leaving my job and going full-time in my business. Buying my first car without a loan..." style="min-height:90px;"></textarea>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:16px;">🗺️ The Roadmap</div>
+
+        <label>Where are you in 90 days if you stay consistent?</label>
+        <textarea id="vision90d" placeholder="e.g. I've completed 3 modules of my course. I've saved R5,000. I'm working out 4x a week consistently. I've had at least 5 real sales conversations..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>What is the biggest obstacle between you and your goals right now?</label>
+        <textarea id="visionObstacle" placeholder="e.g. Time — I work long hours and by the time I get home I have nothing left. Fear — I keep almost starting but not committing. Money — I can't afford the tools I need yet..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>What does the version of you who achieves this look like every day?</label>
+        <textarea id="visionIdentity" placeholder="e.g. She wakes up early. She doesn't wait to feel motivated. She protects her time like it's money. She finishes what she starts. She says no to things that don't move her forward..." style="min-height:80px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: GOAL TRACKER -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Active Goals</div>
+        <div class="step-desc">Set it. Track it. Move it forward every single day.</div>
+      </div>
+    </div>
+    <div class="card">
+      <!-- ADD GOAL FORM -->
+      <div class="add-goal-form" style="margin-bottom:24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:14px;">+ Add a Goal</div>
+        <div class="grid-3" style="gap:12px;margin-bottom:12px;">
+          <div>
+            <label>Goal Title</label>
+            <input type="text" id="newGoalTitle" placeholder="e.g. Launch my website">
+          </div>
+          <div>
+            <label>Category</label>
+            <select id="newGoalCat">
+              <option value="">— Category —</option>
+              <option>Career</option>
+              <option>Business</option>
+              <option>Finance</option>
+              <option>Health & Fitness</option>
+              <option>Education</option>
+              <option>Relationships</option>
+              <option>Spiritual</option>
+              <option>Creative</option>
+              <option>Personal Development</option>
+              <option>Family</option>
+            </select>
+          </div>
+          <div>
+            <label>Deadline</label>
+            <input type="text" id="newGoalDeadline" placeholder="e.g. End of April">
+          </div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label>Why does this goal matter? (your WHY)</label>
+          <input type="text" id="newGoalWhy" placeholder="e.g. Because financial freedom means my kids never stress about school fees the way I did">
+        </div>
+        <button class="btn btn-green btn-sm" onclick="addGoal()">+ Add Goal</button>
+      </div>
+
+      <!-- GOAL LIST -->
+      <div id="goalList" class="goal-list"></div>
+      <div id="goalEmpty" style="text-align:center;padding:30px;color:#444;font-style:italic;font-size:14px;display:none;">No goals added yet. Add your first goal above.</div>
+    </div>
+  </div>
+
+  <!-- STEP 4: HABIT TRACKER -->
+  <div class="step" style="animation-delay:0.25s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">Habit Tracker — The Daily Non-Negotiables</div>
+        <div class="step-desc">You don't rise to your goals. You fall to your systems. Habits are the architecture of your future self.</div>
+      </div>
+    </div>
+    <div class="card">
+      <!-- ADD HABIT -->
+      <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <label>Habit name</label>
+          <input type="text" id="newHabitName" placeholder="e.g. Read 30 minutes">
+        </div>
+        <div style="width:80px;">
+          <label>Emoji</label>
+          <input type="text" id="newHabitEmoji" placeholder="📚" maxlength="2" style="text-align:center;font-size:20px;">
+        </div>
+        <div style="display:flex;align-items:flex-end;">
+          <button class="btn btn-green btn-sm" onclick="addHabit()">+ Add Habit</button>
+        </div>
+      </div>
+
+      <div id="habitList"></div>
+      <div id="habitEmpty" style="text-align:center;padding:20px;color:#444;font-style:italic;font-size:14px;">No habits added yet. Add your first habit above.</div>
+
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:#555;margin-bottom:12px;">💡 Habit Science — What Actually Works</div>
+        <div class="panel-grid" id="habitSciencePanels"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: WINS & LOSSES -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Wins &amp; Lessons This Week</div>
+        <div class="step-desc">Celebrate what went right. Learn from what didn't. Both are growth data.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-green">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:14px;">🏆 Wins This Week</div>
+        <p style="font-size:12px;color:#666;margin-bottom:14px;line-height:1.6;">List every win — no matter how small. Consistency is a win. Showing up when you didn't feel like it is a win. Growth is a win.</p>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <input type="text" id="newWinText" placeholder="e.g. I went to gym 4 days this week" style="flex:1;">
+          <button class="btn btn-green btn-sm" onclick="addWin()">Add</button>
+        </div>
+        <div id="winList"></div>
+      </div>
+      <div class="card card-red">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">📚 Lessons This Week</div>
+        <p style="font-size:12px;color:#666;margin-bottom:14px;line-height:1.6;">Losses aren't failures — they're feedback. What didn't work, what you'd do differently, what you learned.</p>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <input type="text" id="newLossText" placeholder="e.g. I let a bad mood derail my whole day" style="flex:1;">
+          <button class="btn btn-red btn-sm" onclick="addLoss()">Add</button>
+        </div>
+        <div id="lossList"></div>
+      </div>
+      <div class="card full">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📊 Weekly Score</div>
+        <div class="grid-3" id="weeklyScoreGrid" style="margin-bottom:20px;"></div>
+        <label>What's the most important thing you're taking forward from this week?</label>
+        <textarea id="weeklyTakeaway" placeholder="e.g. I need to plan my week on Sunday evenings. When I do that, the whole week goes better. Without a plan I just react..." style="min-height:80px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: MINDSET & GROWTH AREAS -->
+  <div class="step" style="animation-delay:0.35s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Mindset &amp; Growth Areas</div>
+        <div class="step-desc">Your outer results are a lagging indicator of your inner game. Rate yourself and identify where to focus.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:6px;">📐 Life Balance Wheel</div>
+        <p style="font-size:12px;color:#555;margin-bottom:16px;line-height:1.6;">Rate each area of your life 1–10. Where are you thriving? Where are you neglecting?</p>
+        <div id="wheelSliders"></div>
+      </div>
+      <div class="card card-purple">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🧠 Mindset Blockers</div>
+        <p style="font-size:12px;color:#666;margin-bottom:14px;line-height:1.6;">Tick any mindset patterns that are holding you back right now:</p>
+        <div id="mindsetBlockers"></div>
+        <div style="margin-top:16px;border-top:1px solid rgba(255,255,255,0.07);padding-top:14px;">
+          <label>Which blocker costs you the most? What would change if you addressed it?</label>
+          <textarea id="mindsetReflect" placeholder="e.g. Perfectionism. I spend so long making things perfect that I never launch. One 'done' beats a thousand 'perfect'. I know this. I don't live it yet..." style="min-height:80px;"></textarea>
+        </div>
+      </div>
+      <div class="card full">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">🚀 Growth Principles — Tap to Expand</div>
+        <div class="panel-grid" id="growthPrinciples"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: REFLECT + AFFIRM + LOG -->
+  <div class="step" style="animation-delay:0.4s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Reflect, Affirm &amp; Commit</div>
+        <div class="step-desc">Close with intention. Tomorrow is built today.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>⚡ What did you do today that your future self will thank you for?</label>
+        <textarea id="r_future" placeholder="e.g. I sent the email I'd been putting off for two weeks. I turned off Netflix at 9pm and worked on my course for an hour. I said no to something that would have drained me..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>🎯 My most important task for tomorrow</label>
+        <textarea id="r_tomorrow" placeholder="e.g. Finish the first draft of the proposal. Send 3 follow-up messages. Complete module 4 of the course. Go to gym regardless of how I feel..." style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <label>🔥 One thing I'm committed to not quitting, no matter what</label>
+        <textarea id="r_nodrop" placeholder="e.g. Building this business. Getting healthy. Learning this skill. Becoming financially free. Being the parent my child deserves..." style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <div style="margin-top:4px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:10px;">My Weekly Commitments</div>
+          <div id="commitChecklist"></div>
+        </div>
+      </div>
+
+      <div class="card card-green" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:14px;">⚡ Growth Affirmation</div>
+          <div class="affirm-box">
+            <div class="affirm-text" id="affirmText"></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="affirmByStatus()" style="flex:1;font-size:13px;padding:9px;">✦ Match Status</button>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:10px;">📊 Today's Growth Score</div>
+          <div id="todayScore" style="font-family:'Barlow Condensed',sans-serif;font-size:64px;font-weight:900;color:var(--green);text-align:center;line-height:1;">—</div>
+          <div style="text-align:center;font-size:12px;color:#555;margin-top:4px;">Habits done + goals progressed + wins logged</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:16px;">📅 Growth Journal — Recent Entries</div>
+        <div id="growthLog" style="margin-bottom:16px;"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-green" onclick="saveEntry()">⚡ Save Today's Entry</button>
+          <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-green" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">⚡ Save Today's Entry</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+
+</div>
+
+<button class="summary-toggle" id="summaryToggle" onclick="toggleSummary()" data-icon="⚡">⚡</button>
+
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_status">—</div><div class="summary-key">Growth Status</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_goals">0</div><div class="summary-key">Active Goals</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_habits">0</div><div class="summary-key">Habits Today</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_wins">0</div><div class="summary-key">Wins Logged</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_wheel">—</div><div class="summary-key">Avg Life Score</div></div>
+  <div class="summary-save">
+    <button class="btn btn-green" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session') || '{}');
+if (!session.loggedIn) window.location.href = 'wellness1.html';
+const userEmail = session.email, userName = session.name || 'Friend', firstName = userName.split(' ')[0];
+document.getElementById('navName').textContent = firstName;
+document.getElementById('navAvatar').textContent = firstName.charAt(0).toUpperCase();
+document.getElementById('navName').style.opacity = document.getElementById('navAvatar').style.opacity = '1';
+function key(s) { return `wl_${userEmail}_${s}`; }
+
+function updateClock() {
+  const h = new Date().getHours();
+  document.getElementById('timeGreeting').textContent =
+    h < 12 ? `Good morning, ${firstName}` : h < 17 ? `Good afternoon, ${firstName}` : `Good evening, ${firstName}`;
+  const now = new Date();
+  document.getElementById('clockTime').textContent =
+    String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock, 30000);
+
+let currentDate = new Date();
+function dk(d) { return d.toISOString().slice(0,10); }
+function fmt(d) { return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+function shiftDate(n) { currentDate.setDate(currentDate.getDate()+n); renderDate(); loadEntry(); }
+function renderDate() {
+  document.getElementById('dateStr').textContent = fmt(currentDate);
+  const strip = document.getElementById('weekStrip'); strip.innerHTML = '';
+  for (let i=-3;i<=3;i++) {
+    const d = new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip = document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadEntry(); };
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let goals = [], habits = [], wins = [], losses = [];
+let state = {
+  growthStatus:'', statusNote:'', growthTags:[],
+  vision5yr:'', visionOneThng:'', vision90d:'', visionObstacle:'', visionIdentity:'',
+  wheelRatings:{}, mindsetBlockers:[], commitChecked:[],
+  mindsetReflect:'', weeklyTakeaway:'',
+  r_future:'', r_tomorrow:'', r_nodrop:'', ts:''
+};
+
+// ── STATUS ────────────────────────────────────────────────────────────────────
+function selectStatus(el) {
+  document.querySelectorAll('.status-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); state.growthStatus = el.dataset.s;
+  document.getElementById('s_status').textContent = el.dataset.s.split(' ')[0];
+}
+
+// ── GROWTH TAGS ───────────────────────────────────────────────────────────────
+const GROWTH_TAGS = [
+  'Career growth','Business building','Financial freedom','Health & fitness',
+  'Education / studying','Side hustle','Personal brand','Spiritual growth',
+  'Mental health','Relationships','Saving money','Investing',
+  'Learning a new skill','Creative work','Fitness goal','Writing / content',
+  'Leadership','Parenting & family','Community impact',
+];
+function renderGrowthTags() {
+  const w = document.getElementById('growthTags');
+  GROWTH_TAGS.forEach(tag => {
+    const t = document.createElement('div'); t.className='ttag'; t.textContent=tag; t.dataset.tag=tag;
+    t.onclick=()=>{
+      t.classList.toggle('active');
+      if(t.classList.contains('active')){ if(!state.growthTags.includes(tag)) state.growthTags.push(tag); }
+      else state.growthTags=state.growthTags.filter(x=>x!==tag);
+    };
+    w.appendChild(t);
+  });
+}
+
+// ── GOALS ─────────────────────────────────────────────────────────────────────
+function addGoal() {
+  const title = document.getElementById('newGoalTitle').value.trim();
+  if (!title) return;
+  const goal = {
+    id: Date.now(), title,
+    cat: document.getElementById('newGoalCat').value,
+    deadline: document.getElementById('newGoalDeadline').value,
+    why: document.getElementById('newGoalWhy').value,
+    progress: 0, done: false,
+    created: new Date().toISOString()
+  };
+  goals.push(goal);
+  document.getElementById('newGoalTitle').value = '';
+  document.getElementById('newGoalDeadline').value = '';
+  document.getElementById('newGoalWhy').value = '';
+  renderGoals();
+  saveGoalsData();
+}
+function renderGoals() {
+  const el = document.getElementById('goalList');
+  const empty = document.getElementById('goalEmpty');
+  if (!goals.length) { el.innerHTML=''; empty.style.display='block'; document.getElementById('s_goals').textContent='0'; return; }
+  empty.style.display='none';
+  el.innerHTML='';
+  goals.forEach((g,i) => {
+    const div = document.createElement('div'); div.className='goal-item'+(g.done?' done':'');
+    div.innerHTML=`
+      <div class="goal-header">
+        <div class="goal-check" onclick="toggleGoalDone(${i})">${g.done?'✓':''}</div>
+        <div class="goal-title-wrap">
+          <div class="goal-title">${g.title}</div>
+          <div class="goal-cat">${g.cat||'General'}${g.deadline?' · Due: '+g.deadline:''}</div>
+        </div>
+        <button class="goal-del" onclick="deleteGoal(${i})">×</button>
+      </div>
+      <div class="goal-progress">
+        <div class="goal-progress-label">
+          <span>Progress</span>
+          <span id="gpct_${i}">${g.progress}%</span>
+        </div>
+        <div class="goal-bar-wrap"><div class="goal-bar-fill" id="gbar_${i}" style="width:${g.progress}%;"></div></div>
+        <input type="range" min="0" max="100" value="${g.progress}" oninput="updateGoalProgress(${i},this.value)" style="margin-bottom:8px;">
+        ${g.why?`<div class="goal-note">💡 Why: ${g.why}</div>`:''}
+      </div>
+    `;
+    el.appendChild(div);
+  });
+  document.getElementById('s_goals').textContent = goals.filter(g=>!g.done).length;
+  updateTodayScore();
+}
+function toggleGoalDone(i) { goals[i].done=!goals[i].done; if(goals[i].done) goals[i].progress=100; renderGoals(); saveGoalsData(); }
+function deleteGoal(i) { goals.splice(i,1); renderGoals(); saveGoalsData(); }
+function updateGoalProgress(i, val) {
+  goals[i].progress=parseInt(val);
+  document.getElementById('gpct_'+i).textContent=val+'%';
+  document.getElementById('gbar_'+i).style.width=val+'%';
+  saveGoalsData(); updateTodayScore();
+}
+function saveGoalsData() { localStorage.setItem(key('life5_goals'), JSON.stringify(goals)); }
+function loadGoalsData() { const r=localStorage.getItem(key('life5_goals')); if(r) goals=JSON.parse(r); renderGoals(); }
+
+// ── HABITS ────────────────────────────────────────────────────────────────────
+const DAYS = ['M','T','W','T','F','S','S'];
+function addHabit() {
+  const name = document.getElementById('newHabitName').value.trim();
+  if (!name) return;
+  const emoji = document.getElementById('newHabitEmoji').value || '✅';
+  const habit = { id:Date.now(), name, emoji, days:[false,false,false,false,false,false,false], streak:0 };
+  habits.push(habit);
+  document.getElementById('newHabitName').value='';
+  document.getElementById('newHabitEmoji').value='';
+  renderHabits();
+  saveHabitsData();
+}
+function renderHabits() {
+  const el = document.getElementById('habitList');
+  const empty = document.getElementById('habitEmpty');
+  if (!habits.length) { el.innerHTML=''; empty.style.display='block'; updateHabitSummary(); return; }
+  empty.style.display='none'; el.innerHTML='';
+  habits.forEach((h,i) => {
+    const streak = h.days.reduce((acc,d,j,arr) => { if(j>0&&d&&arr[j-1]) return acc+1; return d?1:0; }, 0);
+    const row = document.createElement('div'); row.className='habit-row';
+    const daysHtml = DAYS.map((d,j) =>
+      `<div class="habit-day${h.days[j]?' done':''}${j===new Date().getDay()-1?' today':''}" onclick="toggleHabitDay(${i},${j})" title="${['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][j]}">${d}</div>`
+    ).join('');
+    row.innerHTML=`
+      <div class="habit-emoji">${h.emoji}</div>
+      <div class="habit-info">
+        <div class="habit-name">${h.name}</div>
+        <div class="habit-streak">${h.days.filter(Boolean).length}/7 this week${streak>1?' · 🔥 '+streak+' day streak':''}</div>
+      </div>
+      <div class="habit-days">${daysHtml}</div>
+      <button class="habit-del" onclick="deleteHabit(${i})">×</button>
+    `;
+    el.appendChild(row);
+  });
+  updateHabitSummary();
+}
+function toggleHabitDay(hi, di) { habits[hi].days[di]=!habits[hi].days[di]; renderHabits(); saveHabitsData(); updateTodayScore(); }
+function deleteHabit(i) { habits.splice(i,1); renderHabits(); saveHabitsData(); }
+function saveHabitsData() { localStorage.setItem(key('life5_habits'), JSON.stringify(habits)); }
+function loadHabitsData() { const r=localStorage.getItem(key('life5_habits')); if(r) habits=JSON.parse(r); renderHabits(); }
+function updateHabitSummary() {
+  const today = new Date().getDay();
+  const dayIdx = today === 0 ? 6 : today - 1;
+  const doneToday = habits.filter(h=>h.days[dayIdx]).length;
+  document.getElementById('s_habits').textContent = doneToday+'/'+habits.length;
+  updateTodayScore();
+}
+
+const HABIT_SCIENCE_PANELS = [
+  {icon:'🔗',title:'Habit Stacking',desc:'Attach a new habit to an existing one.',
+    expand:`<strong>The formula:</strong> "After I [CURRENT HABIT], I will [NEW HABIT]."<br><br>
+    Examples:<br>
+    → After I make my morning coffee, I will write 3 things I'm grateful for.<br>
+    → After I sit down at my desk, I will review my goals for 2 minutes.<br>
+    → After I get into bed, I will read for 10 minutes instead of scrolling.<br><br>
+    <em>The existing habit acts as the trigger. Your brain already has the neural pathway — you're just adding to it.</em>`},
+  {icon:'📉',title:'The 2-Minute Rule',desc:'Make new habits so small they\'re impossible to refuse.',
+    expand:`When starting a new habit, scale it down until it takes less than 2 minutes to do.<br><br>
+    → "Read every night" becomes "Read one page."<br>
+    → "Work out every day" becomes "Put on my gym clothes."<br>
+    → "Write daily" becomes "Open my notebook."<br><br>
+    The 2-minute version is not the goal — it's the entry point. Once you start, you'll usually continue. The hardest part is always beginning.<br><br>
+    <em>Showing up consistently matters more than performing perfectly occasionally.</em>`},
+  {icon:'🌍',title:'Environment Design',desc:'Make good habits obvious and bad habits invisible.',
+    expand:`Your environment is more powerful than your willpower. Design your space to make the right choice the easy choice.<br><br>
+    → Put your gym bag by the door the night before.<br>
+    → Delete social media from your phone's home screen.<br>
+    → Put your book on your pillow so you see it before bed.<br>
+    → Keep healthy food at eye level in the fridge; hide the junk at the back.<br>
+    → Put your phone charger outside the bedroom.<br><br>
+    <em>You don't need more willpower. You need a better environment.</em>`},
+  {icon:'📅',title:'Habit Scheduling',desc:'When you decide WHEN, you actually do it.',
+    expand:`Research shows that people who specify exactly when and where they'll perform a habit are 2-3x more likely to follow through.<br><br>
+    <strong>Implementation intention:</strong> "I will [BEHAVIOUR] at [TIME] in [LOCATION]."<br><br>
+    → "I will meditate for 10 minutes at 7am in my bedroom."<br>
+    → "I will study for 1 hour at 8pm at my desk."<br>
+    → "I will call one prospect every Tuesday at 10am from my car."<br><br>
+    <em>A goal without a time is just a wish. A habit without a schedule is just a hope.</em>`},
+  {icon:'🧠',title:'Identity-Based Habits',desc:'The real goal isn\'t the habit — it\'s who you become.',
+    expand:`Most people try to change their habits by focusing on outcomes ("I want to lose 10kg"). The most effective approach focuses on identity.<br><br>
+    <strong>Outcome-based:</strong> "I want to write a book." → leads to: "I need to write more."<br>
+    <strong>Identity-based:</strong> "I am a writer." → leads to: "Writers write every day."<br><br>
+    Each habit you perform is a vote for the identity you want. A 10-minute workout is a vote for "I am someone who exercises." Skipping it is a vote against.<br><br>
+    <em>Ask: What would the person I want to be do right now? Then do that.</em>`},
+  {icon:'📊',title:'Tracking & Streaks',desc:'Never break the chain — but don\'t make the chain the point.',
+    expand:`Tracking habits creates visual evidence of progress. Streaks activate our loss aversion — we don't want to break them.<br><br>
+    <strong>The golden rule:</strong> Never miss twice. One missed day is an accident. Two missed days is the start of a new habit — the habit of not doing it.<br><br>
+    <strong>But:</strong> Don't let tracking become the goal. The number on the tracker is not the point. The actual behaviour is the point. A missed day on the tracker is not a failure. It's a single data point.<br><br>
+    <em>Miss once? Fine. Miss twice? Intervene. That's the game.</em>`},
+];
+function renderHabitSciencePanels() {
+  const g = document.getElementById('habitSciencePanels');
+  HABIT_SCIENCE_PANELS.forEach(p => {
+    const card = document.createElement('div'); card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── WINS / LOSSES ─────────────────────────────────────────────────────────────
+function addWin() {
+  const text = document.getElementById('newWinText').value.trim();
+  if (!text) return;
+  wins.push({ text, date: new Date().toISOString() });
+  document.getElementById('newWinText').value='';
+  renderWins(); saveWinsData(); updateTodayScore();
+}
+function addLoss() {
+  const text = document.getElementById('newLossText').value.trim();
+  if (!text) return;
+  losses.push({ text, date: new Date().toISOString() });
+  document.getElementById('newLossText').value='';
+  renderLosses(); saveLossesData();
+}
+function renderWins() {
+  const el = document.getElementById('winList'); el.innerHTML='';
+  wins.forEach((w,i) => {
+    const d = document.createElement('div'); d.className='win-item win';
+    d.innerHTML=`<span class="win-icon">🏆</span><div class="win-body"><div class="win-title">Win</div><div class="win-text">${w.text}</div></div><button class="win-del" onclick="deleteWin(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  document.getElementById('s_wins').textContent = wins.length;
+  updateWeeklyScore();
+}
+function renderLosses() {
+  const el = document.getElementById('lossList'); el.innerHTML='';
+  losses.forEach((l,i) => {
+    const d = document.createElement('div'); d.className='win-item loss';
+    d.innerHTML=`<span class="win-icon">📚</span><div class="win-body"><div class="win-title">Lesson</div><div class="win-text">${l.text}</div></div><button class="win-del" onclick="deleteLoss(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  updateWeeklyScore();
+}
+function deleteWin(i) { wins.splice(i,1); renderWins(); saveWinsData(); }
+function deleteLoss(i) { losses.splice(i,1); renderLosses(); saveLossesData(); }
+function saveWinsData() { localStorage.setItem(key('life5_wins_'+dk(currentDate)), JSON.stringify(wins)); }
+function saveLossesData() { localStorage.setItem(key('life5_losses_'+dk(currentDate)), JSON.stringify(losses)); }
+function loadWinsLosses() {
+  const wr=localStorage.getItem(key('life5_wins_'+dk(currentDate)));
+  const lr=localStorage.getItem(key('life5_losses_'+dk(currentDate)));
+  wins = wr ? JSON.parse(wr) : [];
+  losses = lr ? JSON.parse(lr) : [];
+  renderWins(); renderLosses();
+}
+function updateWeeklyScore() {
+  const g = document.getElementById('weeklyScoreGrid');
+  const items = [
+    { label:'Wins', val:wins.length, color:'var(--green)' },
+    { label:'Lessons', val:losses.length, color:'var(--red)' },
+    { label:'Goals Active', val:goals.filter(g=>!g.done).length, color:'var(--blue)' },
+  ];
+  g.innerHTML = items.map(it=>`
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;text-align:center;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:${it.color};line-height:1;">${it.val}</div>
+      <div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">${it.label}</div>
+    </div>
+  `).join('');
+}
+
+// ── WHEEL ─────────────────────────────────────────────────────────────────────
+const WHEEL_AREAS = [
+  {key:'career',label:'💼 Career / Work',color:'var(--blue)'},
+  {key:'finance',label:'💰 Finances',color:'var(--gold)'},
+  {key:'health',label:'💪 Health & Fitness',color:'var(--green)'},
+  {key:'relationships',label:'💜 Relationships',color:'var(--purple)'},
+  {key:'family',label:'🏡 Family',color:'var(--orange)'},
+  {key:'mindset',label:'🧠 Mental Health',color:'#00d2ff'},
+  {key:'spiritual',label:'✨ Spiritual / Purpose',color:'#f5c518'},
+  {key:'fun',label:'🎉 Fun & Recreation',color:'#ff4b2b'},
+];
+function renderWheelSliders() {
+  const w = document.getElementById('wheelSliders');
+  WHEEL_AREAS.forEach(a => {
+    const initVal = state.wheelRatings[a.key] || 5;
+    const row = document.createElement('div'); row.style.marginBottom='14px';
+    row.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+        <span style="font-size:13px;color:#ccc;">${a.label}</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:${a.color};" id="wval_${a.key}">${initVal}</span>
+      </div>
+      <div class="bar-wrap"><div class="bar-fill" id="wbar_${a.key}" style="width:${initVal*10}%;background:${a.color};"></div></div>
+      <input type="range" min="1" max="10" value="${initVal}" oninput="updateWheel('${a.key}',this.value,'${a.color}')">
+    `;
+    w.appendChild(row);
+  });
+  updateWheelAvg();
+}
+function updateWheel(key, val, color) {
+  val=parseInt(val); state.wheelRatings[key]=val;
+  document.getElementById('wval_'+key).textContent=val;
+  document.getElementById('wbar_'+key).style.width=(val*10)+'%';
+  updateWheelAvg();
+}
+function updateWheelAvg() {
+  const vals=Object.values(state.wheelRatings).filter(v=>v>0);
+  const avg=vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—';
+  document.getElementById('s_wheel').textContent=avg!=='—'?avg+'/10':'—';
+}
+
+// ── MINDSET BLOCKERS ──────────────────────────────────────────────────────────
+const BLOCKERS = [
+  'Perfectionism — waiting until it\'s "ready" before starting or sharing',
+  'Imposter syndrome — feeling like I don\'t belong or will be found out',
+  'Fear of failure — avoiding attempts to avoid the possibility of failing',
+  'Fear of success — unconsciously sabotaging when things start going well',
+  'Comparison — measuring my chapter 1 against someone else\'s chapter 20',
+  'Lack of discipline — motivation-dependent, not system-dependent',
+  'Procrastination — doing easier tasks to avoid the important hard ones',
+  'Scarcity mindset — believing resources, opportunities, or luck are limited',
+  'People pleasing — saying yes to others at the expense of my own goals',
+  'Comfort zone addiction — choosing familiar discomfort over unfamiliar growth',
+  'Negative self-talk — the inner critic is louder than the inner coach',
+  'Busyness as avoidance — always "busy" but never actually moving forward',
+];
+function renderMindsetBlockers() {
+  const w = document.getElementById('mindsetBlockers');
+  BLOCKERS.forEach((b,i) => {
+    const d = document.createElement('div'); d.className='check-item'; d.dataset.bidx=i;
+    d.innerHTML=`<div class="check-box" id="blk_${i}"></div><div class="check-text">${b}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('blk_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){ if(!state.mindsetBlockers.includes(i)) state.mindsetBlockers.push(i); }
+      else state.mindsetBlockers=state.mindsetBlockers.filter(x=>x!==i);
+    };
+    w.appendChild(d);
+  });
+}
+
+// ── GROWTH PRINCIPLES ─────────────────────────────────────────────────────────
+const GROWTH_PRINCIPLES = [
+  {icon:'🐢',title:'Compound Growth',desc:'1% better every day = 37x better in a year.',
+    expand:`The math of compound growth is almost unbelievable until you live it. Improving by just 1% each day doesn't add up — it multiplies. After 365 days of 1% improvement, you are 37.78x better than where you started.<br><br>
+    The reverse is also true: 1% worse every day for a year = 0.03 of where you started.<br><br>
+    This means the question is never: <em>"What can I do today that will change everything?"</em><br>
+    The question is: <em>"What can I do today that is 1% better than yesterday?"</em><br><br>
+    <em>Big results are just small habits compounded over a long enough period of time.</em>`},
+  {icon:'💎',title:'Deliberate Practice',desc:'Not just practice — the right kind of practice.',
+    expand:`Hours don't create mastery. The right kind of hours do. Research by Anders Ericsson on elite performers found that what separates experts from novices is not time — it's <strong>deliberate practice.</strong><br><br>
+    Deliberate practice has four qualities:<br>
+    1. It's specifically designed to improve performance<br>
+    2. It's done with full concentration<br>
+    3. It includes immediate feedback<br>
+    4. It operates at the edge of your current ability — just beyond comfort<br><br>
+    Mindless repetition creates habit. Deliberate practice creates mastery.<br><br>
+    <em>Practise with intention. Every session should have a specific thing you're trying to improve.</em>`},
+  {icon:'🧱',title:'Brick by Brick',desc:'You can\'t skip the middle. Stop looking for shortcuts.',
+    expand:`We live in an era of highlight reels and overnight success stories. What we don't see is the 7 years of obscurity before the overnight success. The 10,000 unglamorous hours. The thousand attempts before the one that worked.<br><br>
+    Every person you admire for their results was once exactly where you are — uncertain, frustrated, and still building.<br><br>
+    <strong>The discipline isn't in the big moments. It's in the boring ones.</strong><br>
+    → Showing up on the days you don't feel like it<br>
+    → Doing the unsexy foundational work<br>
+    → Staying when there's no visible progress yet<br><br>
+    <em>The brick you lay today becomes part of the wall you'll be proud of tomorrow. Lay it anyway.</em>`},
+  {icon:'🗣️',title:'Your Environment Shapes You',desc:'You are the average of the five people you spend most time with.',
+    expand:`Jim Rohn's observation is backed by decades of social science. The people around you influence your habits, ambitions, standards, and beliefs about what's possible.<br><br>
+    <strong>Questions to ask:</strong><br>
+    → Who in your circle is where you want to be in 5 years?<br>
+    → Who consistently pulls your energy down?<br>
+    → Who believes in your potential more than you currently do?<br>
+    → Who challenges you to think bigger?<br><br>
+    This isn't about abandoning people. It's about being intentional about proximity and exposure. Seek out communities, mentors, and environments aligned with who you're becoming.<br><br>
+    <em>If you're the smartest person in the room, you're in the wrong room.</em>`},
+  {icon:'🔥',title:'Discomfort is the Price',desc:'Growth and comfort cannot coexist.',
+    expand:`Everything you want is on the other side of something uncomfortable. The conversation you're avoiding. The attempt you keep postponing. The room full of people more advanced than you that feels intimidating to enter.<br><br>
+    Comfort is not the enemy of growth — it's the signal that you're no longer growing. When you feel resistance toward something important — that resistance is the compass pointing toward your next level.<br><br>
+    <strong>The reframe:</strong> Discomfort doesn't mean something is wrong. It means you're doing something right. Your brain is trying to protect you from risk. But the biggest risk is staying comfortable while your potential goes unrealised.<br><br>
+    <em>Get comfortable being uncomfortable. That is the skill of growth.</em>`},
+  {icon:'🔄',title:'Failure is Data',desc:'You\'re not failing. You\'re gathering information.',
+    expand:`The most successful people in any field have a different relationship with failure than everyone else. They don't try to avoid it — they expect it and extract from it.<br><br>
+    Every failed attempt contains:<br>
+    → What approach doesn't work<br>
+    → What you need to learn or acquire before trying again<br>
+    → Proof that you have the courage to try<br>
+    → Data for your next attempt<br><br>
+    The only real failure is the one you don't learn from — or the attempt you never made because you were afraid of failing.<br><br>
+    <strong>Ask after every setback:</strong> What did this teach me? What would I do differently? What's the next attempt?<br><br>
+    <em>You haven't failed. You've found out what doesn't work. That is progress.</em>`},
+  {icon:'⏰',title:'Time is the Asset',desc:'You don\'t manage time. You allocate it.',
+    expand:`Time management is a myth — you can't manage time. You can only decide where to allocate it. And every "yes" is a "no" to something else.<br><br>
+    <strong>The questions that matter:</strong><br>
+    → What would happen if I did nothing on this?<br>
+    → Am I doing this because it moves me forward — or because I'm avoiding something harder?<br>
+    → What's the highest-value use of the next hour?<br>
+    → What do I keep saying I'll get to — and never do?<br><br>
+    <strong>Practical:</strong><br>
+    → Time-block your most important work in your most productive hours<br>
+    → Single-task — multitasking reduces effectiveness by up to 40%<br>
+    → Audit your week: where does your time actually go vs where you want it to go?<br><br>
+    <em>How you spend your days is how you spend your life. Spend them intentionally.</em>`},
+  {icon:'🙏',title:'Rest is Part of the Work',desc:'Recovery is not a reward. It\'s a requirement.',
+    expand:`Hustle culture has sold a lie: that the person sleeping less, grinding more, and sacrificing everything is the one who wins. Research says the opposite.<br><br>
+    Sleep deprivation reduces cognitive function, decision-making ability, emotional regulation, creativity, and physical performance. You are not more productive on less sleep. You just feel more frantic.<br><br>
+    <strong>Rest is the work:</strong><br>
+    → 7–9 hours of sleep is non-negotiable for peak performance<br>
+    → Rest days are when muscles (and ideas) consolidate<br>
+    → Boredom and stillness are where your best thinking happens<br>
+    → Burnout sets back progress by months — rest prevents it<br><br>
+    <em>You don't build in the gym. You build in recovery. The same is true for your mind and your goals.</em>`},
+];
+function renderGrowthPrinciples() {
+  const g = document.getElementById('growthPrinciples');
+  GROWTH_PRINCIPLES.forEach(p => {
+    const card = document.createElement('div'); card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── COMMIT CHECKLIST ──────────────────────────────────────────────────────────
+const COMMITS = [
+  'I will do my most important task before checking social media',
+  'I will protect at least 1 hour of deep work time each day this week',
+  'I will track my habits every day this week — even on hard days',
+  'I will not complain about what I\'m not doing — I\'ll just do it',
+  'I will review my goals every morning for 2 minutes',
+  'I will say no to one thing that doesn\'t serve my goals this week',
+  'I will ask for help or mentorship on something I\'m stuck on',
+  'I will celebrate progress, not just completion',
+  'I will go to sleep at a consistent time to protect my energy',
+  'I will check in with my vision — is what I\'m doing today aligned?',
+];
+function renderCommitChecklist() {
+  const w = document.getElementById('commitChecklist');
+  COMMITS.forEach((c,i) => {
+    const d = document.createElement('div'); d.className='check-item'; d.dataset.cidx=i;
+    d.innerHTML=`<div class="check-box" id="com_${i}"></div><div class="check-text">${c}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('com_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){ if(!state.commitChecked.includes(i)) state.commitChecked.push(i); }
+      else state.commitChecked=state.commitChecked.filter(x=>x!==i);
+    };
+    w.appendChild(d);
+  });
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────────────
+const AFFIRMATIONS = {
+  general:[
+    'I am building something real. Every day of work is a brick in the wall.',
+    'Discipline is choosing my future self over my present comfort.',
+    'I don\'t need motivation. I need a system — and I\'m building one.',
+    'The version of me I\'m becoming is worth every uncomfortable step.',
+    'Small daily progress beats occasional perfection every time.',
+  ],
+  'Locked In':['I am locked in. I protect this energy. I am unstoppable right now.','I\'m in the zone. I don\'t break this streak for anything.'],
+  'Building':['Every brick I lay today is part of the foundation I\'ll live on tomorrow.','I\'m building. It doesn\'t look impressive yet. It will.'],
+  'Figuring It Out':['Confusion is not failure. It\'s the sign of someone thinking seriously about their life.','I don\'t need to have it all figured out. I just need to keep moving.'],
+  'Stuck':['Being stuck is temporary. Quitting is permanent. I choose temporary.','I am not behind. I am exactly where I need to be to learn what I\'m learning.'],
+  'Starting Over':['Starting over is not failure. It\'s having the courage to try again with everything I now know.','Every version of me that started over was braver than the one who stayed stuck.'],
+  'Resting':['Rest is not retreat. Rest is preparation. I recover so I can build stronger.','I give myself permission to slow down. The goals are still there when I return.'],
+};
+function newAffirm() {
+  const all = Object.values(AFFIRMATIONS).flat();
+  setAffirm(all[Math.floor(Math.random()*all.length)]);
+}
+function affirmByStatus() {
+  const list = AFFIRMATIONS[state.growthStatus] || AFFIRMATIONS.general;
+  setAffirm(list[Math.floor(Math.random()*list.length)]);
+}
+function setAffirm(txt) {
+  const el = document.getElementById('affirmText'); el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=txt; el.style.transition='opacity 0.4s'; el.style.opacity=1; },250);
+}
+
+// ── TODAY SCORE ───────────────────────────────────────────────────────────────
+function updateTodayScore() {
+  const today = new Date().getDay();
+  const dayIdx = today === 0 ? 6 : today - 1;
+  const habitsDone = habits.filter(h=>h.days[dayIdx]).length;
+  const goalsProgressed = goals.filter(g=>g.progress>0&&!g.done).length + goals.filter(g=>g.done).length;
+  const score = habitsDone + goalsProgressed + wins.length;
+  document.getElementById('todayScore').textContent = score;
+}
+
+// ── GROWTH LOG ────────────────────────────────────────────────────────────────
+let growthLog = [];
+function loadGrowthLog() {
+  const r = localStorage.getItem(key('life5_log')); growthLog = r ? JSON.parse(r) : []; renderGrowthLog();
+}
+function renderGrowthLog() {
+  const el = document.getElementById('growthLog');
+  if (!growthLog.length) { el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to start your growth journal.</p>'; return; }
+  el.innerHTML='';
+  growthLog.slice(0,4).forEach((e,i) => {
+    const d = document.createElement('div'); d.className='log-item';
+    d.innerHTML=`<div class="li-left">
+      <div class="li-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div>
+      <div class="li-title">${e.status||'—'} · ${e.goals||0} goals · ${e.wins||0} wins</div>
+      ${e.note?`<div class="li-note">${e.note.slice(0,120)}${e.note.length>120?'…':''}</div>`:''}
+    </div>
+    <button class="li-del" onclick="delLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(growthLog.length>4){ const m=document.createElement('p'); m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;'; m.textContent=`+ ${growthLog.length-4} earlier entries`; el.appendChild(m); }
+}
+function delLog(i) { growthLog.splice(i,1); localStorage.setItem(key('life5_log'),JSON.stringify(growthLog)); renderGrowthLog(); }
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry() {
+  state.statusNote      = document.getElementById('statusNote').value;
+  state.vision5yr       = document.getElementById('vision5yr').value;
+  state.visionOneThng   = document.getElementById('visionOneThng').value;
+  state.vision90d       = document.getElementById('vision90d').value;
+  state.visionObstacle  = document.getElementById('visionObstacle').value;
+  state.visionIdentity  = document.getElementById('visionIdentity').value;
+  state.mindsetReflect  = document.getElementById('mindsetReflect').value;
+  state.weeklyTakeaway  = document.getElementById('weeklyTakeaway').value;
+  state.r_future        = document.getElementById('r_future').value;
+  state.r_tomorrow      = document.getElementById('r_tomorrow').value;
+  state.r_nodrop        = document.getElementById('r_nodrop').value;
+  state.ts              = new Date().toISOString();
+
+  localStorage.setItem(key('life5_'+dk(currentDate)), JSON.stringify(state));
+
+  growthLog.unshift({ status:state.growthStatus, goals:goals.filter(g=>!g.done).length, wins:wins.length, note:state.statusNote, date:state.ts });
+  localStorage.setItem(key('life5_log'), JSON.stringify(growthLog));
+  renderGrowthLog();
+
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{
+    studentName:userName, studentEmail:userEmail,
+    courseName:`Life 5 Growth Check-In — ${fmt(currentDate)}`,
+    coursePrice:'N/A', courseDuration:'Wellness Portal', sessionType:'Online', paymentMethod:'Free',
+    additionalInfo:`Growth Status: ${state.growthStatus||'—'}\nActive Goals: ${goals.filter(g=>!g.done).length}\nWins: ${wins.length}\nHabits: ${habits.length}\nGrowth Areas: ${state.growthTags.join(', ')||'None'}\nVision: ${state.vision5yr.slice(0,200)||'—'}\nOne Thing: ${state.visionOneThng.slice(0,150)||'—'}\nTomorrow: ${state.r_tomorrow.slice(0,150)||'—'}`,
+    dashboardUrl:window.location.href
+  }).catch(()=>{});
+
+  showToast('⚡ Entry saved');
+}
+
+function loadEntry() {
+  const raw = localStorage.getItem(key('life5_'+dk(currentDate)));
+  if (!raw) { loadWinsLosses(); return; }
+  const s = JSON.parse(raw);
+
+  if(s.growthStatus){ document.querySelectorAll('.status-tile').forEach(t=>{ if(t.dataset.s===s.growthStatus) t.classList.add('active'); }); state.growthStatus=s.growthStatus; document.getElementById('s_status').textContent=s.growthStatus.split(' ')[0]; }
+
+  document.getElementById('statusNote').value      = s.statusNote||'';
+  document.getElementById('vision5yr').value       = s.vision5yr||'';
+  document.getElementById('visionOneThng').value   = s.visionOneThng||'';
+  document.getElementById('vision90d').value       = s.vision90d||'';
+  document.getElementById('visionObstacle').value  = s.visionObstacle||'';
+  document.getElementById('visionIdentity').value  = s.visionIdentity||'';
+  document.getElementById('mindsetReflect').value  = s.mindsetReflect||'';
+  document.getElementById('weeklyTakeaway').value  = s.weeklyTakeaway||'';
+  document.getElementById('r_future').value        = s.r_future||'';
+  document.getElementById('r_tomorrow').value      = s.r_tomorrow||'';
+  document.getElementById('r_nodrop').value        = s.r_nodrop||'';
+
+  // Tags
+  state.growthTags=s.growthTags||[];
+  document.querySelectorAll('#growthTags .ttag').forEach(t=>{ if(state.growthTags.includes(t.dataset.tag)) t.classList.add('active'); });
+
+  // Wheel ratings
+  state.wheelRatings=s.wheelRatings||{};
+  WHEEL_AREAS.forEach(a=>{ if(state.wheelRatings[a.key]!==undefined){ document.querySelector(`input[oninput*="'${a.key}'"]`).value=state.wheelRatings[a.key]; updateWheel(a.key,state.wheelRatings[a.key],a.color); } });
+
+  // Mindset blockers
+  state.mindsetBlockers=s.mindsetBlockers||[];
+  state.mindsetBlockers.forEach(i=>{ const d=document.querySelector(`.check-item[data-bidx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('blk_'+i).textContent='✓';} });
+
+  // Commit checklist
+  state.commitChecked=s.commitChecked||[];
+  state.commitChecked.forEach(i=>{ const d=document.querySelector(`.check-item[data-cidx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('com_'+i).textContent='✓';} });
+
+  state={...state,...s};
+  loadWinsLosses();
+  updateTodayScore();
+  updateWeeklyScore();
+  showToast('Entry loaded');
+}
+
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+function toggleSummary() {
+  const strip=document.getElementById('summaryStrip'), btn=document.getElementById('summaryToggle');
+  strip.classList.toggle('open');
+  btn.textContent=strip.classList.contains('open')?'✕':btn.dataset.icon;
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderGrowthTags();
+renderHabitSciencePanels();
+renderGrowthPrinciples();
+renderMindsetBlockers();
+renderWheelSliders();
+renderCommitChecklist();
+loadGoalsData();
+loadHabitsData();
+loadGrowthLog();
+loadEntry();
+newAffirm();
+</script>
+</body>
+</html>
