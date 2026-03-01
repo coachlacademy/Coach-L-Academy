@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 3 — Relationships | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #f5c518;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background: radial-gradient(ellipse at 25% 25%, rgba(245,197,24,0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 75% 75%, rgba(168,85,247,0.05) 0%, transparent 55%), #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--gold); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass {
+  padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border);
+  color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;
+  transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-glass:hover { border-color:var(--gold); color:var(--gold); }
+.user-chip {
+  display:flex; align-items:center; gap:8px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:6px 14px; border-radius:30px; font-size:13px;
+}
+.avatar {
+  width:26px; height:26px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:900; color:#000;
+}
+
+/* PAGE HEADER */
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.page-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,8vw,5.5rem); font-weight:900;
+  text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px;
+}
+.page-title span { color:var(--gold); }
+.page-sub { font-size:15px; color:#bbb; max-width:560px; line-height:1.7; }
+
+/* TIME GREETING */
+.time-greeting {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px;
+}
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--gold); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* DATE NAV */
+.date-nav {
+  display:flex; align-items:center; gap:14px; margin:0 auto 40px;
+  max-width:1100px; padding:0 40px; flex-wrap:wrap;
+}
+.date-btn {
+  background:var(--glass); border:1px solid var(--glass-border); color:#fff;
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s;
+}
+.date-btn:hover { border-color:var(--gold); color:var(--gold); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--gold); border-color:var(--gold); color:#000; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+
+/* MAIN */
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+/* STEP */
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num {
+  font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--gold); background:rgba(245,197,24,0.1); border:1px solid rgba(245,197,24,0.35);
+  padding:4px 12px; border-radius:20px; white-space:nowrap;
+}
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+/* CARD */
+.card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:28px; backdrop-filter:blur(12px);
+  position:relative; overflow:hidden; transition:border-color 0.3s;
+}
+.card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent);
+}
+.card:hover { border-color:rgba(245,197,24,0.2); }
+.card-gold { border-color:rgba(245,197,24,0.25); background:rgba(245,197,24,0.04); }
+.card-purple { border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.04); }
+.card-red { border-color:rgba(255,75,43,0.2); background:rgba(255,75,43,0.04); }
+.card-green { border-color:rgba(57,255,20,0.2); background:rgba(57,255,20,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* STATUS TILES */
+.status-tiles { display:flex; gap:10px; flex-wrap:wrap; }
+.status-tile {
+  flex:1; min-width:120px; padding:18px 14px; border-radius:12px; text-align:center;
+  background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s;
+}
+.status-tile:hover,.status-tile.active { transform:translateY(-4px); }
+.status-tile .st-emoji { font-size:28px; display:block; margin-bottom:8px; line-height:1; }
+.status-tile .st-label { font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:900; text-transform:uppercase; letter-spacing:0.5px; }
+.status-tile .st-desc { font-size:11px; color:#888; margin-top:3px; }
+.status-tile[data-status="Thriving"]:hover,.status-tile[data-status="Thriving"].active{border-color:#39ff14;background:rgba(57,255,20,0.08);color:#39ff14;}
+.status-tile[data-status="Stable"]:hover,.status-tile[data-status="Stable"].active{border-color:var(--blue);background:rgba(0,210,255,0.08);color:var(--blue);}
+.status-tile[data-status="Complicated"]:hover,.status-tile[data-status="Complicated"].active{border-color:var(--gold);background:rgba(245,197,24,0.08);color:var(--gold);}
+.status-tile[data-status="Struggling"]:hover,.status-tile[data-status="Struggling"].active{border-color:var(--orange);background:rgba(255,140,0,0.08);color:var(--orange);}
+.status-tile[data-status="Healing"]:hover,.status-tile[data-status="Healing"].active{border-color:var(--purple);background:rgba(168,85,247,0.08);color:var(--purple);}
+.status-tile[data-status="Single"]:hover,.status-tile[data-status="Single"].active{border-color:#ccc;background:rgba(255,255,255,0.07);color:#ccc;}
+
+/* TAG GRID */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag {
+  padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700;
+  background:var(--glass); border:1px solid var(--glass-border);
+  cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px;
+}
+.ttag:hover { border-color:rgba(245,197,24,0.5); color:var(--gold); }
+.ttag.active { border-color:rgba(245,197,24,0.6); background:rgba(245,197,24,0.1); color:var(--gold); }
+
+/* EXPANDABLE PANEL CARDS */
+.panel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.panel-card {
+  background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px;
+  cursor:pointer; transition:0.3s;
+}
+.panel-card:hover { border-color:rgba(245,197,24,0.3); transform:translateY(-3px); }
+.panel-card.open { border-color:rgba(245,197,24,0.5); background:rgba(245,197,24,0.05); }
+.pc-icon { font-size:30px; margin-bottom:10px; display:block; }
+.pc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; color:#fff; margin-bottom:4px; }
+.pc-desc { font-size:12px; color:#666; line-height:1.5; }
+.pc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.panel-card.open .pc-expand { display:block; }
+
+/* LOVE LANGUAGE BARS */
+.ll-rows { display:flex; flex-direction:column; gap:16px; }
+.ll-row { }
+.ll-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; }
+.ll-label { font-size:13px; color:#ddd; font-weight:600; }
+.ll-val { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; color:var(--gold); }
+.ll-bar-wrap { height:10px; border-radius:10px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:4px; }
+.ll-bar-fill { height:100%; border-radius:10px; transition:width 0.5s; }
+input[type=range] {
+  width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer;
+  background:linear-gradient(to right,var(--glass-border),var(--gold));
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff;
+  cursor:pointer; box-shadow:0 0 10px rgba(245,197,24,0.5); border:2px solid var(--gold);
+}
+
+/* HEARTBREAK TRACKER */
+.hb-timeline { display:flex; flex-direction:column; gap:12px; }
+.hb-stage {
+  display:flex; gap:14px; align-items:flex-start;
+  padding:14px; border-radius:10px;
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-border);
+  cursor:pointer; transition:0.3s;
+}
+.hb-stage:hover,.hb-stage.active { border-color:rgba(168,85,247,0.4); background:rgba(168,85,247,0.06); }
+.hb-num { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--purple); min-width:36px; line-height:1; }
+.hb-body { flex:1; }
+.hb-title { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; color:#fff; margin-bottom:4px; }
+.hb-desc { font-size:12px; color:#666; line-height:1.6; }
+.hb-stage.active .hb-desc { color:#aaa; }
+
+/* RELATIONSHIP LOG */
+.rel-log-item {
+  display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
+  padding:14px; border-radius:10px; margin-bottom:10px;
+  background:rgba(245,197,24,0.04); border:1px solid rgba(245,197,24,0.15);
+  transition:0.3s;
+}
+.rel-log-item:hover { border-color:rgba(245,197,24,0.3); }
+.rl-left { flex:1; }
+.rl-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.rl-status { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; color:var(--gold); }
+.rl-note { font-size:13px; color:#999; margin-top:4px; line-height:1.5; }
+.rl-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; padding:0 4px; }
+.rl-del:hover { color:var(--red); }
+
+/* AFFIRMATION */
+.affirm-box {
+  background:rgba(245,197,24,0.06); border:1px solid rgba(245,197,24,0.2);
+  border-radius:12px; padding:24px; text-align:center; min-height:90px;
+  display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+}
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* JOURNAL / FORM */
+textarea {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:14px; font-size:14px;
+  font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6;
+}
+textarea:focus { outline:none; border-color:var(--gold); background:rgba(245,197,24,0.04); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+select {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:12px 14px; font-size:14px;
+  font-family:'Barlow',sans-serif; transition:0.3s; margin-bottom:14px; outline:none;
+}
+select:focus { border-color:var(--gold); }
+select option { background:#111; color:#fff; }
+
+/* BUTTONS */
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-gold { background:var(--gold); color:#000; }
+.btn-gold:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+.btn-green { background:var(--green); color:#000; }
+
+/* DIVIDER */
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+/* STICKY SUMMARY */
+.summary-strip {
+  position:fixed; bottom:0; width:100%; z-index:50;
+  background:rgba(0,0,0,0.93); backdrop-filter:blur(20px);
+  border-top:1px solid rgba(245,197,24,0.2);
+  padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap;
+}
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--gold); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--gold); color:#000; padding:11px 26px; border-radius:30px;
+  font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap;
+  transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* HEALTHY vs UNHEALTHY GRID */
+.compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.compare-col { border-radius:12px; padding:18px; }
+.compare-col.healthy { background:rgba(57,255,20,0.05); border:1px solid rgba(57,255,20,0.2); }
+.compare-col.unhealthy { background:rgba(255,75,43,0.05); border:1px solid rgba(255,75,43,0.2); }
+.compare-heading { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; margin-bottom:12px; letter-spacing:1px; }
+.compare-col.healthy .compare-heading { color:var(--green); }
+.compare-col.unhealthy .compare-heading { color:var(--red); }
+.compare-item { font-size:13px; color:#bbb; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.05); line-height:1.5; }
+.compare-item:last-child { border-bottom:none; }
+
+/* CHECK ITEM */
+.check-item {
+  display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px;
+  cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px;
+}
+.check-item:hover { border-color:rgba(245,197,24,0.3); background:rgba(245,197,24,0.04); }
+.check-item.checked { border-color:rgba(57,255,20,0.35); background:rgba(57,255,20,0.05); }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.check-item.checked .check-box { background:var(--green); border-color:var(--green); color:#000; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#aaa; text-decoration:line-through; }
+
+@media(max-width:768px){
+  .grid-2,.grid-3,.compare-grid{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .status-tiles{gap:6px;}
+  .status-tile{min-width:90px;}
+  .summary-strip{padding:12px 16px;gap:14px;}
+}
+
+/* ── MOBILE SUMMARY STRIP FIX ── */
+@media(max-width:768px){
+  .summary-strip {
+    position:fixed;
+    bottom:0; left:0; right:0;
+    transform:translateY(100%);
+    transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    padding:16px;
+    gap:16px;
+    flex-wrap:wrap;
+    z-index:200;
+  }
+  .summary-strip.open {
+    transform:translateY(0);
+  }
+  .summary-toggle {
+    display:flex !important;
+  }
+  .main {
+    padding-bottom:80px !important;
+  }
+}
+.summary-toggle {
+  display:none;
+  position:fixed;
+  bottom:16px; right:16px;
+  z-index:201;
+  width:52px; height:52px;
+  border-radius:50%;
+  border:none; cursor:pointer;
+  font-size:20px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  align-items:center; justify-content:center;
+  transition:transform 0.2s;
+}
+.summary-toggle:active { transform:scale(0.92); }
+
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--gold);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 3 · Relationships</div>
+  <h1 class="page-title">Mjolo<br>Is A <span>Whole</span><br>Pandemic</h1>
+  <p class="page-sub">Where you are in your relationships shapes everything — your mood, your energy, your sense of self. This space is for honest reflection, not performance. Check in. See clearly. Heal intentionally.</p>
+</div>
+
+<!-- DATE NAV -->
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STEP 1: RELATIONSHIP STATUS -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Where Are You Right Now?</div>
+        <div class="step-desc">Your honest relationship status today — not for social media. For you.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="status-tiles">
+        <div class="status-tile" data-status="Thriving" onclick="selectStatus(this)">
+          <span class="st-emoji">🌟</span>
+          <div class="st-label">Thriving</div>
+          <div class="st-desc">Solid, growing, secure</div>
+        </div>
+        <div class="status-tile" data-status="Stable" onclick="selectStatus(this)">
+          <span class="st-emoji">🤝</span>
+          <div class="st-label">Stable</div>
+          <div class="st-desc">Okay, steady, routine</div>
+        </div>
+        <div class="status-tile" data-status="Complicated" onclick="selectStatus(this)">
+          <span class="st-emoji">🌀</span>
+          <div class="st-label">Complicated</div>
+          <div class="st-desc">Unclear, unresolved tension</div>
+        </div>
+        <div class="status-tile" data-status="Struggling" onclick="selectStatus(this)">
+          <span class="st-emoji">💔</span>
+          <div class="st-label">Struggling</div>
+          <div class="st-desc">Pain, conflict, doubt</div>
+        </div>
+        <div class="status-tile" data-status="Healing" onclick="selectStatus(this)">
+          <span class="st-emoji">🌱</span>
+          <div class="st-label">Healing</div>
+          <div class="st-desc">Recovering, rebuilding me</div>
+        </div>
+        <div class="status-tile" data-status="Single" onclick="selectStatus(this)">
+          <span class="st-emoji">🦋</span>
+          <div class="st-label">Single</div>
+          <div class="st-desc">On my own, by choice or chance</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <label>What's actually going on — in your own words?</label>
+        <textarea id="statusNote" placeholder="e.g. We've been distant lately and I don't know how to bring it up. / I'm mostly okay but I miss feeling really seen. / I'm focusing on myself right now..." style="min-height:100px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: WHAT ARE YOU NAVIGATING? -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">What Are You Currently Navigating?</div>
+        <div class="step-desc">Select everything that's present in your relationship world right now. Be honest — this is private.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label style="margin-bottom:12px;">🏷️ What's live for you right now?</label>
+        <div class="tag-grid" id="situationTags"></div>
+      </div>
+      <div class="card card-gold">
+        <label style="margin-bottom:12px;">The situation in detail</label>
+        <select id="situationType">
+          <option value="">— What stage or situation are you in? —</option>
+          <optgroup label="Active Relationship">
+            <option>Long-term relationship — going well</option>
+            <option>Long-term relationship — going through it</option>
+            <option>Newly together — honeymoon phase</option>
+            <option>On-again off-again cycle</option>
+            <option>Dealing with trust issues / past cheating</option>
+            <option>Considering leaving but haven't</option>
+            <option>Separated but still in the same house</option>
+            <option>Co-parenting only</option>
+          </optgroup>
+          <optgroup label="Dating / Pre-Relationship">
+            <option>The talking stage</option>
+            <option>A situationship</option>
+            <option>Dating multiple people</option>
+            <option>Recently met someone promising</option>
+            <option>Waiting for clarity on what this is</option>
+          </optgroup>
+          <optgroup label="Ending / Healing">
+            <option>Going through a breakup</option>
+            <option>Recently divorced / separated</option>
+            <option>Still not over my ex</option>
+            <option>Processing a betrayal</option>
+            <option>Learning to trust again</option>
+          </optgroup>
+          <optgroup label="Single">
+            <option>Single by choice — intentional</option>
+            <option>Single and actively dating</option>
+            <option>Single and not looking right now</option>
+            <option>Focusing on healing before dating again</option>
+          </optgroup>
+        </select>
+
+        <label>Who are you in this relationship to right now?</label>
+        <select id="myRoleSelect">
+          <option value="">— How would you describe yourself in this? —</option>
+          <option>The giver — I give more than I receive</option>
+          <option>The fixer — I'm always trying to save/improve them</option>
+          <option>The avoider — I shut down when things get hard</option>
+          <option>The pursuer — I chase and they pull away</option>
+          <option>The people pleaser — I say yes when I mean no</option>
+          <option>The secure one — I communicate well and hold boundaries</option>
+          <option>The codependent — my mood depends on their mood</option>
+          <option>Somewhere in between — it shifts</option>
+        </select>
+
+        <label>What do you most need from this relationship right now?</label>
+        <textarea id="relNeed" placeholder="e.g. I need to feel heard without being judged. I need space to be myself again. I need consistency — not hot and cold..." style="min-height:80px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: MJOLO PATTERNS -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Mjolo Patterns — Do You Recognise Any of These?</div>
+        <div class="step-desc">Click any pattern that's been present in your life. Knowledge is the first step to doing differently.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="panel-grid" id="mjoloPanels"></div>
+    </div>
+  </div>
+
+  <!-- STEP 4: LOVE LANGUAGES -->
+  <div class="step" style="animation-delay:0.4s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">Love Languages</div>
+        <div class="step-desc">How you give and receive love — and whether those needs are being met right now. Rate each on 1–10.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:6px;">How I Give Love</div>
+        <p style="font-size:12px;color:#555;margin-bottom:20px;">How naturally do you express love through each of these? (1=rarely, 10=naturally)</p>
+        <div class="ll-rows" id="giveLL"></div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:6px;">How I Need Love</div>
+        <p style="font-size:12px;color:#555;margin-bottom:20px;">How important is each of these to feeling truly loved? (1=not important, 10=essential)</p>
+        <div class="ll-rows" id="needLL"></div>
+      </div>
+      <div class="card full card-gold">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Your Primary Love Language</div>
+        <div id="llResult" style="font-size:14px;color:#bbb;line-height:1.7;">
+          Rate the sliders above to discover your primary love language and how well it's being met.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: HEALTHY vs UNHEALTHY -->
+  <div class="step" style="animation-delay:0.5s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Is This Relationship Healthy?</div>
+        <div class="step-desc">Tick the signs that apply to your current relationship or the last one you were in. Honest self-assessment only.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="compare-grid" style="margin-bottom:24px;">
+        <div class="compare-col healthy">
+          <div class="compare-heading">✅ Healthy Signs</div>
+          <div id="healthyChecklist"></div>
+        </div>
+        <div class="compare-col unhealthy">
+          <div class="compare-heading">⚠️ Warning Signs</div>
+          <div id="unhealthyChecklist"></div>
+        </div>
+      </div>
+      <div id="healthAssessment" style="display:none;margin-top:16px;"></div>
+      <button class="btn btn-gold" onclick="assessHealth()" style="margin-top:10px;">Assess My Relationship Health</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: HEARTBREAK / HEALING TRACKER -->
+  <div class="step" style="animation-delay:0.6s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Healing Journey</div>
+        <div class="step-desc">Whether you're in a relationship, healing from one, or building yourself — this step is about your inner work.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:16px;">The Heartbreak Stages</div>
+        <p style="font-size:12px;color:#666;margin-bottom:16px;line-height:1.6;">If you're healing from a breakup or loss, click the stage you're in today. All stages are valid.</p>
+        <div class="hb-timeline" id="hbTimeline"></div>
+      </div>
+      <div class="card card-purple">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:16px;">Your Healing Work</div>
+
+        <label>What relationship pattern are you trying to break?</label>
+        <textarea id="h_pattern" placeholder="e.g. I always end up with emotionally unavailable people. I give too much and expect nothing back. I stay too long in situations that don't serve me..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>What does the healed version of you look like in a relationship?</label>
+        <textarea id="h_healed" placeholder="e.g. She sets boundaries without guilt. She chooses people who choose her back. She doesn't shrink to fit someone else's comfort..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>What are you actively doing to heal and grow?</label>
+        <div class="tag-grid" id="healingActions"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: REFLECT + AFFIRM + LOG -->
+  <div class="step" style="animation-delay:0.7s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Reflect &amp; Affirm</div>
+        <div class="step-desc">Close with intention. What you focus on grows.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>💛 What is this relationship (or season of singleness) teaching you?</label>
+        <textarea id="r_lesson" placeholder="e.g. I'm learning that I have to stop abandoning myself to keep other people comfortable. I'm learning what I actually need..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>🎯 One thing I'm committing to this week</label>
+        <textarea id="r_commit" placeholder="e.g. I will have the conversation I've been avoiding. I will stop checking their social media. I will go to therapy..." style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <label>📝 Free reflection — what else needs to be said?</label>
+        <textarea id="r_free" placeholder="Anything that didn't fit above. No filter needed here..." style="min-height:80px;"></textarea>
+      </div>
+
+      <div class="card card-gold" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">💛 Relationship Affirmation</div>
+          <div class="affirm-box">
+            <div class="affirm-text" id="affirmText"></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="affirmByStatus()" style="flex:1;font-size:13px;padding:9px;">✦ Match My Status</button>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:12px;">My Relationship Standards</div>
+          <p style="font-size:12px;color:#555;margin-bottom:12px;line-height:1.6;">Tick what you non-negotiably hold as standards for yourself in any relationship:</p>
+          <div id="standardsChecklist"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:16px;">📅 Relationship Journal — Recent Entries</div>
+        <div id="relLog" style="margin-bottom:16px;"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-gold" onclick="saveEntry()">💛 Save Today's Entry</button>
+          <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-gold" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">💛 Save Today's Entry</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+
+</div>
+
+<!-- STICKY SUMMARY -->
+<button class="summary-toggle" id="summaryToggle" 
+  style="background:var(--gold);color:#000;"
+  onclick="toggleSummary()" data-icon="💛">💛</button>
+
+<div class="summary-strip">
+  <div class="summary-item"><div class="summary-val" id="s_status">—</div><div class="summary-key">Status</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_situation">—</div><div class="summary-key">Situation</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_tags">0</div><div class="summary-key">Tags Active</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_ll">—</div><div class="summary-key">Top Love Lang</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_stage">—</div><div class="summary-key">Healing Stage</div></div>
+  <div class="summary-save">
+    <button class="btn btn-green" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session') || '{}');
+if (!session.loggedIn) window.location.href = 'wellness1.html';
+const userEmail = session.email;
+const userName  = session.name || 'Friend';
+const firstName = userName.split(' ')[0];
+const navName   = document.getElementById('navName');
+const navAvatar = document.getElementById('navAvatar');
+navName.textContent   = firstName;
+navAvatar.textContent = firstName.charAt(0).toUpperCase();
+navName.style.opacity = navAvatar.style.opacity = '1';
+function key(s) { return `wl_${userEmail}_${s}`; }
+
+// ── TIME GREETING ─────────────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date(), h = now.getHours();
+  document.getElementById('timeGreeting').textContent =
+    h < 12 ? `Good morning, ${firstName}` : h < 17 ? `Good afternoon, ${firstName}` : `Good evening, ${firstName}`;
+  document.getElementById('clockTime').textContent =
+    String(h).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock, 30000);
+
+// ── DATE ──────────────────────────────────────────────────────────────────────
+let currentDate = new Date();
+function dk(d) { return d.toISOString().slice(0,10); }
+function fmt(d) { return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+function shiftDate(n) { currentDate.setDate(currentDate.getDate()+n); renderDate(); loadEntry(); }
+function renderDate() {
+  document.getElementById('dateStr').textContent = fmt(currentDate);
+  const strip = document.getElementById('weekStrip');
+  strip.innerHTML = '';
+  for (let i=-3;i<=3;i++) {
+    const d = new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip = document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadEntry(); };
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state = {
+  relStatus:'', statusNote:'', situationType:'', myRole:'', relNeed:'',
+  situationTags:[], giveLL:{}, needLL:{}, hbStage:'',
+  h_pattern:'', h_healed:'', healingActions:[],
+  healthyChecked:[], unhealthyChecked:[], standardsChecked:[],
+  r_lesson:'', r_commit:'', r_free:'', ts:''
+};
+
+// ── STATUS TILES ──────────────────────────────────────────────────────────────
+function selectStatus(el) {
+  document.querySelectorAll('.status-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  state.relStatus = el.dataset.status;
+  document.getElementById('s_status').textContent = el.dataset.status;
+}
+
+// ── SITUATION TAGS ────────────────────────────────────────────────────────────
+const SIT_TAGS = [
+  'Mixed signals','Ghosted','Being gaslighted','Trust issues','Long distance',
+  'Situationship','Love bombing','Communication breakdown','Jealousy',
+  'Considering breaking up','Just broke up','Cheating involved',
+  'Falling for someone new','Unequal effort','Feeling lonely in the relationship',
+  'Attachment issues','Healing from narcissist','Black tax pressure',
+  'Family disapproves','Moving too fast','Moving too slow',
+];
+function renderSituationTags() {
+  const wrap = document.getElementById('situationTags');
+  SIT_TAGS.forEach(tag=>{
+    const t=document.createElement('div'); t.className='ttag'; t.textContent=tag; t.dataset.tag=tag;
+    t.onclick=()=>{
+      t.classList.toggle('active');
+      if(t.classList.contains('active')){ if(!state.situationTags.includes(tag)) state.situationTags.push(tag); }
+      else state.situationTags=state.situationTags.filter(x=>x!==tag);
+      document.getElementById('s_tags').textContent=state.situationTags.length;
+    };
+    wrap.appendChild(t);
+  });
+}
+
+// ── MJOLO PANELS ──────────────────────────────────────────────────────────────
+const MJOLO_PANELS = [
+  {icon:'💬',title:'The Talking Stage',desc:'That limbo between strangers and something real.',
+    expand:`<strong>What it is:</strong> You're texting daily, maybe seeing each other, but nobody has named what this is. It feels like a relationship — but has no commitment, no protection, no clarity.<br><br>
+    <strong>The problem:</strong> The talking stage can stretch for months. If someone is comfortable staying there indefinitely, they are either keeping their options open, or you are a backup — not a priority.<br><br>
+    <strong>What you can do:</strong> After 4–6 weeks of consistent contact and time together, it is completely reasonable to say: <em>"I enjoy this. What are we doing?"</em> Anyone who responds with anger or avoidance has told you exactly who they are.<br><br>
+    <strong>Remember:</strong> Clarity is not clingy. It is self-respect.<em>`},
+  {icon:'👻',title:'Ghosting',desc:'When they disappear without a word. No closure. No explanation.',
+    expand:`<strong>What it is:</strong> Someone who was present in your life suddenly stops responding — to messages, calls, everything — without explanation.<br><br>
+    <strong>Why they do it:</strong> Cowardice. Avoidance of discomfort. Sometimes they've met someone else. Sometimes they're keeping you as a backup option they can activate later.<br><br>
+    <strong>What it does to you:</strong> Leaves you questioning yourself. Replaying conversations. Wondering what you did wrong. This psychological damage is real — and it is not your fault.<br><br>
+    <strong>The truth:</strong> Ghosting says everything about their emotional maturity and nothing about your worth. You deserve someone who can communicate.<br><br>
+    <em>Closure comes from within. Stop waiting for it from someone who has already shown you they won't give it.</em>`},
+  {icon:'🔄',title:'The Situationship',desc:'More than friends. Less than a relationship. Stuck in between.',
+    expand:`<strong>What it is:</strong> You do relationship things — time together, affection, maybe sex — but without any real commitment or defined future.<br><br>
+    <strong>Who stays in situationships:</strong> One person usually wants more but is afraid to say so. The other is comfortable because they get what they want without accountability or obligation.<br><br>
+    <strong>The cost:</strong> Situationships waste emotional energy. You cannot fully heal, grow, or open yourself to real love while you are half-in something that cannot hold you.<br><br>
+    <strong>How to exit:</strong> <em>"I need clarity on what we are. If we're not working toward something real, I need to step back."</em> Say it once. If they hesitate or avoid — that IS your answer.<br><br>
+    <em>You cannot negotiate your way into someone wanting to commit to you. They either do — or they don't.</em>`},
+  {icon:'🎭',title:'Love Bombing',desc:'Overwhelming affection early — then the withdrawal comes.',
+    expand:`<strong>What it is:</strong> Excessive compliments, constant messages, grand gestures, declarations of love — very early and very fast. It feels incredible. That's the point.<br><br>
+    <strong>Why it's dangerous:</strong> Love bombing creates a bond before you've had time to see who this person really is. It manufactures intimacy to create dependency.<br><br>
+    <strong>The cycle:</strong> Love bombing → Devalue (they become cold, critical, withdrawn) → Discard (they pull away or end it). Then the cycle often restarts. This is a hallmark pattern of narcissistic relationships.<br><br>
+    <strong>Red flag test:</strong> Healthy love builds over time. If someone is telling you you're their soulmate within 2 weeks — slow down. Real love doesn't need to rush to feel permanent.<br><br>
+    <em>Real love is consistent. It doesn't need to overwhelm you in the first week to prove it's real.</em>`},
+  {icon:'📱',title:'Mixed Signals',desc:'Hot one day, cold the next. Always leaving you guessing.',
+    expand:`<strong>What mixed signals really mean:</strong> They are either unsure about you, managing multiple options simultaneously, or emotionally avoidant and unable to commit — even to a direction.<br><br>
+    <strong>What we do:</strong> We make excuses for the cold behaviour. We focus on the warm moments as proof they care. We keep waiting for the "real them" to come back.<br><br>
+    <strong>The truth:</strong> Consistency is a choice. Anyone who consistently sends mixed signals is consistently choosing not to be clear with you. That is a decision.<br><br>
+    <strong>What to do:</strong> Stop chasing the version of them that showed up on the good days. Look at the overall pattern over 30 days. A genuinely interested person makes it known.<br><br>
+    <em>Confusion is not romance. It is anxiety dressed up as chemistry.</em>`},
+  {icon:'🔁',title:'On-Again Off-Again',desc:'Breaking up and getting back together. The cycle that never ends.',
+    expand:`<strong>What it is:</strong> A relationship that repeatedly ends and restarts — usually with the same unresolved problems intact each time.<br><br>
+    <strong>Why we go back:</strong> The reconnection feels like proof the love is real. The chemistry when you reunite is intense — because separation creates longing, not healing.<br><br>
+    <strong>What research shows:</strong> On-off relationships have higher rates of physical violence, emotional abuse, and psychological distress than relationships that end cleanly.<br><br>
+    <strong>Breaking the cycle:</strong> The next time it ends — treat it as final. Block if you need to. Do not "stay friends" immediately. Let yourself actually grieve. The urge to go back will pass if you don't feed it.<br><br>
+    <em>Going back to what broke you will not fix you. It will just break you again — with more evidence that you should have left.</em>`},
+  {icon:'💸',title:'Transactional Love',desc:'When affection becomes a currency. Keeping score.',
+    expand:`<strong>What it looks like:</strong> A relationship where affection, time, and care are conditional on what you provide — financially, emotionally, sexually, or socially.<br><br>
+    <strong>In South African context:</strong> Blessers/blessee dynamics, sugar dating, relationships where someone's financial contribution buys them access, control, or compliance.<br><br>
+    <strong>The cost:</strong> Transactional relationships erode self-worth. When someone treats your love like a commodity, you begin to believe that's all you are worth. It is not.<br><br>
+    <strong>Healthy vs transactional:</strong> In a healthy relationship, you give because you choose to — not because you must to keep someone around. Gifts are expressions of love, not leverage.<br><br>
+    <em>You are not a service. You deserve to be loved for who you are — not for what you can provide or produce.</em>`},
+  {icon:'🧩',title:'Surviving Heartbreak',desc:'How to actually heal — not just cope and repeat.',
+    expand:`<strong>What heartbreak really is:</strong> Loss of the person, loss of the future you imagined, loss of the version of yourself you were in that relationship. All three must be grieved separately.<br><br>
+    <strong>What doesn't work:</strong> Rushing into another relationship. Staying "just friends" immediately. Checking their social media. Hoping they'll come back if you just wait long enough.<br><br>
+    <strong>What does work:</strong><br>
+    • Let yourself feel it fully — suppressed grief resurfaces later, usually at the worst time<br>
+    • Tell the story to people who can hold it well — not everyone, but someone<br>
+    • Rebuild your identity outside of the relationship — who were you before?<br>
+    • Move your body — grief lives in the body, not just the mind<br>
+    • 90-day no-contact minimum — every time you break it, you restart the clock<br><br>
+    <strong>Coach L says:</strong> You don't get over someone. You get through them. And on the other side — if you've done the work — you meet a clearer, stronger version of yourself.<br><br>
+    <em>The goal isn't to stop loving them. It's to love yourself more than you need them.</em>`},
+];
+function renderMjoloPanels() {
+  const g = document.getElementById('mjoloPanels');
+  MJOLO_PANELS.forEach(p=>{
+    const card=document.createElement('div'); card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── LOVE LANGUAGES ────────────────────────────────────────────────────────────
+const LOVE_LANGS = [
+  {key:'words',label:'💬 Words of Affirmation',desc:'Verbal praise, encouragement, "I love you", compliments',color:'#00d2ff'},
+  {key:'time',label:'⏱ Quality Time',desc:'Undivided attention, presence, meaningful one-on-one time',color:'#39ff14'},
+  {key:'touch',label:'🤲 Physical Touch',desc:'Hugs, holding hands, physical closeness and affection',color:'#a855f7'},
+  {key:'acts',label:'🛠 Acts of Service',desc:'Doing things that ease their burden — cooking, helping, showing up',color:'#ff8c00'},
+  {key:'gifts',label:'🎁 Receiving Gifts',desc:'Thoughtful tokens, surprises, gestures that say "I thought of you"',color:'#f5c518'},
+];
+function renderLoveLanguages() {
+  ['giveLL','needLL'].forEach(wrId=>{
+    const wrap = document.getElementById(wrId);
+    LOVE_LANGS.forEach(ll=>{
+      const stateKey = wrId === 'giveLL' ? 'giveLL' : 'needLL';
+      const row = document.createElement('div'); row.className='ll-row';
+      const initVal = state[stateKey][ll.key] || 5;
+      row.innerHTML=`
+        <div class="ll-header">
+          <span class="ll-label">${ll.label}</span>
+          <span class="ll-val" id="${wrId}_val_${ll.key}">${initVal}</span>
+        </div>
+        <div class="ll-bar-wrap"><div class="ll-bar-fill" id="${wrId}_bar_${ll.key}" style="width:${initVal*10}%;background:${ll.color};"></div></div>
+        <input type="range" min="1" max="10" value="${initVal}" oninput="updateLL('${wrId}','${ll.key}',this.value,'${ll.color}')">
+      `;
+      wrap.appendChild(row);
+    });
+  });
+}
+function updateLL(wrId, key, val, color) {
+  val = parseInt(val);
+  const stKey = wrId === 'giveLL' ? 'giveLL' : 'needLL';
+  state[stKey][key] = val;
+  document.getElementById(`${wrId}_val_${key}`).textContent = val;
+  document.getElementById(`${wrId}_bar_${key}`).style.width = (val*10)+'%';
+  updateLLResult();
+}
+function updateLLResult() {
+  const need = state.needLL;
+  if (!Object.keys(need).length) return;
+  const sorted = LOVE_LANGS.slice().sort((a,b)=>(need[b.key]||5)-(need[a.key]||5));
+  const top = sorted[0];
+  const give = state.giveLL;
+  const giveSorted = LOVE_LANGS.slice().sort((a,b)=>(give[b.key]||5)-(give[a.key]||5));
+  const topGive = giveSorted[0];
+  const gap = top.key !== topGive.key;
+  document.getElementById('s_ll').textContent = top.label.split(' ').slice(1,3).join(' ');
+  document.getElementById('llResult').innerHTML = `
+    <p style="margin-bottom:12px;"><strong style="color:var(--gold);">Your primary love language is: ${top.label}</strong></p>
+    <p style="margin-bottom:10px;color:#bbb;line-height:1.7;">${top.desc} — this is how you feel most deeply loved and valued.</p>
+    <p style="margin-bottom:10px;"><strong style="color:#aaa;">You primarily give love through: ${topGive.label}</strong></p>
+    ${gap ? `<p style="background:rgba(255,75,43,0.08);border:1px solid rgba(255,75,43,0.2);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.7;margin-top:10px;">
+      ⚠️ <strong>There's a mismatch</strong> between how you give love (${topGive.label.split(' ').slice(1).join(' ')}) and how you need to receive it (${top.label.split(' ').slice(1).join(' ')}). 
+      This is very common — and it's why people in loving relationships still feel unloved. The fix: communicate your language to your partner.</p>` :
+    `<p style="background:rgba(57,255,20,0.06);border:1px solid rgba(57,255,20,0.2);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.7;margin-top:10px;">
+      ✅ <strong>You give and receive love in the same language.</strong> When both partners share this awareness, relationships feel more reciprocal and satisfying.</p>`}
+  `;
+}
+
+// ── HEALTHY/UNHEALTHY CHECKLIST ────────────────────────────────────────────────
+const HEALTHY_SIGNS = [
+  'I feel safe to be myself around this person',
+  'We can disagree without it becoming destructive',
+  'I trust them — and they trust me',
+  'I have friends and a life outside of this relationship',
+  'My partner supports my growth, even when it means I change',
+  'I can say no without fear of punishment',
+  'We repair after conflict — it doesn\'t just get buried',
+  'I feel valued for who I am, not just what I do',
+  'We both show up for each other consistently',
+  'I would describe myself as happy more days than not',
+];
+const UNHEALTHY_SIGNS = [
+  'I feel afraid of their moods or reactions',
+  'I regularly walk on eggshells around them',
+  'They check my phone, track my location, or monitor me',
+  'I have been cut off from friends or family because of them',
+  'They have put me down, embarrassed me, or called me names',
+  'They have threatened to hurt me, themselves, or my children',
+  'Sex happens because I feel I have no choice',
+  'I feel like I am constantly to blame for their behaviour',
+  'I have made excuses for their behaviour to other people',
+  'I am afraid of what they might do if I leave',
+];
+function renderHealthChecklists() {
+  const hw = document.getElementById('healthyChecklist');
+  const uw = document.getElementById('unhealthyChecklist');
+  HEALTHY_SIGNS.forEach((s,i)=>{
+    const d=document.createElement('div'); d.className='check-item'; d.dataset.type='h'; d.dataset.idx=i;
+    d.innerHTML=`<div class="check-box" id="hchk_${i}"></div><div class="check-text">${s}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('hchk_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){ if(!state.healthyChecked.includes(i)) state.healthyChecked.push(i); }
+      else state.healthyChecked=state.healthyChecked.filter(x=>x!==i);
+    };
+    hw.appendChild(d);
+  });
+  UNHEALTHY_SIGNS.forEach((s,i)=>{
+    const d=document.createElement('div'); d.className='check-item'; d.dataset.type='u'; d.dataset.idx=i;
+    d.innerHTML=`<div class="check-box" id="uchk_${i}"></div><div class="check-text">${s}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('uchk_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){ if(!state.unhealthyChecked.includes(i)) state.unhealthyChecked.push(i); }
+      else state.unhealthyChecked=state.unhealthyChecked.filter(x=>x!==i);
+    };
+    uw.appendChild(d);
+  });
+}
+function assessHealth() {
+  const h = state.healthyChecked.length;
+  const u = state.unhealthyChecked.length;
+  const el = document.getElementById('healthAssessment');
+  el.style.display='block';
+  let color, title, msg, advice;
+  if (u >= 5) {
+    color='var(--red)'; title='⚠️ Serious Warning Signs Present';
+    msg=`You've identified ${u} warning sign${u>1?'s':''} in this relationship. What you're describing aligns with patterns of emotional or potential physical abuse.`;
+    advice='Please do not dismiss what you\'ve ticked. These signs matter. Speak to someone trusted — a therapist, counsellor, or the GBV Command Centre (0800 428 428). You deserve safety. You are not overreacting.';
+  } else if (u >= 2) {
+    color='var(--orange)'; title='⚡ Some Concerning Patterns';
+    msg=`You've ticked ${u} warning sign${u>1?'s':''} alongside ${h} healthy sign${h!==1?'s':''}. This is worth paying attention to.`;
+    advice='These patterns often escalate over time. Consider couples therapy, or individual therapy to process what you\'re experiencing. Trust your instincts — they brought you here for a reason.';
+  } else if (h >= 7) {
+    color='var(--green)'; title='✅ Strong Healthy Foundations';
+    msg=`You've identified ${h} healthy signs in this relationship.`;
+    advice='This suggests a relationship with real health and resilience. Keep investing in communication, repair, and presence. Every relationship requires ongoing attention — healthy ones are built, not just found.';
+  } else {
+    color='var(--gold)'; title='💛 Mixed Picture';
+    msg=`${h} healthy signs and ${u} warning sign${u!==1?'s':''}. This reflects a relationship with both strengths and areas needing attention.`;
+    advice='Name the specific areas of concern and bring them into conversation — ideally with a couples therapist or counsellor. Mixed doesn\'t mean bad. It means work is needed, and work is possible.';
+  }
+  el.innerHTML=`<div style="background:rgba(255,255,255,0.04);border:1px solid ${color};border-radius:12px;padding:20px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:${color};text-transform:uppercase;margin-bottom:8px;">${title}</div>
+    <p style="font-size:14px;color:#ccc;margin-bottom:10px;line-height:1.6;">${msg}</p>
+    <p style="font-size:13px;color:#aaa;line-height:1.7;">${advice}</p>
+  </div>`;
+}
+
+// ── HEARTBREAK STAGES ─────────────────────────────────────────────────────────
+const HB_STAGES = [
+  {num:'1',title:'Shock & Denial',desc:'This can\'t be real. You keep reaching for your phone to tell them something. The absence is everywhere.'},
+  {num:'2',title:'Bargaining & Obsession',desc:'What if I had done X differently? Could I change their mind? The mental replays. The almost-texts.'},
+  {num:'3',title:'Anger',desc:'How could they? After everything. The betrayal. The rage. The unfairness of it all sitting in your chest.'},
+  {num:'4',title:'Grief & Sadness',desc:'The real weight of it arrives. The loss of the future you imagined. The crying for no apparent reason.'},
+  {num:'5',title:'Acceptance',desc:'It happened. You survived it. You are still here. The story starts to belong to you, not define you.'},
+  {num:'6',title:'Rebuilding',desc:'You remember who you were before. You start doing things for yourself again. The world is widening.'},
+  {num:'7',title:'Integration',desc:'You carry the lesson, not the wound. You are grateful for what you learned, even through the pain.'},
+];
+function renderHBTimeline() {
+  const wrap = document.getElementById('hbTimeline');
+  HB_STAGES.forEach(s=>{
+    const div=document.createElement('div'); div.className='hb-stage'; div.dataset.stage=s.title;
+    div.innerHTML=`<div class="hb-num">${s.num}</div><div class="hb-body"><div class="hb-title">${s.title}</div><div class="hb-desc">${s.desc}</div></div>`;
+    div.onclick=()=>{
+      document.querySelectorAll('.hb-stage').forEach(x=>x.classList.remove('active'));
+      div.classList.add('active');
+      state.hbStage=s.title;
+      document.getElementById('s_stage').textContent=s.num;
+    };
+    wrap.appendChild(div);
+  });
+}
+
+// ── HEALING ACTIONS ────────────────────────────────────────────────────────────
+const HEALING_ACTS = [
+  'Therapy / counselling','Journaling','Reading about attachment styles','No contact with ex',
+  'Building my social circle','Focusing on my career','Working out / moving my body',
+  'Spiritual practice / prayer','Gratitude practice','Setting new boundaries','Solo dates',
+  'Affirmations daily','Limiting social media','Talking to trusted friends',
+];
+function renderHealingActions() {
+  const wrap = document.getElementById('healingActions');
+  HEALING_ACTS.forEach(act=>{
+    const t=document.createElement('div'); t.className='ttag'; t.textContent=act; t.dataset.act=act;
+    t.onclick=()=>{
+      t.classList.toggle('active');
+      if(t.classList.contains('active')){ if(!state.healingActions.includes(act)) state.healingActions.push(act); }
+      else state.healingActions=state.healingActions.filter(x=>x!==act);
+    };
+    wrap.appendChild(t);
+  });
+}
+
+// ── STANDARDS CHECKLIST ───────────────────────────────────────────────────────
+const STANDARDS = [
+  'I will not accept being disrespected, even casually',
+  'I will not beg for communication or basic consideration',
+  'I will not lose my friends or family for a relationship',
+  'I will not ignore red flags in the first 3 months',
+  'I will not stay somewhere I feel unsafe',
+  'I will not settle for unclear or undefined situations indefinitely',
+  'I will communicate my needs — and leave if they are consistently unmet',
+  'I will be with someone who chooses me consistently, not only sometimes',
+  'I will not accept love I have to earn through performance',
+  'I will trust my instincts when something feels wrong',
+];
+function renderStandards() {
+  const wrap = document.getElementById('standardsChecklist');
+  STANDARDS.forEach((s,i)=>{
+    const div=document.createElement('div'); div.className='check-item'; div.dataset.sidx=i;
+    div.innerHTML=`<div class="check-box" id="std_${i}"></div><div class="check-text">${s}</div>`;
+    div.onclick=()=>{
+      div.classList.toggle('checked');
+      document.getElementById('std_'+i).textContent=div.classList.contains('checked')?'✓':'';
+      if(div.classList.contains('checked')){ if(!state.standardsChecked.includes(i)) state.standardsChecked.push(i); }
+      else state.standardsChecked=state.standardsChecked.filter(x=>x!==i);
+    };
+    wrap.appendChild(div);
+  });
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────────────
+const AFFIRMATIONS = {
+  general:[
+    'I deserve a love that is consistent, not conditional.',
+    'I am whole on my own. A partner adds to me — they do not complete me.',
+    'I choose relationships that choose me back. Fully.',
+    'My standards are not too high. They are mine.',
+    'The love I give to others, I also deserve to give to myself.',
+  ],
+  Thriving:['I am grateful for this love. I nurture it with intention.','We choose each other every day. That is not small.'],
+  Stable:['Stable is not boring. Stable is safe. I honour what we\'ve built.','Consistent love is real love. I don\'t underestimate it.'],
+  Complicated:['I can hold complexity without collapsing. I am figuring this out.','I don\'t have to solve this today. I just have to stay honest.'],
+  Struggling:['Struggling does not mean failing. It means something needs attention.','I can love someone and still acknowledge when something is not okay.'],
+  Healing:['I am healing. That is the bravest thing I do every day.','What broke me was not the end of me. It was the beginning of my clarity.'],
+  Single:['Being single is not a waiting room. It is a room of its own.','I am not incomplete. I am full — and available to the right thing when it comes.'],
+};
+function newAffirm() {
+  const all=Object.values(AFFIRMATIONS).flat();
+  setAffirm(all[Math.floor(Math.random()*all.length)]);
+}
+function affirmByStatus() {
+  const list=AFFIRMATIONS[state.relStatus]||AFFIRMATIONS.general;
+  setAffirm(list[Math.floor(Math.random()*list.length)]);
+}
+function setAffirm(txt) {
+  const el=document.getElementById('affirmText');
+  el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=txt; el.style.transition='opacity 0.4s'; el.style.opacity=1; },250);
+}
+
+// ── RELATIONSHIP LOG ──────────────────────────────────────────────────────────
+let relLog = [];
+function loadRelLog() {
+  const raw=localStorage.getItem(key('life3_log')); relLog=raw?JSON.parse(raw):[]; renderRelLog();
+}
+function renderRelLog() {
+  const el=document.getElementById('relLog');
+  if(!relLog.length){ el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to start your relationship journal.</p>'; return; }
+  el.innerHTML='';
+  relLog.slice(0,4).forEach((e,i)=>{
+    const d=document.createElement('div'); d.className='rel-log-item';
+    d.innerHTML=`<div class="rl-left">
+      <div class="rl-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div>
+      <div class="rl-status">${e.status||'—'}</div>
+      ${e.note?`<div class="rl-note">${e.note.slice(0,120)}${e.note.length>120?'…':''}</div>`:''}
+    </div>
+    <button class="rl-del" onclick="delRelLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(relLog.length>4){ const m=document.createElement('p'); m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;'; m.textContent=`+ ${relLog.length-4} earlier entries`; el.appendChild(m); }
+}
+function delRelLog(i){ relLog.splice(i,1); localStorage.setItem(key('life3_log'),JSON.stringify(relLog)); renderRelLog(); }
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry() {
+  state.statusNote    = document.getElementById('statusNote').value;
+  state.situationType = document.getElementById('situationType').value;
+  state.myRole        = document.getElementById('myRoleSelect').value;
+  state.relNeed       = document.getElementById('relNeed').value;
+  state.h_pattern     = document.getElementById('h_pattern').value;
+  state.h_healed      = document.getElementById('h_healed').value;
+  state.r_lesson      = document.getElementById('r_lesson').value;
+  state.r_commit      = document.getElementById('r_commit').value;
+  state.r_free        = document.getElementById('r_free').value;
+  state.ts            = new Date().toISOString();
+
+  localStorage.setItem(key('life3_'+dk(currentDate)), JSON.stringify(state));
+
+  // Append to log
+  relLog.unshift({ status:state.relStatus, note:state.statusNote, date:state.ts });
+  localStorage.setItem(key('life3_log'), JSON.stringify(relLog));
+  renderRelLog();
+
+  // Update summary
+  const sitEl = document.getElementById('situationType');
+  const sitTxt = sitEl.options[sitEl.selectedIndex]?.text||'—';
+  document.getElementById('s_situation').textContent = sitTxt.length>14?sitTxt.slice(0,14)+'…':sitTxt;
+
+  // Email
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{
+    studentName:userName, studentEmail:userEmail,
+    courseName:`Life 3 Relationship Check-In — ${fmt(currentDate)}`,
+    coursePrice:'N/A', courseDuration:'Wellness Portal', sessionType:'Online', paymentMethod:'Free',
+    additionalInfo:`Relationship Status: ${state.relStatus||'—'}\nSituation: ${state.situationType||'—'}\nMy Role: ${state.myRole||'—'}\nTags: ${state.situationTags.join(', ')||'None'}\nHealing Stage: ${state.hbStage||'—'}\nLesson: ${state.r_lesson.slice(0,200)||'—'}\nCommitment: ${state.r_commit.slice(0,200)||'—'}`,
+    dashboardUrl:window.location.href
+  }).catch(()=>{});
+
+  showToast('💛 Entry saved');
+}
+
+function loadEntry() {
+  const raw=localStorage.getItem(key('life3_'+dk(currentDate)));
+  if(!raw) return;
+  const s=JSON.parse(raw);
+
+  if(s.relStatus){ document.querySelectorAll('.status-tile').forEach(t=>{ if(t.dataset.status===s.relStatus) t.classList.add('active'); }); state.relStatus=s.relStatus; document.getElementById('s_status').textContent=s.relStatus; }
+
+  document.getElementById('statusNote').value    = s.statusNote||'';
+  document.getElementById('situationType').value = s.situationType||'';
+  document.getElementById('myRoleSelect').value  = s.myRole||'';
+  document.getElementById('relNeed').value       = s.relNeed||'';
+  document.getElementById('h_pattern').value     = s.h_pattern||'';
+  document.getElementById('h_healed').value      = s.h_healed||'';
+  document.getElementById('r_lesson').value      = s.r_lesson||'';
+  document.getElementById('r_commit').value      = s.r_commit||'';
+  document.getElementById('r_free').value        = s.r_free||'';
+
+  // Tags
+  state.situationTags=s.situationTags||[];
+  document.querySelectorAll('#situationTags .ttag').forEach(t=>{ if(state.situationTags.includes(t.dataset.tag)) t.classList.add('active'); });
+  document.getElementById('s_tags').textContent=state.situationTags.length;
+
+  // Healing actions
+  state.healingActions=s.healingActions||[];
+  document.querySelectorAll('#healingActions .ttag').forEach(t=>{ if(state.healingActions.includes(t.dataset.act)) t.classList.add('active'); });
+
+  // Heartbreak stage
+  if(s.hbStage){ document.querySelectorAll('.hb-stage').forEach(d=>{ if(d.dataset.stage===s.hbStage){ d.classList.add('active'); document.getElementById('s_stage').textContent=d.querySelector('.hb-num').textContent; } }); }
+
+  // Healthy/Unhealthy
+  state.healthyChecked=s.healthyChecked||[];
+  state.healthyChecked.forEach(i=>{ const d=document.querySelector(`.check-item[data-type="h"][data-idx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('hchk_'+i).textContent='✓';} });
+  state.unhealthyChecked=s.unhealthyChecked||[];
+  state.unhealthyChecked.forEach(i=>{ const d=document.querySelector(`.check-item[data-type="u"][data-idx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('uchk_'+i).textContent='✓';} });
+
+  // Standards
+  state.standardsChecked=s.standardsChecked||[];
+  state.standardsChecked.forEach(i=>{ const d=document.querySelector(`.check-item[data-sidx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('std_'+i).textContent='✓';} });
+
+  // Love languages
+  state.giveLL=s.giveLL||{}; state.needLL=s.needLL||{};
+  LOVE_LANGS.forEach(ll=>{
+    if(state.giveLL[ll.key]){ document.querySelector(`#giveLL input[oninput*="${ll.key}"]`).value=state.giveLL[ll.key]; updateLL('giveLL',ll.key,state.giveLL[ll.key],ll.color); }
+    if(state.needLL[ll.key]){ document.querySelector(`#needLL input[oninput*="${ll.key}"]`).value=state.needLL[ll.key]; updateLL('needLL',ll.key,state.needLL[ll.key],ll.color); }
+  });
+
+  state={...state,...s};
+  showToast('Entry loaded');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderSituationTags();
+renderMjoloPanels();
+renderLoveLanguages();
+renderHealthChecklists();
+renderHBTimeline();
+renderHealingActions();
+renderStandards();
+loadRelLog();
+newAffirm();
+
+function toggleSummary() {
+  const strip = document.getElementById('summaryStrip');
+  const btn = document.getElementById('summaryToggle');
+  strip.classList.toggle('open');
+  btn.textContent = strip.classList.contains('open') ? '✕' : btn.dataset.icon;
+}
+
+</script>
+</body>
+</html>

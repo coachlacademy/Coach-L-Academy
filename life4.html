@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 4 — Family & Parenting | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #a855f7;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background: radial-gradient(ellipse at 20% 20%, rgba(168,85,247,0.07) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 80%, rgba(245,197,24,0.04) 0%, transparent 55%), #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--purple); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass {
+  padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border);
+  color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;
+  transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-glass:hover { border-color:var(--purple); color:var(--purple); }
+.user-chip {
+  display:flex; align-items:center; gap:8px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:6px 14px; border-radius:30px; font-size:13px;
+}
+.avatar {
+  width:26px; height:26px; border-radius:50%;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:900; color:#fff;
+}
+
+/* PAGE HEADER */
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--purple); margin-bottom:8px; }
+.page-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,8vw,5.5rem); font-weight:900;
+  text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px;
+}
+.page-title span { color:var(--purple); }
+.page-sub { font-size:15px; color:#bbb; max-width:560px; line-height:1.7; }
+
+.time-greeting {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px;
+}
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--purple); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* DATE NAV */
+.date-nav {
+  display:flex; align-items:center; gap:14px; margin:0 auto 40px;
+  max-width:1100px; padding:0 40px; flex-wrap:wrap;
+}
+.date-btn {
+  background:var(--glass); border:1px solid var(--glass-border); color:#fff;
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s;
+}
+.date-btn:hover { border-color:var(--purple); color:var(--purple); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--purple); border-color:var(--purple); color:#fff; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+
+/* MAIN */
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num {
+  font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--purple); background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.35);
+  padding:4px 12px; border-radius:20px; white-space:nowrap;
+}
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+/* CARD */
+.card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:28px; backdrop-filter:blur(12px);
+  position:relative; overflow:hidden; transition:border-color 0.3s;
+}
+.card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent);
+}
+.card:hover { border-color:rgba(168,85,247,0.2); }
+.card-purple { border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.04); }
+.card-gold   { border-color:rgba(245,197,24,0.25);  background:rgba(245,197,24,0.04); }
+.card-red    { border-color:rgba(255,75,43,0.2);    background:rgba(255,75,43,0.04); }
+.card-green  { border-color:rgba(57,255,20,0.2);    background:rgba(57,255,20,0.04); }
+.card-blue   { border-color:rgba(0,210,255,0.2);    background:rgba(0,210,255,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* FAMILY STATUS TILES */
+.status-tiles { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.status-tile {
+  flex:1; min-width:130px; padding:16px 12px; border-radius:12px; text-align:center;
+  background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s;
+}
+.status-tile:hover,.status-tile.active { transform:translateY(-3px); }
+.status-tile .st-emoji { font-size:26px; display:block; margin-bottom:8px; }
+.status-tile .st-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; text-transform:uppercase; letter-spacing:0.5px; }
+.status-tile .st-desc { font-size:10px; color:#666; margin-top:3px; }
+.status-tile[data-s="Thriving"]:hover,.status-tile[data-s="Thriving"].active{border-color:#39ff14;background:rgba(57,255,20,0.07);color:#39ff14;}
+.status-tile[data-s="Stable"]:hover,.status-tile[data-s="Stable"].active{border-color:var(--blue);background:rgba(0,210,255,0.07);color:var(--blue);}
+.status-tile[data-s="Strained"]:hover,.status-tile[data-s="Strained"].active{border-color:var(--gold);background:rgba(245,197,24,0.07);color:var(--gold);}
+.status-tile[data-s="Struggling"]:hover,.status-tile[data-s="Struggling"].active{border-color:var(--orange);background:rgba(255,140,0,0.07);color:var(--orange);}
+.status-tile[data-s="Rebuilding"]:hover,.status-tile[data-s="Rebuilding"].active{border-color:var(--purple);background:rgba(168,85,247,0.07);color:var(--purple);}
+
+/* TAG GRID */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag {
+  padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700;
+  background:var(--glass); border:1px solid var(--glass-border);
+  cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px;
+}
+.ttag:hover { border-color:rgba(168,85,247,0.5); color:var(--purple); }
+.ttag.active { border-color:rgba(168,85,247,0.6); background:rgba(168,85,247,0.1); color:var(--purple); }
+
+/* AGE TABS */
+.age-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+.age-tab {
+  padding:8px 18px; border-radius:20px; font-family:'Barlow Condensed',sans-serif;
+  font-size:13px; font-weight:900; text-transform:uppercase; letter-spacing:1px;
+  background:var(--glass); border:1px solid var(--glass-border); cursor:pointer; transition:0.25s; color:#bbb;
+}
+.age-tab:hover,.age-tab.active { background:rgba(168,85,247,0.15); border-color:var(--purple); color:var(--purple); }
+
+/* PARENTING CONTENT */
+.parenting-content { display:none; }
+.parenting-content.active { display:block; animation:fadeUp 0.4s ease; }
+
+/* EXPANDABLE PANELS */
+.panel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.panel-card {
+  background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px;
+  cursor:pointer; transition:0.3s;
+}
+.panel-card:hover { border-color:rgba(168,85,247,0.3); transform:translateY(-3px); }
+.panel-card.open { border-color:rgba(168,85,247,0.5); background:rgba(168,85,247,0.05); }
+.pc-icon { font-size:28px; margin-bottom:10px; display:block; }
+.pc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; margin-bottom:4px; }
+.pc-desc { font-size:12px; color:#666; line-height:1.5; }
+.pc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.panel-card.open .pc-expand { display:block; }
+
+/* GBV ASSESSMENT */
+.gbv-q { padding:12px 14px; border-radius:8px; cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; display:flex; align-items:flex-start; gap:12px; }
+.gbv-q:hover { border-color:rgba(255,75,43,0.3); background:rgba(255,75,43,0.04); }
+.gbv-q.checked { border-color:rgba(255,75,43,0.5); background:rgba(255,75,43,0.08); }
+.gbv-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.gbv-q.checked .gbv-box { background:var(--red); border-color:var(--red); color:#fff; font-weight:900; }
+.gbv-text { font-size:13px; color:#ccc; line-height:1.5; }
+.gbv-q.checked .gbv-text { color:#aaa; }
+
+/* CHECK ITEM (green) */
+.check-item {
+  display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px;
+  cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px;
+}
+.check-item:hover { border-color:rgba(168,85,247,0.3); background:rgba(168,85,247,0.04); }
+.check-item.checked { border-color:rgba(57,255,20,0.35); background:rgba(57,255,20,0.05); }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.check-item.checked .check-box { background:var(--green); border-color:var(--green); color:#000; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#aaa; text-decoration:line-through; }
+
+/* RESOURCE CARDS */
+.resource-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+.resource-card {
+  background:rgba(255,75,43,0.05); border:1px solid rgba(255,75,43,0.2);
+  border-radius:12px; padding:16px;
+}
+.rc-org { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; color:var(--red); margin-bottom:4px; }
+.rc-num { font-size:18px; font-weight:700; color:#fff; margin-bottom:4px; }
+.rc-desc { font-size:11px; color:#666; line-height:1.5; }
+
+/* JOURNAL */
+textarea {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:14px; font-size:14px;
+  font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6;
+}
+textarea:focus { outline:none; border-color:var(--purple); background:rgba(168,85,247,0.04); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+select {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:12px 14px; font-size:14px;
+  font-family:'Barlow',sans-serif; transition:0.3s; margin-bottom:14px; outline:none;
+}
+select:focus { border-color:var(--purple); }
+select option { background:#111; color:#fff; }
+
+/* AFFIRMATION */
+.affirm-box {
+  background:rgba(168,85,247,0.06); border:1px solid rgba(168,85,247,0.2);
+  border-radius:12px; padding:24px; text-align:center; min-height:90px;
+  display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+}
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* BUTTONS */
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-purple { background:var(--purple); color:#fff; }
+.btn-purple:hover { filter:brightness(1.15); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--purple); color:var(--purple); }
+.btn-green { background:var(--green); color:#000; }
+.btn-red { background:var(--red); color:#fff; }
+
+/* PROGRESS BAR */
+.prog-bar-wrap { height:10px; border-radius:10px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:4px; }
+.prog-bar-fill { height:100%; border-radius:10px; transition:width 0.5s; }
+input[type=range] {
+  width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer;
+  background:linear-gradient(to right,var(--glass-border),var(--purple));
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff;
+  cursor:pointer; box-shadow:0 0 10px rgba(168,85,247,0.5); border:2px solid var(--purple);
+}
+
+/* LOG ITEM */
+.log-item {
+  display:flex; justify-content:space-between; align-items:flex-start; gap:16px;
+  padding:14px; border-radius:10px; margin-bottom:10px;
+  background:rgba(168,85,247,0.04); border:1px solid rgba(168,85,247,0.15); transition:0.3s;
+}
+.log-item:hover { border-color:rgba(168,85,247,0.3); }
+.li-left { flex:1; }
+.li-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.li-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--purple); }
+.li-note { font-size:13px; color:#999; margin-top:4px; line-height:1.5; }
+.li-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; padding:0 4px; }
+.li-del:hover { color:var(--red); }
+
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+/* STICKY SUMMARY */
+.summary-strip {
+  position:sticky; bottom:0; z-index:50;
+  background:rgba(0,0,0,0.93); backdrop-filter:blur(20px);
+  border-top:1px solid rgba(168,85,247,0.2);
+  padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap;
+}
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--purple); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+.toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--purple); color:#fff; padding:11px 26px; border-radius:30px;
+  font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap;
+  transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* MOBILE SUMMARY STRIP FIX */
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .summary-strip{
+    position:fixed; bottom:0; left:0; right:0;
+    transform:translateY(100%);
+    transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    padding:16px; gap:16px; flex-wrap:wrap; z-index:200;
+  }
+  .summary-strip.open { transform:translateY(0); }
+  .summary-toggle { display:flex !important; }
+  .main { padding-bottom:80px !important; }
+}
+.summary-toggle {
+  display:none;
+  position:fixed; bottom:16px; right:16px; z-index:201;
+  width:52px; height:52px; border-radius:50%;
+  border:none; cursor:pointer; font-size:20px;
+  background:var(--purple); color:#fff;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  align-items:center; justify-content:center;
+  transition:transform 0.2s;
+}
+.summary-toggle:active { transform:scale(0.92); }
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--purple);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 4 · Family &amp; Parenting</div>
+  <h1 class="page-title">Home Is<br>Where The<br><span>Work</span> Is</h1>
+  <p class="page-sub">Family is where we are shaped — and where we do the shaping. This space is for honest reflection on your home life, your parenting, your family dynamics, and the weight you carry that nobody talks about.</p>
+</div>
+
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: HOME LIFE STATUS -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">How Is Home Life Right Now?</div>
+        <div class="step-desc">Your honest family status today — not what you tell people at work. The real version.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="status-tiles">
+        <div class="status-tile" data-s="Thriving" onclick="selectStatus(this)">
+          <span class="st-emoji">🏡</span>
+          <div class="st-label">Thriving</div>
+          <div class="st-desc">Warm, connected, growing</div>
+        </div>
+        <div class="status-tile" data-s="Stable" onclick="selectStatus(this)">
+          <span class="st-emoji">🤝</span>
+          <div class="st-label">Stable</div>
+          <div class="st-desc">Routine, okay, getting by</div>
+        </div>
+        <div class="status-tile" data-s="Strained" onclick="selectStatus(this)">
+          <span class="st-emoji">⚡</span>
+          <div class="st-label">Strained</div>
+          <div class="st-desc">Tension, unresolved issues</div>
+        </div>
+        <div class="status-tile" data-s="Struggling" onclick="selectStatus(this)">
+          <span class="st-emoji">💔</span>
+          <div class="st-label">Struggling</div>
+          <div class="st-desc">Conflict, pain, overwhelm</div>
+        </div>
+        <div class="status-tile" data-s="Rebuilding" onclick="selectStatus(this)">
+          <span class="st-emoji">🌱</span>
+          <div class="st-label">Rebuilding</div>
+          <div class="st-desc">Healing, changing, redefining</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label>What's actually going on at home right now?</label>
+          <textarea id="homeNote" placeholder="e.g. The kids are acting out and I don't know if it's school or something at home. My partner and I are ships passing at night. I'm carrying everything alone..." style="min-height:100px;"></textarea>
+        </div>
+        <div>
+          <label>🏷️ What's currently live in your family life?</label>
+          <div class="tag-grid" id="familyTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: PARENTING BY AGE -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">Parenting by Age — What Your Child Needs Right Now</div>
+        <div class="step-desc">Select your child's age group to get stage-appropriate guidance on emotional development, communication, discipline, and safety.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="age-tabs" id="ageTabs">
+        <div class="age-tab active" data-age="0-4" onclick="selectAge(this)">0 – 4 yrs</div>
+        <div class="age-tab" data-age="5-8" onclick="selectAge(this)">5 – 8 yrs</div>
+        <div class="age-tab" data-age="9-12" onclick="selectAge(this)">9 – 12 yrs</div>
+        <div class="age-tab" data-age="13-17" onclick="selectAge(this)">13 – 17 yrs</div>
+        <div class="age-tab" data-age="18+" onclick="selectAge(this)">18+ / Adult</div>
+      </div>
+
+      <!-- AGE 0-4 -->
+      <div class="parenting-content active" id="age_0-4">
+        <div class="grid-2">
+          <div class="card card-purple">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:12px;">🧠 What's Happening Developmentally</div>
+            <p style="font-size:13px;color:#ccc;line-height:1.8;">At 0–4, a child's brain is forming its attachment architecture — the blueprint for how safe the world feels. Every consistent response you give builds their nervous system. They are not being naughty: they are being underdeveloped. Their prefrontal cortex (the part that regulates emotion and thinks before acting) won't be complete until age 25.</p>
+            <ul style="margin-top:12px;padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+              <li>Cannot regulate emotions without you — co-regulation is the task</li>
+              <li>Tantrums are not manipulation — they are overwhelm</li>
+              <li>Routine = safety. Disruption = anxiety</li>
+              <li>Language is still developing — behaviours speak what words can't</li>
+              <li>You are their entire world at this age. Your calm is their calm.</li>
+            </ul>
+          </div>
+          <div class="card card-gold">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">💛 What They Need From You</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Consistency over perfection.</strong> A child needs a predictable caregiver more than a perfect one. Show up the same way, day after day.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Name their emotions out loud.</strong> "You're angry because I said no. That makes sense. I still love you." This builds emotional vocabulary and brain regulation simultaneously.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Get on their level.</strong> Literally. Kneel down. Make eye contact. A child cannot fully process instructions shouted from above.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Repair matters more than perfection.</strong> You will lose your patience. Repair it: "I was too loud. That wasn't okay. I love you." Repair is what builds secure attachment.</div>
+            </div>
+          </div>
+          <div class="card full">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">🛡️ Safety &amp; Body Awareness at 0–4</div>
+            <div class="grid-2">
+              <div>
+                <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:12px;">Start body safety education as early as age 2–3. Children are at highest risk of abuse from people they know and trust — not strangers. Early, age-appropriate language gives them tools to recognise and report.</p>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">Language to use:</div>
+                <ul style="padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+                  <li>"Your body belongs to you."</li>
+                  <li>"Private parts are the parts covered by your swimsuit."</li>
+                  <li>"Nobody should touch your private parts except a doctor with Mommy/Daddy there."</li>
+                  <li>"If anyone makes you feel uncomfortable, always tell me — you will never be in trouble."</li>
+                  <li>"Secrets that make you feel scared or bad — we don't keep those."</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Warning signs in a young child:</div>
+                <ul style="padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+                  <li>Sudden change in behaviour or personality</li>
+                  <li>Regression (bedwetting, thumb-sucking after stopping)</li>
+                  <li>Sexualised behaviour or language beyond their age</li>
+                  <li>Fear of a specific person or place (previously not there)</li>
+                  <li>Nightmares, sleep disturbances, clinging, unexplained crying</li>
+                  <li>Physical signs: bruising, soreness in private areas</li>
+                </ul>
+                <div style="margin-top:12px;background:rgba(255,75,43,0.08);border:1px solid rgba(255,75,43,0.2);border-radius:8px;padding:12px;font-size:12px;color:#ccc;line-height:1.7;">If you notice these signs: stay calm, believe your child, do not ask leading questions, report to Childline <strong style="color:var(--red);">116</strong> or a trusted health professional immediately.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGE 5-8 -->
+      <div class="parenting-content" id="age_5-8">
+        <div class="grid-2">
+          <div class="card card-purple">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:12px;">🧠 What's Happening Developmentally</div>
+            <p style="font-size:13px;color:#ccc;line-height:1.8;">Ages 5–8 is the school-entry period — a massive social expansion. Children now compare themselves to peers, begin to internalise rules, and develop industry vs inferiority (Erikson): am I capable, or am I not enough? Your response to their mistakes at this age directly shapes their self-worth narrative.</p>
+            <ul style="margin-top:12px;padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+              <li>Beginning to understand consequences — use this</li>
+              <li>Peer relationships become critically important</li>
+              <li>Reading, writing, reasoning are developing fast</li>
+              <li>Can understand basic feelings but still struggle to regulate</li>
+              <li>Still needs physical affection and reassurance</li>
+              <li>Fairness is a huge theme at this age — "That's not fair!"</li>
+            </ul>
+          </div>
+          <div class="card card-gold">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">💛 What They Need From You</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Praise effort, not intelligence.</strong> "You worked so hard on that" builds resilience. "You're so smart" creates fear of failure. Effort is within their control. Intelligence feels fixed.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Be curious, not furious.</strong> When they misbehave, ask first: "What happened? What were you feeling?" Understanding before consequence teaches emotional intelligence.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Involve them in family decisions.</strong> Even small ones. "Should we have pasta or rice tonight?" builds agency and reduces power struggles.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Read together.</strong> Even at 8. Reading aloud builds vocabulary, emotional language, and is irreplaceable bonding time.</div>
+            </div>
+          </div>
+          <div class="card full">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--blue);margin-bottom:12px;">🛡️ Body Safety at 5–8</div>
+            <div class="grid-2">
+              <div>
+                <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:12px;">Children aged 5–8 can understand more nuanced body safety concepts. They are also now in school — around more adults and peers — and need updated language.</p>
+                <ul style="padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+                  <li>Name private parts with anatomically correct terms — "penis," "vagina" — not code words. Children who use correct terms are more easily believed and understood when reporting.</li>
+                  <li>"Nobody should touch your private parts, and you should not touch anyone else's."</li>
+                  <li>"If a grown-up asks you to keep a secret that feels uncomfortable — tell me immediately. Grown-ups should never ask children to keep that kind of secret."</li>
+                  <li>"Online: never share your photo, address, or school name with anyone you don't know in real life."</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--purple);margin-bottom:10px;">The 5 Safety Rules (teach these explicitly):</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="background:rgba(168,85,247,0.08);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--purple);">1. My body belongs to me.</strong></div>
+                  <div style="background:rgba(168,85,247,0.08);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--purple);">2. I know the difference between safe and unsafe touch.</strong></div>
+                  <div style="background:rgba(168,85,247,0.08);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--purple);">3. I can say no, even to grown-ups.</strong></div>
+                  <div style="background:rgba(168,85,247,0.08);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--purple);">4. It's never my fault if someone touches me unsafely.</strong></div>
+                  <div style="background:rgba(168,85,247,0.08);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--purple);">5. I will always tell a trusted adult — and keep telling until someone helps.</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGE 9-12 -->
+      <div class="parenting-content" id="age_9-12">
+        <div class="grid-2">
+          <div class="card card-purple">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:12px;">🧠 What's Happening Developmentally</div>
+            <p style="font-size:13px;color:#ccc;line-height:1.8;">Pre-adolescence. Puberty begins (especially for girls — average onset is 9–10). Identity formation accelerates. Peer approval becomes a primary drive. Abstract thinking develops. This is the window where values are consolidated — which means your relationship with them right now is more important than ever.</p>
+            <ul style="margin-top:12px;padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+              <li>Beginning to question authority — this is developmentally healthy</li>
+              <li>Intense need for peer belonging and social acceptance</li>
+              <li>Online world is now a significant part of their social life</li>
+              <li>Puberty education is not optional — they're already getting information somewhere</li>
+              <li>Can reason and debate — engage this, don't shut it down</li>
+            </ul>
+          </div>
+          <div class="card card-gold">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">💛 What They Need From You</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Have the puberty talk before they need it.</strong> Don't wait for a crisis. Normalise the conversation early. If you can't, find a trusted adult or age-appropriate book.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Protect the connection — not the rules.</strong> The relationship is the leverage. Children who feel connected to a parent are more likely to come to them when something goes wrong.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Know their world.</strong> Who are their friends? What are they watching? What's happening in their WhatsApp groups? Not surveillance — curiosity.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Have opinions alongside them.</strong> Watch a movie together and then talk about it. Share your values through conversation, not lectures.</div>
+            </div>
+          </div>
+          <div class="card full">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">🛡️ Online Safety &amp; Grooming Awareness at 9–12</div>
+            <div class="grid-2">
+              <div>
+                <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:12px;">Children aged 9–12 are the primary targets of online grooming. Groomers invest weeks or months building trust — often posing as peers. Teach your child to recognise the pattern, not just "stranger danger."</p>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--red);margin-bottom:8px;">The Grooming Pattern:</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <div style="background:rgba(255,75,43,0.06);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--red);">1. Target selection</strong> — they look for lonely, isolated, or attention-seeking children</div>
+                  <div style="background:rgba(255,75,43,0.06);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--red);">2. Gaining trust</strong> — excessive compliments, gifts, special attention, feeling "understood"</div>
+                  <div style="background:rgba(255,75,43,0.06);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--red);">3. Isolation</strong> — "our special friendship," encouraging secrecy from parents</div>
+                  <div style="background:rgba(255,75,43,0.06);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--red);">4. Desensitisation</strong> — introducing sexual topics or images gradually</div>
+                  <div style="background:rgba(255,75,43,0.06);border-radius:8px;padding:10px;font-size:13px;color:#ccc;"><strong style="color:var(--red);">5. Maintaining control</strong> — threats, shame, "nobody will believe you"</div>
+                </div>
+              </div>
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--purple);margin-bottom:10px;">What to teach your child:</div>
+                <ul style="padding-left:18px;color:#bbb;font-size:13px;line-height:2;margin-bottom:14px;">
+                  <li>Anyone online who quickly becomes your "best friend" deserves scrutiny</li>
+                  <li>You should never share photos, your address, school name, or location</li>
+                  <li>If someone online asks you to keep secrets from your parents — tell your parents immediately</li>
+                  <li>If someone sends you sexual images or messages — it is not your fault, and you must show an adult</li>
+                  <li>You will never be in trouble for telling me — no matter what was said or shared</li>
+                </ul>
+                <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.2);border-radius:8px;padding:12px;font-size:12px;color:#ccc;line-height:1.7;">
+                  <strong style="color:var(--purple);">South African resource:</strong> Childline SA <strong>116</strong> (free, 24/7). Cybersafety Helpline: <strong>0860 100 999</strong>. Report online abuse at <strong>cybercrime.gov.za</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGE 13-17 -->
+      <div class="parenting-content" id="age_13-17">
+        <div class="grid-2">
+          <div class="card card-purple">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:12px;">🧠 What's Happening Developmentally</div>
+            <p style="font-size:13px;color:#ccc;line-height:1.8;">The teenage brain is undergoing its second great remodelling. The reward system is fully online; the prefrontal cortex (decision-making) is still under construction until 25. This is not attitude — this is architecture. Teenagers are neurologically wired to take risks, seek novelty, prioritise peers, and resist parental authority. It is biology, not personal.</p>
+            <ul style="margin-top:12px;padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+              <li>Identity vs role confusion is the core developmental task (Erikson)</li>
+              <li>Sexuality becomes a lived experience, not an abstract concept</li>
+              <li>Alcohol, substances, and peer pressure reach peak intensity</li>
+              <li>Mental health challenges (depression, anxiety) most commonly emerge now</li>
+              <li>The relationship with you is the single greatest protective factor</li>
+            </ul>
+          </div>
+          <div class="card card-gold">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">💛 What They Need From You</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Stay in the relationship even when they push you away.</strong> "I know you don't want to talk. I'm here when you do." Teenagers need you to outlast their rejection.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Have explicit conversations about sex, consent, and relationships.</strong> Not a single talk — an ongoing dialogue. The question is not if they'll be sexually active. The question is whether they'll have your values when they are.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Know the signs of mental health crisis.</strong> Withdrawal, mood extremes, declining grades, loss of interest, self-harm, talk of hopelessness. These are not teen dramatics — these are signals.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Negotiate, don't dictate.</strong> Teens who experience collaborative rule-setting at home are less likely to rebel destructively outside it.</div>
+            </div>
+          </div>
+          <div class="card full">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">🛡️ Consent, Sex &amp; Safety Education at 13–17</div>
+            <div class="grid-2">
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">What to cover — explicitly:</div>
+                <ul style="padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+                  <li><strong style="color:#fff;">Consent:</strong> Enthusiastic, ongoing, reversible. Silence is not consent. Pressure is not consent. Intoxication cannot give consent.</li>
+                  <li><strong style="color:#fff;">Age of consent in SA:</strong> 16 years old. Sexual activity with anyone under 16 is statutory rape — regardless of their consent.</li>
+                  <li><strong style="color:#fff;">Contraception:</strong> Accessible, confidential at any public clinic. Knowing about it does not cause sex — it prevents harm.</li>
+                  <li><strong style="color:#fff;">Sexting:</strong> Any explicit image of a person under 18 — even if they sent it themselves — is child pornography under SA law. This has serious legal consequences.</li>
+                  <li><strong style="color:#fff;">Dating abuse:</strong> Controlling who you speak to, checking your phone, threatening you — this is abuse, even if there's no physical violence.</li>
+                </ul>
+              </div>
+              <div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;color:var(--red);margin-bottom:8px;">Signs your teenager may be in an abusive relationship:</div>
+                <ul style="padding-left:18px;color:#bbb;font-size:13px;line-height:2;margin-bottom:14px;">
+                  <li>Withdrawn from friends and family</li>
+                  <li>Always checking their phone nervously</li>
+                  <li>Partner calls/messages constantly and they seem afraid to not reply</li>
+                  <li>Unexplained bruises or injuries</li>
+                  <li>Partner makes decisions for them or speaks on their behalf</li>
+                  <li>Seems afraid of their partner's reaction to things</li>
+                </ul>
+                <div style="background:rgba(255,75,43,0.08);border:1px solid rgba(255,75,43,0.2);border-radius:8px;padding:12px;font-size:12px;color:#ccc;line-height:1.7;">
+                  <strong style="color:var(--red);">If you suspect abuse:</strong> Don't panic or confront the partner. Stay calm and open with your teenager. Contact Childline <strong>116</strong> or GBV Command Centre <strong>0800 428 428</strong> for guidance on how to help.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AGE 18+ -->
+      <div class="parenting-content" id="age_18+">
+        <div class="grid-2">
+          <div class="card card-purple">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:12px;">🧠 The Adult Child Relationship</div>
+            <p style="font-size:13px;color:#ccc;line-height:1.8;">Parenting does not end at 18 — but it fundamentally changes. Your role shifts from authority figure to trusted advisor. The relationship now needs to be negotiated as an adult-to-adult dynamic. This is often difficult for both parties. You may still see your child. They are becoming a full person, separate from you.</p>
+            <ul style="margin-top:12px;padding-left:18px;color:#bbb;font-size:13px;line-height:2;">
+              <li>Unsolicited advice is experienced as criticism at this stage</li>
+              <li>They still need your unconditional love — not your conditional approval</li>
+              <li>Black tax pressures often begin here — expect, discuss, and plan</li>
+              <li>Mental health challenges may emerge or become visible now</li>
+              <li>Your job: be a safe landing, not a launching ramp</li>
+            </ul>
+          </div>
+          <div class="card card-gold">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">💛 How to Navigate This Season</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Ask before advising.</strong> "Do you want my input, or do you just need me to listen?" This one question preserves more adult relationships than almost anything else.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Acknowledge your mistakes.</strong> Adult children whose parents can say "I got that wrong" heal faster and stay closer. Pride is the enemy of reconnection.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Have explicit Black Tax conversations.</strong> What can you provide? What are the limits? What is expected of them? Name it — don't assume.</div>
+              <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Get your own support.</strong> Empty-nest grief is real. Therapy, community, and purpose outside of parenting are essential at this stage.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Parenting journal -->
+      <div style="margin-top:24px;border-top:1px solid rgba(255,255,255,0.07);padding-top:20px;">
+        <label>📝 Parenting notes for today — what are you navigating with your child?</label>
+        <textarea id="parentingNote" placeholder="e.g. My 9-year-old has been having meltdowns every morning before school. I'm not sure if it's anxiety or just testing limits. I want to respond better than I have been..." style="min-height:100px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: BLACK TAX & FAMILY BOUNDARIES -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Black Tax &amp; Extended Family Dynamics</div>
+        <div class="step-desc">The financial and emotional weight of extended family obligations. Name it, measure it, and decide what you can actually carry.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-gold">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">💰 What Is Black Tax?</div>
+        <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:14px;">Black tax is the financial, emotional, and time burden carried by upwardly mobile Black South Africans who support extended family members. It is not a myth, a complaint, or ingratitude — it is a structural reality with measurable economic consequences.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.2);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Financial forms:</strong> Paying school fees, groceries, rent, medical bills, funerals, lobola contributions, bail money, transport — for parents, siblings, cousins, aunts, uncles.</div>
+          <div style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.2);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Emotional forms:</strong> Being the "strong one," the family therapist, the mediator, the person everyone calls in a crisis — at the cost of your own mental health.</div>
+          <div style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.2);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">The cost:</strong> Delayed homeownership, retirement savings, career investment, and personal wellbeing. Many carry this alone, in silence, with guilt about any resentment they feel.</div>
+          <div style="background:rgba(255,75,43,0.06);border:1px solid rgba(255,75,43,0.2);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--red);">The truth:</strong> You cannot pour from an empty cup. Supporting your family at the expense of your own financial ruin helps no one long-term — including them.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🛡️ Setting &amp; Holding Family Boundaries</div>
+
+        <label>What are you currently carrying for extended family?</label>
+        <textarea id="blacktaxCarry" placeholder="e.g. My sister's school fees, my mom's groceries, occasional rent for my brother, and I always get called when there's a family crisis even though I have my own family to manage..." style="min-height:90px;margin-bottom:14px;"></textarea>
+
+        <label>What have you agreed to that you didn't want to?</label>
+        <textarea id="blacktaxUnwanted" placeholder="e.g. I said I'd pay for the December holiday because everyone expected it. I've been giving my cousin money monthly even though she's never paid me back and never will..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>What boundary do you most need to set or maintain?</label>
+        <textarea id="blacktaxBoundary" placeholder="e.g. I need to stop being the first call in every crisis. I need to say no to the December trip this year and not feel guilty about it..." style="min-height:80px;"></textarea>
+      </div>
+
+      <div class="card full">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:16px;">How to Have the Money Conversation With Family</div>
+        <div class="panel-grid" id="moneyConvoPanel"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: GBV IN THE HOME -->
+  <div class="step" style="animation-delay:0.4s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">GBV &amp; Safety in the Home</div>
+        <div class="step-desc">South Africa has one of the highest rates of intimate partner violence in the world. This step is for anyone — experiencing, witnessing, or healing from violence at home.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">⚠️ The GBV Safety Assessment</div>
+          <p style="font-size:13px;color:#bbb;margin-bottom:14px;line-height:1.7;">These questions are for personal reflection only. Tick anything that has happened in your home in the last 12 months. Your answers are private.</p>
+          <div id="gbvChecklist"></div>
+          <button class="btn btn-red" onclick="assessGBV()" style="margin-top:14px;font-size:14px;padding:10px 22px;">Assess My Safety</button>
+        </div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🧠 Understanding GBV Types</div>
+          <div style="display:flex;flex-direction:column;gap:10px;" id="gbvTypes"></div>
+        </div>
+      </div>
+
+      <div id="gbvResult" style="display:none;margin-bottom:24px;"></div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">📞 South African GBV Resources</div>
+      <div class="resource-grid" id="gbvResources"></div>
+    </div>
+  </div>
+
+  <!-- STEP 5: FAMILY PATTERNS TO BREAK -->
+  <div class="step" style="animation-delay:0.5s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Generational Patterns — What Will You Break?</div>
+        <div class="step-desc">Every family has patterns passed down through generations. Some are gifts. Some are wounds. You get to choose what continues.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>What patterns did you grow up with that you do NOT want to pass on?</label>
+        <textarea id="p_break" placeholder="e.g. Silence as punishment. Shouting as a first response. Never saying 'I love you' out loud. Money being a taboo topic. The idea that children should be seen and not heard..." style="min-height:100px;margin-bottom:14px;"></textarea>
+
+        <label>What was missing in your childhood that you want to actively give your children or family?</label>
+        <textarea id="p_give" placeholder="e.g. Emotional safety to cry without being mocked. Someone who showed up consistently. Open conversations about sex and relationships. Financial literacy. Physical affection that wasn't conditional..." style="min-height:100px;margin-bottom:14px;"></textarea>
+
+        <label>What patterns from your family of origin are you proud of and want to continue?</label>
+        <textarea id="p_keep" placeholder="e.g. We always ate together. We prayed as a family. We were taught to work hard and not complain. My mom always believed in education above everything..." style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="card card-purple">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🔁 Common Patterns That Pass Down</div>
+        <p style="font-size:12px;color:#666;margin-bottom:14px;">Tick any patterns you recognise in your own family:</p>
+        <div id="patternChecklist"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: SELF AS PARENT / FAMILY MEMBER -->
+  <div class="step" style="animation-delay:0.6s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">You Cannot Pour From an Empty Cup</div>
+        <div class="step-desc">How are you doing — as the parent, the child, the caregiver? Your wellbeing is not separate from your family's wellbeing. It is the foundation of it.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🏋️ Parental Wellbeing Check</div>
+        <p style="font-size:12px;color:#666;margin-bottom:16px;">Rate yourself on each area this week. This is not about guilt — it's about knowing what you need.</p>
+        <div id="parentWellbeing"></div>
+      </div>
+
+      <div class="card card-blue">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">💙 What Parents Need Too</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--blue);">Permission to struggle.</strong> Good parents doubt themselves. Bad parents don't. The doubt is evidence that you care.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--blue);">Your own therapy.</strong> Working through your childhood wounds is one of the most profound acts of parenting you will ever do. What you don't process, you pass on.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--blue);">A co-parent you can communicate with.</strong> Even if you're separated. Even if it's hard. Children of high-conflict co-parenting are the collateral damage of adult unfinished business.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--blue);">To be seen as a person, not just a role.</strong> You existed before you were a parent. You have needs. That is not selfish. It is human.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:12px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--blue);">To ask for help without shame.</strong> In South Africa, village raising of children is cultural and ancestral. Asking for help is not weakness. It is wisdom.</div>
+        </div>
+
+        <div style="margin-top:16px;border-top:1px solid rgba(255,255,255,0.08);padding-top:14px;">
+          <label>What do you most need right now as a parent / family member?</label>
+          <textarea id="parentNeed" placeholder="e.g. A break. Someone to tell me I'm doing okay. More support from my partner. Help with the financial pressure. Permission to say no to extended family requests..." style="min-height:80px;"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: REFLECT + AFFIRM + LOG -->
+  <div class="step" style="animation-delay:0.7s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Reflect, Affirm &amp; Commit</div>
+        <div class="step-desc">Close with clarity. What does your family need from you this week? What do you need from yourself?</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>🏡 One thing I want to do differently at home this week</label>
+        <textarea id="r_change" placeholder="e.g. I'm going to put my phone down at dinner. I'm going to apologise to my child for losing my temper last week. I'm going to have the conversation I've been avoiding..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>💛 Something I'm grateful for in my family right now</label>
+        <textarea id="r_grateful" placeholder="e.g. My daughter still wants to hug me before school. My son told me something important yesterday and trusted me with it. We had one really good evening together..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>🔮 What does your ideal home feel like? Describe it.</label>
+        <textarea id="r_vision" placeholder="e.g. It feels calm. People can disagree without it becoming a fight. The kids feel safe to say when something is wrong. There's laughter most days. The adults look after themselves..." style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="card card-purple" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🏡 Family Affirmation</div>
+          <div class="affirm-box">
+            <div class="affirm-text" id="affirmText"></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="affirmByStatus()" style="flex:1;font-size:13px;padding:9px;">✦ Match Status</button>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:12px;">My Commitments As a Parent / Family Member</div>
+          <div id="commitChecklist"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:16px;">📅 Family Journal — Recent Entries</div>
+        <div id="familyLog" style="margin-bottom:16px;"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-purple" onclick="saveEntry()">🏡 Save Today's Entry</button>
+          <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-purple" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">🏡 Save Today's Entry</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+
+</div>
+
+<!-- MOBILE TOGGLE -->
+<button class="summary-toggle" id="summaryToggle" onclick="toggleSummary()" data-icon="🏡">🏡</button>
+
+<!-- STICKY SUMMARY -->
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_status">—</div><div class="summary-key">Home Status</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_age">—</div><div class="summary-key">Age Group</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_tags">0</div><div class="summary-key">Family Tags</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_gbv">—</div><div class="summary-key">GBV Safety</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_wb">—</div><div class="summary-key">Parent Wellbeing</div></div>
+  <div class="summary-save">
+    <button class="btn btn-green" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session') || '{}');
+if (!session.loggedIn) window.location.href = 'wellness1.html';
+const userEmail = session.email, userName = session.name || 'Friend', firstName = userName.split(' ')[0];
+const navName = document.getElementById('navName'), navAvatar = document.getElementById('navAvatar');
+navName.textContent = firstName; navAvatar.textContent = firstName.charAt(0).toUpperCase();
+navName.style.opacity = navAvatar.style.opacity = '1';
+function key(s) { return `wl_${userEmail}_${s}`; }
+
+function updateClock() {
+  const now = new Date(), h = now.getHours();
+  document.getElementById('timeGreeting').textContent =
+    h < 12 ? `Good morning, ${firstName}` : h < 17 ? `Good afternoon, ${firstName}` : `Good evening, ${firstName}`;
+  document.getElementById('clockTime').textContent =
+    String(h).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock, 30000);
+
+let currentDate = new Date();
+function dk(d) { return d.toISOString().slice(0,10); }
+function fmt(d) { return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+function shiftDate(n) { currentDate.setDate(currentDate.getDate()+n); renderDate(); loadEntry(); }
+function renderDate() {
+  document.getElementById('dateStr').textContent = fmt(currentDate);
+  const strip = document.getElementById('weekStrip'); strip.innerHTML = '';
+  for (let i=-3;i<=3;i++) {
+    const d = new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip = document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadEntry(); };
+    strip.appendChild(chip);
+  }
+}
+
+let state = {
+  homeStatus:'', homeNote:'', familyTags:[], ageGroup:'0-4', parentingNote:'',
+  blacktaxCarry:'', blacktaxUnwanted:'', blacktaxBoundary:'',
+  gbvChecked:[], patternChecked:[], commitChecked:[], wbRatings:{},
+  p_break:'', p_give:'', p_keep:'', parentNeed:'',
+  r_change:'', r_grateful:'', r_vision:'', ts:''
+};
+
+// ── STATUS ────────────────────────────────────────────────────────────────────
+function selectStatus(el) {
+  document.querySelectorAll('.status-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); state.homeStatus=el.dataset.s;
+  document.getElementById('s_status').textContent=el.dataset.s;
+}
+
+// ── AGE TABS ──────────────────────────────────────────────────────────────────
+function selectAge(el) {
+  document.querySelectorAll('.age-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.parenting-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const age = el.dataset.age; state.ageGroup=age;
+  document.getElementById('age_'+age).classList.add('active');
+  document.getElementById('s_age').textContent = age;
+}
+
+// ── FAMILY TAGS ───────────────────────────────────────────────────────────────
+const FAMILY_TAGS = [
+  'Co-parenting challenges','Single parenting','Blended family',
+  'Difficult teenager','Toddler tantrums','School struggles',
+  'Child mental health concerns','Partner not involved in parenting',
+  'Black tax pressure','Caring for elderly parent','Family conflict',
+  'Financial stress at home','Estranged family member','Toxic family dynamic',
+  'Domestic violence in home','Grief / bereavement','Custody dispute',
+  'Substance abuse in family','Child with special needs',
+];
+function renderFamilyTags() {
+  const wrap = document.getElementById('familyTags');
+  FAMILY_TAGS.forEach(tag=>{
+    const t=document.createElement('div'); t.className='ttag'; t.textContent=tag; t.dataset.tag=tag;
+    t.onclick=()=>{
+      t.classList.toggle('active');
+      if(t.classList.contains('active')){ if(!state.familyTags.includes(tag)) state.familyTags.push(tag); }
+      else state.familyTags=state.familyTags.filter(x=>x!==tag);
+      document.getElementById('s_tags').textContent=state.familyTags.length;
+    };
+    wrap.appendChild(t);
+  });
+}
+
+// ── MONEY CONVO PANELS ────────────────────────────────────────────────────────
+const MONEY_PANELS = [
+  {icon:'📋',title:'Set a Budget First',desc:'Know your numbers before any conversation.',
+    expand:`Before you can set limits with family, you need to know your own. Calculate your monthly income, fixed costs, savings goals, and the maximum you can sustainably contribute to others.<br><br>
+    <strong>The formula:</strong> What comes in → what must go out (rent, food, medical, transport) → what you want to save → what is genuinely available for family. That number — not guilt, not loyalty, not pressure — is your budget.<br><br>
+    <em>You cannot negotiate without knowing your floor. Your floor is the number below which helping others harms you.</em>`},
+  {icon:'💬',title:'Have the Conversation Once',desc:'Say it clearly. Say it once. Stick to it.',
+    expand:`The mistake most people make is giving vague yes's that they later resent, or no's they don't follow through on. Be specific:<br><br>
+    <em>"I can contribute R1,500/month to groceries. I cannot do more than that without impacting my own rent. This is not a negotiation — it's what is possible."</em><br><br>
+    You do not need to justify your budget. You do not need to share your salary. You do not need to apologise for having limits. Having limits is responsible — not selfish.<br><br>
+    <em>One clear no saves five resentful yeses.</em>`},
+  {icon:'🛑',title:'Say No Without Guilt',desc:'No is a complete sentence. No explanation required.',
+    expand:`Guilt is not evidence that you're doing something wrong. In families with long histories of obligation, guilt is simply what saying no feels like until the pattern changes.<br><br>
+    <strong>Scripts to use:</strong><br>
+    → "I can't do that right now."<br>
+    → "That's not possible for me this month."<br>
+    → "I've reached my limit on what I can contribute."<br>
+    → "I love you and I can't do this."<br><br>
+    You do not owe an explanation that can be debated. Reasons invite negotiations. Limits do not.<br><br>
+    <em>You can love your family deeply and still have limits. These two things are not opposites.</em>`},
+  {icon:'🔄',title:'Plan for Emergencies',desc:'Family emergencies will happen. Plan for them.',
+    expand:`Emergencies are real. Medical crises, funerals, sudden job loss — these happen and they land on the family member with the most resources. The solution is not to say never — it's to plan.<br><br>
+    <strong>Options:</strong><br>
+    → Create a small family emergency fund collectively (each contributing what they can)<br>
+    → Be clear in advance: "For genuine emergencies I can do X. For non-emergencies, my answer is what I've already said."<br>
+    → Define what an emergency is in your own terms — and be consistent<br><br>
+    <em>Planning removes the emotional ambush. You already know what you'll do when it happens.</em>`},
+  {icon:'🧠',title:'Understand the Psychology',desc:'Why it\'s so hard to say no to family.',
+    expand:`Family financial dynamics are loaded with ancestral obligation, cultural expectation, love, loyalty, fear of rejection, and identity. Saying no to family can feel like saying no to belonging itself.<br><br>
+    <strong>What drives the inability to say no:</strong><br>
+    → Fear of being seen as "thinking you're better than us"<br>
+    → Survivor's guilt (you made it — others didn't)<br>
+    → Genuine love and care that has no container<br>
+    → Historical patterns where your value in the family was tied to what you provided<br><br>
+    You are not your family's ATM. You are a member of it. Those are not the same thing.<br><br>
+    <em>Your worth in your family should never be tied to your wallet. If it is — that is the pattern that needs to break.</em>`},
+  {icon:'📈',title:'Build Towards Financial Freedom',desc:'The long game: build yours first.',
+    expand:`Supporting family while building your own financial security is not impossible — but it requires a plan.<br><br>
+    <strong>Principles:</strong><br>
+    → Pay yourself first. Savings and retirement contributions before family contributions.<br>
+    → Emergency fund (3-6 months of expenses) before anything optional.<br>
+    → Tax-free savings account (TFSA) — R36,000/year limit, no tax on growth<br>
+    → Retirement Annuity — contributions are tax deductible up to 27.5% of income<br><br>
+    <strong>The truth:</strong> If you burn yourself out financially supporting family now, you will need their support when you're older. Building your own security is the most generous long-term thing you can do — for everyone.<br><br>
+    <em>Secure your own oxygen mask first. Then help others.</em>`},
+];
+function renderMoneyPanels() {
+  const g = document.getElementById('moneyConvoPanel');
+  MONEY_PANELS.forEach(p=>{
+    const card=document.createElement('div'); card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── GBV CHECKLIST ─────────────────────────────────────────────────────────────
+const GBV_QUESTIONS = [
+  'My partner has shouted at, sworn at, or humiliated me in front of others',
+  'My partner controls what I wear, who I see, or where I go',
+  'My partner checks my phone, email, or social media without my permission',
+  'My partner has threatened to hurt me, the children, or themselves if I leave',
+  'My partner has hit, slapped, pushed, or physically hurt me',
+  'I have been forced or pressured into sexual activity I did not want',
+  'My partner controls access to money or prevents me from working',
+  'I feel afraid of my partner\'s moods or reactions',
+  'My partner has damaged property or hurt pets during arguments',
+  'My partner denies or minimises abuse when I bring it up ("you\'re too sensitive")',
+  'My children have witnessed violence or verbal abuse in the home',
+  'I have been isolated from friends or family by my partner',
+  'I have left and gone back one or more times',
+  'I have been threatened with deportation, losing my children, or public exposure',
+  'I believe things will change — but they haven\'t so far',
+];
+function renderGBVChecklist() {
+  const wrap = document.getElementById('gbvChecklist');
+  GBV_QUESTIONS.forEach((q,i)=>{
+    const d=document.createElement('div'); d.className='gbv-q'; d.dataset.idx=i;
+    d.innerHTML=`<div class="gbv-box" id="gbv_${i}"></div><div class="gbv-text">${q}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('gbv_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){ if(!state.gbvChecked.includes(i)) state.gbvChecked.push(i); }
+      else state.gbvChecked=state.gbvChecked.filter(x=>x!==i);
+    };
+    wrap.appendChild(d);
+  });
+}
+
+const GBV_TYPES = [
+  {color:'var(--red)',title:'Physical Violence',desc:'Hitting, slapping, pushing, kicking, choking, use of weapons. Any physical harm or the threat of it.'},
+  {color:'var(--orange)',title:'Emotional / Psychological',desc:'Humiliation, threats, gaslighting, isolation, constant criticism, controlling behaviour, manipulation.'},
+  {color:'var(--gold)',title:'Sexual Violence',desc:'Any sexual act without full, ongoing, enthusiastic consent. Including within marriage. Marital rape is a crime in South Africa.'},
+  {color:'var(--purple)',title:'Economic Abuse',desc:'Controlling access to money, preventing employment, stealing, forcing debt, withholding basics like food and transport.'},
+  {color:'var(--blue)',title:'Digital / Cyber Abuse',desc:'Monitoring devices, sharing intimate images without consent, online harassment, controlling social media access.'},
+  {color:'var(--green)',title:'Femicide',desc:'The killing of women because of their gender. South Africa records among the highest rates globally — 3x the global average.'},
+];
+function renderGBVTypes() {
+  const wrap = document.getElementById('gbvTypes');
+  GBV_TYPES.forEach(t=>{
+    const d=document.createElement('div');
+    d.style.cssText=`background:rgba(255,255,255,0.03);border-left:3px solid ${t.color};border-radius:0 8px 8px 0;padding:10px 12px;`;
+    d.innerHTML=`<div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;text-transform:uppercase;color:${t.color};margin-bottom:3px;">${t.title}</div><div style="font-size:12px;color:#888;line-height:1.5;">${t.desc}</div>`;
+    wrap.appendChild(d);
+  });
+}
+
+function assessGBV() {
+  const n = state.gbvChecked.length;
+  const el = document.getElementById('gbvResult');
+  el.style.display='block';
+  let color, title, msg, action;
+  if (n === 0) {
+    color='var(--green)'; title='No indicators ticked';
+    msg='You have not ticked any indicators. If you\'re completing this for someone else, or if something felt close but not quite — trust your instincts.';
+    action='If you have concerns at any point, call the GBV Command Centre on <strong>0800 428 428</strong> (24/7, free).';
+  } else if (n <= 3) {
+    color='var(--gold)'; title='Some Warning Signs Present';
+    msg=`You've ticked ${n} indicator${n>1?'s':''}. Even early-stage patterns deserve attention. Abuse tends to escalate over time — not improve on its own.`;
+    action='Consider speaking to a counsellor or calling <strong>0800 428 428</strong> to talk through what you\'re experiencing. You don\'t have to be certain it\'s abuse to reach out.';
+  } else if (n <= 8) {
+    color='var(--orange)'; title='Significant Risk Indicators';
+    msg=`You've ticked ${n} indicators. What you are describing is consistent with an abusive relationship. This is not a small thing. This is serious.`;
+    action='Please reach out for support: <strong>GBV Command Centre: 0800 428 428</strong>. If you are in immediate danger, call <strong>10111</strong> (SAPS). You do not have to leave alone or without a plan.';
+  } else {
+    color='var(--red)'; title='High Risk — Please Seek Help Now';
+    msg=`You've ticked ${n} indicators. This level of abuse is dangerous. Your safety — and your children\'s safety — is the priority above everything else.`;
+    action='<strong>Call now:</strong> GBV Command Centre <strong>0800 428 428</strong> (free, 24/7) · SAPS <strong>10111</strong> · Childline <strong>116</strong> · Thuthuzela Care Centre (nearest public hospital). You deserve safety. Help is available.';
+  }
+  document.getElementById('s_gbv').textContent = n===0?'✓':n+' flags';
+  el.innerHTML=`<div style="background:rgba(255,255,255,0.04);border:1px solid ${color};border-radius:12px;padding:20px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:${color};text-transform:uppercase;margin-bottom:8px;">${title}</div>
+    <p style="font-size:14px;color:#ccc;margin-bottom:10px;line-height:1.6;">${msg}</p>
+    <p style="font-size:13px;color:#aaa;line-height:1.7;">${action}</p>
+  </div>`;
+}
+
+// ── GBV RESOURCES ─────────────────────────────────────────────────────────────
+const GBV_RESOURCES = [
+  {org:'GBV Command Centre',num:'0800 428 428',desc:'Free, 24/7 national helpline. Counselling, referrals, and immediate crisis support.'},
+  {org:'SAPS Emergency',num:'10111',desc:'Police emergency line for immediate danger situations.'},
+  {org:'Childline SA',num:'116',desc:'Free 24/7 helpline for children and concerned adults. Reports of child abuse.'},
+  {org:'Thuthuzela Care Centres',num:'At public hospitals',desc:'One-stop centres for survivors of sexual violence. Forensic, medical, and psychological support.'},
+  {org:'POWA',num:'011 642 4345',desc:'People Opposing Women Abuse. Legal advice, counselling, and shelter referrals.'},
+  {org:'Lifeline SA',num:'0861 322 322',desc:'Crisis counselling, trauma support, and referrals to local services.'},
+];
+function renderGBVResources() {
+  const g=document.getElementById('gbvResources');
+  GBV_RESOURCES.forEach(r=>{
+    const d=document.createElement('div'); d.className='resource-card';
+    d.innerHTML=`<div class="rc-org">${r.org}</div><div class="rc-num">${r.num}</div><div class="rc-desc">${r.desc}</div>`;
+    g.appendChild(d);
+  });
+}
+
+// ── PATTERN CHECKLIST ─────────────────────────────────────────────────────────
+const PATTERNS = [
+  'Emotional unavailability — love shown through provision, not presence',
+  'Physical discipline as a primary parenting tool',
+  'Silence and withdrawal as punishment',
+  'Children not allowed to express anger, sadness, or disagreement',
+  'Favouritism between siblings',
+  'Money as a tool of control or punishment',
+  'Men not expected to participate in emotional or domestic labour',
+  'Women expected to sacrifice their ambitions for the family',
+  'Addiction (alcohol, substances) normalised in the household',
+  'Secrets kept to "protect" children that actually burdened them',
+  'Comparing children to each other or to cousins / peers',
+  'Academic performance as the primary measure of a child\'s worth',
+  'Inability to say "I love you" out loud or express affection physically',
+  'Trauma that was never acknowledged or spoken about',
+];
+function renderPatternChecklist() {
+  const wrap=document.getElementById('patternChecklist');
+  PATTERNS.forEach((p,i)=>{
+    const d=document.createElement('div'); d.className='check-item'; d.dataset.pidx=i;
+    d.innerHTML=`<div class="check-box" id="pat_${i}"></div><div class="check-text">${p}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('pat_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){ if(!state.patternChecked.includes(i)) state.patternChecked.push(i); }
+      else state.patternChecked=state.patternChecked.filter(x=>x!==i);
+    };
+    wrap.appendChild(d);
+  });
+}
+
+// ── PARENT WELLBEING SLIDERS ──────────────────────────────────────────────────
+const WB_AREAS = [
+  {key:'sleep',label:'😴 Sleep Quality',color:'var(--blue)'},
+  {key:'patience',label:'🧘 Patience & Calm',color:'var(--green)'},
+  {key:'connection',label:'💜 Connection with Child/Family',color:'var(--purple)'},
+  {key:'support',label:'🤝 Support System',color:'var(--gold)'},
+  {key:'selfcare',label:'🌿 Time for Yourself',color:'var(--orange)'},
+];
+function renderParentWellbeing() {
+  const wrap=document.getElementById('parentWellbeing');
+  WB_AREAS.forEach(a=>{
+    const initVal = state.wbRatings[a.key]||5;
+    const row=document.createElement('div'); row.style.marginBottom='16px';
+    row.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;color:#ddd;">${a.label}</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:${a.color};" id="wb_val_${a.key}">${initVal}</span>
+      </div>
+      <div class="prog-bar-wrap"><div class="prog-bar-fill" id="wb_bar_${a.key}" style="width:${initVal*10}%;background:${a.color};"></div></div>
+      <input type="range" min="1" max="10" value="${initVal}" oninput="updateWB('${a.key}',this.value,'${a.color}')">
+    `;
+    wrap.appendChild(row);
+  });
+  updateWBAvg();
+}
+function updateWB(key, val, color) {
+  val=parseInt(val); state.wbRatings[key]=val;
+  document.getElementById('wb_val_'+key).textContent=val;
+  document.getElementById('wb_bar_'+key).style.width=(val*10)+'%';
+  updateWBAvg();
+}
+function updateWBAvg() {
+  const vals=Object.values(state.wbRatings).filter(v=>v>0);
+  const avg=vals.length?(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1):'—';
+  document.getElementById('s_wb').textContent=avg!=='—'?avg+'/10':'—';
+}
+
+// ── COMMIT CHECKLIST ──────────────────────────────────────────────────────────
+const COMMITS = [
+  'I will put my phone away during family time at least once this week',
+  'I will apologise to my child/family member if I lose my temper',
+  'I will ask my child how they\'re feeling — and actually listen',
+  'I will say "I love you" out loud at least once today',
+  'I will set one boundary with extended family this week',
+  'I will do one thing just for myself — not as parent or partner',
+  'I will have one honest conversation I\'ve been avoiding',
+  'I will not compare my child to another child this week',
+  'I will reach out to one person who can support me',
+  'I will celebrate one small win in my family this week',
+];
+function renderCommitChecklist() {
+  const wrap=document.getElementById('commitChecklist');
+  COMMITS.forEach((c,i)=>{
+    const d=document.createElement('div'); d.className='check-item'; d.dataset.cidx=i;
+    d.innerHTML=`<div class="check-box" id="com_${i}"></div><div class="check-text">${c}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('com_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){ if(!state.commitChecked.includes(i)) state.commitChecked.push(i); }
+      else state.commitChecked=state.commitChecked.filter(x=>x!==i);
+    };
+    wrap.appendChild(d);
+  });
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────────────
+const AFFIRMATIONS = {
+  general:[
+    'I am doing the best I can with what I have. That is enough for today.',
+    'My children need me present, not perfect.',
+    'I break cycles that were never mine to carry forward.',
+    'I am not just raising children — I am raising future adults. I do this with intention.',
+    'The love I give my family begins with the love I give myself.',
+  ],
+  Thriving:['My home is a place of growth. I protect that intentionally.','We are building something real here. I don\'t take it for granted.'],
+  Stable:['Stable is a gift. Routine is safety. I honour what we\'ve built.','I keep showing up. That consistency is love.'],
+  Strained:['Tension doesn\'t mean broken. I can hold this and work through it.','I name what\'s hard instead of pretending it isn\'t. That is strength.'],
+  Struggling:['Even on the hard days, my love is real and my presence matters.','I reach for help when I need it. That is not failure — that is wisdom.'],
+  Rebuilding:['Rebuilding is not starting over. It\'s starting with everything I now know.','I am creating something better, one honest day at a time.'],
+};
+function newAffirm() {
+  const all=Object.values(AFFIRMATIONS).flat();
+  setAffirm(all[Math.floor(Math.random()*all.length)]);
+}
+function affirmByStatus() {
+  const list=AFFIRMATIONS[state.homeStatus]||AFFIRMATIONS.general;
+  setAffirm(list[Math.floor(Math.random()*list.length)]);
+}
+function setAffirm(txt) {
+  const el=document.getElementById('affirmText'); el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=txt; el.style.transition='opacity 0.4s'; el.style.opacity=1; },250);
+}
+
+// ── FAMILY LOG ────────────────────────────────────────────────────────────────
+let familyLog=[];
+function loadFamilyLog() {
+  const raw=localStorage.getItem(key('life4_log')); familyLog=raw?JSON.parse(raw):[]; renderFamilyLog();
+}
+function renderFamilyLog() {
+  const el=document.getElementById('familyLog');
+  if(!familyLog.length){ el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to start your family journal.</p>'; return; }
+  el.innerHTML='';
+  familyLog.slice(0,4).forEach((e,i)=>{
+    const d=document.createElement('div'); d.className='log-item';
+    d.innerHTML=`<div class="li-left">
+      <div class="li-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div>
+      <div class="li-title">${e.status||'—'} · ${e.age||'—'}</div>
+      ${e.note?`<div class="li-note">${e.note.slice(0,120)}${e.note.length>120?'…':''}</div>`:''}
+    </div>
+    <button class="li-del" onclick="delFamilyLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(familyLog.length>4){ const m=document.createElement('p'); m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;'; m.textContent=`+ ${familyLog.length-4} earlier entries`; el.appendChild(m); }
+}
+function delFamilyLog(i){ familyLog.splice(i,1); localStorage.setItem(key('life4_log'),JSON.stringify(familyLog)); renderFamilyLog(); }
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry() {
+  state.homeNote         = document.getElementById('homeNote').value;
+  state.parentingNote    = document.getElementById('parentingNote').value;
+  state.blacktaxCarry    = document.getElementById('blacktaxCarry').value;
+  state.blacktaxUnwanted = document.getElementById('blacktaxUnwanted').value;
+  state.blacktaxBoundary = document.getElementById('blacktaxBoundary').value;
+  state.p_break          = document.getElementById('p_break').value;
+  state.p_give           = document.getElementById('p_give').value;
+  state.p_keep           = document.getElementById('p_keep').value;
+  state.parentNeed       = document.getElementById('parentNeed').value;
+  state.r_change         = document.getElementById('r_change').value;
+  state.r_grateful       = document.getElementById('r_grateful').value;
+  state.r_vision         = document.getElementById('r_vision').value;
+  state.ts               = new Date().toISOString();
+
+  localStorage.setItem(key('life4_'+dk(currentDate)), JSON.stringify(state));
+
+  familyLog.unshift({ status:state.homeStatus, age:state.ageGroup, note:state.homeNote, date:state.ts });
+  localStorage.setItem(key('life4_log'), JSON.stringify(familyLog));
+  renderFamilyLog();
+
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{
+    studentName:userName, studentEmail:userEmail,
+    courseName:`Life 4 Family Check-In — ${fmt(currentDate)}`,
+    coursePrice:'N/A', courseDuration:'Wellness Portal', sessionType:'Online', paymentMethod:'Free',
+    additionalInfo:`Home Status: ${state.homeStatus||'—'}\nAge Group: ${state.ageGroup||'—'}\nFamily Tags: ${state.familyTags.join(', ')||'None'}\nGBV indicators: ${state.gbvChecked.length}\nParenting notes: ${state.parentingNote.slice(0,200)||'—'}\nPattern work: ${state.p_break.slice(0,150)||'—'}\nCommitment: ${state.r_change.slice(0,150)||'—'}`,
+    dashboardUrl:window.location.href
+  }).catch(()=>{});
+
+  showToast('🏡 Entry saved');
+}
+
+function loadEntry() {
+  const raw=localStorage.getItem(key('life4_'+dk(currentDate)));
+  if(!raw) return;
+  const s=JSON.parse(raw);
+
+  if(s.homeStatus){ document.querySelectorAll('.status-tile').forEach(t=>{ if(t.dataset.s===s.homeStatus) t.classList.add('active'); }); state.homeStatus=s.homeStatus; document.getElementById('s_status').textContent=s.homeStatus; }
+
+  document.getElementById('homeNote').value         = s.homeNote||'';
+  document.getElementById('parentingNote').value    = s.parentingNote||'';
+  document.getElementById('blacktaxCarry').value    = s.blacktaxCarry||'';
+  document.getElementById('blacktaxUnwanted').value = s.blacktaxUnwanted||'';
+  document.getElementById('blacktaxBoundary').value = s.blacktaxBoundary||'';
+  document.getElementById('p_break').value          = s.p_break||'';
+  document.getElementById('p_give').value           = s.p_give||'';
+  document.getElementById('p_keep').value           = s.p_keep||'';
+  document.getElementById('parentNeed').value       = s.parentNeed||'';
+  document.getElementById('r_change').value         = s.r_change||'';
+  document.getElementById('r_grateful').value       = s.r_grateful||'';
+  document.getElementById('r_vision').value         = s.r_vision||'';
+
+  // Tags
+  state.familyTags=s.familyTags||[];
+  document.querySelectorAll('#familyTags .ttag').forEach(t=>{ if(state.familyTags.includes(t.dataset.tag)) t.classList.add('active'); });
+  document.getElementById('s_tags').textContent=state.familyTags.length;
+
+  // Age group
+  if(s.ageGroup){ document.querySelectorAll('.age-tab').forEach(t=>{ if(t.dataset.age===s.ageGroup) selectAge(t); }); }
+
+  // GBV
+  state.gbvChecked=s.gbvChecked||[];
+  state.gbvChecked.forEach(i=>{ const d=document.querySelector(`.gbv-q[data-idx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('gbv_'+i).textContent='✓';} });
+
+  // Pattern checklist
+  state.patternChecked=s.patternChecked||[];
+  state.patternChecked.forEach(i=>{ const d=document.querySelector(`.check-item[data-pidx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('pat_'+i).textContent='✓';} });
+
+  // Commit checklist
+  state.commitChecked=s.commitChecked||[];
+  state.commitChecked.forEach(i=>{ const d=document.querySelector(`.check-item[data-cidx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('com_'+i).textContent='✓';} });
+
+  // Wellbeing ratings
+  state.wbRatings=s.wbRatings||{};
+  WB_AREAS.forEach(a=>{ if(state.wbRatings[a.key]){ document.querySelector(`input[oninput*="${a.key}"]`).value=state.wbRatings[a.key]; updateWB(a.key,state.wbRatings[a.key],a.color); } });
+
+  state={...state,...s};
+  showToast('Entry loaded');
+}
+
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+function toggleSummary() {
+  const strip=document.getElementById('summaryStrip'), btn=document.getElementById('summaryToggle');
+  strip.classList.toggle('open');
+  btn.textContent=strip.classList.contains('open')?'✕':btn.dataset.icon;
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderFamilyTags();
+renderMoneyPanels();
+renderGBVChecklist();
+renderGBVTypes();
+renderGBVResources();
+renderPatternChecklist();
+renderParentWellbeing();
+renderCommitChecklist();
+loadFamilyLog();
+newAffirm();
+</script>
+</body>
+</html>

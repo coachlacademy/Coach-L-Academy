@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 1 — Mood & Emotions | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background: radial-gradient(ellipse at 20% 20%, rgba(0,210,255,0.07) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.05) 0%, transparent 55%), #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--blue); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass {
+  padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border);
+  color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;
+  transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-glass:hover { border-color:var(--blue); color:var(--blue); }
+.user-chip {
+  display:flex; align-items:center; gap:8px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:6px 14px; border-radius:30px; font-size:13px;
+}
+.avatar {
+  width:26px; height:26px; border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:900; color:#000;
+}
+
+/* PAGE HEADER */
+.page-header {
+  padding:100px 40px 40px;
+  max-width:1100px; margin:0 auto;
+}
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--blue); margin-bottom:8px; }
+.page-title {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,8vw,5.5rem); font-weight:900;
+  text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px;
+}
+.page-title span { color:var(--blue); }
+.page-sub { font-size:15px; color:#bbb; max-width:520px; line-height:1.7; }
+
+/* TIME GREETING */
+.time-greeting {
+  display:inline-flex; align-items:center; gap:10px;
+  background:var(--glass); border:1px solid var(--glass-border);
+  padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc;
+  margin-bottom:20px;
+}
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+/* DATE NAV */
+.date-nav {
+  display:flex; align-items:center; gap:14px; margin:0 auto 40px;
+  max-width:1100px; padding:0 40px; flex-wrap:wrap;
+}
+.date-btn {
+  background:var(--glass); border:1px solid var(--glass-border); color:#fff;
+  width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s;
+}
+.date-btn:hover { border-color:var(--blue); color:var(--blue); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--blue); border-color:var(--blue); color:#000; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+.wday.active .wday-d { opacity:1; }
+
+/* MAIN */
+.main { max-width:1100px; margin:0 auto; padding:0 40px 100px; }
+
+/* STEP */
+.step {
+  margin-bottom:32px;
+  animation:fadeUp 0.5s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+.step-header {
+  display:flex; align-items:center; gap:14px; margin-bottom:16px;
+}
+.step-num {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase;
+  color:var(--blue); background:rgba(0,210,255,0.1); border:1px solid rgba(0,210,255,0.3);
+  padding:4px 12px; border-radius:20px; white-space:nowrap;
+}
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+/* CARD */
+.card {
+  background:var(--glass); border:1px solid var(--glass-border);
+  border-radius:16px; padding:28px; backdrop-filter:blur(12px);
+  position:relative; overflow:hidden; transition:border-color 0.3s;
+}
+.card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent);
+}
+.card:hover { border-color:rgba(0,210,255,0.2); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* MOOD WHEEL */
+.mood-wheel { display:flex; gap:10px; flex-wrap:wrap; }
+.mood-tile {
+  flex:1; min-width:100px; padding:16px 10px; border-radius:12px; text-align:center;
+  background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s;
+}
+.mood-tile:hover, .mood-tile.active { transform:translateY(-4px); }
+.mood-tile .m-emoji { font-size:32px; display:block; margin-bottom:8px; line-height:1; }
+.mood-tile .m-label { font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+.mood-tile .m-desc { font-size:11px; color:#888; margin-top:3px; }
+.mood-tile[data-mood="Thriving"]:hover,.mood-tile[data-mood="Thriving"].active { border-color:var(--blue); background:rgba(0,210,255,0.1); }
+.mood-tile[data-mood="Good"]:hover,.mood-tile[data-mood="Good"].active { border-color:var(--green); background:rgba(57,255,20,0.08); }
+.mood-tile[data-mood="Okay"]:hover,.mood-tile[data-mood="Okay"].active { border-color:var(--gold); background:rgba(245,197,24,0.08); }
+.mood-tile[data-mood="Low"]:hover,.mood-tile[data-mood="Low"].active { border-color:var(--orange); background:rgba(255,140,0,0.08); }
+.mood-tile[data-mood="Struggling"]:hover,.mood-tile[data-mood="Struggling"].active { border-color:var(--red); background:rgba(255,75,43,0.08); }
+
+/* EMOTION TAGS */
+.emotion-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.etag {
+  padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700;
+  background:var(--glass); border:1px solid var(--glass-border);
+  cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px;
+}
+.etag:hover, .etag.active { color:#fff; border-color:var(--blue); background:rgba(0,210,255,0.1); }
+
+/* ENERGY BAR */
+.energy-track { margin:8px 0 20px; }
+.energy-labels { display:flex; justify-content:space-between; font-size:11px; color:#bbb; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px; }
+.energy-bar-wrap { position:relative; height:14px; border-radius:14px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:10px; }
+.energy-fill { height:100%; border-radius:14px; transition:width 0.4s; background:linear-gradient(to right,var(--red),var(--gold),var(--green)); }
+input[type=range] {
+  width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer;
+  background:linear-gradient(to right,var(--green),var(--gold),var(--red));
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff;
+  cursor:pointer; box-shadow:0 0 10px rgba(0,210,255,0.5); border:2px solid var(--blue);
+}
+.gauge-num {
+  text-align:center; font-family:'Barlow Condensed',sans-serif;
+  font-size:48px; font-weight:900; line-height:1; margin-top:8px;
+}
+
+/* STARS */
+.star-rows { display:flex; flex-direction:column; gap:14px; }
+.star-row { display:flex; justify-content:space-between; align-items:center; }
+.star-label { font-size:14px; color:#ddd; }
+.star-group { display:flex; gap:5px; }
+.star { font-size:22px; cursor:pointer; color:#222; transition:0.2s; line-height:1; }
+.star.on { color:var(--gold); }
+.star:hover { transform:scale(1.2); }
+
+/* BODY SCAN */
+.body-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:10px; }
+.body-zone {
+  padding:12px; border-radius:10px; text-align:center; cursor:pointer; transition:0.3s;
+  background:var(--glass); border:1px solid var(--glass-border);
+  font-size:12px; color:#bbb; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;
+}
+.body-zone .bz-icon { font-size:22px; display:block; margin-bottom:6px; }
+.body-zone:hover, .body-zone.active { border-color:rgba(255,75,43,0.4); background:rgba(255,75,43,0.07); color:#fff; }
+
+/* JOURNAL */
+textarea {
+  width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border);
+  border-radius:10px; color:#fff; padding:14px; font-size:14px;
+  font-family:'Barlow',sans-serif; resize:vertical; min-height:90px;
+  transition:0.3s; line-height:1.6;
+}
+textarea:focus { outline:none; border-color:var(--blue); background:rgba(0,210,255,0.04); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+
+/* THOUGHT ITEMS */
+.thought-item {
+  display:flex; align-items:flex-start; gap:10px;
+  background:rgba(255,255,255,0.03); border:1px solid var(--glass-border);
+  border-radius:8px; padding:10px 12px; margin-bottom:8px;
+}
+.thought-time { font-size:10px; color:#555; white-space:nowrap; margin-top:2px; }
+.thought-text { flex:1; font-size:13px; color:#ccc; line-height:1.5; }
+.thought-del { background:none; border:none; color:#333; cursor:pointer; font-size:16px; transition:0.2s; }
+.thought-del:hover { color:var(--red); }
+
+/* AFFIRMATION */
+.affirm-box {
+  background:rgba(0,210,255,0.05); border:1px solid rgba(0,210,255,0.15);
+  border-radius:12px; padding:24px; text-align:center; min-height:90px;
+  display:flex; align-items:center; justify-content:center; margin-bottom:16px;
+}
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* BUTTONS */
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-blue { background:var(--blue); color:#000; }
+.btn-blue:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--blue); color:var(--blue); }
+.btn-green { background:var(--green); color:#000; }
+.btn-green:hover { filter:brightness(1.1); }
+
+/* DIVIDER */
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+/* SUMMARY BAR */
+.summary-strip {
+  position:sticky; bottom:0; z-index:50;
+  background:rgba(0,0,0,0.92); backdrop-filter:blur(20px);
+  border-top:1px solid var(--glass-border);
+  padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap;
+}
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--blue); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px);
+  background:var(--green); color:#000; padding:11px 26px; border-radius:30px;
+  font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900;
+  text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap;
+  transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+/* PROGRESS RING */
+.progress-ring-wrap { display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-bottom:20px; }
+.ring-svg { transform:rotate(-90deg); }
+.ring-bg { fill:none; stroke:rgba(255,255,255,0.06); }
+.ring-fill { fill:none; stroke:var(--blue); stroke-linecap:round; transition:stroke-dashoffset 0.8s; }
+.ring-label { text-align:center; }
+.ring-pct { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; color:var(--blue); }
+.ring-name { font-size:11px; color:#bbb; text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px 16px;}
+  .mood-wheel{gap:6px;}
+  .mood-tile{min-width:80px;}
+}
+
+/* ── MOBILE SUMMARY STRIP FIX ── */
+@media(max-width:768px){
+  .summary-strip {
+    position:fixed;
+    bottom:0; left:0; right:0;
+    transform:translateY(100%);
+    transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    padding:16px;
+    gap:16px;
+    flex-wrap:wrap;
+    z-index:200;
+  }
+  .summary-strip.open {
+    transform:translateY(0);
+  }
+  .summary-toggle {
+    display:flex !important;
+  }
+  .main {
+    padding-bottom:80px !important;
+  }
+}
+.summary-toggle {
+  display:none;
+  position:fixed;
+  bottom:16px; right:16px;
+  z-index:201;
+  width:52px; height:52px;
+  border-radius:50%;
+  border:none; cursor:pointer;
+  font-size:20px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  align-items:center; justify-content:center;
+  transition:transform 0.2s;
+}
+.summary-toggle:active { transform:scale(0.92); }
+
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--blue);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 1 · Mood &amp; Emotions</div>
+  <h1 class="page-title">How Are<br>You <span>Really?</span></h1>
+  <p class="page-sub">Work through each step honestly. This is your private space — no judgement, no performance. Just the truth.</p>
+</div>
+
+<!-- DATE NAV -->
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STEP 1: MOOD -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Overall Mood</div>
+        <div class="step-desc">How would you describe how you're feeling right now — in one word?</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="mood-wheel">
+        <div class="mood-tile" data-mood="Thriving" onclick="selectMood(this)">
+          <span class="m-emoji">🌟</span>
+          <div class="m-label">Thriving</div>
+          <div class="m-desc">Energised, positive, flowing</div>
+        </div>
+        <div class="mood-tile" data-mood="Good" onclick="selectMood(this)">
+          <span class="m-emoji">😊</span>
+          <div class="m-label">Good</div>
+          <div class="m-desc">Settled, content, okay</div>
+        </div>
+        <div class="mood-tile" data-mood="Okay" onclick="selectMood(this)">
+          <span class="m-emoji">😐</span>
+          <div class="m-label">Okay</div>
+          <div class="m-desc">Neutral, getting through</div>
+        </div>
+        <div class="mood-tile" data-mood="Low" onclick="selectMood(this)">
+          <span class="m-emoji">😔</span>
+          <div class="m-label">Low</div>
+          <div class="m-desc">Heavy, drained, flat</div>
+        </div>
+        <div class="mood-tile" data-mood="Struggling" onclick="selectMood(this)">
+          <span class="m-emoji">😞</span>
+          <div class="m-label">Struggling</div>
+          <div class="m-desc">Overwhelmed, hurting</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: EMOTIONS -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">What Emotions Are Present?</div>
+        <div class="step-desc">Select all that apply. Be honest — you can feel multiple things at once.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="margin-bottom:16px;">
+        <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Positive</div>
+        <div class="emotion-grid" id="posEmotions"></div>
+      </div>
+      <div>
+        <div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Difficult</div>
+        <div class="emotion-grid" id="negEmotions"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: ENERGY & STRESS -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Energy &amp; Stress Levels</div>
+        <div class="step-desc">Where are you right now on each scale?</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label style="margin-bottom:12px;color:#bbb;">⚡ Energy Level — <span id="energyLabel" style="color:var(--blue);">5/10</span></label>
+        <div class="energy-bar-wrap">
+          <div class="energy-fill" id="energyFill" style="width:50%;"></div>
+        </div>
+        <input type="range" min="1" max="10" value="5" id="energySlider"
+          oninput="updateGauge('energy',this.value)"
+          style="background:linear-gradient(to right,var(--red),var(--gold),var(--green));">
+        <div class="gauge-num" id="energyNum" style="color:var(--gold);">5</div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-top:4px;">
+          <span>Empty</span><span>Moderate</span><span>Fully Charged</span>
+        </div>
+      </div>
+      <div class="card">
+        <label style="margin-bottom:12px;color:#bbb;">🌡 Stress Level — <span id="stressLabel" style="color:var(--blue);">5/10</span></label>
+        <div class="energy-bar-wrap">
+          <div class="energy-fill" id="stressFill" style="width:50%;background:linear-gradient(to right,var(--green),var(--gold),var(--red));"></div>
+        </div>
+        <input type="range" min="1" max="10" value="5" id="stressSlider"
+          oninput="updateGauge('stress',this.value)"
+          style="background:linear-gradient(to right,var(--green),var(--gold),var(--red));">
+        <div class="gauge-num" id="stressNum" style="color:var(--gold);">5</div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-top:4px;">
+          <span>Calm</span><span>Moderate</span><span>High Stress</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: WELLBEING STARS -->
+  <div class="step" style="animation-delay:0.4s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">Wellbeing Check</div>
+        <div class="step-desc">Rate each area of your wellbeing today. 1 star = poor, 5 stars = excellent.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="star-rows" id="starRows"></div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;text-transform:uppercase;margin-bottom:16px;color:#bbb;">Wellbeing at a Glance</div>
+        <div class="progress-ring-wrap" id="ringWrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: BODY SCAN -->
+  <div class="step" style="animation-delay:0.5s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Body Scan</div>
+        <div class="step-desc">Where is your body holding tension, discomfort, or heaviness today?</div>
+      </div>
+    </div>
+    <div class="card">
+      <p style="font-size:13px;color:#bbb;margin-bottom:16px;line-height:1.6;">Your body keeps score. Emotions live in your body — not just your mind. Tension, tightness, heaviness, and pain are often emotional signals. Tap any area you're feeling something in today.</p>
+      <div class="body-grid" id="bodyGrid"></div>
+      <div style="margin-top:16px;">
+        <label>Anything else your body is telling you?</label>
+        <textarea id="bodyNote" placeholder="e.g. My shoulders feel like concrete. My chest feels tight when I think about work..." style="min-height:70px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: JOURNAL -->
+  <div class="step" style="animation-delay:0.6s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Daily Journal</div>
+        <div class="step-desc">Three focused prompts. Then free space for whatever needs to come out.</div>
+      </div>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <label>💪 What I Succeeded At Today</label>
+        <p style="font-size:12px;color:#bbb;margin-bottom:10px;font-style:italic;">Name 3 things — big or small. Progress counts.</p>
+        <textarea id="j_win" placeholder="e.g. Stayed calm in a difficult meeting, finished the report..."></textarea>
+      </div>
+      <div class="card">
+        <label>🦁 What Took Courage</label>
+        <p style="font-size:12px;color:#bbb;margin-bottom:10px;font-style:italic;">Something you pushed through, even when it was hard.</p>
+        <textarea id="j_courage" placeholder="e.g. Had a hard conversation I'd been avoiding..."></textarea>
+      </div>
+      <div class="card">
+        <label>🙏 What I'm Grateful For</label>
+        <p style="font-size:12px;color:#bbb;margin-bottom:10px;font-style:italic;">One thing — big or small. Gratitude rewires the brain.</p>
+        <textarea id="j_gratitude" placeholder="e.g. A moment of quiet, a kind word, hot coffee..."></textarea>
+      </div>
+      <div class="card full">
+        <label>💬 Free Thoughts — What's On My Mind</label>
+        <p style="font-size:12px;color:#bbb;margin-bottom:10px;font-style:italic;">No rules. No structure. Just write. Each thought is saved separately.</p>
+        <div style="display:flex;gap:10px;margin-bottom:10px;">
+          <textarea id="freeInput" placeholder="Type a thought and press Add..." style="min-height:70px;flex:1;"></textarea>
+          <button class="btn btn-blue" onclick="addThought()" style="align-self:flex-end;padding:10px 16px;font-size:13px;white-space:nowrap;">+ Add</button>
+        </div>
+        <div id="thoughtsList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: AFFIRMATION -->
+  <div class="step" style="animation-delay:0.7s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Encourage Yourself</div>
+        <div class="step-desc">End with a word that builds you up. You deserve it.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="affirm-box">
+          <div class="affirm-text" id="affirmText"></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;">✦ New Affirmation</button>
+          <button class="btn btn-outline" onclick="affirmByMood()" style="flex:1;">✦ Match My Mood</button>
+        </div>
+      </div>
+      <div class="card">
+        <label>Write Your Own Affirmation</label>
+        <textarea id="myAffirm" placeholder="I am... / I choose... / Today I will..." style="min-height:80px;margin-bottom:14px;"></textarea>
+        <label>How do you want to feel by end of today?</label>
+        <textarea id="intention" placeholder="My intention for today is..." style="min-height:70px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+
+  <!-- SAVE -->
+  <div style="text-align:center;padding:20px 0 120px;">
+    <button class="btn btn-blue" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">✓ Save Today's Check-In</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+
+</div>
+
+<!-- STICKY SUMMARY -->
+<button class="summary-toggle" id="summaryToggle" 
+  style="background:var(--blue);color:#000;"
+  onclick="toggleSummary()" data-icon="📊">📊</button>
+
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_mood">—</div><div class="summary-key">Mood</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_energy">—</div><div class="summary-key">Energy</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_stress">—</div><div class="summary-key">Stress</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_emotions">0</div><div class="summary-key">Emotions Tagged</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_wb">—</div><div class="summary-key">Avg Wellbeing</div></div>
+  <div class="summary-save">
+    <button class="btn btn-green" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session') || '{}');
+if (!session.loggedIn) window.location.href = 'wellness1.html';
+const userEmail = session.email;
+const userName  = session.name || 'Friend';
+const firstName = userName.split(' ')[0];
+
+const navName   = document.getElementById('navName');
+const navAvatar = document.getElementById('navAvatar');
+navName.textContent   = firstName;
+navAvatar.textContent = firstName.charAt(0).toUpperCase();
+navName.style.opacity = '1';
+navAvatar.style.opacity = '1';
+
+function key(s) { return `wl_${userEmail}_${s}`; }
+
+// ── TIME GREETING ─────────────────────────────────────────────────────
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours();
+  const greet = h < 12 ? `Good morning, ${firstName}` : h < 17 ? `Good afternoon, ${firstName}` : `Good evening, ${firstName}`;
+  document.getElementById('timeGreeting').textContent = greet;
+  const hh = String(h).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('clockTime').textContent = `${hh}:${mm}`;
+}
+updateClock();
+setInterval(updateClock, 30000);
+
+// ── DATE ──────────────────────────────────────────────────────────────
+let currentDate = new Date();
+function dk(d) { return d.toISOString().slice(0,10); }
+function fmt(d) { return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+function shiftDate(n) { currentDate.setDate(currentDate.getDate()+n); renderDate(); loadEntry(); }
+
+function renderDate() {
+  document.getElementById('dateStr').textContent = fmt(currentDate);
+  const strip = document.getElementById('weekStrip');
+  strip.innerHTML = '';
+  for (let i=-3;i<=3;i++) {
+    const d = new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip = document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadEntry(); };
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────
+let state = {
+  mood:'', emotions:[], energy:5, stress:5,
+  stars:{sleep:0,energy:0,work:0,personal:0,physical:0},
+  body:[], bodyNote:'',
+  journal:{win:'',courage:'',gratitude:''},
+  thoughts:[], myAffirm:'', intention:''
+};
+
+// ── MOOD ──────────────────────────────────────────────────────────────
+function selectMood(el) {
+  document.querySelectorAll('.mood-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  state.mood = el.dataset.mood;
+  document.getElementById('s_mood').textContent = el.querySelector('.m-emoji').textContent;
+}
+
+// ── EMOTIONS ──────────────────────────────────────────────────────────
+const POS_EMOTIONS = ['Grateful','Hopeful','Calm','Motivated','Joyful','Confident','Loved','Proud','Excited','Peaceful','Creative','Connected'];
+const NEG_EMOTIONS = ['Anxious','Overwhelmed','Angry','Sad','Frustrated','Exhausted','Lonely','Numb','Scared','Resentful','Guilty','Hopeless','Confused','Irritable','Embarrassed'];
+
+function renderEmotions() {
+  const pe = document.getElementById('posEmotions');
+  const ne = document.getElementById('negEmotions');
+  POS_EMOTIONS.forEach(e => { const t=mkTag(e,'pos'); pe.appendChild(t); });
+  NEG_EMOTIONS.forEach(e => { const t=mkTag(e,'neg'); ne.appendChild(t); });
+}
+function mkTag(label, type) {
+  const t = document.createElement('div'); t.className='etag'; t.textContent=label; t.dataset.emotion=label;
+  t.onclick = () => {
+    t.classList.toggle('active');
+    if (t.classList.contains('active')) {
+      if (!state.emotions.includes(label)) state.emotions.push(label);
+      if (type==='neg') t.style.borderColor='rgba(255,75,43,0.5)';
+      else t.style.borderColor='rgba(57,255,20,0.5)';
+    } else {
+      state.emotions = state.emotions.filter(x=>x!==label);
+      t.style.borderColor='';
+    }
+    document.getElementById('s_emotions').textContent = state.emotions.length;
+  };
+  return t;
+}
+
+// ── GAUGES ────────────────────────────────────────────────────────────
+const ENERGY_COLORS = ['','#ff4b2b','#ff6b2b','#ff8c00','#ffaa00','#f5c518','#d4e000','#aadd00','#7acc00','#55bb00','#39ff14'];
+const STRESS_COLORS = ['','#39ff14','#55bb00','#7acc00','#aadd00','#f5c518','#ffaa00','#ff8c00','#ff6b2b','#ff5519','#ff4b2b'];
+
+function updateGauge(type, val) {
+  val = parseInt(val);
+  if (type==='energy') {
+    state.energy = val;
+    document.getElementById('energyLabel').textContent = val+'/10';
+    document.getElementById('energyNum').textContent = val;
+    document.getElementById('energyNum').style.color = ENERGY_COLORS[val];
+    document.getElementById('energyFill').style.width = (val*10)+'%';
+    document.getElementById('s_energy').textContent = val+'/10';
+  } else {
+    state.stress = val;
+    document.getElementById('stressLabel').textContent = val+'/10';
+    document.getElementById('stressNum').textContent = val;
+    document.getElementById('stressNum').style.color = STRESS_COLORS[val];
+    document.getElementById('stressFill').style.width = (val*10)+'%';
+    document.getElementById('s_stress').textContent = val+'/10';
+  }
+}
+
+// ── STARS ─────────────────────────────────────────────────────────────
+const WB_KEYS   = ['sleep','energy','work','personal','physical'];
+const WB_LABELS = ['😴 Sleep Quality','⚡ Energy','💼 Work Satisfaction','❤️ Personal Life','💪 Physical Health'];
+
+function renderStars() {
+  const wrap = document.getElementById('starRows');
+  wrap.innerHTML='';
+  WB_KEYS.forEach((k,i) => {
+    const row = document.createElement('div'); row.className='star-row';
+    row.innerHTML=`<span class="star-label">${WB_LABELS[i]}</span><div class="star-group" data-key="${k}">
+      ${[1,2,3,4,5].map(n=>`<span class="star" onclick="rateStar('${k}',${n})">★</span>`).join('')}
+    </div>`;
+    wrap.appendChild(row);
+  });
+  renderRings();
+}
+function rateStar(k,v) {
+  state.stars[k]=v;
+  document.querySelectorAll(`.star-group[data-key="${k}"] .star`).forEach((s,i)=>s.classList.toggle('on',i<v));
+  renderRings(); updateWbAvg();
+}
+function updateWbAvg() {
+  const vals = Object.values(state.stars).filter(v=>v>0);
+  const avg = vals.length ? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1) : '—';
+  document.getElementById('s_wb').textContent = avg !== '—' ? avg+'/5' : '—';
+}
+function renderRings() {
+  const wrap = document.getElementById('ringWrap');
+  wrap.innerHTML='';
+  WB_KEYS.forEach((k,i) => {
+    const v = state.stars[k] || 0;
+    const pct = v/5;
+    const r=28, circ=2*Math.PI*r;
+    const offset = circ*(1-pct);
+    const colors=['var(--blue)','var(--green)','var(--gold)','var(--purple)','var(--orange)'];
+    const div=document.createElement('div'); div.style.textAlign='center';
+    div.innerHTML=`<svg width="70" height="70" class="ring-svg"><circle class="ring-bg" cx="35" cy="35" r="${r}" stroke-width="5"/><circle class="ring-fill" cx="35" cy="35" r="${r}" stroke-width="5" stroke="${colors[i]}" stroke-dasharray="${circ}" stroke-dashoffset="${offset}"/></svg><div class="ring-pct" style="color:${colors[i]};">${v>0?v+'/5':'—'}</div><div class="ring-name">${WB_LABELS[i].split(' ').slice(1).join(' ')}</div>`;
+    wrap.appendChild(div);
+  });
+}
+
+// ── BODY SCAN ─────────────────────────────────────────────────────────
+const BODY_ZONES = [
+  {icon:'🧠',label:'Head / Mind'},{icon:'👁',label:'Eyes'},{icon:'😬',label:'Jaw / Neck'},
+  {icon:'🫁',label:'Chest'},{icon:'💔',label:'Heart'},{icon:'🌀',label:'Stomach'},
+  {icon:'💪',label:'Shoulders'},{icon:'🔙',label:'Back'},{icon:'🦵',label:'Legs'},
+  {icon:'🤲',label:'Hands'},{icon:'😮‍💨',label:'Breathing'},{icon:'⚡',label:'Whole Body'},
+];
+function renderBodyGrid() {
+  const g=document.getElementById('bodyGrid');
+  BODY_ZONES.forEach(z=>{
+    const d=document.createElement('div'); d.className='body-zone';
+    d.innerHTML=`<span class="bz-icon">${z.icon}</span>${z.label}`;
+    d.onclick=()=>{
+      d.classList.toggle('active');
+      if(d.classList.contains('active')) { if(!state.body.includes(z.label)) state.body.push(z.label); }
+      else state.body=state.body.filter(x=>x!==z.label);
+    };
+    g.appendChild(d);
+  });
+}
+
+// ── FREE THOUGHTS ─────────────────────────────────────────────────────
+let thoughts=[];
+function addThought() {
+  const inp=document.getElementById('freeInput');
+  const txt=inp.value.trim(); if(!txt) return;
+  const now=new Date();
+  const ts=now.toLocaleTimeString('en-ZA',{hour:'2-digit',minute:'2-digit'});
+  thoughts.push({text:txt,ts}); inp.value=''; renderThoughts();
+}
+function renderThoughts() {
+  const el=document.getElementById('thoughtsList');
+  el.innerHTML='';
+  thoughts.forEach((t,i)=>{
+    const d=document.createElement('div'); d.className='thought-item';
+    d.innerHTML=`<span class="thought-time">${t.ts}</span><span class="thought-text">${t.text}</span><button class="thought-del" onclick="delThought(${i})">×</button>`;
+    el.appendChild(d);
+  });
+}
+function delThought(i) { thoughts.splice(i,1); renderThoughts(); }
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────
+const AFFIRMATIONS = {
+  general:['I am capable of handling whatever comes my way.','Progress, not perfection. I am enough.','I deserve balance between work and the life I love.','My feelings are valid. I give myself permission to feel.','I release what I cannot control and focus on what I can.'],
+  Thriving:['I am in my element today. I let this energy flow.','My momentum today is a gift — I use it with intention.','I am thriving and I deserve to.'],
+  Good:['I build on this solid foundation today.','Good is more than enough. I am grateful for this.','I choose to stay in this goodness.'],
+  Okay:['Getting through is getting forward.','I do not have to feel spectacular to do good work.','Okay is a valid place to be. I honour today.'],
+  Low:['Even in the low times, I am enough.','I give myself permission to rest without guilt.','This feeling is temporary. I have survived every low before.'],
+  Struggling:['I am still here. That alone is strength.','I do not have to carry this alone.','The fact that I am checking in shows I am not giving up.'],
+};
+function newAffirm() {
+  const all=Object.values(AFFIRMATIONS).flat();
+  setAffirm(all[Math.floor(Math.random()*all.length)]);
+}
+function affirmByMood() {
+  const list=AFFIRMATIONS[state.mood]||AFFIRMATIONS.general;
+  setAffirm(list[Math.floor(Math.random()*list.length)]);
+}
+function setAffirm(txt) {
+  const el=document.getElementById('affirmText');
+  el.style.opacity=0;
+  setTimeout(()=>{ el.textContent=txt; el.style.transition='opacity 0.4s'; el.style.opacity=1; },250);
+}
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────
+function saveEntry() {
+  state.journal.win      = document.getElementById('j_win').value;
+  state.journal.courage  = document.getElementById('j_courage').value;
+  state.journal.gratitude= document.getElementById('j_gratitude').value;
+  state.bodyNote         = document.getElementById('bodyNote').value;
+  state.thoughts         = thoughts;
+  state.myAffirm         = document.getElementById('myAffirm').value;
+  state.intention        = document.getElementById('intention').value;
+  state.ts               = new Date().toISOString();
+
+  localStorage.setItem(key('life1_'+dk(currentDate)), JSON.stringify(state));
+
+  // Email summary
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{
+    studentName: userName, studentEmail: userEmail,
+    courseName: `Life 1 Check-In — ${fmt(currentDate)}`,
+    coursePrice:'N/A', courseDuration:'Wellness Portal', sessionType:'Online', paymentMethod:'Free',
+    additionalInfo:`Mood: ${state.mood} | Energy: ${state.energy}/10 | Stress: ${state.stress}/10\nEmotions: ${state.emotions.join(', ')||'None selected'}\nSleep: ${state.stars.sleep}/5 | Work: ${state.stars.work}/5 | Wellbeing avg: ${document.getElementById('s_wb').textContent}\nBody tension: ${state.body.join(', ')||'None'}\nWins: ${state.journal.win||'—'}\nGratitude: ${state.journal.gratitude||'—'}`,
+    dashboardUrl: window.location.href
+  }).catch(()=>{});
+
+  showToast('✓ Check-in saved');
+}
+
+function loadEntry() {
+  const raw=localStorage.getItem(key('life1_'+dk(currentDate)));
+  if(!raw) return;
+  const s=JSON.parse(raw);
+  // Mood
+  if(s.mood) { document.querySelectorAll('.mood-tile').forEach(t=>{ if(t.dataset.mood===s.mood){t.classList.add('active'); document.getElementById('s_mood').textContent=t.querySelector('.m-emoji').textContent;} }); }
+  // Emotions
+  state.emotions=s.emotions||[];
+  document.querySelectorAll('.etag').forEach(t=>{ if(state.emotions.includes(t.dataset.emotion)) t.click(); });
+  // Gauges
+  ['energy','stress'].forEach(type=>{
+    const val=s[type]||5;
+    document.getElementById(type+'Slider').value=val;
+    updateGauge(type,val);
+  });
+  // Stars
+  Object.keys(s.stars||{}).forEach(k=>{ if(s.stars[k]) rateStar(k,s.stars[k]); });
+  // Body
+  state.body=s.body||[];
+  document.querySelectorAll('.body-zone').forEach(d=>{ if(state.body.includes(d.textContent.trim())) d.classList.add('active'); });
+  document.getElementById('bodyNote').value=s.bodyNote||'';
+  // Journal
+  document.getElementById('j_win').value       = s.journal?.win||'';
+  document.getElementById('j_courage').value   = s.journal?.courage||'';
+  document.getElementById('j_gratitude').value = s.journal?.gratitude||'';
+  document.getElementById('myAffirm').value    = s.myAffirm||'';
+  document.getElementById('intention').value   = s.intention||'';
+  // Thoughts
+  thoughts = s.thoughts||[]; renderThoughts();
+  state = { ...state, ...s };
+  showToast('Entry loaded');
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────
+renderDate();
+renderEmotions();
+renderStars();
+renderBodyGrid();
+newAffirm();
+updateGauge('energy',5);
+updateGauge('stress',5);
+
+function toggleSummary() {
+  const strip = document.getElementById('summaryStrip');
+  const btn = document.getElementById('summaryToggle');
+  strip.classList.toggle('open');
+  btn.textContent = strip.classList.contains('open') ? '✕' : btn.dataset.icon;
+}
+
+</script>
+</body>
+</html>
