@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 7 — Money & Finances | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #39ff14;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(57,255,20,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(245,197,24,0.04) 0%, transparent 55%),
+    #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--green); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass {
+  padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border);
+  color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;
+  transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none;
+  display:inline-flex; align-items:center; gap:6px;
+}
+.btn-glass:hover { border-color:var(--green); color:var(--green); }
+.user-chip { display:flex; align-items:center; gap:8px; background:var(--glass); border:1px solid var(--glass-border); padding:6px 14px; border-radius:30px; font-size:13px; }
+.avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--green),var(--blue)); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#000; }
+
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--green); margin-bottom:8px; }
+.page-title { font-family:'Barlow Condensed',sans-serif; font-size:clamp(3rem,8vw,5.5rem); font-weight:900; text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px; }
+.page-title span { color:var(--green); }
+.page-sub { font-size:15px; color:#bbb; max-width:560px; line-height:1.7; }
+
+.time-greeting { display:inline-flex; align-items:center; gap:10px; background:var(--glass); border:1px solid var(--glass-border); padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px; }
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+.date-nav { display:flex; align-items:center; gap:14px; margin:0 auto 40px; max-width:1100px; padding:0 40px; flex-wrap:wrap; }
+.date-btn { background:var(--glass); border:1px solid var(--glass-border); color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s; }
+.date-btn:hover { border-color:var(--green); color:var(--green); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--green); border-color:var(--green); color:#000; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+.wday.active .wday-d { opacity:1; }
+
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--green); background:rgba(57,255,20,0.1); border:1px solid rgba(57,255,20,0.35); padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+.card { background:var(--glass); border:1px solid var(--glass-border); border-radius:16px; padding:28px; backdrop-filter:blur(12px); position:relative; overflow:hidden; transition:border-color 0.3s; }
+.card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent); }
+.card:hover { border-color:rgba(57,255,20,0.15); }
+.card-green  { border-color:rgba(57,255,20,0.25);  background:rgba(57,255,20,0.04); }
+.card-gold   { border-color:rgba(245,197,24,0.25); background:rgba(245,197,24,0.04); }
+.card-red    { border-color:rgba(255,75,43,0.2);   background:rgba(255,75,43,0.04); }
+.card-purple { border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.04); }
+.card-blue   { border-color:rgba(0,210,255,0.2);   background:rgba(0,210,255,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* STATUS TILES */
+.status-tiles { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.status-tile { flex:1; min-width:120px; padding:16px 12px; border-radius:12px; text-align:center; background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s; }
+.status-tile:hover,.status-tile.active { transform:translateY(-3px); }
+.status-tile .st-emoji { font-size:26px; display:block; margin-bottom:8px; }
+.status-tile .st-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; text-transform:uppercase; }
+.status-tile .st-desc { font-size:10px; color:#666; margin-top:3px; }
+.status-tile[data-s="Thriving"]:hover,.status-tile[data-s="Thriving"].active{border-color:#39ff14;background:rgba(57,255,20,0.08);color:#39ff14;}
+.status-tile[data-s="Stable"]:hover,.status-tile[data-s="Stable"].active{border-color:var(--blue);background:rgba(0,210,255,0.08);color:var(--blue);}
+.status-tile[data-s="Building"]:hover,.status-tile[data-s="Building"].active{border-color:var(--gold);background:rgba(245,197,24,0.08);color:var(--gold);}
+.status-tile[data-s="Surviving"]:hover,.status-tile[data-s="Surviving"].active{border-color:var(--orange);background:rgba(255,140,0,0.08);color:var(--orange);}
+.status-tile[data-s="Drowning"]:hover,.status-tile[data-s="Drowning"].active{border-color:var(--red);background:rgba(255,75,43,0.08);color:var(--red);}
+.status-tile[data-s="Starting Over"]:hover,.status-tile[data-s="Starting Over"].active{border-color:var(--purple);background:rgba(168,85,247,0.08);color:var(--purple);}
+
+/* BUDGET ROWS */
+.budget-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.budget-row input[type=text],.budget-row input[type=number] { flex:1; }
+.budget-cat { font-family:'Barlow Condensed',sans-serif; font-size:14px; font-weight:900; text-transform:uppercase; color:#bbb; min-width:120px; }
+.budget-amount { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; }
+.budget-del { background:none; border:none; color:#333; cursor:pointer; font-size:16px; transition:0.2s; }
+.budget-del:hover { color:var(--red); }
+
+/* PROGRESS BARS */
+.bar-wrap { height:10px; border-radius:10px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:4px; }
+.bar-fill { height:100%; border-radius:10px; transition:width 0.5s; }
+input[type=range] { width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer; background:linear-gradient(to right,rgba(255,255,255,0.06),var(--green)); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff; cursor:pointer; box-shadow:0 0 10px rgba(57,255,20,0.5); border:2px solid var(--green); }
+
+/* EXPANDABLE PANELS */
+.panel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.panel-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px; cursor:pointer; transition:0.3s; }
+.panel-card:hover { border-color:rgba(57,255,20,0.3); transform:translateY(-3px); }
+.panel-card.open { border-color:rgba(57,255,20,0.5); background:rgba(57,255,20,0.04); }
+.pc-icon { font-size:28px; margin-bottom:10px; display:block; }
+.pc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; margin-bottom:4px; }
+.pc-desc { font-size:12px; color:#666; line-height:1.5; }
+.pc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.panel-card.open .pc-expand { display:block; }
+
+/* DEBT TRACKER */
+.debt-item { background:rgba(255,75,43,0.04); border:1px solid rgba(255,75,43,0.15); border-radius:12px; padding:18px; margin-bottom:12px; transition:0.3s; }
+.debt-item:hover { border-color:rgba(255,75,43,0.3); }
+.debt-header { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:12px; }
+.debt-name { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; color:#fff; }
+.debt-amounts { display:flex; gap:16px; flex-wrap:wrap; }
+.debt-num { text-align:center; }
+.debt-num-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; }
+.debt-num-key { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:#555; }
+.debt-del { background:none; border:none; color:#333; cursor:pointer; font-size:16px; transition:0.2s; }
+.debt-del:hover { color:var(--red); }
+
+/* SAVINGS GOALS */
+.savings-item { background:rgba(57,255,20,0.04); border:1px solid rgba(57,255,20,0.15); border-radius:12px; padding:18px; margin-bottom:12px; transition:0.3s; }
+.savings-item:hover { border-color:rgba(57,255,20,0.3); }
+
+/* TAG GRID */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag { padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700; background:var(--glass); border:1px solid var(--glass-border); cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px; }
+.ttag:hover { border-color:rgba(57,255,20,0.5); color:var(--green); }
+.ttag.active { border-color:rgba(57,255,20,0.6); background:rgba(57,255,20,0.1); color:var(--green); }
+
+/* CHECK ITEMS */
+.check-item { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px; cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; }
+.check-item:hover { border-color:rgba(57,255,20,0.3); background:rgba(57,255,20,0.04); }
+.check-item.checked { border-color:rgba(57,255,20,0.4); background:rgba(57,255,20,0.07); }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.check-item.checked .check-box { background:var(--green); border-color:var(--green); color:#000; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#666; text-decoration:line-through; }
+
+/* AFFIRM */
+.affirm-box { background:rgba(57,255,20,0.05); border:1px solid rgba(57,255,20,0.2); border-radius:12px; padding:24px; text-align:center; min-height:90px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* FORMS */
+textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:14px; font-size:14px; font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6; }
+textarea:focus { outline:none; border-color:var(--green); background:rgba(57,255,20,0.03); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+input[type=text],input[type=number] { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+input[type=text]:focus,input[type=number]:focus { border-color:var(--green); background:rgba(57,255,20,0.03); }
+input[type=text]::placeholder,input[type=number]::placeholder { color:#555; }
+select { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+select:focus { border-color:var(--green); }
+select option { background:#111; color:#fff; }
+
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-green { background:var(--green); color:#000; }
+.btn-green:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--green); color:var(--green); }
+.btn-gold { background:var(--gold); color:#000; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-sm { padding:8px 16px; font-size:13px; }
+
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+.log-item { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:14px; border-radius:10px; margin-bottom:10px; background:rgba(57,255,20,0.03); border:1px solid rgba(57,255,20,0.12); transition:0.3s; }
+.log-item:hover { border-color:rgba(57,255,20,0.25); }
+.li-left { flex:1; }
+.li-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.li-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--green); }
+.li-note { font-size:13px; color:#777; margin-top:4px; line-height:1.5; }
+.li-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; }
+.li-del:hover { color:var(--red); }
+
+.summary-strip { position:sticky; bottom:0; z-index:50; background:rgba(0,0,0,0.93); backdrop-filter:blur(20px); border-top:1px solid rgba(57,255,20,0.2); padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap; }
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--green); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--green); color:#000; padding:11px 26px; border-radius:30px; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900; text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap; transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .debt-amounts{gap:10px;}
+  .summary-strip{position:fixed;bottom:0;left:0;right:0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);padding:16px;gap:16px;flex-wrap:wrap;z-index:200;}
+  .summary-strip.open{transform:translateY(0);}
+  .summary-toggle{display:flex !important;}
+  .main{padding-bottom:80px !important;}
+}
+.summary-toggle{display:none;position:fixed;bottom:16px;right:16px;z-index:201;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;font-size:20px;background:var(--green);color:#000;box-shadow:0 4px 20px rgba(0,0,0,0.5);align-items:center;justify-content:center;transition:transform 0.2s;}
+.summary-toggle:active{transform:scale(0.92);}
+</style>
+</head>
+<body>
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--green);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 7 · Money &amp; Finances</div>
+  <h1 class="page-title">Your<br><span>Money</span><br>Story</h1>
+  <p class="page-sub">Money is not just maths — it is emotion, history, identity, and power. Before you can manage your money, you need to understand your relationship with it. This space is for both the numbers and the narrative.</p>
+</div>
+
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: MONEY STATUS -->
+  <div class="step" style="animation-delay:0.05s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Where Are You Financially Right Now?</div>
+        <div class="step-desc">Your honest money status today — not aspirational, not shameful. Just true.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="status-tiles">
+        <div class="status-tile" data-s="Thriving" onclick="selectStatus(this)"><span class="st-emoji">💰</span><div class="st-label">Thriving</div><div class="st-desc">Saving, investing, growing</div></div>
+        <div class="status-tile" data-s="Stable" onclick="selectStatus(this)"><span class="st-emoji">🤝</span><div class="st-label">Stable</div><div class="st-desc">Bills paid, some breathing room</div></div>
+        <div class="status-tile" data-s="Building" onclick="selectStatus(this)"><span class="st-emoji">🏗️</span><div class="st-label">Building</div><div class="st-desc">Making progress, not there yet</div></div>
+        <div class="status-tile" data-s="Surviving" onclick="selectStatus(this)"><span class="st-emoji">⚡</span><div class="st-label">Surviving</div><div class="st-desc">Month-to-month, barely making it</div></div>
+        <div class="status-tile" data-s="Drowning" onclick="selectStatus(this)"><span class="st-emoji">🌊</span><div class="st-label">Drowning</div><div class="st-desc">Debt, arrears, financial crisis</div></div>
+        <div class="status-tile" data-s="Starting Over" onclick="selectStatus(this)"><span class="st-emoji">🌱</span><div class="st-label">Starting Over</div><div class="st-desc">Reset, rebuilding from zero</div></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>What is your financial reality right now — honestly?</label>
+          <textarea id="moneyNote" placeholder="e.g. I earn a decent salary but I have no savings and I don't know where the money goes. / I'm R40,000 in debt and I avoid looking at my bank balance. / I've just started earning and I want to get this right from the beginning..." style="min-height:110px;"></textarea>
+        </div>
+        <div>
+          <label>🏷️ What money challenges are live for you right now?</label>
+          <div class="tag-grid" id="moneyTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: MONEY STORY & TRAUMA -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">Your Money Story — Where It All Started</div>
+        <div class="step-desc">Your financial behaviours today were largely shaped before you turned 10. Understanding your money story is the first step to rewriting it.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-purple">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🧠 What Is Financial Trauma?</div>
+        <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:14px;">Financial trauma is the emotional and psychological damage caused by significant money-related hardship — growing up poor, watching parents fight about bills, having utilities cut off, experiencing sudden financial loss, or living with chronic scarcity. It leaves lasting imprints on how we think, feel, and behave around money as adults.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--purple);">Scarcity mindset.</strong> When money felt unsafe as a child, the brain learns to treat financial resources as permanently unreliable — even when they're not.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--purple);">Avoidance behaviour.</strong> Not opening bank statements. Not checking your balance. Spending to soothe anxiety. These are trauma responses — not character flaws.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--purple);">Guilt around having.</strong> Many people from poor backgrounds feel guilt or shame when they start earning well — as if having money is a betrayal of where they came from.</div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--purple);">Self-sabotage.</strong> Spending every rand before it can be saved. Making poor decisions when money arrives. Unconsciously recreating scarcity because it feels familiar.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📖 Your Money Origin Story</div>
+        <label>What messages did you receive about money growing up?</label>
+        <textarea id="ms_messages" placeholder='e.g. "Money is the root of all evil." / "We can\'t afford that." / "Rich people are greedy." / "You have to work yourself to death to survive." / "Money doesn\'t grow on trees."' style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What emotions come up when you think about money?</label>
+        <textarea id="ms_emotions" placeholder="e.g. Shame — because I feel behind where I should be. Anxiety — because there's never enough. Guilt — because I have more than my family and they expect me to share it all..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What is your biggest money fear?</label>
+        <textarea id="ms_fear" placeholder="e.g. Ending up poor like I grew up. Not being able to provide for my children. Being in debt forever. Never owning property..." style="min-height:70px;margin-bottom:12px;"></textarea>
+
+        <label>What would financial freedom actually feel like to you?</label>
+        <textarea id="ms_freedom" placeholder="e.g. Waking up without financial anxiety. Choosing work because I love it, not because I need the money. Being able to say yes to opportunities without checking my balance first..." style="min-height:70px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: BUDGET -->
+  <div class="step" style="animation-delay:0.15s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Monthly Budget Snapshot</div>
+        <div class="step-desc">Know your numbers. A budget is not a punishment — it is a plan. You cannot grow what you cannot see.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:14px;">💵 Income</div>
+          <div id="incomeRows"></div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+            <input type="text" id="newIncomeLabel" placeholder="Income source" style="flex:1;min-width:120px;margin-bottom:0;">
+            <input type="number" id="newIncomeAmt" placeholder="Amount (R)" style="width:130px;margin-bottom:0;">
+            <button class="btn btn-green btn-sm" onclick="addIncome()">+ Add</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">💸 Expenses</div>
+          <div id="expenseRows"></div>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+            <input type="text" id="newExpLabel" placeholder="Expense name" style="flex:1;min-width:120px;margin-bottom:0;">
+            <input type="number" id="newExpAmt" placeholder="Amount (R)" style="width:130px;margin-bottom:0;">
+            <button class="btn btn-red btn-sm" onclick="addExpense()">+ Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BUDGET SUMMARY -->
+      <div class="grid-3" id="budgetSummary" style="margin-bottom:20px;"></div>
+
+      <!-- 50/30/20 RULE -->
+      <div class="card card-green full" style="margin-top:4px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:12px;">📐 The 50/30/20 Rule — A Simple Framework</div>
+        <div class="grid-3">
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:var(--green);line-height:1;">50%</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;color:#bbb;margin:6px 0 4px;">Needs</div>
+            <div style="font-size:12px;color:#666;line-height:1.5;">Rent, food, transport, utilities, minimum debt repayments</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:var(--gold);line-height:1;">30%</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;color:#bbb;margin:6px 0 4px;">Wants</div>
+            <div style="font-size:12px;color:#666;line-height:1.5;">Dining out, clothing, entertainment, subscriptions, lifestyle</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:42px;font-weight:900;color:var(--blue);line-height:1;">20%</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;color:#bbb;margin:6px 0 4px;">Future</div>
+            <div style="font-size:12px;color:#666;line-height:1.5;">Savings, emergency fund, investments, extra debt repayments</div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:#666;margin-top:12px;line-height:1.6;">In South Africa, with the reality of black tax, load shedding costs, and a high cost of living, the 50/30/20 rule may need to be adjusted. The principle still holds: <strong style="color:#fff;">pay yourself first</strong> before the 20% becomes zero.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: DEBT TRACKER -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">Debt Tracker</div>
+        <div class="step-desc">Name your debt. Own it. Then build a plan to eliminate it. Debt ignored grows. Debt confronted shrinks.</div>
+      </div>
+    </div>
+    <div class="card">
+      <!-- ADD DEBT FORM -->
+      <div style="background:rgba(255,75,43,0.04);border:1px dashed rgba(255,75,43,0.2);border-radius:12px;padding:20px;margin-bottom:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">+ Add a Debt</div>
+        <div class="grid-3" style="gap:10px;margin-bottom:10px;">
+          <div><label>Creditor / Name</label><input type="text" id="debtName" placeholder="e.g. Capitec Personal Loan"></div>
+          <div><label>Total Owed (R)</label><input type="number" id="debtTotal" placeholder="e.g. 45000"></div>
+          <div><label>Monthly Payment (R)</label><input type="number" id="debtMonthly" placeholder="e.g. 1800"></div>
+        </div>
+        <div class="grid-3" style="gap:10px;margin-bottom:12px;">
+          <div><label>Interest Rate (%)</label><input type="number" id="debtRate" placeholder="e.g. 24.5"></div>
+          <div><label>Type</label>
+            <select id="debtType"><option>Personal Loan</option><option>Credit Card</option><option>Store Account</option><option>Student Loan</option><option>Home Loan</option><option>Vehicle Finance</option><option>Family Loan</option><option>Payday Loan</option><option>Tax Debt</option></select>
+          </div>
+          <div style="display:flex;align-items:flex-end;"><button class="btn btn-red btn-sm" onclick="addDebt()">+ Add Debt</button></div>
+        </div>
+      </div>
+      <div id="debtList"></div>
+      <div id="debtEmpty" style="color:#444;font-size:13px;font-style:italic;text-align:center;padding:20px;">No debts added. Add one above or come back when ready — there\'s no shame in naming it.</div>
+
+      <div style="margin-top:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">💡 Debt Elimination Strategies — Tap to Expand</div>
+        <div class="panel-grid" id="debtStrategyPanels"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: SAVINGS GOALS -->
+  <div class="step" style="animation-delay:0.25s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Savings &amp; Investment Goals</div>
+        <div class="step-desc">Saving is not what you do with what's left. It's the first thing you pay — to yourself.</div>
+      </div>
+    </div>
+    <div class="card">
+      <!-- ADD SAVINGS GOAL -->
+      <div style="background:rgba(57,255,20,0.04);border:1px dashed rgba(57,255,20,0.2);border-radius:12px;padding:20px;margin-bottom:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:14px;">+ Add a Savings Goal</div>
+        <div class="grid-3" style="gap:10px;margin-bottom:10px;">
+          <div><label>Goal Name</label><input type="text" id="saveName" placeholder="e.g. Emergency Fund"></div>
+          <div><label>Target Amount (R)</label><input type="number" id="saveTarget" placeholder="e.g. 30000"></div>
+          <div><label>Saved So Far (R)</label><input type="number" id="saveCurrent" placeholder="e.g. 5000"></div>
+        </div>
+        <div class="grid-3" style="gap:10px;margin-bottom:12px;">
+          <div><label>Monthly Contribution (R)</label><input type="number" id="saveMonthly" placeholder="e.g. 2000"></div>
+          <div><label>Target Date</label><input type="text" id="saveDate" placeholder="e.g. December 2025"></div>
+          <div style="display:flex;align-items:flex-end;"><button class="btn btn-green btn-sm" onclick="addSavingsGoal()">+ Add Goal</button></div>
+        </div>
+      </div>
+      <div id="savingsList"></div>
+      <div id="savingsEmpty" style="color:#444;font-size:13px;font-style:italic;text-align:center;padding:20px;">No savings goals yet. Add your first one above.</div>
+
+      <div style="margin-top:24px;border-top:1px solid rgba(255,255,255,0.07);padding-top:20px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">🇿🇦 South African Investment Vehicles — What You Need to Know</div>
+        <div class="panel-grid" id="investPanels"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: GENERATIONAL WEALTH & BLACK TAX -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Generational Wealth &amp; Black Tax</div>
+        <div class="step-desc">Building wealth in South Africa as a Black person means navigating both systems and family obligations. You can honour both — with a plan.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-gold">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">💛 What is Generational Wealth?</div>
+        <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:14px;">Generational wealth is assets passed from one generation to the next — property, investments, education, business ownership, and financial knowledge. For most Black South African families, apartheid's deliberate destruction of Black wealth means we are starting this process from zero — or from debt.</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:rgba(245,197,24,0.07);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">It starts with you.</strong> You don't need to be a millionaire. The first generation that breaks the cycle of zero — saves, owns property, invests even R200/month — changes the trajectory of every generation after them.</div>
+          <div style="background:rgba(245,197,24,0.07);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Financial literacy is wealth.</strong> Teaching your children about money — how to save, how credit works, how to invest — is the most valuable inheritance you can leave.</div>
+          <div style="background:rgba(245,197,24,0.07);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">Property matters.</strong> Homeownership is still one of the most accessible paths to building a balance sheet. Even a modest property transferred to your children is a head start they didn't have.</div>
+          <div style="background:rgba(245,197,24,0.07);border-radius:8px;padding:11px;font-size:13px;color:#ccc;line-height:1.6;"><strong style="color:var(--gold);">You cannot build generational wealth while destroying your own financial health.</strong> Black tax must be managed — not avoided, but limited, communicated, and planned for.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">💸 My Black Tax Reality</div>
+        <label>What am I currently providing for extended family? (be specific)</label>
+        <textarea id="bt_current" placeholder="e.g. R3,500/month for my mom's groceries and transport. I paid my sister's school fees last year. I cover my nephew's school uniform every year. I'm always the one called in a crisis..." style="min-height:90px;margin-bottom:12px;"></textarea>
+
+        <label>What is the emotional cost — beyond the financial?</label>
+        <textarea id="bt_emotional" placeholder="e.g. Resentment that nobody asks how I'm coping. Exhaustion from being the 'strong one'. Guilt when I say no. Fear of being seen as selfish for building my own life..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What boundary do I need to set — or hold — this month?</label>
+        <textarea id="bt_boundary" placeholder="e.g. I need to stop agreeing to requests in the moment and start saying 'let me check my budget and come back to you'. I need to set a fixed monthly amount and stick to it regardless of emotional pressure..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What am I building for MY future? (your wealth vision)</label>
+        <textarea id="bt_vision" placeholder="e.g. I want to own my first property by 35. I want my kids to inherit a paid-off home. I want to retire before 60 without depending on anyone. I want to leave something..." style="min-height:80px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: REFLECT + AFFIRM + LOG -->
+  <div class="step" style="animation-delay:0.35s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Reflect, Commit &amp; Affirm</div>
+        <div class="step-desc">Close with intention. Your financial future is built one decision at a time.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>💡 The one money habit I'm starting or maintaining this month</label>
+        <textarea id="r_habit" placeholder="e.g. Automating R1,000 into savings on payday before anything else touches that account. Cutting one subscription I haven't used in 3 months. Tracking every spend for 30 days..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>🎯 My most important financial goal right now</label>
+        <textarea id="r_goal" placeholder="e.g. Build a R10,000 emergency fund within 6 months. Pay off my credit card by end of year. Save the deposit for my first property..." style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <label>🔮 What does financial freedom look like for me in 10 years?</label>
+        <textarea id="r_freedom" placeholder="e.g. I own my home. I have 12 months of expenses saved. My children's education is funded. I work because I want to, not because I have to. I have started a family trust..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <div style="margin-top:4px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:10px;">✅ Monthly Money Commitments</div>
+          <div id="moneyCommits"></div>
+        </div>
+      </div>
+
+      <div class="card card-green" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:14px;">💰 Money Affirmation</div>
+          <div class="affirm-box"><div class="affirm-text" id="affirmText"></div></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="affirmByStatus()" style="flex:1;font-size:13px;padding:9px;">✦ Match Status</button>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📅 Finance Journal — Recent Entries</div>
+          <div id="financeLog" style="margin-bottom:16px;"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-green" onclick="saveEntry()">💰 Save Today's Entry</button>
+            <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-green" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">💰 Save Today's Entry</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+</div>
+
+<button class="summary-toggle" id="summaryToggle" onclick="toggleSummary()" data-icon="💰">💰</button>
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_status">—</div><div class="summary-key">Money Status</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_income">R0</div><div class="summary-key">Monthly Income</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_expenses">R0</div><div class="summary-key">Monthly Expenses</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_balance">R0</div><div class="summary-key">Balance</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_debt">0</div><div class="summary-key">Debts Tracked</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_savings">0</div><div class="summary-key">Savings Goals</div></div>
+  <div class="summary-save"><button class="btn btn-green" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session = JSON.parse(localStorage.getItem('wl_session')||'{}');
+if(!session.loggedIn) window.location.href='wellness1.html';
+const userEmail=session.email, userName=session.name||'Friend', firstName=userName.split(' ')[0];
+document.getElementById('navName').textContent=firstName;
+document.getElementById('navAvatar').textContent=firstName.charAt(0).toUpperCase();
+document.getElementById('navName').style.opacity=document.getElementById('navAvatar').style.opacity='1';
+function key(s){ return `wl_${userEmail}_${s}`; }
+
+function updateClock(){
+  const now=new Date(),h=now.getHours();
+  document.getElementById('timeGreeting').textContent=h<12?`Good morning, ${firstName}`:h<17?`Good afternoon, ${firstName}`:`Good evening, ${firstName}`;
+  document.getElementById('clockTime').textContent=String(h).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock,30000);
+
+let currentDate=new Date();
+function dk(d){ return d.toISOString().slice(0,10); }
+function fmt(d){ return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'}); }
+function shiftDate(n){ currentDate.setDate(currentDate.getDate()+n); renderDate(); loadEntry(); }
+function renderDate(){
+  document.getElementById('dateStr').textContent=fmt(currentDate);
+  const strip=document.getElementById('weekStrip'); strip.innerHTML='';
+  for(let i=-3;i<=3;i++){
+    const d=new Date(currentDate); d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip=document.createElement('div'); chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{ currentDate=new Date(d); renderDate(); loadEntry(); };
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state={ moneyStatus:'', moneyNote:'', moneyTags:[], ms_messages:'', ms_emotions:'', ms_fear:'', ms_freedom:'', bt_current:'', bt_emotional:'', bt_boundary:'', bt_vision:'', r_habit:'', r_goal:'', r_freedom:'', commitChecked:[], ts:'' };
+let incomeRows=[], expenseRows=[], debts=[], savingsGoals=[];
+
+// ── STATUS ────────────────────────────────────────────────────────────────────
+function selectStatus(el){
+  document.querySelectorAll('.status-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); state.moneyStatus=el.dataset.s;
+  document.getElementById('s_status').textContent=el.dataset.s.split(' ')[0];
+}
+
+// ── MONEY TAGS ────────────────────────────────────────────────────────────────
+const MONEY_TAGS=['Living paycheck to paycheck','High debt load','No emergency fund','Black tax pressure','Saving consistently','Investing already','Trying to budget','Avoidance behaviour','Financial anxiety','Behind on bills','Building savings','No financial plan','Wants to invest','Needs a will/estate plan','Struggling with credit','Overspending on lifestyle','Under-earning','Supporting family','Starting a business'];
+function renderMoneyTags(){
+  const w=document.getElementById('moneyTags');
+  MONEY_TAGS.forEach(tag=>{
+    const t=document.createElement('div'); t.className='ttag'; t.textContent=tag; t.dataset.tag=tag;
+    t.onclick=()=>{ t.classList.toggle('active'); if(t.classList.contains('active')){ if(!state.moneyTags.includes(tag)) state.moneyTags.push(tag); } else state.moneyTags=state.moneyTags.filter(x=>x!==tag); };
+    w.appendChild(t);
+  });
+}
+
+// ── BUDGET ────────────────────────────────────────────────────────────────────
+function fmt_r(n){ return 'R'+Number(n||0).toLocaleString('en-ZA'); }
+
+function addIncome(){
+  const label=document.getElementById('newIncomeLabel').value.trim();
+  const amt=parseFloat(document.getElementById('newIncomeAmt').value)||0;
+  if(!label||!amt) return;
+  incomeRows.push({label,amt}); document.getElementById('newIncomeLabel').value=''; document.getElementById('newIncomeAmt').value='';
+  renderBudget(); saveBudgetData();
+}
+function addExpense(){
+  const label=document.getElementById('newExpLabel').value.trim();
+  const amt=parseFloat(document.getElementById('newExpAmt').value)||0;
+  if(!label||!amt) return;
+  expenseRows.push({label,amt}); document.getElementById('newExpLabel').value=''; document.getElementById('newExpAmt').value='';
+  renderBudget(); saveBudgetData();
+}
+function renderBudget(){
+  const iw=document.getElementById('incomeRows'); iw.innerHTML='';
+  incomeRows.forEach((r,i)=>{
+    const d=document.createElement('div'); d.className='budget-row';
+    d.innerHTML=`<span class="budget-cat">${r.label}</span><span class="budget-amount" style="color:var(--green);">${fmt_r(r.amt)}</span><button class="budget-del" onclick="delIncome(${i})">×</button>`;
+    iw.appendChild(d);
+  });
+  const ew=document.getElementById('expenseRows'); ew.innerHTML='';
+  expenseRows.forEach((r,i)=>{
+    const d=document.createElement('div'); d.className='budget-row';
+    d.innerHTML=`<span class="budget-cat">${r.label}</span><span class="budget-amount" style="color:var(--red);">${fmt_r(r.amt)}</span><button class="budget-del" onclick="delExpense(${i})">×</button>`;
+    ew.appendChild(d);
+  });
+  const totalIncome=incomeRows.reduce((a,r)=>a+r.amt,0);
+  const totalExpenses=expenseRows.reduce((a,r)=>a+r.amt,0);
+  const balance=totalIncome-totalExpenses;
+  const balColor=balance>=0?'var(--green)':'var(--red)';
+  document.getElementById('budgetSummary').innerHTML=`
+    <div style="background:rgba(57,255,20,0.06);border:1px solid rgba(57,255,20,0.2);border-radius:10px;padding:18px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--green);">${fmt_r(totalIncome)}</div><div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Total Income</div></div>
+    <div style="background:rgba(255,75,43,0.06);border:1px solid rgba(255,75,43,0.15);border-radius:10px;padding:18px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--red);">${fmt_r(totalExpenses)}</div><div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">Total Expenses</div></div>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:18px;text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:${balColor};">${fmt_r(balance)}</div><div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-top:4px;">${balance>=0?'Surplus':'Deficit'}</div></div>
+  `;
+  document.getElementById('s_income').textContent=fmt_r(totalIncome);
+  document.getElementById('s_expenses').textContent=fmt_r(totalExpenses);
+  document.getElementById('s_balance').textContent=fmt_r(balance);
+}
+function delIncome(i){ incomeRows.splice(i,1); renderBudget(); saveBudgetData(); }
+function delExpense(i){ expenseRows.splice(i,1); renderBudget(); saveBudgetData(); }
+function saveBudgetData(){ localStorage.setItem(key('life7_budget'),JSON.stringify({incomeRows,expenseRows})); }
+function loadBudgetData(){ const r=localStorage.getItem(key('life7_budget')); if(r){ const d=JSON.parse(r); incomeRows=d.incomeRows||[]; expenseRows=d.expenseRows||[]; } renderBudget(); }
+
+// ── DEBT ──────────────────────────────────────────────────────────────────────
+function addDebt(){
+  const name=document.getElementById('debtName').value.trim();
+  const total=parseFloat(document.getElementById('debtTotal').value)||0;
+  if(!name||!total) return;
+  const monthly=parseFloat(document.getElementById('debtMonthly').value)||0;
+  const rate=parseFloat(document.getElementById('debtRate').value)||0;
+  const type=document.getElementById('debtType').value;
+  debts.push({id:Date.now(),name,total,monthly,rate,type,paid:0});
+  ['debtName','debtTotal','debtMonthly','debtRate'].forEach(id=>document.getElementById(id).value='');
+  renderDebts(); saveDebtsData();
+}
+function renderDebts(){
+  const el=document.getElementById('debtList');
+  const empty=document.getElementById('debtEmpty');
+  if(!debts.length){ el.innerHTML=''; empty.style.display='block'; document.getElementById('s_debt').textContent='0'; return; }
+  empty.style.display='none'; el.innerHTML='';
+  let totalDebt=0;
+  debts.forEach((d,i)=>{
+    totalDebt+=d.total;
+    const pct=d.total>0?Math.min(100,Math.round((d.paid/d.total)*100)):0;
+    const monthsLeft=d.monthly>0?Math.ceil((d.total-d.paid)/d.monthly):null;
+    const div=document.createElement('div'); div.className='debt-item';
+    div.innerHTML=`
+      <div class="debt-header">
+        <div><div class="debt-name">${d.name}</div><div style="font-size:11px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-top:2px;">${d.type}${d.rate?' · '+d.rate+'% p.a.':''}</div></div>
+        <div class="debt-amounts">
+          <div class="debt-num"><div class="debt-num-val" style="color:var(--red);">${fmt_r(d.total)}</div><div class="debt-num-key">Total Owed</div></div>
+          <div class="debt-num"><div class="debt-num-val" style="color:var(--gold);">${fmt_r(d.monthly)}</div><div class="debt-num-key">Monthly</div></div>
+          ${monthsLeft?`<div class="debt-num"><div class="debt-num-val" style="color:#aaa;">${monthsLeft}m</div><div class="debt-num-key">To Clear</div></div>`:''}
+        </div>
+        <button class="debt-del" onclick="deleteDebt(${i})">×</button>
+      </div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:linear-gradient(to right,var(--red),var(--gold));"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:4px;margin-bottom:10px;"><span>Amount paid off</span><span>${pct}%</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:12px;color:#666;">Paid so far:</span>
+        <input type="number" value="${d.paid}" placeholder="R paid so far" style="width:130px;margin-bottom:0;" onchange="updateDebtPaid(${i},this.value)">
+      </div>
+    `;
+    el.appendChild(div);
+  });
+  document.getElementById('s_debt').textContent=debts.length;
+}
+function updateDebtPaid(i,val){ debts[i].paid=parseFloat(val)||0; renderDebts(); saveDebtsData(); }
+function deleteDebt(i){ debts.splice(i,1); renderDebts(); saveDebtsData(); }
+function saveDebtsData(){ localStorage.setItem(key('life7_debts'),JSON.stringify(debts)); }
+function loadDebtsData(){ const r=localStorage.getItem(key('life7_debts')); if(r) debts=JSON.parse(r); renderDebts(); }
+
+const DEBT_STRATEGIES=[
+  {icon:'❄️',title:'Debt Snowball',desc:'Pay smallest debt first for quick psychological wins.',
+    expand:`<strong>How it works:</strong> List all your debts from smallest to largest balance. Pay the minimum on everything except the smallest — throw every extra rand at that one. When it's gone, roll that payment onto the next smallest.<br><br>
+    <strong>Why it works:</strong> The quick wins create momentum and motivation. Paying off a debt — even a small one — gives your brain a dopamine reward that keeps you going.<br><br>
+    <strong>Best for:</strong> People who struggle with motivation or have many small debts spread across multiple accounts.<br><br>
+    <em>Dave Ramsey's approach. Not mathematically optimal but psychologically powerful — and done beats perfect.</em>`},
+  {icon:'🏔️',title:'Debt Avalanche',desc:'Pay highest interest debt first — saves the most money.',
+    expand:`<strong>How it works:</strong> List your debts from highest to lowest interest rate. Pay minimums on everything, put all extra money at the highest rate debt. When it's cleared, move to the next highest rate.<br><br>
+    <strong>Why it works:</strong> Interest is the cost of debt. Eliminating the most expensive debt first minimises the total amount you pay over time.<br><br>
+    <strong>Best for:</strong> People who can stay motivated through slower initial progress and have high-interest credit cards or payday loans.<br><br>
+    <em>Mathematically optimal. Can save tens of thousands in interest over the life of your debts.</em>`},
+  {icon:'🔄',title:'Debt Consolidation',desc:'Combine multiple debts into one lower-interest loan.',
+    expand:`<strong>How it works:</strong> You take out one new loan (usually at a lower interest rate) to pay off multiple smaller debts. You then have one monthly payment instead of many.<br><br>
+    <strong>When it makes sense:</strong> When you have multiple high-interest debts (store cards at 20–28%) and can qualify for a personal loan at a significantly lower rate.<br><br>
+    <strong>The risk:</strong> Many people consolidate, then run up their store cards again — doubling their problem. Consolidation only works if you <em>also</em> close or freeze the accounts you've paid off.<br><br>
+    <strong>In SA:</strong> Compare rates from your bank, NCR-registered debt counsellors, and platforms like Debt Busters before committing.<br><br>
+    <em>A tool, not a solution. The behaviour change is what creates the solution.</em>`},
+  {icon:'🛡️',title:'Debt Review',desc:'Legal protection from creditors while you repay.',
+    expand:`<strong>What it is:</strong> Under the National Credit Act, a registered debt counsellor assesses your situation, negotiates reduced payments with creditors, and places you under legal protection while you repay under a new plan.<br><br>
+    <strong>Benefits:</strong> Creditors cannot take legal action against you. Reduced monthly payments. One payment to a Payment Distribution Agency (PDA) who pays your creditors.<br><br>
+    <strong>The trade-off:</strong> You cannot take on new credit during review. It stays on your credit record until all debts are cleared. The process can take several years.<br><br>
+    <strong>Who it's for:</strong> People who are over-indebted — spending more than they earn — and genuinely cannot meet all minimum payments.<br><br>
+    <em>Contact the NCR (National Credit Regulator) at <strong>0860 627 627</strong> or visit ncr.org.za for registered debt counsellors.</em>`},
+  {icon:'🧾',title:'Negotiate Your Interest',desc:'You can often get rates reduced — just ask.',
+    expand:`Many South Africans don't realise that credit card and store account interest rates are negotiable — especially if you've been a consistent payer.<br><br>
+    <strong>How to do it:</strong><br>
+    → Call your credit provider directly. Ask to speak with the retentions or collections department.<br>
+    → Say: "I've been a loyal customer and I'm working hard to reduce my debt. Can you reduce my interest rate so I can pay this off faster?"<br>
+    → If they say no, ask what your options are. Ask again in 3 months.<br><br>
+    <strong>It works more than you'd expect.</strong> Banks prefer a reduced-rate repayment to a default or debt review. They have an incentive to work with you.<br><br>
+    <em>The worst they can say is no. The best case is saving thousands in interest over the repayment period.</em>`},
+  {icon:'💼',title:'Increase Your Income',desc:'Sometimes the fastest debt exit is more money in.',
+    expand:`While cutting expenses helps, there's a floor to how much you can cut. There's no ceiling on how much you can earn.<br><br>
+    <strong>Short-term income boosters:</strong><br>
+    → Sell things you don't use (Facebook Marketplace, Gumtree)<br>
+    → Offer a service on weekends (tutoring, cleaning, cooking, driving)<br>
+    → Monetise a skill (freelance writing, design, photography)<br>
+    → Take overtime or extra shifts<br><br>
+    <strong>The rule:</strong> Any extra income generated above your normal salary goes directly to debt — not lifestyle. Treat it as if it doesn't exist for spending.<br><br>
+    <em>R2,000 extra per month against a R40,000 debt at 24% interest cuts the repayment time by years.</em>`},
+];
+function renderDebtPanels(){
+  const g=document.getElementById('debtStrategyPanels');
+  DEBT_STRATEGIES.forEach(p=>{
+    const card=document.createElement('div'); card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── SAVINGS GOALS ─────────────────────────────────────────────────────────────
+function addSavingsGoal(){
+  const name=document.getElementById('saveName').value.trim();
+  const target=parseFloat(document.getElementById('saveTarget').value)||0;
+  if(!name||!target) return;
+  savingsGoals.push({ id:Date.now(), name, target, current:parseFloat(document.getElementById('saveCurrent').value)||0, monthly:parseFloat(document.getElementById('saveMonthly').value)||0, date:document.getElementById('saveDate').value });
+  ['saveName','saveTarget','saveCurrent','saveMonthly','saveDate'].forEach(id=>document.getElementById(id).value='');
+  renderSavings(); saveSavingsData();
+}
+function renderSavings(){
+  const el=document.getElementById('savingsList');
+  const empty=document.getElementById('savingsEmpty');
+  if(!savingsGoals.length){ el.innerHTML=''; empty.style.display='block'; document.getElementById('s_savings').textContent='0'; return; }
+  empty.style.display='none'; el.innerHTML='';
+  savingsGoals.forEach((g,i)=>{
+    const pct=g.target>0?Math.min(100,Math.round((g.current/g.target)*100)):0;
+    const remaining=Math.max(0,g.target-g.current);
+    const monthsLeft=g.monthly>0?Math.ceil(remaining/g.monthly):null;
+    const div=document.createElement('div'); div.className='savings-item';
+    div.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px;">
+        <div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-transform:uppercase;color:#fff;">${g.name}</div>${g.date?`<div style="font-size:11px;color:#555;margin-top:2px;">Target: ${g.date}</div>`:''}
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <div style="text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--green);">${fmt_r(g.current)}</div><div style="font-size:10px;color:#555;text-transform:uppercase;">Saved</div></div>
+          <div style="text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#bbb;">${fmt_r(g.target)}</div><div style="font-size:10px;color:#555;text-transform:uppercase;">Target</div></div>
+          ${monthsLeft?`<div style="text-align:center;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--blue);">${monthsLeft}m</div><div style="font-size:10px;color:#555;text-transform:uppercase;">To Go</div></div>`:''}
+          <button style="background:none;border:none;color:#333;cursor:pointer;font-size:16px;" onclick="deleteSavings(${i})">×</button>
+        </div>
+      </div>
+      <div class="bar-wrap"><div class="bar-fill" style="width:${pct}%;background:linear-gradient(to right,var(--green),var(--blue));"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:4px;margin-bottom:10px;"><span>${pct}% complete</span><span>${fmt_r(remaining)} remaining</span></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <span style="font-size:12px;color:#666;">Update saved amount:</span>
+        <input type="number" value="${g.current}" style="width:150px;margin-bottom:0;" onchange="updateSaved(${i},this.value)">
+      </div>
+    `;
+    el.appendChild(div);
+  });
+  document.getElementById('s_savings').textContent=savingsGoals.length;
+}
+function updateSaved(i,val){ savingsGoals[i].current=parseFloat(val)||0; renderSavings(); saveSavingsData(); }
+function deleteSavings(i){ savingsGoals.splice(i,1); renderSavings(); saveSavingsData(); }
+function saveSavingsData(){ localStorage.setItem(key('life7_savings'),JSON.stringify(savingsGoals)); }
+function loadSavingsData(){ const r=localStorage.getItem(key('life7_savings')); if(r) savingsGoals=JSON.parse(r); renderSavings(); }
+
+const INVEST_PANELS=[
+  {icon:'🏦',title:'Tax-Free Savings Account',desc:'R36,000/year — no tax on growth or withdrawals.',
+    expand:`The Tax-Free Savings Account (TFSA) is one of the best financial tools available to South Africans — and most people are not using it.<br><br>
+    <strong>What it is:</strong> A savings or investment account where all growth, interest, and returns are completely tax-free. You can withdraw at any time without penalty.<br><br>
+    <strong>Limits:</strong> R36,000 per year, R500,000 lifetime maximum. You cannot "replace" money you withdraw — it counts against your lifetime allowance.<br><br>
+    <strong>Where to open one:</strong> Any major bank (FNB, Nedbank, Capitec, Standard Bank, Absa), or through an investment platform like Easy Equities, Satrix, or Allan Gray.<br><br>
+    <em>Start here. R1,000/month in a TFSA invested in a low-cost index fund is one of the most powerful financial decisions you can make.</em>`},
+  {icon:'📈',title:'Retirement Annuity (RA)',desc:'Tax deduction now + tax-free growth. For retirement.',
+    expand:`A Retirement Annuity is a long-term investment vehicle specifically for retirement. In South Africa, you can deduct up to 27.5% of your income (max R350,000/year) from your taxable income — meaning SARS effectively co-funds your retirement.<br><br>
+    <strong>The tax benefit in practice:</strong> If you earn R30,000/month and invest R3,000 into a RA, your taxable income drops from R360,000 to R324,000/year. Depending on your tax bracket, this saves you R900–R1,260/month in tax.<br><br>
+    <strong>Important:</strong> You cannot access an RA before age 55 (except in cases of emigration or terminal illness). Think of it as locked-away future wealth.<br><br>
+    <strong>Providers:</strong> Allan Gray, Coronation, Sanlam, Discovery Invest, 10X Investments (low cost).<br><br>
+    <em>If your employer offers a pension or provident fund — make sure you understand how it works and whether you're getting the maximum employer match.</em>`},
+  {icon:'🏘️',title:'Property Investment',desc:'Buy to let, or buy to live in — SA\'s most common wealth vehicle.',
+    expand:`Property remains one of the most reliable long-term wealth vehicles in South Africa — both for appreciation and for rental income.<br><br>
+    <strong>First property:</strong> Your primary residence is a wealth-building tool. A paid-off home is a significant asset. Your bond payment is forced savings.<br><br>
+    <strong>Buy to let:</strong> A second property rented out creates passive income. The rental income should cover the bond and running costs — ideally with surplus.<br><br>
+    <strong>What to know before buying:</strong><br>
+    → Save at least 10% deposit (20% preferred to avoid high interest)<br>
+    → Factor in rates, levies, maintenance, and vacancy periods<br>
+    → Location and tenant quality determine the success of a rental property<br>
+    → Use a conveyancer and get a home inspection before buying<br><br>
+    <em>Your first property doesn't have to be your dream home. It has to be a wise financial decision.</em>`},
+  {icon:'📊',title:'Index Funds & ETFs',desc:'Low-cost diversified investing. Start with R500/month.',
+    expand:`An Exchange Traded Fund (ETF) is a basket of shares that tracks an index (like the JSE Top 40 or the S&P 500 globally). You buy one thing and get exposure to hundreds of companies.<br><br>
+    <strong>Why ETFs for beginners:</strong><br>
+    → Diversification — one purchase spreads your risk across many companies<br>
+    → Low fees — compared to actively managed funds<br>
+    → No expertise required — you're not picking stocks<br>
+    → Accessible — minimum investments as low as R500/month<br><br>
+    <strong>Where to start in SA:</strong><br>
+    → Easy Equities — user-friendly app, low minimums<br>
+    → Satrix — Naspers/Prosus, JSE Top 40 trackers<br>
+    → Sygnia — competitive fees, wide range<br><br>
+    <em>Time in the market beats timing the market. Start small. Start now. Increase contributions as income grows.</em>`},
+  {icon:'🔐',title:'Emergency Fund First',desc:'3–6 months of expenses in cash before anything else.',
+    expand:`Before investing a single rand, you need an emergency fund. An emergency fund is 3–6 months of your essential living expenses in an easily accessible, interest-bearing account.<br><br>
+    <strong>Why it matters:</strong> Without an emergency fund, any unexpected expense — a car repair, a medical bill, a job loss — becomes debt. Debt reverses all financial progress.<br><br>
+    <strong>Where to keep it:</strong> A high-interest savings account (not your cheque account where it will be spent). FNB, Capitec, Nedbank, TymeBank all offer reasonable interest rates on savings accounts.<br><br>
+    <strong>How to build it:</strong> Start with R10,000 as a first milestone. Then build to 1 month, then 3, then 6.<br><br>
+    <em>An emergency fund is not an investment. It's insurance against financial catastrophe. It is the foundation that every other financial plan is built on.</em>`},
+  {icon:'📝',title:'Life Insurance & Will',desc:'Protect what you build. Leave something behind.',
+    expand:`Many South Africans are severely underinsured or have no will — meaning everything they've built could be lost or tied up in courts for years after their death.<br><br>
+    <strong>Life insurance:</strong> If people depend on your income, you need life insurance. The payout should be enough to cover all debts plus 3–5 years of your dependants' living expenses.<br><br>
+    <strong>Income protection:</strong> Often overlooked, but critical. If you cannot work due to illness or injury, income protection pays a monthly benefit. Your ability to earn is your most valuable asset.<br><br>
+    <strong>A will:</strong> Without a valid will in South Africa, the Intestate Succession Act determines who gets what — and it may not match your wishes. A basic will can be drafted for free through many banks and legal aid offices.<br><br>
+    <em>Building wealth without protecting it is building on sand. Insure your income. Write your will. Update both as your life changes.</em>`},
+];
+function renderInvestPanels(){
+  const g=document.getElementById('investPanels');
+  INVEST_PANELS.forEach(p=>{
+    const card=document.createElement('div'); card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── COMMIT CHECKLIST ──────────────────────────────────────────────────────────
+const COMMITS=['I will check my bank balance every day this week — no avoidance','I will not buy anything non-essential without waiting 24 hours first','I will set up or increase my automated savings this month','I will pay more than the minimum on at least one debt','I will have an honest conversation about money with someone I trust','I will calculate my net worth (assets minus liabilities) this month','I will read one article or watch one video about personal finance this week','I will not compare my financial progress to anyone else\'s','I will celebrate one financial win — however small','I will review this budget before the next salary arrives'];
+function renderCommits(){
+  const w=document.getElementById('moneyCommits');
+  COMMITS.forEach((c,i)=>{
+    const d=document.createElement('div'); d.className='check-item'; d.dataset.cidx=i;
+    d.innerHTML=`<div class="check-box" id="com_${i}"></div><div class="check-text">${c}</div>`;
+    d.onclick=()=>{ d.classList.toggle('checked'); document.getElementById('com_'+i).textContent=d.classList.contains('checked')?'✓':''; if(d.classList.contains('checked')){ if(!state.commitChecked.includes(i)) state.commitChecked.push(i); } else state.commitChecked=state.commitChecked.filter(x=>x!==i); };
+    w.appendChild(d);
+  });
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────────────
+const AFFIRMATIONS={
+  general:['I am building a healthy relationship with money — one decision at a time.','Money is a tool. I am learning to use it wisely.','I deserve financial security and I am actively creating it.','My financial past does not determine my financial future.','I am becoming someone who thinks long-term about money.'],
+  Thriving:['I am thriving financially and I use this abundance with intention and generosity.','I have worked hard for this stability. I protect it and I grow it.'],
+  Stable:['I am stable. I build on this foundation deliberately and without rushing.','Stability is not stagnation — I am using this platform to grow.'],
+  Building:['Every rand I save and invest is a brick in the life I am building.','I am patient with the process. Wealth is built slowly and kept permanently.'],
+  Surviving:['I have survived every financial difficulty so far. I will survive this one too.','I am one decision away from beginning to change my financial direction.'],
+  Drowning:['I face my debt. I name it. I make a plan. This is not permanent.','The bravest thing I can do right now is ask for help and take one step forward.'],
+  'Starting Over':['Starting over is not failure — it is courage to try again with everything I now know.','I build smarter this time. Every lesson from the past is a foundation for what comes next.'],
+};
+function newAffirm(){ const all=Object.values(AFFIRMATIONS).flat(); setAffirm(all[Math.floor(Math.random()*all.length)]); }
+function affirmByStatus(){ const list=AFFIRMATIONS[state.moneyStatus]||AFFIRMATIONS.general; setAffirm(list[Math.floor(Math.random()*list.length)]); }
+function setAffirm(txt){ const el=document.getElementById('affirmText'); el.style.opacity=0; setTimeout(()=>{ el.textContent=txt; el.style.transition='opacity 0.4s'; el.style.opacity=1; },250); }
+
+// ── LOG ───────────────────────────────────────────────────────────────────────
+let financeLog=[];
+function loadFinanceLog(){ const r=localStorage.getItem(key('life7_log')); financeLog=r?JSON.parse(r):[]; renderFinanceLog(); }
+function renderFinanceLog(){
+  const el=document.getElementById('financeLog');
+  if(!financeLog.length){ el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to begin your finance journal.</p>'; return; }
+  el.innerHTML='';
+  financeLog.slice(0,4).forEach((e,i)=>{
+    const d=document.createElement('div'); d.className='log-item';
+    d.innerHTML=`<div class="li-left"><div class="li-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div><div class="li-title">${e.status||'—'}</div>${e.note?`<div class="li-note">${e.note.slice(0,120)}${e.note.length>120?'…':''}</div>`:''}</div><button class="li-del" onclick="delLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(financeLog.length>4){ const m=document.createElement('p'); m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;'; m.textContent=`+ ${financeLog.length-4} earlier entries`; el.appendChild(m); }
+}
+function delLog(i){ financeLog.splice(i,1); localStorage.setItem(key('life7_log'),JSON.stringify(financeLog)); renderFinanceLog(); }
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry(){
+  state.moneyNote   =document.getElementById('moneyNote').value;
+  state.ms_messages =document.getElementById('ms_messages').value;
+  state.ms_emotions =document.getElementById('ms_emotions').value;
+  state.ms_fear     =document.getElementById('ms_fear').value;
+  state.ms_freedom  =document.getElementById('ms_freedom').value;
+  state.bt_current  =document.getElementById('bt_current').value;
+  state.bt_emotional=document.getElementById('bt_emotional').value;
+  state.bt_boundary =document.getElementById('bt_boundary').value;
+  state.bt_vision   =document.getElementById('bt_vision').value;
+  state.r_habit     =document.getElementById('r_habit').value;
+  state.r_goal      =document.getElementById('r_goal').value;
+  state.r_freedom   =document.getElementById('r_freedom').value;
+  state.ts          =new Date().toISOString();
+  localStorage.setItem(key('life7_'+dk(currentDate)),JSON.stringify(state));
+  financeLog.unshift({status:state.moneyStatus,note:state.moneyNote,date:state.ts});
+  localStorage.setItem(key('life7_log'),JSON.stringify(financeLog));
+  renderFinanceLog();
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{studentName:userName,studentEmail:userEmail,courseName:`Life 7 Finance Check-In — ${fmt(currentDate)}`,coursePrice:'N/A',courseDuration:'Wellness Portal',sessionType:'Online',paymentMethod:'Free',additionalInfo:`Money Status: ${state.moneyStatus||'—'}\nTags: ${state.moneyTags.join(', ')||'None'}\nDebts tracked: ${debts.length}\nSavings goals: ${savingsGoals.length}\nHabit: ${state.r_habit.slice(0,150)||'—'}\nGoal: ${state.r_goal.slice(0,150)||'—'}`,dashboardUrl:window.location.href}).catch(()=>{});
+  showToast('💰 Entry saved');
+}
+function loadEntry(){
+  const raw=localStorage.getItem(key('life7_'+dk(currentDate)));
+  if(!raw) return;
+  const s=JSON.parse(raw);
+  if(s.moneyStatus){ document.querySelectorAll('.status-tile').forEach(t=>{ if(t.dataset.s===s.moneyStatus) t.classList.add('active'); }); state.moneyStatus=s.moneyStatus; document.getElementById('s_status').textContent=s.moneyStatus.split(' ')[0]; }
+  ['moneyNote','ms_messages','ms_emotions','ms_fear','ms_freedom','bt_current','bt_emotional','bt_boundary','bt_vision','r_habit','r_goal','r_freedom'].forEach(id=>{ document.getElementById(id).value=s[id]||''; });
+  state.moneyTags=s.moneyTags||[];
+  document.querySelectorAll('#moneyTags .ttag').forEach(t=>{ if(state.moneyTags.includes(t.dataset.tag)) t.classList.add('active'); });
+  state.commitChecked=s.commitChecked||[];
+  state.commitChecked.forEach(i=>{ const d=document.querySelector(`.check-item[data-cidx="${i}"]`); if(d){d.classList.add('checked'); document.getElementById('com_'+i).textContent='✓';} });
+  state={...state,...s};
+  showToast('Entry loaded');
+}
+
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+function toggleSummary(){ const strip=document.getElementById('summaryStrip'),btn=document.getElementById('summaryToggle'); strip.classList.toggle('open'); btn.textContent=strip.classList.contains('open')?'✕':btn.dataset.icon; }
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderMoneyTags();
+renderDebtPanels();
+renderInvestPanels();
+renderCommits();
+loadBudgetData();
+loadDebtsData();
+loadSavingsData();
+loadFinanceLog();
+newAffirm();
+loadEntry();
+</script>
+</body>
+</html>
