@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 8 — Body & Sexual Health | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #ff8c00;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255,140,0,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.04) 0%, transparent 55%),
+    #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--orange); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass { padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border); color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+.btn-glass:hover { border-color:var(--orange); color:var(--orange); }
+.user-chip { display:flex; align-items:center; gap:8px; background:var(--glass); border:1px solid var(--glass-border); padding:6px 14px; border-radius:30px; font-size:13px; }
+.avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--orange),var(--red)); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; }
+
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--orange); margin-bottom:8px; }
+.page-title { font-family:'Barlow Condensed',sans-serif; font-size:clamp(3rem,8vw,5.5rem); font-weight:900; text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px; }
+.page-title span { color:var(--orange); }
+.page-sub { font-size:15px; color:#bbb; max-width:560px; line-height:1.7; }
+
+.time-greeting { display:inline-flex; align-items:center; gap:10px; background:var(--glass); border:1px solid var(--glass-border); padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px; }
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--orange); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+.date-nav { display:flex; align-items:center; gap:14px; margin:0 auto 40px; max-width:1100px; padding:0 40px; flex-wrap:wrap; }
+.date-btn { background:var(--glass); border:1px solid var(--glass-border); color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s; }
+.date-btn:hover { border-color:var(--orange); color:var(--orange); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--orange); border-color:var(--orange); color:#000; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--orange); background:rgba(255,140,0,0.1); border:1px solid rgba(255,140,0,0.35); padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+.card { background:var(--glass); border:1px solid var(--glass-border); border-radius:16px; padding:28px; backdrop-filter:blur(12px); position:relative; overflow:hidden; transition:border-color 0.3s; }
+.card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent); }
+.card:hover { border-color:rgba(255,140,0,0.15); }
+.card-orange { border-color:rgba(255,140,0,0.25); background:rgba(255,140,0,0.04); }
+.card-purple { border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.04); }
+.card-red    { border-color:rgba(255,75,43,0.2);   background:rgba(255,75,43,0.04); }
+.card-green  { border-color:rgba(57,255,20,0.2);   background:rgba(57,255,20,0.04); }
+.card-gold   { border-color:rgba(245,197,24,0.25); background:rgba(245,197,24,0.04); }
+.card-blue   { border-color:rgba(0,210,255,0.2);   background:rgba(0,210,255,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* STATUS TILES */
+.status-tiles { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.status-tile { flex:1; min-width:120px; padding:16px 12px; border-radius:12px; text-align:center; background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s; }
+.status-tile:hover,.status-tile.active { transform:translateY(-3px); }
+.st-emoji { font-size:26px; display:block; margin-bottom:8px; }
+.st-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; text-transform:uppercase; }
+.st-desc { font-size:10px; color:#666; margin-top:3px; }
+.status-tile[data-s="Confident"]:hover,.status-tile[data-s="Confident"].active{border-color:var(--orange);background:rgba(255,140,0,0.08);color:var(--orange);}
+.status-tile[data-s="Curious"]:hover,.status-tile[data-s="Curious"].active{border-color:var(--blue);background:rgba(0,210,255,0.08);color:var(--blue);}
+.status-tile[data-s="Healing"]:hover,.status-tile[data-s="Healing"].active{border-color:var(--purple);background:rgba(168,85,247,0.08);color:var(--purple);}
+.status-tile[data-s="Anxious"]:hover,.status-tile[data-s="Anxious"].active{border-color:var(--gold);background:rgba(245,197,24,0.08);color:var(--gold);}
+.status-tile[data-s="Struggling"]:hover,.status-tile[data-s="Struggling"].active{border-color:var(--red);background:rgba(255,75,43,0.08);color:var(--red);}
+.status-tile[data-s="Disconnected"]:hover,.status-tile[data-s="Disconnected"].active{border-color:#666;background:rgba(255,255,255,0.06);color:#aaa;}
+
+/* TAG GRID */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag { padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700; background:var(--glass); border:1px solid var(--glass-border); cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px; }
+.ttag:hover { border-color:rgba(255,140,0,0.5); color:var(--orange); }
+.ttag.active { border-color:rgba(255,140,0,0.6); background:rgba(255,140,0,0.1); color:var(--orange); }
+
+/* EXPANDABLE PANELS */
+.panel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.panel-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px; cursor:pointer; transition:0.3s; }
+.panel-card:hover { border-color:rgba(255,140,0,0.3); transform:translateY(-3px); }
+.panel-card.open { border-color:rgba(255,140,0,0.5); background:rgba(255,140,0,0.04); }
+.pc-icon { font-size:28px; margin-bottom:10px; display:block; }
+.pc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; margin-bottom:4px; }
+.pc-desc { font-size:12px; color:#666; line-height:1.5; }
+.pc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.panel-card.open .pc-expand { display:block; }
+
+/* CHECK ITEMS */
+.check-item { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px; cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; }
+.check-item:hover { border-color:rgba(255,140,0,0.3); background:rgba(255,140,0,0.04); }
+.check-item.checked { border-color:rgba(255,140,0,0.4); background:rgba(255,140,0,0.07); }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.check-item.checked .check-box { background:var(--orange); border-color:var(--orange); color:#fff; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#666; text-decoration:line-through; }
+
+/* PROGRESS BARS */
+.bar-wrap { height:8px; border-radius:8px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:6px; }
+.bar-fill { height:100%; border-radius:8px; transition:width 0.5s; }
+input[type=range] { width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer; background:linear-gradient(to right,rgba(255,255,255,0.06),var(--orange)); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff; cursor:pointer; box-shadow:0 0 10px rgba(255,140,0,0.5); border:2px solid var(--orange); }
+
+/* AFFIRM */
+.affirm-box { background:rgba(255,140,0,0.05); border:1px solid rgba(255,140,0,0.2); border-radius:12px; padding:24px; text-align:center; min-height:90px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* FORMS */
+textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:14px; font-size:14px; font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6; }
+textarea:focus { outline:none; border-color:var(--orange); background:rgba(255,140,0,0.03); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+input[type=text] { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+input[type=text]:focus { border-color:var(--orange); }
+input[type=text]::placeholder { color:#555; }
+select { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+select:focus { border-color:var(--orange); }
+select option { background:#111; }
+
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-orange { background:var(--orange); color:#000; }
+.btn-orange:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--orange); color:var(--orange); }
+.btn-sm { padding:8px 16px; font-size:13px; }
+
+/* INFO BOX */
+.info-box { background:rgba(255,140,0,0.06); border:1px solid rgba(255,140,0,0.2); border-radius:10px; padding:14px 16px; font-size:13px; color:#ccc; line-height:1.7; margin-bottom:10px; }
+.info-box strong { color:var(--orange); }
+
+/* RESOURCE CARDS */
+.resource-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+.resource-card { background:rgba(255,140,0,0.05); border:1px solid rgba(255,140,0,0.2); border-radius:12px; padding:16px; }
+.rc-org { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; color:var(--orange); margin-bottom:4px; }
+.rc-num { font-size:18px; font-weight:700; color:#fff; margin-bottom:4px; }
+.rc-desc { font-size:11px; color:#666; line-height:1.5; }
+
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+.log-item { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:14px; border-radius:10px; margin-bottom:10px; background:rgba(255,140,0,0.03); border:1px solid rgba(255,140,0,0.12); transition:0.3s; }
+.log-item:hover { border-color:rgba(255,140,0,0.25); }
+.li-left { flex:1; }
+.li-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.li-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--orange); }
+.li-note { font-size:13px; color:#777; margin-top:4px; line-height:1.5; }
+.li-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; }
+.li-del:hover { color:var(--red); }
+
+.summary-strip { position:sticky; bottom:0; z-index:50; background:rgba(0,0,0,0.93); backdrop-filter:blur(20px); border-top:1px solid rgba(255,140,0,0.2); padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap; }
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--orange); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--orange); color:#000; padding:11px 26px; border-radius:30px; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900; text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap; transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .summary-strip{position:fixed;bottom:0;left:0;right:0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);padding:16px;gap:16px;z-index:200;}
+  .summary-strip.open{transform:translateY(0);}
+  .summary-toggle{display:flex !important;}
+  .main{padding-bottom:80px !important;}
+}
+.summary-toggle{display:none;position:fixed;bottom:16px;right:16px;z-index:201;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;font-size:20px;background:var(--orange);color:#fff;box-shadow:0 4px 20px rgba(0,0,0,0.5);align-items:center;justify-content:center;transition:transform 0.2s;}
+.summary-toggle:active{transform:scale(0.92);}
+</style>
+</head>
+<body>
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--orange);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 8 · Body &amp; Sexual Health</div>
+  <h1 class="page-title">Know<br>Your<br><span>Body</span></h1>
+  <p class="page-sub">Your body is not shameful. Your sexuality is not something to be hidden. Knowledge is protection — and knowing your body, your rights, and your health is one of the most powerful things you can do for yourself.</p>
+</div>
+
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: BODY STATUS -->
+  <div class="step" style="animation-delay:0.05s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">How Are You Feeling in Your Body Right Now?</div>
+        <div class="step-desc">Not your appearance — your relationship with your body. How present, safe, and at home do you feel in your own skin today?</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="status-tiles">
+        <div class="status-tile" data-s="Confident" onclick="selectStatus(this)"><span class="st-emoji">💪</span><div class="st-label">Confident</div><div class="st-desc">At home in my skin</div></div>
+        <div class="status-tile" data-s="Curious" onclick="selectStatus(this)"><span class="st-emoji">🔍</span><div class="st-label">Curious</div><div class="st-desc">Learning, exploring</div></div>
+        <div class="status-tile" data-s="Healing" onclick="selectStatus(this)"><span class="st-emoji">🌱</span><div class="st-label">Healing</div><div class="st-desc">Processing, recovering</div></div>
+        <div class="status-tile" data-s="Anxious" onclick="selectStatus(this)"><span class="st-emoji">😟</span><div class="st-label">Anxious</div><div class="st-desc">Worried, uncertain</div></div>
+        <div class="status-tile" data-s="Struggling" onclick="selectStatus(this)"><span class="st-emoji">💔</span><div class="st-label">Struggling</div><div class="st-desc">Pain, discomfort, shame</div></div>
+        <div class="status-tile" data-s="Disconnected" onclick="selectStatus(this)"><span class="st-emoji">🌫️</span><div class="st-label">Disconnected</div><div class="st-desc">Numb, detached</div></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>What is your body telling you right now that you've been ignoring?</label>
+          <textarea id="bodyNote" placeholder="e.g. I've been getting headaches every day and I keep dismissing them. / I feel disconnected from my body since what happened. / I haven't been to the clinic in over a year and I know I should go..." style="min-height:110px;"></textarea>
+        </div>
+        <div>
+          <label>🏷️ What body and sexual health topics are relevant to you right now?</label>
+          <div class="tag-grid" id="bodyTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: BODY IMAGE -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">Body Image — Your Relationship With Your Own Body</div>
+        <div class="step-desc">Body image is not about how you look. It is about how you feel about how you look — and those are very different things. Both can be worked on.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-orange">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">🧠 Understanding Body Image</div>
+        <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:14px;">Body image is the mental picture you have of your body combined with your feelings, thoughts, and beliefs about it. Negative body image is not vanity — it is a real psychological experience that affects mental health, relationships, eating, sexual confidence, and self-worth.</p>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div class="info-box"><strong>Media and colonialism.</strong> The standard of "beautiful" in South Africa is still heavily influenced by Eurocentric ideals that were imposed through colonialism. Dark skin, natural hair, full bodies, and African features were systematically devalued. Healing body image for many South Africans means actively unlearning a colonised standard.</div>
+          <div class="info-box"><strong>Social media.</strong> The average person sees hundreds of curated, filtered, and often surgically altered images per day. This creates a comparison standard that no unfiltered human body can meet — including the person in the photo.</div>
+          <div class="info-box"><strong>The difference between weight and health.</strong> BMI was created by a mathematician in 1832 to describe populations — not individuals. It does not measure health. Healthy people come in every size. Size is not a moral category.</div>
+          <div class="info-box"><strong>Body neutrality vs body positivity.</strong> Body positivity asks you to love your body every day. Body neutrality says: your body doesn't have to be loved — it just has to be respected. You don't owe your body admiration. You owe it care.</div>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">💭 Your Body Image Reflection</div>
+
+        <label>Where did your body image come from? Who taught you how to feel about your body?</label>
+        <textarea id="bi_origin" placeholder="e.g. My mother always commented on my weight. At school I was teased about my skin colour. I grew up seeing only thin women celebrated as beautiful. My church said a woman's body was a source of sin..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What parts of your body do you struggle to accept — and why?</label>
+        <textarea id="bi_struggle" placeholder="e.g. My stomach — because I've had a baby and it changed. My skin — because it's darker than what's considered attractive in my family. My hair — because I've been told it's 'difficult'..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What does your body do for you that you take for granted?</label>
+        <textarea id="bi_gratitude" placeholder="e.g. It carries me everywhere I go. It healed from surgery. It grew and birthed a child. It gets up every morning even when I don't want to. It breathes without me asking it to..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <div style="background:rgba(255,140,0,0.07);border:1px solid rgba(255,140,0,0.2);border-radius:10px;padding:14px;font-size:13px;color:#ccc;line-height:1.7;">
+          <strong style="color:var(--orange);">Body image check — rate yourself 1–10:</strong><br><br>
+          <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px;"><span>How I feel about my body overall</span><span id="bi_val1">5</span></div>
+            <input type="range" min="1" max="10" value="5" oninput="document.getElementById('bi_val1').textContent=this.value;updateBISummary()">
+          </div>
+          <div style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px;"><span>How comfortable I feel in my body sexually</span><span id="bi_val2">5</span></div>
+            <input type="range" min="1" max="10" value="5" oninput="document.getElementById('bi_val2').textContent=this.value;updateBISummary()">
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#888;margin-bottom:6px;"><span>How much I care for my body (sleep, food, movement)</span><span id="bi_val3">5</span></div>
+            <input type="range" min="1" max="10" value="5" oninput="document.getElementById('bi_val3').textContent=this.value;updateBISummary()">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: SEXUAL HEALTH -->
+  <div class="step" style="animation-delay:0.15s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Sexual Health — What You Need to Know</div>
+        <div class="step-desc">Sexual health is not just about avoiding disease. It is about pleasure, safety, consent, and the right to make informed decisions about your own body.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="background:rgba(255,140,0,0.06);border:1px solid rgba(255,140,0,0.2);border-radius:12px;padding:20px;margin-bottom:24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">⚖️ Your Sexual Rights — South African Law</div>
+        <div class="grid-2">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="info-box"><strong>The right to say no.</strong> You have the right to refuse sexual activity at any time — before, during, or after intimacy has begun. Consent can be withdrawn at any point. This includes within a marriage.</div>
+            <div class="info-box"><strong>Marital rape is a crime.</strong> Section 3 of the Sexual Offences Act 32 of 2007 makes marital rape illegal in South Africa. No marriage or relationship gives another person ownership of your body.</div>
+            <div class="info-box"><strong>Age of consent is 16.</strong> Sexual activity with anyone under 16 is statutory rape regardless of perceived consent. Both parties aged 12–16 engaging with each other is handled under a separate provision.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="info-box"><strong>Access to contraception.</strong> You have the right to access contraception at any public clinic without your partner's permission, without your parents' knowledge if you are 12+, and without judgment.</div>
+            <div class="info-box"><strong>Access to abortion.</strong> The Choice on Termination of Pregnancy Act allows abortion on request up to 12 weeks. Between 13–20 weeks under specified conditions. This is a legal right. Public health facilities are required to provide this service.</div>
+            <div class="info-box"><strong>Confidentiality.</strong> Your sexual and reproductive health information is confidential. Healthcare providers are bound by confidentiality except where there is risk to life.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">💊 Contraception Guide — Know Your Options</div>
+      <div class="panel-grid" id="contraceptionPanels"></div>
+    </div>
+  </div>
+
+  <!-- STEP 4: STIs & HIV -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">STIs &amp; HIV — Facts Without Shame</div>
+        <div class="step-desc">South Africa has the largest HIV epidemic in the world. Knowing the facts removes the fear. Testing removes the uncertainty. Treatment changes everything.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-red">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">❤️ HIV — What You Must Know</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="info-box" style="background:rgba(255,75,43,0.06);border-color:rgba(255,75,43,0.2);"><strong style="color:var(--red);">HIV is a manageable chronic condition.</strong> With antiretroviral treatment (ART), people living with HIV can live full, long lives and cannot transmit the virus to partners (U=U: Undetectable = Untransmittable).</div>
+          <div class="info-box" style="background:rgba(255,75,43,0.06);border-color:rgba(255,75,43,0.2);"><strong style="color:var(--red);">PrEP.</strong> Pre-Exposure Prophylaxis is a daily medication taken by HIV-negative people that is 99% effective at preventing HIV transmission. Available free at public clinics in South Africa.</div>
+          <div class="info-box" style="background:rgba(255,75,43,0.06);border-color:rgba(255,75,43,0.2);"><strong style="color:var(--red);">PEP.</strong> Post-Exposure Prophylaxis must be started within 72 hours of potential exposure. It is a 28-day course of medication. Available at public hospital emergency departments.</div>
+          <div class="info-box" style="background:rgba(255,75,43,0.06);border-color:rgba(255,75,43,0.2);"><strong style="color:var(--red);">Test regularly.</strong> Every sexually active person should test for HIV at least once a year — more often with multiple partners. Testing takes 15 minutes and is free at all public clinics.</div>
+          <div class="info-box" style="background:rgba(255,75,43,0.06);border-color:rgba(255,75,43,0.2);"><strong style="color:var(--red);">HIV status is private.</strong> You are under no legal obligation to disclose your status to family, employers, or anyone except sexual partners (who you must notify). Discrimination based on HIV status is illegal in South Africa.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">🔬 Common STIs — Signs, Testing &amp; Treatment</div>
+        <div class="panel-grid" id="stiPanels" style="grid-template-columns:1fr;"></div>
+      </div>
+
+      <div class="card full card-purple">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🛡️ Protection — How to Reduce Risk</div>
+        <div class="grid-3">
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">🏥 Get Tested Regularly</div>
+            <p style="font-size:13px;color:#bbb;line-height:1.7;">HIV + STI testing at any public clinic — free. Pap smear every 3 years from age 21 (or 3 years after first sexual activity). Breast self-exam monthly. Know your status.</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">🎀 Use Protection Consistently</div>
+            <p style="font-size:13px;color:#bbb;line-height:1.7;">Male and female condoms are the only contraception that also protects against STIs. PrEP adds an additional layer of HIV protection. Dual protection = condom + another contraceptive method.</p>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">💬 Communicate With Partners</div>
+            <p style="font-size:13px;color:#bbb;line-height:1.7;">Conversations about testing status, contraception preferences, and consent are a sign of a mature, respectful partnership. If a partner refuses this conversation — that tells you something important.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: REPRODUCTIVE WELLNESS -->
+  <div class="step" style="animation-delay:0.25s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Reproductive Wellness</div>
+        <div class="step-desc">Your reproductive health is your health. Cycle awareness, fertility, menopause, prostate health — know your body across every season of life.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">🌸 Menstrual Health</div>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:16px;">
+          <div class="info-box"><strong>A normal cycle</strong> is 21–35 days. Period duration: 3–7 days. Blood loss: 30–80ml per cycle. Anything significantly outside this range consistently is worth discussing with a healthcare provider.</div>
+          <div class="info-box"><strong>Period pain (dysmenorrhoea)</strong> is common but debilitating pain is not normal and should be investigated. Conditions like endometriosis — which affects 1 in 10 women — are frequently dismissed and under-diagnosed, particularly in Black women.</div>
+          <div class="info-box"><strong>PCOS (Polycystic Ovary Syndrome)</strong> affects up to 10% of women. Symptoms include irregular periods, excess hair growth, acne, and difficulty conceiving. It is manageable with the right care and often goes undiagnosed for years.</div>
+          <div class="info-box"><strong>Menopause</strong> typically begins between 45–55. Perimenopause (the transition) can last years. Symptoms include hot flashes, mood changes, irregular periods, and sleep disruption. Hormone therapy and lifestyle adjustments can significantly improve quality of life.</div>
+        </div>
+        <label>📅 How would you describe your menstrual / reproductive health right now?</label>
+        <textarea id="repro_note" placeholder="e.g. My periods have been irregular for 6 months. I've been told I might have fibroids but haven't followed up. I'm experiencing perimenopause symptoms and don't know what to do. I'm trying to conceive..." style="min-height:80px;"></textarea>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--blue);margin-bottom:14px;">🔵 Men's Sexual &amp; Reproductive Health</div>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:16px;">
+          <div class="info-box" style="background:rgba(0,210,255,0.05);border-color:rgba(0,210,255,0.2);"><strong style="color:var(--blue);">Testicular self-exam.</strong> Monthly self-examination is the best early detection for testicular cancer, which is most common in men aged 15–35. Check for lumps, changes in size or shape, or heaviness.</div>
+          <div class="info-box" style="background:rgba(0,210,255,0.05);border-color:rgba(0,210,255,0.2);"><strong style="color:var(--blue);">Prostate health.</strong> Prostate cancer is the most common cancer in South African men. Black men are at higher risk. PSA screening from age 40 (or 35 with family history) is recommended. Early detection is highly treatable.</div>
+          <div class="info-box" style="background:rgba(0,210,255,0.05);border-color:rgba(0,210,255,0.2);"><strong style="color:var(--blue);">Erectile dysfunction (ED).</strong> ED affects up to 40% of men over 40 — but increasingly younger men. It is often a symptom of cardiovascular disease, diabetes, anxiety, or relationship factors. It is treatable. Seeking help is not weakness.</div>
+          <div class="info-box" style="background:rgba(0,210,255,0.05);border-color:rgba(0,210,255,0.2);"><strong style="color:var(--blue);">Male fertility.</strong> 40-50% of fertility issues are attributable to male factors. Sperm count, motility, and morphology can be affected by heat, lifestyle, and stress. Fertility is a shared responsibility.</div>
+          <div class="info-box" style="background:rgba(0,210,255,0.05);border-color:rgba(0,210,255,0.2);"><strong style="color:var(--blue);">Circumcision and HIV.</strong> Medical male circumcision reduces HIV transmission risk by approximately 60% in heterosexual men. It is not a substitute for condoms or PrEP — but an additional layer of protection.</div>
+        </div>
+        <label>📝 Any reproductive health concerns you've been avoiding addressing?</label>
+        <textarea id="mens_note" placeholder="e.g. I've noticed something different but haven't gone to the doctor. I struggle with ED and I've been too embarrassed to talk to anyone. I don't know when I last had a full health check..." style="min-height:80px;"></textarea>
+      </div>
+
+      <div class="card full card-gold">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">💛 Intimacy &amp; Sexual Wellbeing</div>
+        <div class="grid-2">
+          <div>
+            <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:14px;">Sexual wellbeing is a recognized component of overall health by the World Health Organization. It includes the ability to have pleasurable, safe sexual experiences — free from coercion, discrimination, and violence.</p>
+            <div style="display:flex;flex-direction:column;gap:9px;">
+              <div class="info-box" style="background:rgba(245,197,24,0.06);border-color:rgba(245,197,24,0.2);"><strong style="color:var(--gold);">Low libido</strong> is one of the most common — and least discussed — sexual health issues. It can be caused by stress, medication (especially antidepressants, contraceptives), hormonal changes, relationship issues, trauma, or depression. It is not a personal failure.</div>
+              <div class="info-box" style="background:rgba(245,197,24,0.06);border-color:rgba(245,197,24,0.2);"><strong style="color:var(--gold);">Pain during sex</strong> (dyspareunia or vaginismus) affects millions of women and is consistently under-reported and under-treated. It is a medical condition — not a psychological problem to push through. A gynaecologist or pelvic floor physiotherapist can help.</div>
+              <div class="info-box" style="background:rgba(245,197,24,0.06);border-color:rgba(245,197,24,0.2);"><strong style="color:var(--gold);">Sexual trauma recovery.</strong> Sexual trauma fundamentally changes one's relationship with their body and with intimacy. Healing is possible — but it requires safety, time, and often professional support. There is no timeline for this.</div>
+            </div>
+          </div>
+          <div>
+            <label>How would you describe your relationship with intimacy and sexuality right now?</label>
+            <textarea id="intimacy_note" placeholder="e.g. I've shut down sexually since my last relationship ended. / I experience pain during sex that I haven't addressed. / My libido has completely disappeared since I started this medication. / I'm healing from an assault and I don't know how to feel about my body or intimacy anymore..." style="min-height:130px;margin-bottom:12px;"></textarea>
+            <label>What would a healthier relationship with your sexuality look like for you?</label>
+            <textarea id="intimacy_vision" placeholder="e.g. Feeling safe in my body. Being able to be present during intimacy instead of disconnecting. Knowing what I want and being able to ask for it. Not feeling shame about my desires..." style="min-height:90px;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: BODY CARE CHECKLIST + RESOURCES -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Body Care Commitments &amp; SA Resources</div>
+        <div class="step-desc">Taking care of your body is not vanity — it is the most basic form of self-respect. Tick what you're committed to this month.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">✅ My Body Care Commitments</div>
+        <div id="bodyCommits"></div>
+      </div>
+      <div class="card card-red">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">📞 SA Sexual Health Resources</div>
+        <div id="resourceGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: REFLECT + AFFIRM + LOG -->
+  <div class="step" style="animation-delay:0.35s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Reflect, Affirm &amp; Commit</div>
+        <div class="step-desc">Close with intention. Your body deserves the same care you give everything else in your life.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>🏥 One health appointment or test I've been putting off</label>
+        <textarea id="r_appt" placeholder="e.g. HIV test. Pap smear. Breast exam. Gynaecologist. Prostate check. Dentist. Following up on that symptom I've been ignoring for months..." style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <label>💬 One honest conversation about my sexual or reproductive health I need to have</label>
+        <textarea id="r_convo" placeholder="e.g. I need to tell my partner about the pain I experience during sex. I need to ask my doctor about PrEP. I need to have a conversation about contraception that we keep avoiding..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>🌿 How I will honour my body this week (beyond looks)</label>
+        <textarea id="r_honour" placeholder="e.g. Sleep 7 hours. Drink water before coffee. Move for 20 minutes. Cook one nourishing meal. Say something kind to myself in the mirror instead of criticising..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>💭 A message to your body — what do you want it to know?</label>
+        <textarea id="r_message" placeholder='e.g. "I'm sorry for how harshly I have judged you. You have carried me through everything. You deserve my care and not just my criticism."' style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="card card-orange" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">💪 Body Affirmation</div>
+          <div class="affirm-box"><div class="affirm-text" id="affirmText"></div></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="affirmByStatus()" style="flex:1;font-size:13px;padding:9px;">✦ Match Status</button>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📅 Body Health Journal — Recent Entries</div>
+          <div id="bodyLog" style="margin-bottom:16px;"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-orange" onclick="saveEntry()">💪 Save Today's Entry</button>
+            <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-orange" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">💪 Save Today's Entry</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+</div>
+
+<button class="summary-toggle" id="summaryToggle" onclick="toggleSummary()" data-icon="💪">💪</button>
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_status">—</div><div class="summary-key">Body Status</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_bi">—</div><div class="summary-key">Body Image Score</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_tags">0</div><div class="summary-key">Active Topics</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_commits">0</div><div class="summary-key">Commitments</div></div>
+  <div class="summary-save"><button class="btn btn-orange" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session=JSON.parse(localStorage.getItem('wl_session')||'{}');
+if(!session.loggedIn) window.location.href='wellness1.html';
+const userEmail=session.email,userName=session.name||'Friend',firstName=userName.split(' ')[0];
+document.getElementById('navName').textContent=firstName;
+document.getElementById('navAvatar').textContent=firstName.charAt(0).toUpperCase();
+document.getElementById('navName').style.opacity=document.getElementById('navAvatar').style.opacity='1';
+function key(s){return `wl_${userEmail}_${s}`;}
+
+function updateClock(){
+  const now=new Date(),h=now.getHours();
+  document.getElementById('timeGreeting').textContent=h<12?`Good morning, ${firstName}`:h<17?`Good afternoon, ${firstName}`:`Good evening, ${firstName}`;
+  document.getElementById('clockTime').textContent=String(h).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock,30000);
+
+let currentDate=new Date();
+function dk(d){return d.toISOString().slice(0,10);}
+function fmt(d){return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function shiftDate(n){currentDate.setDate(currentDate.getDate()+n);renderDate();loadEntry();}
+function renderDate(){
+  document.getElementById('dateStr').textContent=fmt(currentDate);
+  const strip=document.getElementById('weekStrip');strip.innerHTML='';
+  for(let i=-3;i<=3;i++){
+    const d=new Date(currentDate);d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip=document.createElement('div');chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{currentDate=new Date(d);renderDate();loadEntry();};
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state={bodyStatus:'',bodyNote:'',bodyTags:[],bi_origin:'',bi_struggle:'',bi_gratitude:'',bi1:5,bi2:5,bi3:5,repro_note:'',mens_note:'',intimacy_note:'',intimacy_vision:'',commitChecked:[],r_appt:'',r_convo:'',r_honour:'',r_message:'',ts:''};
+
+function selectStatus(el){
+  document.querySelectorAll('.status-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');state.bodyStatus=el.dataset.s;
+  document.getElementById('s_status').textContent=el.dataset.s;
+}
+
+// ── BODY TAGS ─────────────────────────────────────────────────────────────────
+const BODY_TAGS=['Body image concerns','Low libido','Pain during sex','Irregular periods','PCOS symptoms','Fibroids','Trying to conceive','Pregnancy','Postpartum','Menopause','HIV+ and on treatment','On PrEP','STI concern','Need to get tested','Contraception questions','Prostate health','Erectile dysfunction','Sexual trauma healing','Chronic pain','Disconnected from body'];
+function renderBodyTags(){
+  const w=document.getElementById('bodyTags');
+  BODY_TAGS.forEach(tag=>{
+    const t=document.createElement('div');t.className='ttag';t.textContent=tag;t.dataset.tag=tag;
+    t.onclick=()=>{
+      t.classList.toggle('active');
+      if(t.classList.contains('active')){if(!state.bodyTags.includes(tag))state.bodyTags.push(tag);}
+      else state.bodyTags=state.bodyTags.filter(x=>x!==tag);
+      document.getElementById('s_tags').textContent=state.bodyTags.length;
+    };
+    w.appendChild(t);
+  });
+}
+
+function updateBISummary(){
+  const v1=parseInt(document.getElementById('bi_val1').textContent)||5;
+  const v2=parseInt(document.getElementById('bi_val2').textContent)||5;
+  const v3=parseInt(document.getElementById('bi_val3').textContent)||5;
+  state.bi1=v1;state.bi2=v2;state.bi3=v3;
+  const avg=((v1+v2+v3)/3).toFixed(1);
+  document.getElementById('s_bi').textContent=avg+'/10';
+}
+
+// ── CONTRACEPTION PANELS ──────────────────────────────────────────────────────
+const CONTRA=[
+  {icon:'🎀',title:'Male Condom',desc:'98% effective. Only method that prevents both pregnancy & STIs.',
+    expand:`<strong>Effectiveness:</strong> 98% with perfect use, 87% with typical use.<br><br><strong>How it works:</strong> Creates a physical barrier preventing sperm from reaching the egg and fluids from being exchanged.<br><br><strong>Advantages:</strong> No hormones. Protects against STIs including HIV. Available free at all public clinics and many pharmacies. No prescription needed.<br><br><strong>Important:</strong> Use a new condom for each act of sex. Check the expiry date. Do not use oil-based lubricants with latex condoms — they degrade the material.<br><br><em>Free at all public clinics. Always keep some available — never rely on a partner to "have one."</em>`},
+  {icon:'🔵',title:'Female Condom',desc:'Internal condom. Can be inserted before sex.',
+    expand:`<strong>Effectiveness:</strong> 95% with perfect use, 79% with typical use.<br><br><strong>How it works:</strong> A soft pouch worn inside the vagina or anus that prevents sperm from reaching the egg. Can be inserted up to 8 hours before sex.<br><br><strong>Advantages:</strong> Controlled by the person wearing it. No hormones. Protects against STIs. Does not require a partner to cooperate.<br><br><strong>Finding them:</strong> Free at some public clinics. Available at pharmacies. Less widely available than male condoms but worth knowing about and advocating for.<br><br><em>The female condom is an important option for people who cannot negotiate condom use with a partner — because it doesn't require negotiation.</em>`},
+  {icon:'💊',title:'Oral Contraceptive Pill',desc:'Daily hormone pill. 99% effective with perfect use.',
+    expand:`<strong>Effectiveness:</strong> 99% with perfect use, 93% with typical use (missed pills reduce effectiveness significantly).<br><br><strong>Types:</strong> Combined pill (oestrogen + progestogen) and progestogen-only pill (POP/mini-pill). Your doctor will advise which is appropriate for you.<br><br><strong>Advantages:</strong> Regulates periods. Can reduce period pain and PMS. Clears acne for some users.<br><br><strong>Considerations:</strong> Must be taken at the same time every day. Certain medications (including some antibiotics and antiretrovirals) can reduce effectiveness. Does NOT protect against STIs.<br><br><strong>In SA:</strong> Available free at public clinics with a prescription. A doctor or nurse will assess which type is safe for you.<br><br><em>If you're on ART for HIV, discuss the interaction between your ARVs and the pill with your healthcare provider.</em>`},
+  {icon:'💉',title:'Injectable (Depo)',desc:'3-monthly injection. No daily pill required.',
+    expand:`<strong>Effectiveness:</strong> 99% with perfect use, 96% with typical use.<br><br><strong>How it works:</strong> A progestogen injection given every 3 months (Depo-Provera) or every 2 months (Nur-Isterate) that prevents ovulation.<br><br><strong>Advantages:</strong> No daily pill. Very private — no visible evidence. Often stops periods entirely over time.<br><br><strong>Considerations:</strong> May cause irregular bleeding, especially in the first few months. Fertility can take 6–18 months to return after stopping. Does NOT protect against STIs.<br><br><strong>Important for HIV:</strong> Some studies show a possible increased risk of HIV acquisition with DMPA (Depo-Provera). Discuss with your healthcare provider and use condoms alongside the injection.<br><br><em>Free at all public clinics. Most widely used contraceptive in South Africa.</em>`},
+  {icon:'🔩',title:'IUD (Copper or Hormonal)',desc:'Long-acting. Up to 10 years of protection.',
+    expand:`<strong>Effectiveness:</strong> Over 99%. One of the most effective reversible contraceptives available.<br><br><strong>Copper IUD:</strong> Non-hormonal. Works by creating an environment toxic to sperm. Lasts 5–10 years. Also the most effective emergency contraceptive if inserted within 5 days of unprotected sex.<br><br><strong>Hormonal IUD (Mirena):</strong> Releases a low dose of progestogen locally. Often reduces or eliminates periods. Lasts 3–5 years.<br><br><strong>Procedure:</strong> Inserted by a healthcare provider into the uterus. Insertion can be uncomfortable but the procedure is brief. Most discomfort resolves within a few days.<br><br><strong>Advantages:</strong> Set-and-forget. No daily action required. Fertility returns immediately upon removal. Does NOT protect against STIs.<br><br><em>Available at public clinics and sexual health facilities. Ask about it — it is significantly underutilised despite being one of the best options available.</em>`},
+  {icon:'🩹',title:'Implant',desc:'Small rod under the skin. 3 years of protection.',
+    expand:`<strong>Effectiveness:</strong> Over 99%. The most effective reversible contraceptive method available.<br><br><strong>How it works:</strong> A small flexible rod (the size of a matchstick) is inserted under the skin of the upper arm by a healthcare provider. It releases a low dose of progestogen continuously for 3 years.<br><br><strong>Advantages:</strong> Completely invisible. No daily, weekly, or monthly action. Fertility returns quickly after removal. Not affected by other medications in the same way as pills.<br><br><strong>Considerations:</strong> May cause irregular bleeding, especially in the first 3–6 months. Some women stop having periods entirely. Does NOT protect against STIs.<br><br><em>Available at public clinics. The implant is becoming more accessible in South Africa and is an excellent option for people who struggle with pill adherence.</em>`},
+  {icon:'🆘',title:'Emergency Contraception',desc:'Plan B — must be used within 72 hours.',
+    expand:`<strong>Emergency contraception (EC) is NOT an abortion.</strong> It prevents pregnancy from occurring — it does not end an existing pregnancy.<br><br><strong>Types:</strong><br>
+    → <strong>Levonorgestrel pill ("morning-after pill"/"Plan B"):</strong> Available over the counter at pharmacies without prescription. Most effective within 72 hours of unprotected sex. Less effective the longer you wait.<br>
+    → <strong>Copper IUD:</strong> Inserted within 5 days. Over 99% effective as EC and then continues as ongoing contraception for up to 10 years.<br><br>
+    <strong>Important:</strong> EC is for emergencies — not for regular use. It does not protect against STIs. It may cause nausea, headache, or irregular bleeding. It does not affect future fertility.<br><br>
+    <em>If you have been sexually assaulted, go to the nearest public hospital emergency department immediately for EC, PEP (HIV prevention), STI testing, and documentation if you choose to report.</em>`},
+];
+function renderContraceptionPanels(){
+  const g=document.getElementById('contraceptionPanels');
+  CONTRA.forEach(p=>{
+    const card=document.createElement('div');card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── STI PANELS ────────────────────────────────────────────────────────────────
+const STIS=[
+  {icon:'🔴',title:'Chlamydia',desc:'Most common bacterial STI. Often has no symptoms.',
+    expand:`<strong>Symptoms:</strong> Often none. When present: unusual discharge, burning urination, pelvic pain, testicular pain.<br><br><strong>Transmission:</strong> Vaginal, anal, or oral sex with an infected person.<br><br><strong>Testing:</strong> Urine test or swab. Available at public clinics.<br><br><strong>Treatment:</strong> Antibiotics (typically azithromycin or doxycycline). Curable with treatment. Sexual partners must also be treated.<br><br><strong>If untreated:</strong> Can cause pelvic inflammatory disease (PID), infertility, and increased HIV risk.<br><br><em>Test annually if sexually active with multiple partners or with a new partner.</em>`},
+  {icon:'🟡',title:'Gonorrhoea',desc:'Bacterial. Can cause serious reproductive damage if untreated.',
+    expand:`<strong>Symptoms:</strong> Often none. May include: discharge (yellow, green, or white), painful urination, sore throat (oral gonorrhoea), rectal symptoms.<br><br><strong>Testing:</strong> Swab or urine test. Gonorrhoea in the throat or rectum requires specific swabs — tell your healthcare provider where you may have been exposed.<br><br><strong>Treatment:</strong> Antibiotics (injectable ceftriaxone + oral azithromycin). Drug-resistant gonorrhoea is an increasing global concern.<br><br><strong>If untreated:</strong> PID, infertility, spread to joints (septic arthritis), increased HIV transmission.<br><br><em>Gonorrhoea and chlamydia are commonly tested together. Both partners must be treated simultaneously.</em>`},
+  {icon:'🟠',title:'Syphilis',desc:'Bacterial. Stages — treatable at any stage.',
+    expand:`<strong>Stages:</strong><br>
+    → Primary: Painless sore (chancre) at the site of infection<br>
+    → Secondary: Rash (often on palms and soles), flu-like symptoms<br>
+    → Latent: No symptoms but still infectious<br>
+    → Tertiary: Serious damage to heart, brain, other organs (rare if treated early)<br><br>
+    <strong>Testing:</strong> Blood test. Ask specifically for syphilis testing — it is not always included in standard STI panels.<br><br>
+    <strong>Treatment:</strong> Penicillin injection. Completely curable at any stage, though damage from late-stage syphilis cannot be reversed.<br><br>
+    <strong>Pregnancy:</strong> Syphilis during pregnancy can cause stillbirth or serious infant illness. Testing is part of antenatal care in SA.<br><br>
+    <em>Syphilis rates have been rising in South Africa. Know the signs and test regularly.</em>`},
+  {icon:'🟣',title:'Herpes (HSV)',desc:'Lifelong but manageable. More common than people know.',
+    expand:`<strong>Types:</strong> HSV-1 (typically oral) and HSV-2 (typically genital), though both can affect either area.<br><br><strong>Prevalence:</strong> HSV-1 infects approximately 67% of people globally. HSV-2 affects approximately 11%. Many people carry herpes without knowing.<br><br><strong>Symptoms:</strong> Blisters or sores at the site of infection. Many people have no symptoms or very mild symptoms that go unrecognised.<br><br><strong>Transmission:</strong> Skin-to-skin contact, including when no sores are visible (asymptomatic shedding).<br><br><strong>Management:</strong> Antiviral medication (acyclovir, valacyclovir) reduces outbreaks and transmission risk. Cannot be cured, but can be effectively managed.<br><br><em>A herpes diagnosis is not the end of a sexual life. With appropriate management and disclosure to partners, people live full, healthy intimate lives.</em>`},
+  {icon:'💜',title:'HPV',desc:'Most sexually active people will have HPV. Vaccine available.',
+    expand:`<strong>What it is:</strong> Human Papillomavirus — the most common STI globally. There are over 100 strains; most clear on their own. High-risk strains cause cervical, anal, throat, and other cancers. Low-risk strains cause genital warts.<br><br><strong>Symptoms:</strong> Most people have no symptoms. Genital warts if infected with low-risk strains. High-risk strains are detected through cervical screening (pap smear).<br><br><strong>Vaccination:</strong> The HPV vaccine is most effective before first sexual exposure. In SA, it is offered free to Grade 4 girls through the school vaccination programme. Adults can also be vaccinated — ask your doctor.<br><br><strong>Cervical screening:</strong> Every woman who has ever been sexually active should have a pap smear every 3 years from age 21. This is how cervical cancer is caught early — when it is most treatable.<br><br><em>Cervical cancer is largely preventable with vaccination and regular screening. Both are accessible through the public health system.</em>`},
+];
+function renderSTIPanels(){
+  const g=document.getElementById('stiPanels');
+  STIS.forEach(p=>{
+    const card=document.createElement('div');card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── BODY CARE COMMITS ─────────────────────────────────────────────────────────
+const BODY_COMMITS=['I will book or attend a health screening this month (HIV test, pap smear, prostate check, or general)','I will use protection (condom) consistently this month','I will take my contraception as prescribed without skipping','I will do a breast or testicular self-exam this month','I will drink at least 1.5L of water every day this week','I will sleep 7+ hours at least 5 nights this week','I will move my body for at least 20 minutes, 3 times this week','I will stop dismissing symptoms I\'ve been ignoring and seek advice','I will practice saying something kind about my body instead of criticising it','I will not compare my body to filtered or curated images on social media'];
+function renderBodyCommits(){
+  const w=document.getElementById('bodyCommits');
+  BODY_COMMITS.forEach((c,i)=>{
+    const d=document.createElement('div');d.className='check-item';d.dataset.cidx=i;
+    d.innerHTML=`<div class="check-box" id="bcom_${i}"></div><div class="check-text">${c}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('bcom_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){if(!state.commitChecked.includes(i))state.commitChecked.push(i);}
+      else state.commitChecked=state.commitChecked.filter(x=>x!==i);
+      document.getElementById('s_commits').textContent=state.commitChecked.length;
+    };
+    w.appendChild(d);
+  });
+}
+
+// ── RESOURCES ─────────────────────────────────────────────────────────────────
+const RESOURCES=[
+  {org:'AIDS Helpline',num:'0800 012 322',desc:'Free 24/7 HIV counselling, testing info, and referrals.'},
+  {org:'IPPF / MSI SA',num:'0800 11 77 85',desc:'Sexual & reproductive health services including contraception and safe abortion.'},
+  {org:'Rape Crisis Cape Town',num:'021 447 9762',desc:'24/7 support for survivors of sexual violence. Counselling and legal support.'},
+  {org:'Lifeline SA',num:'0861 322 322',desc:'General crisis support including sexual trauma and relationship violence.'},
+  {org:'PEPFAR / USAID Clinics',num:'At public hospitals',desc:'Free HIV testing, PrEP, PEP, ART, and STI services at public facilities nationwide.'},
+  {org:'Thuthuzela Care',num:'At major hospitals',desc:'One-stop care for sexual assault survivors: medical, forensic, and psychological.'},
+];
+function renderResources(){
+  const g=document.getElementById('resourceGrid');
+  RESOURCES.forEach(r=>{
+    const d=document.createElement('div');d.className='resource-card';d.style.marginBottom='10px';
+    d.innerHTML=`<div class="rc-org">${r.org}</div><div class="rc-num">${r.num}</div><div class="rc-desc">${r.desc}</div>`;
+    g.appendChild(d);
+  });
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────────────
+const AFFIRMATIONS={
+  general:['My body is not an ornament. It is the vehicle for my entire life.','I am learning to treat my body with the same kindness I give to people I love.','My worth is not determined by my appearance, my size, or my health status.','I listen to my body. It communicates with me — I choose to hear it.','Taking care of my body is not vanity. It is the most basic form of respect.'],
+  Confident:['I am at home in my body. I move through the world with this ease.','My body is mine — and I carry it with confidence and care.'],
+  Curious:['I am learning about my body with curiosity and without shame.','Knowledge is protection. Every question I ask makes me stronger.'],
+  Healing:['My body has been through things. I give it the grace to heal at its own pace.','Healing is not linear. I am gentle with myself through this process.'],
+  Anxious:['I breathe. I am safe in this body. I take this one day at a time.','I address my health concerns with courage — not because it\'s easy, but because I matter.'],
+  Struggling:['Even when my body feels like a difficult place to be, I choose to care for it.','I deserve medical attention and compassionate care. I will not wait to ask for it.'],
+  Disconnected:['I gently return to my body. One breath at a time. One moment at a time.','I am not separate from my body — I am working my way back to it.'],
+};
+function newAffirm(){const all=Object.values(AFFIRMATIONS).flat();setAffirm(all[Math.floor(Math.random()*all.length)]);}
+function affirmByStatus(){const list=AFFIRMATIONS[state.bodyStatus]||AFFIRMATIONS.general;setAffirm(list[Math.floor(Math.random()*list.length)]);}
+function setAffirm(txt){const el=document.getElementById('affirmText');el.style.opacity=0;setTimeout(()=>{el.textContent=txt;el.style.transition='opacity 0.4s';el.style.opacity=1;},250);}
+
+// ── LOG ───────────────────────────────────────────────────────────────────────
+let bodyLog=[];
+function loadBodyLog(){const r=localStorage.getItem(key('life8_log'));bodyLog=r?JSON.parse(r):[];renderBodyLog();}
+function renderBodyLog(){
+  const el=document.getElementById('bodyLog');
+  if(!bodyLog.length){el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to begin your body health journal.</p>';return;}
+  el.innerHTML='';
+  bodyLog.slice(0,4).forEach((e,i)=>{
+    const d=document.createElement('div');d.className='log-item';
+    d.innerHTML=`<div class="li-left"><div class="li-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div><div class="li-title">${e.status||'—'} · ${e.commits||0} commitments</div>${e.note?`<div class="li-note">${e.note.slice(0,120)}${e.note.length>120?'…':''}</div>`:''}</div><button class="li-del" onclick="delLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(bodyLog.length>4){const m=document.createElement('p');m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;';m.textContent=`+ ${bodyLog.length-4} earlier entries`;el.appendChild(m);}
+}
+function delLog(i){bodyLog.splice(i,1);localStorage.setItem(key('life8_log'),JSON.stringify(bodyLog));renderBodyLog();}
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry(){
+  state.bodyNote       =document.getElementById('bodyNote').value;
+  state.bi_origin      =document.getElementById('bi_origin').value;
+  state.bi_struggle    =document.getElementById('bi_struggle').value;
+  state.bi_gratitude   =document.getElementById('bi_gratitude').value;
+  state.repro_note     =document.getElementById('repro_note').value;
+  state.mens_note      =document.getElementById('mens_note').value;
+  state.intimacy_note  =document.getElementById('intimacy_note').value;
+  state.intimacy_vision=document.getElementById('intimacy_vision').value;
+  state.r_appt         =document.getElementById('r_appt').value;
+  state.r_convo        =document.getElementById('r_convo').value;
+  state.r_honour       =document.getElementById('r_honour').value;
+  state.r_message      =document.getElementById('r_message').value;
+  state.ts             =new Date().toISOString();
+  localStorage.setItem(key('life8_'+dk(currentDate)),JSON.stringify(state));
+  bodyLog.unshift({status:state.bodyStatus,note:state.bodyNote,commits:state.commitChecked.length,date:state.ts});
+  localStorage.setItem(key('life8_log'),JSON.stringify(bodyLog));
+  renderBodyLog();
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{studentName:userName,studentEmail:userEmail,courseName:`Life 8 Body Health Check-In — ${fmt(currentDate)}`,coursePrice:'N/A',courseDuration:'Wellness Portal',sessionType:'Online',paymentMethod:'Free',additionalInfo:`Body Status: ${state.bodyStatus||'—'}\nTopics: ${state.bodyTags.join(', ')||'None'}\nCommitments: ${state.commitChecked.length}\nAppointment needed: ${state.r_appt.slice(0,150)||'—'}\nMessage to body: ${state.r_message.slice(0,150)||'—'}`,dashboardUrl:window.location.href}).catch(()=>{});
+  showToast('💪 Entry saved');
+}
+
+function loadEntry(){
+  const raw=localStorage.getItem(key('life8_'+dk(currentDate)));
+  if(!raw)return;
+  const s=JSON.parse(raw);
+  if(s.bodyStatus){document.querySelectorAll('.status-tile').forEach(t=>{if(t.dataset.s===s.bodyStatus)t.classList.add('active');});state.bodyStatus=s.bodyStatus;document.getElementById('s_status').textContent=s.bodyStatus;}
+  ['bodyNote','bi_origin','bi_struggle','bi_gratitude','repro_note','mens_note','intimacy_note','intimacy_vision','r_appt','r_convo','r_honour','r_message'].forEach(id=>{document.getElementById(id).value=s[id]||'';});
+  state.bodyTags=s.bodyTags||[];
+  document.querySelectorAll('#bodyTags .ttag').forEach(t=>{if(state.bodyTags.includes(t.dataset.tag))t.classList.add('active');});
+  document.getElementById('s_tags').textContent=state.bodyTags.length;
+  state.commitChecked=s.commitChecked||[];
+  state.commitChecked.forEach(i=>{const d=document.querySelector(`.check-item[data-cidx="${i}"]`);if(d){d.classList.add('checked');document.getElementById('bcom_'+i).textContent='✓';}});
+  document.getElementById('s_commits').textContent=state.commitChecked.length;
+  if(s.bi1){document.querySelectorAll('input[type=range]')[0].value=s.bi1;document.getElementById('bi_val1').textContent=s.bi1;}
+  if(s.bi2){document.querySelectorAll('input[type=range]')[1].value=s.bi2;document.getElementById('bi_val2').textContent=s.bi2;}
+  if(s.bi3){document.querySelectorAll('input[type=range]')[2].value=s.bi3;document.getElementById('bi_val3').textContent=s.bi3;}
+  updateBISummary();
+  state={...state,...s};
+  showToast('Entry loaded');
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function toggleSummary(){const strip=document.getElementById('summaryStrip'),btn=document.getElementById('summaryToggle');strip.classList.toggle('open');btn.textContent=strip.classList.contains('open')?'✕':btn.dataset.icon;}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderBodyTags();
+renderContraceptionPanels();
+renderSTIPanels();
+renderBodyCommits();
+renderResources();
+loadBodyLog();
+newAffirm();
+loadEntry();
+</script>
+</body>
+</html>
