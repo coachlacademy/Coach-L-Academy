@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 9 — Faith & Spirituality | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --gold: #f5c518;
+  --gold2: #ffd700;
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --red: #ff4b2b;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #f5c518;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(245,197,24,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(255,215,0,0.04) 0%, transparent 55%),
+    #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--gold); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass { padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border); color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+.btn-glass:hover { border-color:var(--gold); color:var(--gold); }
+.user-chip { display:flex; align-items:center; gap:8px; background:var(--glass); border:1px solid var(--glass-border); padding:6px 14px; border-radius:30px; font-size:13px; }
+.avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--orange)); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#000; }
+
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+.page-title { font-family:'Barlow Condensed',sans-serif; font-size:clamp(3rem,8vw,5.5rem); font-weight:900; text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px; }
+.page-title span { color:var(--gold); }
+.page-sub { font-size:15px; color:#bbb; max-width:600px; line-height:1.7; }
+
+.time-greeting { display:inline-flex; align-items:center; gap:10px; background:var(--glass); border:1px solid var(--glass-border); padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px; }
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--gold); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+.date-nav { display:flex; align-items:center; gap:14px; margin:0 auto 40px; max-width:1100px; padding:0 40px; flex-wrap:wrap; }
+.date-btn { background:var(--glass); border:1px solid var(--glass-border); color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s; }
+.date-btn:hover { border-color:var(--gold); color:var(--gold); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--gold); border-color:var(--gold); color:#000; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--gold); background:rgba(245,197,24,0.1); border:1px solid rgba(245,197,24,0.35); padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+.card { background:var(--glass); border:1px solid var(--glass-border); border-radius:16px; padding:28px; backdrop-filter:blur(12px); position:relative; overflow:hidden; transition:border-color 0.3s; }
+.card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent); }
+.card:hover { border-color:rgba(245,197,24,0.2); }
+.card-gold   { border-color:rgba(245,197,24,0.3);  background:rgba(245,197,24,0.05); }
+.card-purple { border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.04); }
+.card-red    { border-color:rgba(255,75,43,0.2);   background:rgba(255,75,43,0.04); }
+.card-green  { border-color:rgba(57,255,20,0.2);   background:rgba(57,255,20,0.04); }
+.card-blue   { border-color:rgba(0,210,255,0.2);   background:rgba(0,210,255,0.04); }
+.card-dark   { border-color:rgba(255,255,255,0.08); background:rgba(0,0,0,0.3); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* FAITH STATUS TILES */
+.status-tiles { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.status-tile { flex:1; min-width:120px; padding:16px 12px; border-radius:12px; text-align:center; background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s; }
+.status-tile:hover,.status-tile.active { transform:translateY(-3px); }
+.st-emoji { font-size:26px; display:block; margin-bottom:8px; }
+.st-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; text-transform:uppercase; }
+.st-desc { font-size:10px; color:#666; margin-top:3px; }
+.status-tile[data-s="Anchored"]:hover,.status-tile[data-s="Anchored"].active{border-color:var(--gold);background:rgba(245,197,24,0.1);color:var(--gold);}
+.status-tile[data-s="Seeking"]:hover,.status-tile[data-s="Seeking"].active{border-color:var(--blue);background:rgba(0,210,255,0.08);color:var(--blue);}
+.status-tile[data-s="Tested"]:hover,.status-tile[data-s="Tested"].active{border-color:var(--orange);background:rgba(255,140,0,0.08);color:var(--orange);}
+.status-tile[data-s="Under Attack"]:hover,.status-tile[data-s="Under Attack"].active{border-color:var(--red);background:rgba(255,75,43,0.08);color:var(--red);}
+.status-tile[data-s="Doubting"]:hover,.status-tile[data-s="Doubting"].active{border-color:var(--purple);background:rgba(168,85,247,0.08);color:var(--purple);}
+.status-tile[data-s="Rebuilding"]:hover,.status-tile[data-s="Rebuilding"].active{border-color:var(--green);background:rgba(57,255,20,0.08);color:var(--green);}
+
+/* TAG GRID */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag { padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700; background:var(--glass); border:1px solid var(--glass-border); cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px; }
+.ttag:hover { border-color:rgba(245,197,24,0.5); color:var(--gold); }
+.ttag.active { border-color:rgba(245,197,24,0.6); background:rgba(245,197,24,0.1); color:var(--gold); }
+
+/* SCRIPTURE CARD */
+.scripture-hero {
+  background:linear-gradient(135deg,rgba(245,197,24,0.1),rgba(255,140,0,0.06));
+  border:1px solid rgba(245,197,24,0.3); border-radius:20px;
+  padding:40px; text-align:center; position:relative; overflow:hidden; margin-bottom:24px;
+}
+.scripture-hero::before {
+  content:'✦'; position:absolute; top:16px; left:24px;
+  font-size:40px; color:rgba(245,197,24,0.12); pointer-events:none;
+}
+.scripture-hero::after {
+  content:'✦'; position:absolute; bottom:16px; right:24px;
+  font-size:40px; color:rgba(245,197,24,0.12); pointer-events:none;
+}
+.scripture-text { font-family:'Barlow Condensed',sans-serif; font-size:clamp(18px,3vw,28px); font-weight:700; line-height:1.45; color:#fff; letter-spacing:0.3px; margin-bottom:12px; font-style:italic; transition:opacity 0.4s; }
+.scripture-ref { font-size:13px; color:var(--gold); text-transform:uppercase; letter-spacing:2px; font-weight:700; }
+
+/* ATTACK CARDS */
+.attack-card { background:rgba(255,75,43,0.04); border:1px solid rgba(255,75,43,0.15); border-radius:14px; padding:22px; cursor:pointer; transition:0.3s; }
+.attack-card:hover { border-color:rgba(255,75,43,0.35); transform:translateY(-2px); }
+.attack-card.open { border-color:rgba(255,75,43,0.45); background:rgba(255,75,43,0.07); }
+.ac-icon { font-size:28px; margin-bottom:10px; display:block; }
+.ac-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; color:var(--red); margin-bottom:4px; }
+.ac-desc { font-size:12px; color:#777; line-height:1.5; }
+.ac-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,75,43,0.15); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.attack-card.open .ac-expand { display:block; }
+
+/* RESPONSE CARDS (God's response / what to do) */
+.response-card { background:rgba(245,197,24,0.05); border:1px solid rgba(245,197,24,0.2); border-radius:14px; padding:22px; cursor:pointer; transition:0.3s; }
+.response-card:hover { border-color:rgba(245,197,24,0.4); transform:translateY(-2px); }
+.response-card.open { border-color:rgba(245,197,24,0.5); background:rgba(245,197,24,0.08); }
+.rc-icon { font-size:28px; margin-bottom:10px; display:block; }
+.rc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+.rc-desc { font-size:12px; color:#888; line-height:1.5; }
+.rc-expand { display:none; margin-top:14px; border-top:1px solid rgba(245,197,24,0.15); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.response-card.open .rc-expand { display:block; }
+
+/* PANEL GRID */
+.panel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.panel-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px; cursor:pointer; transition:0.3s; }
+.panel-card:hover { border-color:rgba(245,197,24,0.3); transform:translateY(-3px); }
+.panel-card.open { border-color:rgba(245,197,24,0.5); background:rgba(245,197,24,0.05); }
+.pc-icon { font-size:28px; margin-bottom:10px; display:block; }
+.pc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; margin-bottom:4px; }
+.pc-desc { font-size:12px; color:#666; line-height:1.5; }
+.pc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.panel-card.open .pc-expand { display:block; }
+
+/* PRAYER JOURNAL */
+.prayer-item { background:rgba(245,197,24,0.04); border:1px solid rgba(245,197,24,0.15); border-radius:12px; padding:16px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; transition:0.3s; }
+.prayer-item:hover { border-color:rgba(245,197,24,0.3); }
+.prayer-item.answered { border-color:rgba(57,255,20,0.3); background:rgba(57,255,20,0.04); }
+.pi-left { flex:1; }
+.pi-date { font-size:11px; color:#555; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+.pi-text { font-size:14px; color:#ddd; line-height:1.6; font-style:italic; }
+.pi-tag { display:inline-block; margin-top:6px; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+.pi-tag.active-prayer { background:rgba(245,197,24,0.15); color:var(--gold); border:1px solid rgba(245,197,24,0.3); }
+.pi-tag.answered-tag { background:rgba(57,255,20,0.12); color:var(--green); border:1px solid rgba(57,255,20,0.3); }
+.pi-actions { display:flex; gap:6px; flex-shrink:0; }
+.pi-btn { background:none; border:1px solid rgba(255,255,255,0.1); border-radius:6px; color:#666; cursor:pointer; font-size:11px; padding:5px 10px; font-weight:700; transition:0.2s; text-transform:uppercase; }
+.pi-btn:hover { color:#fff; border-color:rgba(255,255,255,0.3); }
+.pi-btn.answered-btn:hover { border-color:var(--green); color:var(--green); }
+.pi-del { background:none; border:none; color:#333; cursor:pointer; font-size:16px; transition:0.2s; }
+.pi-del:hover { color:var(--red); }
+
+/* CHECK ITEMS */
+.check-item { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px; cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; }
+.check-item:hover { border-color:rgba(245,197,24,0.3); background:rgba(245,197,24,0.04); }
+.check-item.checked { border-color:rgba(245,197,24,0.4); background:rgba(245,197,24,0.07); }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.check-item.checked .check-box { background:var(--gold); border-color:var(--gold); color:#000; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#666; text-decoration:line-through; }
+
+/* AFFIRMATION / DECLARATION */
+.affirm-box { background:rgba(245,197,24,0.06); border:1px solid rgba(245,197,24,0.25); border-radius:12px; padding:28px; text-align:center; min-height:100px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.affirm-text { font-size:17px; line-height:1.75; color:#fff; font-style:italic; transition:opacity 0.4s; font-family:'Barlow Condensed',sans-serif; font-weight:700; letter-spacing:0.3px; }
+
+/* FORMS */
+textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:14px; font-size:14px; font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6; }
+textarea:focus { outline:none; border-color:var(--gold); background:rgba(245,197,24,0.03); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+input[type=text] { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+input[type=text]:focus { border-color:var(--gold); }
+input[type=text]::placeholder { color:#555; }
+select { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+select:focus { border-color:var(--gold); }
+select option { background:#111; }
+
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-gold { background:var(--gold); color:#000; }
+.btn-gold:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--gold); color:var(--gold); }
+.btn-green { background:var(--green); color:#000; }
+.btn-sm { padding:8px 16px; font-size:13px; }
+
+.info-box { background:rgba(245,197,24,0.05); border:1px solid rgba(245,197,24,0.18); border-radius:10px; padding:14px 16px; font-size:13px; color:#ccc; line-height:1.7; margin-bottom:10px; }
+.info-box strong { color:var(--gold); }
+
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+.log-item { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:14px; border-radius:10px; margin-bottom:10px; background:rgba(245,197,24,0.03); border:1px solid rgba(245,197,24,0.12); transition:0.3s; }
+.log-item:hover { border-color:rgba(245,197,24,0.25); }
+.li-left { flex:1; }
+.li-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.li-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--gold); }
+.li-note { font-size:13px; color:#777; margin-top:4px; line-height:1.5; font-style:italic; }
+.li-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; }
+.li-del:hover { color:var(--red); }
+
+.summary-strip { position:sticky; bottom:0; z-index:50; background:rgba(0,0,0,0.93); backdrop-filter:blur(20px); border-top:1px solid rgba(245,197,24,0.25); padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap; }
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--gold); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--gold); color:#000; padding:11px 26px; border-radius:30px; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900; text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap; transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .scripture-hero{padding:28px 20px;}
+  .summary-strip{position:fixed;bottom:0;left:0;right:0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);padding:16px;gap:16px;z-index:200;}
+  .summary-strip.open{transform:translateY(0);}
+  .summary-toggle{display:flex !important;}
+  .main{padding-bottom:80px !important;}
+}
+.summary-toggle{display:none;position:fixed;bottom:16px;right:16px;z-index:201;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;font-size:20px;background:var(--gold);color:#000;box-shadow:0 4px 20px rgba(0,0,0,0.5);align-items:center;justify-content:center;transition:transform 0.2s;}
+.summary-toggle:active{transform:scale(0.92);}
+</style>
+</head>
+<body>
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--gold);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 9 · Faith &amp; Spirituality</div>
+  <h1 class="page-title">Standing<br>In The<br><span>Storm</span></h1>
+  <p class="page-sub">The enemy does not attack what has no value. If you are under spiritual attack — from colleagues, family, friends, or forces you cannot name — it is because you carry something worth fighting for. You were not built to collapse. You were built to stand.</p>
+</div>
+
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: FAITH STATUS -->
+  <div class="step" style="animation-delay:0.05s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Where Is Your Faith Right Now?</div>
+        <div class="step-desc">Be honest. God is not surprised by where you are. He is already there with you in it.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="status-tiles">
+        <div class="status-tile" data-s="Anchored" onclick="selectStatus(this)"><span class="st-emoji">⚓</span><div class="st-label">Anchored</div><div class="st-desc">Grounded, faith is strong</div></div>
+        <div class="status-tile" data-s="Seeking" onclick="selectStatus(this)"><span class="st-emoji">🕊️</span><div class="st-label">Seeking</div><div class="st-desc">Searching, open, growing</div></div>
+        <div class="status-tile" data-s="Tested" onclick="selectStatus(this)"><span class="st-emoji">🔥</span><div class="st-label">Tested</div><div class="st-desc">In the fire, holding on</div></div>
+        <div class="status-tile" data-s="Under Attack" onclick="selectStatus(this)"><span class="st-emoji">⚔️</span><div class="st-label">Under Attack</div><div class="st-desc">Spiritual warfare is real</div></div>
+        <div class="status-tile" data-s="Doubting" onclick="selectStatus(this)"><span class="st-emoji">🌫️</span><div class="st-label">Doubting</div><div class="st-desc">Struggling to believe</div></div>
+        <div class="status-tile" data-s="Rebuilding" onclick="selectStatus(this)"><span class="st-emoji">🌱</span><div class="st-label">Rebuilding</div><div class="st-desc">Coming back to faith</div></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Where are you with God right now — honestly?</label>
+          <textarea id="faithNote" placeholder="e.g. I feel like my prayers aren't reaching the ceiling. I've been faithful for years and I'm still waiting. I'm angry at God for what He allowed. I feel His presence more now than ever before. I'm just going through the motions..." style="min-height:110px;"></textarea>
+        </div>
+        <div>
+          <label>🏷️ What spiritual challenges are you navigating right now?</label>
+          <div class="tag-grid" id="faithTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: TODAY'S SCRIPTURE -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">The Word for Your Season</div>
+        <div class="step-desc">God does not speak into a vacuum. His Word was written for exactly this moment in your life. Receive it.</div>
+      </div>
+    </div>
+    <div class="card card-gold">
+      <div class="scripture-hero">
+        <div class="scripture-text" id="scriptureText">"No weapon formed against you shall prosper, and every tongue which rises against you in judgment you shall condemn. This is the heritage of the servants of the LORD."</div>
+        <div class="scripture-ref" id="scriptureRef">Isaiah 54:17</div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px;">
+        <button class="btn btn-outline" onclick="newScripture()" style="font-size:13px;padding:10px 22px;">✦ New Scripture</button>
+        <button class="btn btn-outline" onclick="scriptureByStatus()" style="font-size:13px;padding:10px 22px;">✦ For My Season</button>
+        <button class="btn btn-gold" onclick="saveDailyScripture()" style="font-size:13px;padding:10px 22px;">★ Save as Today's Word</button>
+      </div>
+      <div>
+        <label>📝 What does this scripture speak to in your life right now?</label>
+        <textarea id="scripture_reflect" placeholder="e.g. This word about weapons not prospering — I needed to hear this. The person at work who has been spreading lies about me, the family member who keeps trying to pull me down. God sees it. He is my vindicator..." style="min-height:90px;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: SPIRITUAL ATTACKS -->
+  <div class="step" style="animation-delay:0.15s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Recognising Spiritual Attacks</div>
+        <div class="step-desc">Not everything that comes against you is natural. Some attacks come through people — colleagues, friends, family — and some come directly at your mind and spirit. Name what you are facing.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="background:rgba(255,75,43,0.05);border:1px solid rgba(255,75,43,0.2);border-radius:12px;padding:20px;margin-bottom:24px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:12px;">⚔️ What Is a Spiritual Attack?</div>
+        <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:12px;">Spiritual warfare is real — described throughout Scripture as the battle between light and darkness, between the Kingdom of God and the forces that oppose it. Ephesians 6:12 says: <em style="color:var(--gold);">"For we do not wrestle against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this age."</em></p>
+        <p style="font-size:13px;color:#ccc;line-height:1.8;">This means that when people come against you — when colleagues sabotage, when family curses, when friends betray — the attack is not ultimately from that person. They are being used as a vessel. Understanding this is not about excusing the behaviour. It is about directing your battle to the right place — on your knees, in prayer, in the Spirit.</p>
+      </div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:16px;">🔍 Types of Spiritual Attack — Tap to Identify Yours</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:24px;" id="attackCards"></div>
+
+      <div class="card card-dark">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📝 Name What You Are Facing</div>
+        <div class="grid-2">
+          <div>
+            <label>The attack from the workplace — what is happening?</label>
+            <textarea id="atk_work" placeholder="e.g. A colleague who undermines me in every meeting. A manager who constantly moves the goalposts. Opportunities being given to others less qualified. My name being tarnished by someone I trusted. Being excluded, sidelined, or set up to fail..." style="min-height:90px;margin-bottom:12px;"></textarea>
+            <label>The attack from family — what is happening?</label>
+            <textarea id="atk_family" placeholder="e.g. A family member who speaks destruction over my life. Constant comparison and belittling. Witchcraft or ancestral practices being directed at me. A parent whose words curse rather than bless. Betrayal by someone who was supposed to protect me..." style="min-height:90px;"></textarea>
+          </div>
+          <div>
+            <label>The attack from friends or close relationships</label>
+            <textarea id="atk_friends" placeholder="e.g. A friend who left when things got difficult. Someone who was close to me sharing my private matters. Jealousy disguised as friendship. People who celebrate my failures more than my wins. Betrayal in the body of Christ..." style="min-height:90px;margin-bottom:12px;"></textarea>
+            <label>The attack on your mind — what thoughts come most?</label>
+            <textarea id="atk_mind" placeholder="e.g. You will never make it. God has forgotten you. You are cursed. Nothing you build will stand. You don't deserve good things. Give up. You are alone in this. Nobody can see what is happening to you..." style="min-height:90px;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: GOD'S RESPONSE & WHAT HE WANTS YOU TO DO -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">God's Response to the Storm — What He Wants You to Do</div>
+        <div class="step-desc">God is not silent in your storm. He has already spoken. He has already moved. He is asking you to stand in what He has already done.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;" id="responseCards"></div>
+    </div>
+  </div>
+
+  <!-- STEP 5: THE ARMOUR OF GOD -->
+  <div class="step" style="animation-delay:0.25s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Put On the Full Armour of God</div>
+        <div class="step-desc">Ephesians 6:13–18 — "Therefore take up the whole armour of God, that you may be able to withstand in the evil day, and having done all, to stand." This is not metaphor. This is strategy.</div>
+      </div>
+    </div>
+    <div class="card card-gold">
+      <div class="grid-2" style="margin-bottom:20px;">
+        <div style="display:flex;flex-direction:column;gap:12px;" id="armourLeft"></div>
+        <div style="display:flex;flex-direction:column;gap:12px;" id="armourRight"></div>
+      </div>
+      <div style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.2);border-radius:10px;padding:16px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">✅ Daily Armour Checklist — Have You Put It On Today?</div>
+        <div id="armourChecklist"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: PRAYER JOURNAL -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Prayer Journal — Requests &amp; Answered Prayers</div>
+        <div class="step-desc">Write your prayers down. When God answers — mark it. A record of answered prayers is the most powerful faith-builder you will ever have.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">🙏 Add a Prayer Request</div>
+        <div style="margin-bottom:10px;">
+          <label>What are you bringing to God today?</label>
+          <textarea id="newPrayer" placeholder="e.g. Lord, I need You to move in this situation at work. The person who is trying to destroy what I've built — I need Your protection and vindication. I cannot fight this in the natural. I'm asking You to be my defence..." style="min-height:100px;margin-bottom:10px;"></textarea>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+          <select id="prayerCategory" style="flex:1;min-width:140px;">
+            <option value="Protection">Protection</option>
+            <option value="Healing">Healing</option>
+            <option value="Provision">Provision</option>
+            <option value="Relationships">Relationships</option>
+            <option value="Guidance">Guidance</option>
+            <option value="Family">Family</option>
+            <option value="Work / Career">Work / Career</option>
+            <option value="Spiritual Warfare">Spiritual Warfare</option>
+            <option value="Breakthrough">Breakthrough</option>
+            <option value="Gratitude">Gratitude</option>
+          </select>
+          <button class="btn btn-gold btn-sm" onclick="addPrayer()">+ Add Prayer</button>
+        </div>
+
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;color:#555;margin-bottom:10px;">💡 How to Pray Through a Spiritual Attack</div>
+        <div class="panel-grid" id="prayerGuidePanels" style="grid-template-columns:1fr;"></div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">📖 My Prayer Journal</div>
+        <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;">
+          <button class="btn btn-outline btn-sm" onclick="filterPrayers('all')" id="pf_all" style="border-color:rgba(245,197,24,0.4);color:var(--gold);">All</button>
+          <button class="btn btn-outline btn-sm" onclick="filterPrayers('active')" id="pf_active">Active</button>
+          <button class="btn btn-outline btn-sm" onclick="filterPrayers('answered')" id="pf_answered">Answered ✓</button>
+        </div>
+        <div id="prayerList"></div>
+        <div id="prayerEmpty" style="color:#444;font-size:13px;font-style:italic;text-align:center;padding:30px;">Your prayers will appear here. Write them. Trust them. Watch God move.</div>
+        <div style="margin-top:12px;background:rgba(57,255,20,0.05);border:1px solid rgba(57,255,20,0.15);border-radius:10px;padding:14px;display:flex;gap:16px;align-items:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:40px;font-weight:900;color:var(--green);line-height:1;" id="answeredCount">0</div>
+          <div><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--green);">Prayers Answered</div><div style="font-size:12px;color:#555;line-height:1.5;margin-top:2px;">Every single one of these is evidence. God heard you.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: DECLARATIONS + LOG -->
+  <div class="step" style="animation-delay:0.35s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Declare, Reflect &amp; Stand</div>
+        <div class="step-desc">Close with declaration. The enemy fears your praise. He cannot stay where worship goes up.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>🔥 What is God saying to you in the middle of this storm?</label>
+        <textarea id="r_godsword" placeholder='e.g. "Be still and know that I am God." — He keeps bringing me back to this. In all the chaos, He is saying: stop striving. I have this. Trust Me...' style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>⚔️ My declaration over this attack — I speak this out loud:</label>
+        <textarea id="r_declaration" placeholder='e.g. "I decree that every plan formed against me this season shall not prosper. I am covered by the blood of Jesus. I walk in divine protection. My enemies may rise but they shall fall. I am not moved by what I see. I am moved by what God has promised."' style="min-height:90px;margin-bottom:14px;"></textarea>
+
+        <label>🙏 What am I choosing to praise God for today — even in the storm?</label>
+        <textarea id="r_praise" placeholder="e.g. I praise Him for keeping me. For the attacks I didn't even know were coming that He deflected. For the peace that doesn't make sense given my circumstances. For the evidence in my prayer journal that He has never once failed me..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:10px;">✅ My Spiritual Commitments This Week</div>
+        <div id="spiritualCommits"></div>
+      </div>
+
+      <div class="card card-gold" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:14px;">⚡ Today's Declaration</div>
+          <div class="affirm-box"><div class="affirm-text" id="affirmText"></div></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newDeclaration()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="declarationByStatus()" style="flex:1;font-size:13px;padding:9px;">✦ For My Season</button>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📅 Faith Journal — Recent Entries</div>
+          <div id="faithLog" style="margin-bottom:16px;"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-gold" onclick="saveEntry()">✦ Save Today's Entry</button>
+            <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-gold" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">✦ Save Today's Entry</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+</div>
+
+<button class="summary-toggle" id="summaryToggle" onclick="toggleSummary()" data-icon="✦">✦</button>
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_status">—</div><div class="summary-key">Faith Status</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_prayers">0</div><div class="summary-key">Prayers Active</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_answered">0</div><div class="summary-key">Prayers Answered</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_armour">0/7</div><div class="summary-key">Armour On</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_commits">0</div><div class="summary-key">Commitments</div></div>
+  <div class="summary-save"><button class="btn btn-gold" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session=JSON.parse(localStorage.getItem('wl_session')||'{}');
+if(!session.loggedIn) window.location.href='wellness1.html';
+const userEmail=session.email,userName=session.name||'Friend',firstName=userName.split(' ')[0];
+document.getElementById('navName').textContent=firstName;
+document.getElementById('navAvatar').textContent=firstName.charAt(0).toUpperCase();
+document.getElementById('navName').style.opacity=document.getElementById('navAvatar').style.opacity='1';
+function key(s){return `wl_${userEmail}_${s}`;}
+
+function updateClock(){
+  const now=new Date(),h=now.getHours();
+  document.getElementById('timeGreeting').textContent=h<12?`Good morning, ${firstName}`:h<17?`Good afternoon, ${firstName}`:`Good evening, ${firstName}`;
+  document.getElementById('clockTime').textContent=String(h).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+}
+updateClock(); setInterval(updateClock,30000);
+
+let currentDate=new Date();
+function dk(d){return d.toISOString().slice(0,10);}
+function fmt(d){return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function shiftDate(n){currentDate.setDate(currentDate.getDate()+n);renderDate();loadEntry();}
+function renderDate(){
+  document.getElementById('dateStr').textContent=fmt(currentDate);
+  const strip=document.getElementById('weekStrip');strip.innerHTML='';
+  for(let i=-3;i<=3;i++){
+    const d=new Date(currentDate);d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip=document.createElement('div');chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{currentDate=new Date(d);renderDate();loadEntry();};
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state={faithStatus:'',faithNote:'',faithTags:[],scripture_reflect:'',atk_work:'',atk_family:'',atk_friends:'',atk_mind:'',r_godsword:'',r_declaration:'',r_praise:'',armourChecked:[],commitChecked:[],dailyScripture:'',ts:''};
+let prayers=[];
+let prayerFilter='all';
+
+// ── STATUS ────────────────────────────────────────────────────────────────────
+function selectStatus(el){
+  document.querySelectorAll('.status-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');state.faithStatus=el.dataset.s;
+  document.getElementById('s_status').textContent=el.dataset.s.split(' ')[0];
+}
+
+// ── FAITH TAGS ────────────────────────────────────────────────────────────────
+const FAITH_TAGS=['Spiritual attack at work','Family witchcraft / curses','Betrayal by church members','Feeling spiritually dry','Unanswered prayer','Doubt and unbelief','Fear and anxiety','Grief and loss','Financial spiritual battle','Relationship warfare','Health battle','Mind under attack','Feeling abandoned by God','Spiritual fatigue','Waiting on a breakthrough','Deliverance needed','Generational strongholds','Standing for family'];
+function renderFaithTags(){
+  const w=document.getElementById('faithTags');
+  FAITH_TAGS.forEach(tag=>{
+    const t=document.createElement('div');t.className='ttag';t.textContent=tag;t.dataset.tag=tag;
+    t.onclick=()=>{t.classList.toggle('active');if(t.classList.contains('active')){if(!state.faithTags.includes(tag))state.faithTags.push(tag);}else state.faithTags=state.faithTags.filter(x=>x!==tag);};
+    w.appendChild(t);
+  });
+}
+
+// ── SCRIPTURES ────────────────────────────────────────────────────────────────
+const SCRIPTURES=[
+  {text:'No weapon formed against you shall prosper, and every tongue which rises against you in judgment you shall condemn. This is the heritage of the servants of the LORD.',ref:'Isaiah 54:17'},
+  {text:'For I know the plans I have for you, declares the LORD, plans to prosper you and not to harm you, plans to give you hope and a future.',ref:'Jeremiah 29:11'},
+  {text:'The LORD is my light and my salvation — whom shall I fear? The LORD is the stronghold of my life — of whom shall I be afraid?',ref:'Psalm 27:1'},
+  {text:'Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. And the peace of God, which transcends all understanding, will guard your hearts and your minds.',ref:'Philippians 4:6–7'},
+  {text:'What, then, shall we say in response to these things? If God is for us, who can be against us?',ref:'Romans 8:31'},
+  {text:'Be strong and courageous. Do not be afraid or terrified because of them, for the LORD your God goes with you; He will never leave you nor forsake you.',ref:'Deuteronomy 31:6'},
+  {text:'I can do all this through Him who gives me strength.',ref:'Philippians 4:13'},
+  {text:'The LORD will fight for you; you need only to be still.',ref:'Exodus 14:14'},
+  {text:'Cast all your anxiety on Him because He cares for you.',ref:'1 Peter 5:7'},
+  {text:'And we know that in all things God works for the good of those who love Him, who have been called according to His purpose.',ref:'Romans 8:28'},
+  {text:'Even though I walk through the darkest valley, I will fear no evil, for You are with me; Your rod and Your staff, they comfort me.',ref:'Psalm 23:4'},
+  {text:'The thief comes only to steal and kill and destroy; I have come that they may have life, and have it to the full.',ref:'John 10:10'},
+  {text:'Submit yourselves, then, to God. Resist the devil, and he will flee from you.',ref:'James 4:7'},
+  {text:'Greater is He that is in you, than he that is in the world.',ref:'1 John 4:4'},
+  {text:'But those who hope in the LORD will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.',ref:'Isaiah 40:31'},
+  {text:'Vindicate me, my God, and plead my cause against an unfaithful nation. Rescue me from those who are deceitful and wicked.',ref:'Psalm 43:1'},
+  {text:'The LORD will make you the head, not the tail. If you pay attention to the commands of the LORD your God and carefully follow them, you will always be at the top, never at the bottom.',ref:'Deuteronomy 28:13'},
+  {text:'When you pass through the waters, I will be with you; and when you pass through the rivers, they will not sweep over you. When you walk through the fire, you will not be burned.',ref:'Isaiah 43:2'},
+  {text:'Behold, I have given you authority to tread on serpents and scorpions, and over all the power of the enemy, and nothing shall hurt you.',ref:'Luke 10:19'},
+  {text:'The LORD is my shepherd, I lack nothing.',ref:'Psalm 23:1'},
+];
+
+const SCRIPTURES_BY_STATUS={
+  Anchored:[0,6,14,19],
+  Seeking:[1,2,9,14],
+  Tested:[7,10,12,17],
+  'Under Attack':[0,4,13,18],
+  Doubting:[3,8,9,15],
+  Rebuilding:[1,5,11,16],
+};
+
+let currentScriptureIdx=0;
+function setScripture(s){
+  const el=document.getElementById('scriptureText');
+  el.style.opacity=0;
+  setTimeout(()=>{el.textContent=`"${s.text}"`;el.style.opacity=1;},300);
+  document.getElementById('scriptureRef').textContent=s.ref;
+  state.currentScripture=s;
+}
+function newScripture(){
+  currentScriptureIdx=(currentScriptureIdx+1)%SCRIPTURES.length;
+  setScripture(SCRIPTURES[currentScriptureIdx]);
+}
+function scriptureByStatus(){
+  const idxs=SCRIPTURES_BY_STATUS[state.faithStatus]||[0,3,6,9];
+  const pick=idxs[Math.floor(Math.random()*idxs.length)];
+  setScripture(SCRIPTURES[pick]);
+}
+function saveDailyScripture(){
+  state.dailyScripture=SCRIPTURES[currentScriptureIdx]||SCRIPTURES[0];
+  showToast('★ Saved as today\'s Word');
+}
+
+// ── ATTACK CARDS ──────────────────────────────────────────────────────────────
+const ATTACKS=[
+  {icon:'🏢',title:'Workplace Attacks',desc:'Colleagues, managers, and systems used against you.',
+    expand:`<strong>What it looks like:</strong><br>
+    → A colleague who consistently undermines you in meetings or with management<br>
+    → Credit stolen for your work — your ideas presented as someone else's<br>
+    → Being passed over for promotion despite being the most qualified<br>
+    → Gossip and slander destroying your professional reputation<br>
+    → A manager who targets you, sets impossible standards, or creates a hostile environment<br>
+    → Being set up to fail — given impossible tasks or withheld information needed to succeed<br><br>
+    <strong>What God says:</strong> <em style="color:var(--gold);">"No weapon formed against you shall prosper." (Isaiah 54:17)</em> God sees every injustice. He is your vindicator. What people take from you in the natural, He restores supernaturally — and He often takes you past where you would have gone if they hadn't tried to stop you.<br><br>
+    <strong>What to do spiritually:</strong> Pray for the person — not because they deserve it but because unforgiveness gives them access to your peace. Cover your workplace in prayer. Ask God for favour with the right people. Do your work as unto the Lord, not unto man.`},
+  {icon:'👨‍👩‍👧',title:'Family Spiritual Attacks',desc:'Those closest to you can be the most dangerous instruments.',
+    expand:`<strong>What it looks like:</strong><br>
+    → A family member who speaks curses over your life disguised as concern: "You always fail", "Who do you think you are?", "You'll never be different from your father"<br>
+    → Witchcraft, sangoma practices, or ancestral spiritual manipulation directed at you<br>
+    → A parent whose words have never blessed you — only diminished you<br>
+    → Family members who celebrate your failures and minimise your wins<br>
+    → Being used as a scapegoat or the identified "problem" in a dysfunctional family system<br>
+    → Generational strongholds — patterns of addiction, poverty, abuse — that fight to continue through you<br><br>
+    <strong>What God says:</strong> <em style="color:var(--gold);">"Christ redeemed us from the curse of the law by becoming a curse for us." (Galatians 3:13)</em> Every generational curse is broken at the cross. You are not bound by what came before you. You are the beginning of a new line.<br><br>
+    <strong>What to do spiritually:</strong> Renounce every generational curse by name. Declare the blood of Jesus over your bloodline. You do not have to participate in family spiritual practices that conflict with your faith. Love the person. Reject the spirit operating through them.`},
+  {icon:'🤝',title:'Attacks Through Friends',desc:'Betrayal in close relationships and in the Body of Christ.',
+    expand:`<strong>What it looks like:</strong><br>
+    → A close friend who shared your private matters publicly<br>
+    → People who were in your life during your building season but withdrew before the breakthrough<br>
+    → Jealousy disguised as friendship — celebrating when you struggle, quiet when you succeed<br>
+    → Betrayal from within the church — spiritual leaders or fellow believers who wound rather than heal<br>
+    → Being isolated from community through rumour or manipulation<br><br>
+    <strong>What God says:</strong> <em style="color:var(--gold);">"Even my close friend, someone I trusted, one who shared my bread, has turned against me." (Psalm 41:9)</em> Jesus was betrayed by one He walked with for three years. He knows this pain intimately. And He knows: betrayal is not the end. It is often the redirecting.<br><br>
+    <strong>What to do spiritually:</strong> Release the person. Forgiveness is not reconciliation — you do not have to restore trust to someone who broke it. But you must release bitterness, because bitterness is a poison you drink expecting them to die. Ask God to bring you covenant relationships — people who are assigned to your destiny, not just your season.`},
+  {icon:'🧠',title:'Attacks on the Mind',desc:'The battlefield of thoughts, fear, and mental warfare.',
+    expand:`<strong>What it looks like:</strong><br>
+    → Intrusive thoughts that arrive without invitation: "You will fail. You are cursed. God doesn't hear you. Give up."<br>
+    → Persistent anxiety or dread with no natural cause<br>
+    → Dreams that disturb, exhaust, or terrorise<br>
+    → Sudden unexplained depression during seasons of breakthrough<br>
+    → Mental confusion when making decisions aligned with God's will<br>
+    → A pattern of self-sabotage — getting close to breakthrough then destroying it<br><br>
+    <strong>What God says:</strong> <em style="color:var(--gold);">"For God has not given us a spirit of fear, but of power and of love and of a sound mind." (2 Timothy 1:7)</em> The mind is the primary battlefield of spiritual warfare. What you allow to replay in your mind shapes what you believe and what you do.<br><br>
+    <strong>What to do spiritually:</strong> Take every thought captive (2 Corinthians 10:5). When a thought arrives that contradicts God's word — reject it by name. Speak the opposite scripture aloud. Fill your mind with worship. Do not agree with the enemy's narrative about your life, even in the privacy of your own thoughts.`},
+  {icon:'💸',title:'Financial Spiritual Attack',desc:'Warfare directed at your provision and your assignment.',
+    expand:`<strong>What it looks like:</strong><br>
+    → Money that disappears without explanation — you earn but nothing accumulates<br>
+    → Opportunities that collapse at the last moment, repeatedly<br>
+    → Unexpected expenses that arrive every time you begin to save<br>
+    → Business or career that hits an inexplicable ceiling despite effort and skill<br>
+    → Debt that multiplies faster than income<br>
+    → People who steal from you — financially or in the marketplace of ideas<br><br>
+    <strong>What God says:</strong> <em style="color:var(--gold);">"Bring the whole tithe into the storehouse... and see if I will not throw open the floodgates of heaven and pour out so much blessing that there will not be room enough to store it." (Malachi 3:10)</em> God is a provider. Financial attack is often an attempt to cut off your assignment — because your resources fund your purpose.<br><br>
+    <strong>What to do spiritually:</strong> Tithe faithfully — not as a transaction but as an act of trust. Pray over your finances specifically. Close doors of debt you've opened through ungodly means. Ask God to rebuke the devourer on your behalf. Break the spirit of poverty over your bloodline by name.`},
+  {icon:'😴',title:'Spiritual Fatigue',desc:'When you\'re tired of fighting and the fire feels low.',
+    expand:`<strong>What it looks like:</strong><br>
+    → Prayer feels like talking to a ceiling — no presence, no sense of connection<br>
+    → Worship that used to move you now feels mechanical<br>
+    → Bible reading that once fed you now feels flat<br>
+    → Going through the motions of faith without the feeling of faith<br>
+    → Tired of waiting. Tired of believing. Tired of fighting the same battle again.<br><br>
+    <strong>What God says:</strong> <em style="color:var(--gold);">"Come to me, all you who are weary and burdened, and I will give you rest." (Matthew 11:28)</em> Elijah, one of the greatest prophets who ever lived, sat under a tree and asked God to let him die. God's response was not a rebuke. It was rest, food, and water — twice — before the next assignment.<br><br>
+    <strong>What to do spiritually:</strong> Spiritual fatigue is not faithlessness — it is exhaustion. Give yourself permission to rest in God without striving to feel something. Let worship be your work instead of your warfare for a season. Tell God honestly how you feel. He is not fragile. He can handle your exhaustion.`},
+];
+function renderAttackCards(){
+  const g=document.getElementById('attackCards');
+  ATTACKS.forEach(a=>{
+    const card=document.createElement('div');card.className='attack-card';
+    card.innerHTML=`<span class="ac-icon">${a.icon}</span><div class="ac-title">${a.title}</div><div class="ac-desc">${a.desc}</div><div class="ac-expand">${a.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── GOD'S RESPONSE CARDS ──────────────────────────────────────────────────────
+const RESPONSES=[
+  {icon:'🛡️',title:'Stand — Do Not Run',desc:'God calls you to hold your ground, not retreat.',
+    expand:`<em style="color:var(--gold);">"Having done all, stand." — Ephesians 6:13</em><br><br>
+    When every human instinct says run, quit, collapse — God says stand. Standing is not passive. Standing is the most active, intentional decision you can make in the middle of a spiritual battle. It is choosing to remain in position while God moves on your behalf.<br><br>
+    <strong>What standing looks like:</strong><br>
+    → Staying at your post at work even when the environment is hostile<br>
+    → Continuing to tithe and give when your finances are under attack<br>
+    → Praising God in the middle of circumstances that make no sense to praise Him in<br>
+    → Refusing to make permanent decisions from a temporary place of pain<br>
+    → Not lowering your standards or compromising your integrity under pressure<br><br>
+    The enemy wants you to leave your position before God's appointed time for your breakthrough. <strong>Do not move.</strong>`},
+  {icon:'🙏',title:'Pray — Specifically and Persistently',desc:'Vague prayers get vague results. Name it. Claim it. War for it.',
+    expand:`<em style="color:var(--gold);">"The effective, fervent prayer of a righteous man avails much." — James 5:16</em><br><br>
+    God wants you to be specific. He already knows what you need — but there is something about the act of naming it before Him that aligns your faith and activates the answer.<br><br>
+    <strong>How to pray through a spiritual attack:</strong><br>
+    → <strong>Name the attack:</strong> "Lord, I am being targeted at work by [name]. I bring this before You."<br>
+    → <strong>Claim the promise:</strong> "Your Word says no weapon formed against me shall prosper. I stand on this."<br>
+    → <strong>Release the person:</strong> "I forgive them and I release them to You. I will not be their judge."<br>
+    → <strong>Ask for specific intervention:</strong> "I ask for Your favour with [specific person or outcome]."<br>
+    → <strong>Thank Him in advance:</strong> "I thank You that You have already moved in this situation, even if I can't see it yet."<br><br>
+    Persistent prayer is not nagging God — it is demonstrating that you believe He will answer.`},
+  {icon:'📖',title:'Stay in the Word',desc:'The Word is your sword. You cannot fight without it.',
+    expand:`<em style="color:var(--gold);">"The sword of the Spirit, which is the word of God." — Ephesians 6:17</em><br><br>
+    When Jesus was attacked in the wilderness by the enemy, His only weapon was Scripture. Three times He was tempted. Three times He responded: "It is written." The Word of God is not a comfort — it is a weapon.<br><br>
+    <strong>How to use the Word in warfare:</strong><br>
+    → Find the scripture that directly addresses your attack. Write it down.<br>
+    → Speak it out loud — not silently. There is power in the spoken Word.<br>
+    → Pray it back to God: "Lord, You said in Isaiah 54:17 that no weapon formed against me shall prosper. I hold You to Your Word."<br>
+    → Post it where you will see it — on your bathroom mirror, your phone screen, your desk.<br>
+    → When the enemy speaks a lie — respond immediately with the opposing truth of Scripture.<br><br>
+    The enemy knows the Word. When you speak it, he has no response. Scripture confounds the enemy.`},
+  {icon:'🎵',title:'Worship Through It',desc:'Praise is a weapon. The enemy cannot stay where worship rises.',
+    expand:`<em style="color:var(--gold);">"When they began to sing and praise, the LORD set ambushes against the men of Ammon and Moab." — 2 Chronicles 20:22</em><br><br>
+    In this account, King Jehoshaphat faced an overwhelming enemy army. God's strategy was not conventional warfare. He told them to send the worshippers ahead of the army — and as they sang, God destroyed the enemy before they arrived.<br><br>
+    Worship is not just a response to God's goodness. It is a weapon of warfare. Something shifts in the spiritual realm when God's people praise — especially when the circumstances give them no natural reason to.<br><br>
+    <strong>What this looks like practically:</strong><br>
+    → Put on worship music in your car, your home, your office space<br>
+    → Sing — even when you don't feel it. Especially when you don't feel it.<br>
+    → Thank God for what you cannot yet see<br>
+    → Dance in your living room at midnight when the anxiety comes — it sounds foolish and it is spiritually devastating to the enemy<br><br>
+    Your praise creates an atmosphere God inhabits. Darkness cannot remain where His presence is welcomed.`},
+  {icon:'🤲',title:'Forgive — Break the Chain',desc:'Unforgiveness gives the enemy legal access to your peace.',
+    expand:`<em style="color:var(--gold);">"And when you stand praying, if you hold anything against anyone, forgive them, so that your Father in heaven may forgive you." — Mark 11:25</em><br><br>
+    This is one of the hardest commands in Scripture — and one of the most spiritually consequential. Unforgiveness is not a feeling. It is a door. When you carry bitterness against the person God is using to grow or redirect you, you give the enemy legal access to your peace, your health, your prayers, and your breakthrough.<br><br>
+    <strong>What forgiveness is NOT:</strong><br>
+    → It is not saying what they did was okay<br>
+    → It is not restoring trust or relationship<br>
+    → It is not forgetting what happened<br>
+    → It is not a feeling you wait to have<br><br>
+    <strong>What forgiveness IS:</strong><br>
+    → Releasing your right to revenge into God's hands<br>
+    → Choosing not to replay the offence<br>
+    → A daily act of will, not a once-off emotion<br>
+    → The most powerful thing you can do for yourself — because it sets you free, not them<br><br>
+    Pray for the person who harmed you. Not for their sake — for yours. Something breaks in the spirit when you pray for your enemies.`},
+  {icon:'👥',title:'Cover Yourself with Community',desc:'You were not built to fight alone. Isolation is a tactic.',
+    expand:`<em style="color:var(--gold);">"Two are better than one... If either of them falls down, one can help the other up." — Ecclesiastes 4:9–10</em><br><br>
+    One of the enemy's most effective tactics is isolation. He separates the target from their covering — their prayer partners, their pastor, their trusted community — and then attacks when they are alone and unguarded.<br><br>
+    <strong>Spiritual covering looks like:</strong><br>
+    → At least one person who prays with you and for you consistently<br>
+    → A pastor or spiritual leader who knows your situation and can pray specifically<br>
+    → A small group or cell group that goes beyond Sunday services<br>
+    → People who will fast with you when the battle intensifies<br><br>
+    <strong>How to find it if you don't have it:</strong><br>
+    → Ask God specifically for a prayer partner. Be intentional about making the ask.<br>
+    → Join a mid-week group at your church — surface-level Sunday attendance is not enough covering in a season of warfare<br>
+    → Be vulnerable. You cannot receive prayer for what you never disclose.<br><br>
+    The enemy cannot easily break what is bound together. Find your people. Let them help you hold the line.`},
+  {icon:'⏳',title:'Wait — God\'s Timing Is Perfect',desc:'The delay is not denial. The wait is part of the work.',
+    expand:`<em style="color:var(--gold);">"But those who wait on the LORD shall renew their strength." — Isaiah 40:31</em><br><br>
+    Waiting is one of the hardest spiritual disciplines. In a season of attack, waiting can feel like abandonment. But the God who is never early and never late is working in the waiting in ways that are invisible to you.<br><br>
+    <strong>What happens in the waiting:</strong><br>
+    → Character is formed that could not be formed in comfort<br>
+    → What God is building in you is made strong enough to carry what He is about to give you<br>
+    → The enemy's plans against you are dismantled before you arrive at your destination<br>
+    → The right people, resources, and doors are being positioned<br><br>
+    <strong>Joseph waited 13 years from dream to palace.</strong> Abraham waited 25 years for a son. David was anointed king and then went back to look after sheep. The delay between promise and fulfilment is not punishment — it is preparation.<br><br>
+    What God has promised you, He will bring to pass. In His time. In His way. Trust the process you cannot see.`},
+  {icon:'✨',title:'Declare God\'s Promises',desc:'There is power in the words you speak about your situation.',
+    expand:`<em style="color:var(--gold);">"Death and life are in the power of the tongue." — Proverbs 18:21</em><br><br>
+    What you say about your situation matters spiritually. The enemy wants you to agree with his narrative — to speak defeat, lack, failure, and fear. Every time you do, you partner with his plans. Every time you speak God's word over your life, you partner with His.<br><br>
+    <strong>Declarations to speak over a spiritual attack:</strong><br>
+    → "I am covered by the blood of Jesus."<br>
+    → "Every plan formed against me this season shall not prosper."<br>
+    → "I am the head and not the tail, above and not beneath."<br>
+    → "My God shall supply all my needs according to His riches in glory."<br>
+    → "The LORD is my vindicator. I do not have to fight this battle."<br>
+    → "I walk in divine favour with God and with people."<br>
+    → "What the enemy meant for evil, God is turning for my good."<br><br>
+    Speak these out loud. Not quietly. The power of a declaration is in its voicing. You are reminding yourself and announcing to the spiritual realm where you stand.`},
+];
+function renderResponseCards(){
+  const g=document.getElementById('responseCards');
+  RESPONSES.forEach(r=>{
+    const card=document.createElement('div');card.className='response-card';
+    card.innerHTML=`<span class="rc-icon">${r.icon}</span><div class="rc-title">${r.title}</div><div class="rc-desc">${r.desc}</div><div class="rc-expand">${r.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── ARMOUR OF GOD ─────────────────────────────────────────────────────────────
+const ARMOUR=[
+  {piece:'Belt of Truth',verse:'Ephesians 6:14',desc:'Truth is your foundation. The enemy\'s primary weapon is deception. When you are grounded in truth — about who God is, who you are, and what He has promised — lies cannot find a foothold.',prayer:'Lord, I put on the belt of truth today. I reject every lie of the enemy about my situation, my identity, and my future. I stand on Your Word as the only truth that defines me.'},
+  {piece:'Breastplate of Righteousness',verse:'Ephesians 6:14',desc:'Your righteousness is not your own — it is Christ\'s, given to you. The enemy attacks your identity and your standing with God. The breastplate guards your heart against condemnation.',prayer:'Father, I put on the breastplate of righteousness. My standing before You is not based on my performance but on what Christ has done. I reject the accusations of the enemy. I am the righteousness of God in Christ Jesus.'},
+  {piece:'Gospel of Peace on Your Feet',verse:'Ephesians 6:15',desc:'You go where God sends you ready — not reactive. The peace of God guards the paths you walk. You move from a place of peace, not panic.',prayer:'Lord, I put on shoes of peace today. Wherever I walk — into my workplace, my home, my battles — I carry Your peace. I will not be moved by what I see. I will be moved by what You have spoken.'},
+  {piece:'Shield of Faith',verse:'Ephesians 6:16',desc:'Faith is not a feeling — it is a decision. The shield deflects every fiery arrow of doubt, fear, and discouragement before it reaches your heart.',prayer:'Father, I take up the shield of faith. I choose to believe Your Word above my circumstances. Every arrow of doubt, fear, and discouragement is extinguished before it reaches me. My faith is not in what I see — it is in You.'},
+  {piece:'Helmet of Salvation',verse:'Ephesians 6:17',desc:'Guard your mind. The helmet covers your thought life — your identity in Christ, your assurance of salvation, your eternal perspective in a temporal battle.',prayer:'Lord, I put on the helmet of salvation. I guard my mind today. I refuse every thought that does not align with who You say I am and what You have done for me. My mind belongs to You.'},
+  {piece:'Sword of the Spirit',verse:'Ephesians 6:17',desc:'The Word of God is the only offensive weapon in the armour. Every other piece is defensive. The Word attacks the enemy\'s position.',prayer:'Holy Spirit, fill my mouth with Your Word today. Give me the scriptures I need for the battles I face. Let Your Word be alive in me — a sword that cuts through every lie and darkness.'},
+  {piece:'Prayer in the Spirit',verse:'Ephesians 6:18',desc:'Prayer is not an addition to the armour — it is the activating power of all of it. Without prayer, the armour sits unused. With prayer, it becomes a living defence.',prayer:'Father, I commit to praying without ceasing today. I pray for every person in my life who is in a battle. I pray for my own breakthrough. I ask the Holy Spirit to pray through me what I do not have words for.'},
+];
+function renderArmour(){
+  const left=document.getElementById('armourLeft');
+  const right=document.getElementById('armourRight');
+  ARMOUR.forEach((a,i)=>{
+    const div=document.createElement('div');
+    div.style.cssText='background:rgba(245,197,24,0.05);border:1px solid rgba(245,197,24,0.15);border-radius:10px;padding:14px;';
+    div.innerHTML=`
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="flex:1;">
+          <div style="font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:2px;">${a.piece}</div>
+          <div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">${a.verse}</div>
+          <div style="font-size:13px;color:#bbb;line-height:1.6;margin-bottom:8px;">${a.desc}</div>
+          <div style="font-size:12px;color:#888;line-height:1.6;font-style:italic;border-top:1px solid rgba(245,197,24,0.1);padding-top:8px;">${a.prayer}</div>
+        </div>
+      </div>
+    `;
+    if(i<4) left.appendChild(div);
+    else right.appendChild(div);
+  });
+}
+function renderArmourChecklist(){
+  const w=document.getElementById('armourChecklist');
+  ARMOUR.forEach((a,i)=>{
+    const d=document.createElement('div');d.className='check-item';d.dataset.aidx=i;
+    d.innerHTML=`<div class="check-box" id="arm_${i}"></div><div class="check-text">I have put on the <strong>${a.piece}</strong> today</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('arm_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){if(!state.armourChecked.includes(i))state.armourChecked.push(i);}
+      else state.armourChecked=state.armourChecked.filter(x=>x!==i);
+      document.getElementById('s_armour').textContent=state.armourChecked.length+'/7';
+    };
+    w.appendChild(d);
+  });
+}
+
+// ── PRAYER JOURNAL ────────────────────────────────────────────────────────────
+function addPrayer(){
+  const text=document.getElementById('newPrayer').value.trim();
+  if(!text)return;
+  prayers.unshift({id:Date.now(),text,category:document.getElementById('prayerCategory').value,date:new Date().toISOString(),answered:false});
+  document.getElementById('newPrayer').value='';
+  savePrayers();renderPrayers();updatePrayerSummary();
+  showToast('🙏 Prayer added');
+}
+function savePrayers(){localStorage.setItem(key('life9_prayers'),JSON.stringify(prayers));}
+function loadPrayers(){const r=localStorage.getItem(key('life9_prayers'));prayers=r?JSON.parse(r):[];renderPrayers();updatePrayerSummary();}
+function filterPrayers(f){
+  prayerFilter=f;
+  ['all','active','answered'].forEach(x=>{
+    const btn=document.getElementById('pf_'+x);
+    if(btn){btn.style.borderColor=x===f?'rgba(245,197,24,0.5)':'';btn.style.color=x===f?'var(--gold)':'';}
+  });
+  renderPrayers();
+}
+function renderPrayers(){
+  const el=document.getElementById('prayerList');
+  const empty=document.getElementById('prayerEmpty');
+  let list=prayers;
+  if(prayerFilter==='active') list=prayers.filter(p=>!p.answered);
+  if(prayerFilter==='answered') list=prayers.filter(p=>p.answered);
+  if(!list.length){el.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';el.innerHTML='';
+  list.forEach((p,i)=>{
+    const realIdx=prayers.indexOf(p);
+    const d=document.createElement('div');d.className='prayer-item'+(p.answered?' answered':'');
+    d.innerHTML=`
+      <div class="pi-left">
+        <div class="pi-date">${new Date(p.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})} · ${p.category}</div>
+        <div class="pi-text">"${p.text}"</div>
+        <span class="pi-tag ${p.answered?'answered-tag':'active-prayer'}">${p.answered?'✓ Answered':'Active Prayer'}</span>
+      </div>
+      <div class="pi-actions">
+        ${!p.answered?`<button class="pi-btn answered-btn" onclick="markAnswered(${realIdx})">✓ Answered</button>`:''}
+        <button class="pi-del" onclick="deletePrayer(${realIdx})">×</button>
+      </div>
+    `;
+    el.appendChild(d);
+  });
+}
+function markAnswered(i){prayers[i].answered=true;savePrayers();renderPrayers();updatePrayerSummary();showToast('✓ Praise God — prayer answered!');}
+function deletePrayer(i){prayers.splice(i,1);savePrayers();renderPrayers();updatePrayerSummary();}
+function updatePrayerSummary(){
+  const active=prayers.filter(p=>!p.answered).length;
+  const answered=prayers.filter(p=>p.answered).length;
+  document.getElementById('s_prayers').textContent=active;
+  document.getElementById('s_answered').textContent=answered;
+  document.getElementById('answeredCount').textContent=answered;
+}
+
+// ── PRAYER GUIDE PANELS ───────────────────────────────────────────────────────
+const PRAYER_GUIDES=[
+  {icon:'🔥',title:'The ACTS Method',desc:'Adoration, Confession, Thanksgiving, Supplication.',
+    expand:`A simple framework for structured prayer that covers every dimension of your relationship with God:<br><br>
+    <strong style="color:var(--gold);">A — Adoration:</strong> Begin with worship. Tell God who He is. "Lord, You are the God who fights my battles. You are my Protector, my Provider, my Vindicator." Start with His character, not your problem.<br><br>
+    <strong style="color:var(--gold);">C — Confession:</strong> Be honest before Him. Anything in you that has given the enemy access — pride, unforgiveness, sin — bring it and release it. 1 John 1:9 says: "If we confess our sins, He is faithful and just to forgive us."<br><br>
+    <strong style="color:var(--gold);">T — Thanksgiving:</strong> Thank Him before the answer comes. This is where faith is expressed. Name specific things He has done. Your prayer journal of answered prayers is powerful here.<br><br>
+    <strong style="color:var(--gold);">S — Supplication:</strong> Now bring your specific requests. Be precise. Name the situation, name the people, name what you need God to do.`},
+  {icon:'⚔️',title:'Warfare Prayer',desc:'How to pray specifically against a spiritual attack.',
+    expand:`Warfare prayer is not shouting louder. It is praying with authority — from the position of a believer who understands what Christ has already accomplished.<br><br>
+    <strong>Structure for warfare prayer:</strong><br><br>
+    1. <strong style="color:var(--gold);">Establish your authority:</strong> "In the name of Jesus Christ, I come before You as Your child, covered by the blood of Jesus."<br><br>
+    2. <strong style="color:var(--gold);">Name the attack specifically:</strong> "I come against the spirit of [sabotage / jealousy / witchcraft / fear] that has been operating against me through [situation or person]."<br><br>
+    3. <strong style="color:var(--gold);">Bind and loose (Matthew 18:18):</strong> "I bind every demonic assignment against my life, my family, my work, and my destiny. I loose the blessing, protection, and purposes of God over my life."<br><br>
+    4. <strong style="color:var(--gold);">Declare the blood of Jesus:</strong> "I cover myself, my household, my workplace, and everything that belongs to me with the blood of Jesus."<br><br>
+    5. <strong style="color:var(--gold);">Pray for your enemy:</strong> "Lord, I release [name] to You. Deal with them as only You can. I choose to forgive."<br><br>
+    6. <strong style="color:var(--gold);">Thank God for the victory:</strong> "I thank You that the battle is already won. I receive the victory now by faith."<br><br>
+    <em>Pray this early in the morning — before the day begins. Cover your day before you step into it.</em>`},
+  {icon:'🌙',title:'Night Watch Prayer',desc:'Praying through the night in times of intense warfare.',
+    expand:`There are seasons when God calls His people to night prayer — what the church has historically called the "night watch." Between midnight and 3am, many spiritual intercessors believe spiritual activity intensifies. Whether or not you hold to that specific theology, there is clear biblical precedent for praying at night:<br><br>
+    → Paul and Silas prayed and sang at midnight — an earthquake followed (Acts 16:25)<br>
+    → Jesus frequently withdrew at night to pray<br>
+    → The Psalms speak of meditating on God's law through the night<br><br>
+    <strong>When to use it:</strong> In seasons of intense attack — when the battle is acute and the day's prayer feels insufficient. Even a single night of intentional prayer can shift the atmosphere.<br><br>
+    <strong>How to do it:</strong><br>
+    → Set an alarm for 12am or 3am<br>
+    → Have your scriptures ready<br>
+    → Worship first — then warfare — then intercession for others<br>
+    → Pray specifically. Bring the situation before God in detail.<br>
+    → Return to sleep trusting that God has heard<br><br>
+    <em>You do not need to do this every night. But in seasons of war — the enemy does not sleep. Neither should your intercession.</em>`},
+];
+function renderPrayerGuide(){
+  const g=document.getElementById('prayerGuidePanels');
+  PRAYER_GUIDES.forEach(p=>{
+    const card=document.createElement('div');card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── SPIRITUAL COMMITS ─────────────────────────────────────────────────────────
+const SPIRITUAL_COMMITS=['I will spend at least 15 minutes in prayer every morning before picking up my phone','I will read the scripture assigned to my season and meditate on it today','I will put on the full armour of God verbally before I leave the house','I will choose praise over complaint in at least one moment today','I will forgive — by name — the person who has wronged me this season','I will not speak defeat over my situation — I will only speak what God says','I will connect with a prayer partner or spiritual community this week','I will add a specific prayer request to my journal today','I will declare at least one scripture aloud over my life this week','I will end my day with thanksgiving — naming at least three things God has done'];
+function renderSpiritualCommits(){
+  const w=document.getElementById('spiritualCommits');
+  SPIRITUAL_COMMITS.forEach((c,i)=>{
+    const d=document.createElement('div');d.className='check-item';d.dataset.cidx=i;
+    d.innerHTML=`<div class="check-box" id="com_${i}"></div><div class="check-text">${c}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('com_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){if(!state.commitChecked.includes(i))state.commitChecked.push(i);}
+      else state.commitChecked=state.commitChecked.filter(x=>x!==i);
+      document.getElementById('s_commits').textContent=state.commitChecked.length;
+    };
+    w.appendChild(d);
+  });
+}
+
+// ── DECLARATIONS ──────────────────────────────────────────────────────────────
+const DECLARATIONS={
+  general:[
+    'I decree that what God has promised over my life shall come to pass — in His time and in His way.',
+    'I am covered by the blood of Jesus. No weapon formed against me shall prosper.',
+    'I walk in divine favour — with God and with man. Doors open for me that no man can shut.',
+    'The LORD is my vindicator. I do not fight this battle — He fights it for me.',
+    'I am not moved by what I see. I am moved by what God has said.',
+  ],
+  Anchored:['I am rooted and grounded in Him. No storm can uproot what God has planted.','My anchor holds. I am not moving from this place of trust.'],
+  Seeking:['God rewards those who diligently seek Him. I will find what I am looking for.','I am growing in faith. Every question I bring to God brings me closer to Him.'],
+  Tested:['The fire I am walking through will not consume me — it will purify me.','I am in the furnace but I am not alone. The Son of God walks with me in this fire.'],
+  'Under Attack':['Every weapon raised against me is already defeated at the cross.','I am more than a conqueror through Him who loved me. The battle is the Lord\'s.'],
+  Doubting:['I bring my doubts to God — He is not shaken by my questions. My faith is growing.','Even in my weakness, He is strong. I choose to trust what I cannot yet feel.'],
+  Rebuilding:['God is restoring what the enemy stole — with interest. My best days are still ahead.','I am building again — stronger, wiser, and more covered than before.'],
+};
+function newDeclaration(){const all=Object.values(DECLARATIONS).flat();setDeclaration(all[Math.floor(Math.random()*all.length)]);}
+function declarationByStatus(){const list=DECLARATIONS[state.faithStatus]||DECLARATIONS.general;setDeclaration(list[Math.floor(Math.random()*list.length)]);}
+function setDeclaration(txt){const el=document.getElementById('affirmText');el.style.opacity=0;setTimeout(()=>{el.textContent=txt;el.style.transition='opacity 0.4s';el.style.opacity=1;},250);}
+
+// ── FAITH LOG ─────────────────────────────────────────────────────────────────
+let faithLog=[];
+function loadFaithLog(){const r=localStorage.getItem(key('life9_log'));faithLog=r?JSON.parse(r):[];renderFaithLog();}
+function renderFaithLog(){
+  const el=document.getElementById('faithLog');
+  if(!faithLog.length){el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to begin your faith journal.</p>';return;}
+  el.innerHTML='';
+  faithLog.slice(0,4).forEach((e,i)=>{
+    const d=document.createElement('div');d.className='log-item';
+    d.innerHTML=`<div class="li-left"><div class="li-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div><div class="li-title">${e.status||'—'} · ${e.prayers||0} prayers</div>${e.note?`<div class="li-note">"${e.note.slice(0,120)}${e.note.length>120?'…':''}"</div>`:''}</div><button class="li-del" onclick="delLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(faithLog.length>4){const m=document.createElement('p');m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;';m.textContent=`+ ${faithLog.length-4} earlier entries`;el.appendChild(m);}
+}
+function delLog(i){faithLog.splice(i,1);localStorage.setItem(key('life9_log'),JSON.stringify(faithLog));renderFaithLog();}
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry(){
+  state.faithNote       =document.getElementById('faithNote').value;
+  state.scripture_reflect=document.getElementById('scripture_reflect').value;
+  state.atk_work        =document.getElementById('atk_work').value;
+  state.atk_family      =document.getElementById('atk_family').value;
+  state.atk_friends     =document.getElementById('atk_friends').value;
+  state.atk_mind        =document.getElementById('atk_mind').value;
+  state.r_godsword      =document.getElementById('r_godsword').value;
+  state.r_declaration   =document.getElementById('r_declaration').value;
+  state.r_praise        =document.getElementById('r_praise').value;
+  state.ts              =new Date().toISOString();
+  localStorage.setItem(key('life9_'+dk(currentDate)),JSON.stringify(state));
+  faithLog.unshift({status:state.faithStatus,prayers:prayers.filter(p=>!p.answered).length,note:state.r_praise,date:state.ts});
+  localStorage.setItem(key('life9_log'),JSON.stringify(faithLog));
+  renderFaithLog();
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{studentName:userName,studentEmail:userEmail,courseName:`Life 9 Faith Check-In — ${fmt(currentDate)}`,coursePrice:'N/A',courseDuration:'Wellness Portal',sessionType:'Online',paymentMethod:'Free',additionalInfo:`Faith Status: ${state.faithStatus||'—'}\nTags: ${state.faithTags.join(', ')||'None'}\nActive Prayers: ${prayers.filter(p=>!p.answered).length}\nAnswered Prayers: ${prayers.filter(p=>p.answered).length}\nArmour: ${state.armourChecked.length}/7\nDeclaration: ${state.r_declaration.slice(0,200)||'—'}`,dashboardUrl:window.location.href}).catch(()=>{});
+  showToast('✦ Entry saved — God sees your faith');
+}
+
+function loadEntry(){
+  const raw=localStorage.getItem(key('life9_'+dk(currentDate)));
+  if(!raw)return;
+  const s=JSON.parse(raw);
+  if(s.faithStatus){document.querySelectorAll('.status-tile').forEach(t=>{if(t.dataset.s===s.faithStatus)t.classList.add('active');});state.faithStatus=s.faithStatus;document.getElementById('s_status').textContent=s.faithStatus.split(' ')[0];}
+  ['faithNote','scripture_reflect','atk_work','atk_family','atk_friends','atk_mind','r_godsword','r_declaration','r_praise'].forEach(id=>{document.getElementById(id).value=s[id]||'';});
+  state.faithTags=s.faithTags||[];
+  document.querySelectorAll('#faithTags .ttag').forEach(t=>{if(state.faithTags.includes(t.dataset.tag))t.classList.add('active');});
+  state.armourChecked=s.armourChecked||[];
+  state.armourChecked.forEach(i=>{const d=document.querySelector(`.check-item[data-aidx="${i}"]`);if(d){d.classList.add('checked');document.getElementById('arm_'+i).textContent='✓';}});
+  document.getElementById('s_armour').textContent=state.armourChecked.length+'/7';
+  state.commitChecked=s.commitChecked||[];
+  state.commitChecked.forEach(i=>{const d=document.querySelector(`.check-item[data-cidx="${i}"]`);if(d){d.classList.add('checked');document.getElementById('com_'+i).textContent='✓';}});
+  document.getElementById('s_commits').textContent=state.commitChecked.length;
+  state={...state,...s};
+  showToast('Entry loaded');
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function toggleSummary(){const strip=document.getElementById('summaryStrip'),btn=document.getElementById('summaryToggle');strip.classList.toggle('open');btn.textContent=strip.classList.contains('open')?'✕':btn.dataset.icon;}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderFaithTags();
+renderAttackCards();
+renderResponseCards();
+renderArmour();
+renderArmourChecklist();
+renderPrayerGuide();
+renderSpiritualCommits();
+loadPrayers();
+loadFaithLog();
+newDeclaration();
+setScripture(SCRIPTURES[0]);
+loadEntry();
+</script>
+</body>
+</html>
