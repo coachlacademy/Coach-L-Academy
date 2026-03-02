@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Change & Purpose - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #009688 0%, #00695c 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #26a69a 0%, #009688 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #009688 0%, #00695c 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #009688 0%, #00695c 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #009688 0%, #00695c 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #009688; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #009688; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #009688 0%, #00695c 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #434343 0%, #000000 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(0,150,136,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #009688; transform: scale(1.1); }
+  .play-btn::after { content: '\25BA'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #009688; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #00695c; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #009688; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #009688; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #009688; background: #e0f2f1; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #009688 0%, #00695c 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,150,136,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .safety-banner { background: linear-gradient(135deg, #e0f2f1 0%, #e8f5e9 100%); border: 2px solid #009688; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .safety-banner h4 { color: #00695c; margin-bottom: 8px; }
+  .safety-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #009688; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #009688 0%, #00695c 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title"><h1>Career Change &amp; Purpose</h1><p>6-Week Comprehensive Course</p></div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:0.85rem;opacity:0.9;">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">&#9999;&#65039; Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#009688;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Career Change &amp; Purpose</h3>
+    <p style="color:#666;margin-bottom:30px;">Enter your details to begin your career transformation journey.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#009688 0%,#00695c 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Begin My Journey &#128640;</button>
+  </div>
+</div>
+<div class="container">
+  <div class="safety-banner">
+    <h4>&#128640; Career Change Takes Courage &mdash; And You Don&rsquo;t Have to Figure It Out Alone</h4>
+    <p>Career transitions can be exhilarating and terrifying in equal measure. Financial uncertainty, fear of failure, identity shifts, and the judgement of others can make even the most necessary change feel impossible. This course gives you research-backed tools, honest frameworks, and structured reflection to move through that fear. If you are experiencing significant distress, please reach out:<br><br>
+    <strong>Crisis Line:</strong> &#128222; 0800 12 13 14 &nbsp;|&nbsp; <strong>Suicide Helpline:</strong> 0800 567 567</p>
+  </div>
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#26a69a 0%,#009688 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">&#128249; Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">&#128218; Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+  <div class="video-section" style="margin-top:50px;">
+    <h2>&#128172; Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised career transition coaching.</p>
+    <div style="background:linear-gradient(135deg,#009688 0%,#00695c 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">&#127909; Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for strategic, personalised career guidance.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#009688;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#009688;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="admin-btn" onclick="viewAllResults()">&#128202; View Results</button>
+<script>
+const GOOGLE_SHEET_URL='https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY='CoachL2025SecureKey';
+const COURSE_NAME='Career Change & Purpose';
+const TOTAL_WEEKS=6;
+const STORAGE_PREFIX='coachL_CCP_';
+let currentWeek=1;
+let studentInfo={name:'',email:''};
+let completedWeeks=new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks')||'[]'));
+function saveCompletedWeeks(){localStorage.setItem(STORAGE_PREFIX+'completedWeeks',JSON.stringify([...completedWeeks]));}
+window.onload=function(){
+  const n=localStorage.getItem('studentName'),e=localStorage.getItem('studentEmail');
+  if(n&&e){studentInfo.name=n;studentInfo.email=e;updateUserDisplay();}
+  else{document.getElementById('nameModal').style.display='flex';}
+  updateProgress();refreshModuleButtons();
+  selectModule([1,2,3,4,5,6].find(w=>!completedWeeks.has(w))||1);
+};
+function isValidEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);}
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(),e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e){alert('Please enter your email address.');return;}
+  if(!isValidEmail(e)){alert('Please enter a valid email address.');document.getElementById('studentEmail').focus();return;}
+  studentInfo.name=n;studentInfo.email=e;
+  localStorage.setItem('studentName',n);localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none';updateUserDisplay();
+}
+function updateEmail(){
+  const cur=localStorage.getItem('studentEmail')||'',nw=prompt('Update your email address:',cur);
+  if(nw===null)return;
+  if(!isValidEmail(nw.trim())){alert('Please enter a valid email.');return;}
+  studentInfo.email=nw.trim();localStorage.setItem('studentEmail',nw.trim());alert('Email updated to: '+nw.trim());
+}
+function updateUserDisplay(){document.getElementById('userAvatar').textContent=studentInfo.name.charAt(0).toUpperCase();document.getElementById('userName').textContent='Welcome, '+studentInfo.name+'!';}
+function refreshModuleButtons(){
+  document.querySelectorAll('.module-btn').forEach((btn,i)=>{
+    const w=i+1;btn.classList.remove('active','completed');
+    if(completedWeeks.has(w)){btn.classList.add('completed');btn.textContent='Week '+w+' \u2713';}
+    else{btn.textContent='Week '+w;}
+    if(w===currentWeek)btn.classList.add('active');
+  });
+}
+function selectModule(week){currentWeek=week;refreshModuleButtons();updateWeekContent();}
+function showTab(tabName,tabBtn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if(tabBtn)tabBtn.classList.add('active');
+}
+function updateWeekContent(){
+  const w=weekData[currentWeek];
+  document.getElementById('weekTitle').textContent='\uD83D\uDCF9 Week '+currentWeek+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tutorialVideo;
+  document.getElementById('basicTitle').textContent='Basic Learning: '+w.basicVideo;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='\uD83D\uDCDA Course Resources - Week '+currentWeek;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">\uD83D\uDCE5 Download</span></div>`).join('');
+  renderAssessment();
+}
+function renderAssessment(){
+  const w=weekData[currentWeek],passed=completedWeeks.has(currentWeek);
+  let html=`<h2>\uD83D\uDCDD Week ${currentWeek} Assessment</h2>`;
+  if(passed){html+=`<div class="already-passed-notice"><h3>\u2705 You already passed this week!</h3><p>Great work! Your score has been recorded.</p></div>`;}
+  else{html+=`<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass.</p>`;}
+  w.assessment.forEach((q,i)=>{html+=`<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`;});
+  if(!passed)html+=`<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function submitQuiz(){
+  if(completedWeeks.has(currentWeek)){alert('You have already passed this assessment!');return;}
+  const w=weekData[currentWeek];let correct=0,answers=[],allAnswered=true;
+  w.assessment.forEach((q,i)=>{const sel=document.querySelector(`input[name="q${i}"]:checked`);if(!sel){allAnswered=false;return;}const ua=parseInt(sel.value),ok=ua===q.correct;if(ok)correct++;answers.push({question:q.question,userAnswer:q.options[ua],correctAnswer:q.options[q.correct],isCorrect:ok});});
+  if(!allAnswered){alert('Please answer all questions before submitting.');return;}
+  const score=Math.round((correct/w.assessment.length)*100),passed=score>=70;
+  submitToSheets(currentWeek,score,correct,w.assessment.length,answers,passed);
+  if(passed){completedWeeks.add(currentWeek);saveCompletedWeeks();updateProgress();refreshModuleButtons();renderAssessment();
+    alert(currentWeek<TOTAL_WEEKS?`Congratulations! You passed with ${score}%! Continue to Week ${currentWeek+1} whenever you are ready.`:`Course complete! You passed with ${score}%! Your certificate will be emailed to you.`);
+  }else{alert(`You scored ${score}% (${correct}/${w.assessment.length}). You need 70% to pass. Review the material and try again!`);}
+}
+function submitToSheets(week,score,correct,total,answers,passed){
+  const payload={secretKey:SECRET_KEY,timestamp:new Date().toLocaleString(),studentName:studentInfo.name,studentEmail:studentInfo.email,courseName:COURSE_NAME,week,score,correct,total,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(e=>console.error(e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');all.push({...payload,answers});localStorage.setItem('assessmentResults',JSON.stringify(all));
+}
+function updateProgress(){
+  const done=completedWeeks.size,pct=Math.round((done/TOTAL_WEEKS)*100);
+  document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TOTAL_WEEKS;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TOTAL_WEEKS*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TOTAL_WEEKS;
+}
+function playVideo(type,week){alert('Playing '+type+' video for Week '+week+'. Replace with your actual video embed.');}
+function markComplete(){showTab('assessment',document.querySelectorAll('.tab')[2]);window.scrollTo({top:0,behavior:'smooth'});}
+function downloadResource(file,title){
+  fetch('resources/'+file,{method:'HEAD'}).then(r=>{if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);}else{alert('Add "'+file+'" to your /resources/ folder to enable downloads.');}}).catch(()=>alert('Add "'+file+'" to your /resources/ folder.'));
+}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src='https://meet.jit.si/'+room+'#config.prejoinPageEnabled=false&userInfo.displayName='+encodeURIComponent(studentInfo.name);
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){if(confirm('End the session?')){document.getElementById('jitsiFrame').src='';document.getElementById('videoCallContainer').style.display='none';}}
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No assessment results yet.');return;}
+  const rows=all.map((r,i)=>'<div class="result-card '+(r.passed==='YES'?'passed':'failed')+'"><h2>Submission #'+(i+1)+' - '+(r.passed==='YES'?'PASSED':'FAILED')+'</h2><p><strong>Student:</strong> '+r.studentName+'</p><p><strong>Email:</strong> '+r.studentEmail+'</p><p><strong>Course:</strong> '+r.courseName+'</p><p><strong>Week:</strong> '+r.week+'</p><p><strong>Score:</strong> '+r.score+'% ('+r.correct+'/'+r.total+')</p><p><strong>Date:</strong> '+r.timestamp+'</p></div>').join('');
+  const win=window.open('','Results','width=900,height=700');
+  win.document.write('<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#009688;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}</style></head><body><h1>Results - Coach L Academy</h1>'+rows+'</body></html>');
+  win.document.close();
+}
+const weekData = {
+
+  1: {
+    tutorialVideo: "Why Careers Stall and Souls Suffocate - The Case for Change",
+    basicVideo: "Ikigai and Purpose - Finding the Work That Was Made for You",
+    content: `
+      <h2>Week 1: Knowing When It's Time - The Call Toward Change</h2>
+      <div class="safety-banner"><h4>&#128640; Restlessness Is Not Ingratitude - It Is Information</h4><p>Many people who need a career change spend years dismissing the signal. This week gives you permission to take the signal seriously. Dissatisfaction in work is not a character flaw - it is data about the fit between who you are and how you are spending the majority of your waking life.</p></div>
+      <h3>&#127919; Learning Objectives</h3>
+      <ul>
+        <li>Understand the psychological cost of misaligned work and why people stay in it</li>
+        <li>Learn the research on meaningful work and what it actually requires</li>
+        <li>Explore the Ikigai framework for finding work that integrates purpose, skill, need, and reward</li>
+        <li>Begin your honest self-assessment of where you currently stand</li>
+      </ul>
+      <h3>&#128218; Key Concepts</h3>
+      <h4>1. The Cost of Staying in the Wrong Career</h4>
+      <p>Gallup's State of the Global Workplace report consistently shows that approximately 80% of workers worldwide are either "not engaged" or "actively disengaged" from their work. The psychological costs of sustained career misalignment include identity erosion (misaligned work gradually undermines your sense of self), the Sunday dread phenomenon (anticipatory anxiety about Monday that is a clinically significant signal), the sunk cost fallacy (past investment does not change the calculus of future years), physical health impacts (elevated cortisol, impaired immune function, cardiovascular risk), and downstream relationship effects (the chronically disengaged person does not arrive home as their best self).</p>
+      <h4>2. Three Orientations to Work - Wrzesniewski's Research</h4>
+      <p>Amy Wrzesniewski at Yale identifies three orientations: Job orientation (work as means to an end - income and security), Career orientation (work as path of advancement and achievement), and Calling orientation (work that feels intrinsically meaningful because of what it expresses internally). Research consistently shows calling-oriented workers are more satisfied, more resilient, perform better, and have better health outcomes. Crucially, calling orientation can be developed in many types of work - it is not reserved for artists or social workers. Martin Seligman's PERMA model (Positive emotions, Engagement, Relationships, Meaning, Achievement) applies directly to work: high scores across multiple dimensions sustain; low scores across all deplete even the most resilient person.</p>
+      <h4>3. The Ikigai Framework</h4>
+      <p>Ikigai maps four overlapping circles whose centre is where fulfilling work lives: What you love (activities producing genuine engagement and flow), What you are good at (capacities that come naturally and produce your best work with less strain), What the world needs (the genuine problems your work addresses), and What you can be paid for (economic viability). Partial overlaps produce partial satisfactions: What you love + What you're good at = passion (potentially impractical). What you're good at + What the world needs = vocation (meaningful but perhaps loveless). What you love + What you can be paid for = comfort (financially secure but potentially purposeless). The full Ikigai centre is where sustainable, deeply fulfilling career lives. A critical caution: the Ikigai diagram can produce paralysis if treated as a prerequisite rather than a direction. Clarity is discovered through movement, not analysis alone.</p>
+      <h4>4. Why People Stay in Misaligned Careers</h4>
+      <p>Specific psychological forces include: the sunk cost fallacy ("I've spent 10 years building this" - but past investment does not determine future value), identity fusion (when your career has become your primary identity, leaving feels like personal death), fear of financial instability (real and requiring honest financial planning), social judgment (the opinions of family and peers are among the most underestimated barriers), imposter syndrome about the new direction ("who am I to think I could do that?"), and the absence of a clear alternative (much harder to leave when you don't know what you're leaving for).</p>
+      <h3>&#128161; Practical Exercises</h3>
+      <p><strong>Exercise 1: The Career Satisfaction Audit</strong><br>Rate your current work honestly across five dimensions (1-10): Energy (does this work energise or deplete you?), Meaning (does this work feel significant and worthwhile?), Strengths (does this work allow you to do what you do best?), Growth (are you still developing and learning?), and Alignment (does this work reflect your values?). Total your score out of 50. What does this number tell you - and what does your gut reaction to the number tell you?</p>
+      <p><strong>Exercise 2: Your Ikigai Map</strong><br>Draw the four Ikigai circles. Spend at least 15 minutes filling each circle without self-editing. Then look for overlaps: what sits at the intersection of two circles? Three? Where do all four meet, even partially? This is the beginning of a conversation with yourself about what work could feel like.</p>
+      <p><strong>Exercise 3: The Staying Inventory</strong><br>Write down every reason you have for staying in your current career. Categorise each reason: Is it a genuine constraint (real financial obligation, genuine skill gap) or a fear masquerading as a constraint (catastrophic thinking, sunk cost, social judgment)? Genuine constraints need planning; fears need examination.</p>
+      <h3>&#128203; Reflection Questions</h3>
+      <ul>
+        <li>If you could observe yourself at work from the outside - the energy in your body, the quality of your engagement - what would you see?</li>
+        <li>Which of the three orientations (job, career, calling) best describes your current relationship with work - and which do you most want?</li>
+        <li>What is the fear that most keeps you in a career that is not serving you - and how much of your life is it costing?</li>
+        <li>When you imagine your life ten years from now if nothing changes - how does that feel?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'&#127919;',title:'Career Satisfaction Audit Tool',desc:'Rate your current work across all five dimensions with scoring guide',file:'career-audit.pdf'},
+      {icon:'&#9711;',title:'Ikigai Mapping Worksheet',desc:'Four-circle template with guided questions for each dimension',file:'ikigai-worksheet.pdf'},
+      {icon:'&#129504;',title:'Psychology of Career Dissatisfaction',desc:"Wrzesniewski's three orientations, PERMA at work, and the research",file:'career-psychology.pdf'},
+      {icon:'&#128270;',title:'The Staying Inventory Worksheet',desc:'Separate genuine constraints from fears masquerading as constraints',file:'staying-inventory.pdf'},
+      {icon:'&#127911;',title:'Career Clarity Visualisation Audio',desc:'15-minute guided visualisation for connecting with your authentic career direction',file:'career-clarity-audio.mp3'},
+      {icon:'&#128218;',title:'Career Purpose Reading List',desc:"Designing Your Life (Burnett & Evans), So Good They Can't Ignore You (Newport), Man's Search for Meaning (Frankl)",file:'career-purpose-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does Gallup research consistently show about worker engagement worldwide?",options:["Approximately 60% of workers are actively engaged","Work engagement has significantly increased in the digital age","Approximately 80% of workers worldwide are either not engaged or actively disengaged - going through the motions and counting down to the weekend","Worker engagement varies too much to generalise globally"],correct:2},
+      {question:"What is the sunk cost fallacy in career change?",options:["The belief that a career change will cost more than it is worth","The irrational tendency to stay in a misaligned career because of past investment - failing to recognise that time already spent does not change the calculus of future years","The financial cost of retraining for a new career","The tendency to underestimate the cost of leaving a stable career"],correct:1},
+      {question:"What distinguishes a calling orientation from a career orientation to work?",options:["Calling-oriented workers always earn less","Calling orientation is only available in helping professions","Calling orientation means work feels intrinsically meaningful because of what it expresses internally - and research shows these workers are more satisfied, resilient, and healthy. This orientation can be developed in many types of work.","Calling orientation requires having had the work since childhood"],correct:2},
+      {question:"What is the centre of the Ikigai framework?",options:["The intersection of passion and financial reward only","What you love combined with what you are good at","The point where all four circles meet - what you love, what you are good at, what the world needs, and what you can be paid for. This centre is where sustainable, deeply fulfilling career lives.","The compromise between idealism and practical necessity"],correct:2},
+      {question:"What does a partial overlap in Ikigai produce?",options:["When only one circle is clearly identified","When the framework produces too many options","Different partial combinations produce different partial satisfactions - passion, vocation, or comfort - all worthwhile but incomplete without the full centre","When the four circles are too similar to distinguish"],correct:2},
+      {question:"What critical caution is raised about the Ikigai framework?",options:["It is more applicable to Eastern cultures","Financial considerations should always override other circles","The diagram can produce paralysis if treated as a prerequisite - you do not need to find the perfect centre before taking any step. The centre is discovered through movement, not analysis alone.","The world-needs circle is too subjective to be practically useful"],correct:2},
+      {question:"What does identity fusion mean as a barrier to career change?",options:["When a career change requires learning an entirely new identity","When family identity is closely tied to professional status","When your career has become your primary identity, leaving it feels like personal death. The career is not just what you do - it is who you are, making departure feel like self-destruction.","When colleagues become so important that leaving the job means losing the relationships"],correct:2},
+      {question:"What does Seligman's PERMA model reveal about work satisfaction?",options:["Achievement is the most important dimension","Positive emotions at work are sufficient","Work scoring high across multiple PERMA dimensions is deeply sustaining - work scoring low across all of them depletes even the most resilient person","Only Engagement and Meaning are relevant for work"],correct:2},
+      {question:"What does research show about the physical health impact of chronic career misalignment?",options:["Physical impacts are primarily psychosomatic","Physical impacts only occur in physically demanding roles","Research links chronic work dissatisfaction to elevated cortisol, impaired immune function, cardiovascular risk, and disrupted sleep - the body keeps the score of career misalignment as it does of other chronic stress","Physical health is insufficiently researched to draw conclusions"],correct:2},
+      {question:"Why is the absence of a clear alternative a powerful barrier to career change?",options:["People cannot make career changes without a job offer in hand","It is harder psychologically to leave something when you do not know what you are leaving for - clarity about the destination significantly reduces the psychological cost of departure","Most career changes fail because the alternative was not researched thoroughly","Exploring alternatives before leaving is financially irresponsible"],correct:1}
+    ]
+  },
+
+  2: {
+    tutorialVideo: "Know Yourself First - Strengths, Values, and the Work That Fits",
+    basicVideo: "Skills Audit and Transferable Competencies - What You Already Have",
+    content: `
+      <h2>Week 2: Deep Self-Knowledge - The Foundation of Smart Career Change</h2>
+      <div class="safety-banner"><h4>&#128640; The Best Career Decision Is Based on Who You Actually Are - Not Who You Think You Should Be</h4><p>Most failed career changes are failures of self-knowledge. This week does the deep inner work: understanding your genuine strengths, your core values, and the conditions in which you do your best work. This self-knowledge is the compass for everything that follows.</p></div>
+      <h3>&#127919; Learning Objectives</h3>
+      <ul>
+        <li>Identify your genuine strengths - the activities that energise, engage, and come naturally</li>
+        <li>Clarify your core values and how they must be honoured in your work</li>
+        <li>Audit your transferable skills and understand their career value</li>
+        <li>Identify the working conditions in which you thrive</li>
+      </ul>
+      <h3>&#128218; Key Concepts</h3>
+      <h4>1. Genuine Strengths vs Acquired Skills</h4>
+      <p>Marcus Buckingham and Donald Clifton's research defines a strength as meeting three criteria: consistent high Performance (you do it better than most), Energy generation (it energises rather than depletes you), and rapid Growth (you improve more quickly here than elsewhere). The critical insight: you can be very good at something that is not a strength - if it depletes you, if improvement is slow, if doing it well requires significant effort rather than coming naturally. Many career changers discover they have spent decades excelling at work that was not a genuine strength. Signs of a genuine strength: losing track of time, feeling in flow, producing your best work with less than maximal effort, feeling energised after this activity. Signs of working against strengths: clock-watching, requiring excessive effort for adequate results, dreading tasks even when you perform them adequately.</p>
+      <h4>2. Values Clarification</h4>
+      <p>Core career values are the principles that, when present in your work, make it feel right - and when absent, make even skilled or well-compensated work feel hollow. Key values include Impact and contribution (seeing genuine positive difference), Autonomy and independence (directing your own work), Creativity and innovation (generating and creating), Connection and community (meaningful relationship within work), Mastery and excellence (developing expertise to its highest level), Security and stability (predictability and reliable income), Growth and learning (continuous development), and Recognition and status (acknowledgment and professional standing). Values are not morally ranked - wanting security is as legitimate as wanting impact. The values you choose must be honestly yours, not aspirationally curated.</p>
+      <h4>3. The Transferable Skills Audit</h4>
+      <p>"I don't have skills for anything else" is almost universally false. Every career builds transferable skills: Communication skills (writing, presenting, persuading, facilitating, negotiating), Analytical skills (research, data interpretation, problem diagnosis, strategic planning), People skills (team leadership, client management, conflict resolution, mentoring), Project skills (planning, execution, deadline management, resource allocation), and Domain knowledge (expertise that translates into consulting, advising, teaching, or writing in adjacent fields). The reframing exercise: describe each skill in sector-neutral language. "I managed a team of retail staff" becomes "I led a team, managed performance, resolved conflict, and developed talent." The skill travels; the context that contained it was specific.</p>
+      <h4>4. Working Conditions - The Environment in Which You Thrive</h4>
+      <p>Key dimensions: Environment (office, remote, hybrid, outdoors, client-facing), Structure (high direction vs high autonomy), Pace (fast and varied vs steady and in-depth), People (solo vs collaborative vs leading vs serving), Scale (startup with high impact and uncertainty vs large organisation with specialisation and stability), and Sector (commercial, non-profit, public sector, self-employed - each has a distinct culture and incentive structure). A natural collaborator forced into isolated remote work, or a creative person in rigid process compliance, will find the work unsatisfying regardless of content. Conditions matter as much as content.</p>
+      <h3>&#128161; Practical Exercises</h3>
+      <p><strong>Exercise 1: Peak Performance Inventory</strong><br>Write down 10 occasions in your life - at work or outside - when you were performing at your best: energised, absorbed, producing excellent results. For each: what specifically were you doing? What skills were you using? What conditions were you in? Look for patterns across the 10 - these patterns point toward your genuine strengths.</p>
+      <p><strong>Exercise 2: Core Values Ranking</strong><br>From the values list, write your top 10 career values. Then rank them honestly - not by what sounds impressive, but by what you genuinely cannot sustain work without. Circle your top 5. Which of these 5 are currently most met in your work - and most violated? The gap between your top values and your current experience is a key measure of career alignment.</p>
+      <p><strong>Exercise 3: The Transferable Skills Reframe</strong><br>List every significant skill from your career history. For each, rewrite it in sector-neutral language. Then rate each skill: (a) how much you enjoy using it (1-10) and (b) how good you are at it (1-10). High on both = career capital. High on competence but low on enjoyment = skills you have been rewarded for but may need to consciously reduce in a new direction.</p>
+      <h3>&#128203; Reflection Questions</h3>
+      <ul>
+        <li>What is the difference between your genuine strengths and the skills you have been most rewarded for - and are they the same?</li>
+        <li>If you had to identify the three values your current work most violates, what would they be?</li>
+        <li>What working conditions bring out your best self - and are those conditions currently present?</li>
+        <li>What skill or capability do you have that you have never been paid for but that brings you genuine energy?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'&#128170;',title:'Strengths Discovery Guide',desc:"Buckingham and Clifton's framework with Peak Performance Inventory",file:'strengths-guide.pdf'},
+      {icon:'&#10084;',title:'Core Career Values Clarification Workbook',desc:'50 career values to rank, reflect on, and apply to your direction',file:'values-workbook.pdf'},
+      {icon:'&#128260;',title:'Transferable Skills Audit Template',desc:'Reframe your skills in sector-neutral language with scoring guide',file:'skills-audit.pdf'},
+      {icon:'&#127757;',title:'Working Conditions Preference Map',desc:'Identify the environment, structure, pace, and scale in which you thrive',file:'working-conditions.pdf'},
+      {icon:'&#127911;',title:'Strengths Visualisation Audio',desc:'12-minute guided practice for connecting with your deepest strengths',file:'strengths-audio.mp3'},
+      {icon:'&#128218;',title:'Self-Knowledge for Career Reading',desc:'Now Discover Your Strengths (Buckingham), Quiet (Cain), What Color Is Your Parachute (Bolles)',file:'self-knowledge-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What three criteria define a genuine strength according to Buckingham and Clifton?",options:["Qualifications, experience, and professional recognition","Natural talent, formal training, and peer validation","Consistent high performance, energy generation (it energises rather than depletes), and rapid growth (learning comes naturally) - distinct from skills merely accumulated through practice","Intelligence, passion, and hard work"],correct:2},
+      {question:"What is the critical insight about skills you perform well but that are not genuine strengths?",options:["Skills that are not strengths should be abandoned immediately","All well-performed skills are genuine strengths by definition","You can be very good at something that depletes rather than energises you. Many career changers have spent decades excelling at work that was not a strength in the deeper sense.","Skills that are not strengths can become strengths through sustained practice"],correct:2},
+      {question:"What is the most important principle in values clarification for career purposes?",options:["Values must align with current economic realities","Achievement values are more legitimate than security values","Values must be honestly yours, not aspirationally curated - the issue arises when you pursue someone else's values while violating your actual ones. No value is morally superior to another.","Values should be reassessed annually"],correct:2},
+      {question:"What does the transferable skills reframe exercise reveal?",options:["Most skills are only useful within the specific sector where they were developed","Career changers need entirely new skill sets","By describing skills in sector-neutral language, the underlying capability travels far more readily than people believe. The skill is the same; only the context was specific.","Technical skills transfer more readily than interpersonal skills"],correct:2},
+      {question:"Why do working conditions matter as much as work content in career direction?",options:["Conditions can always be adapted to once the right role is found","Working conditions only matter for particular personality types","Someone can choose the right type of work in the wrong conditions and find it as unsatisfying as misaligned work. Content and context must both fit.","Working conditions are primarily determined by sector rather than specific role"],correct:2},
+      {question:"What is a key sign that you are working within a genuine strength?",options:["You receive consistent praise and high performance reviews","You can perform the task without errors","Losing track of time, feeling in flow, producing your best work with less than maximal effort, and feeling energised after the activity rather than exhausted","You learned the skill quickly when you first encountered it"],correct:2},
+      {question:"Why is the belief 'I don't have skills for anything else' almost universally false?",options:["Modern recruitment makes it easy to enter new fields","Every person has natural talents that transcend professional training","Every career builds a portfolio of transferable skills - communication, analysis, leadership, project management, domain knowledge - that travel across contexts far more readily than people realise","Retraining programmes make skill gaps irrelevant in career change"],correct:2},
+      {question:"What does a career values gap analysis reveal?",options:["The additional qualifications needed to pursue a new direction","The gap between current and target salary","The distance between your top values and your current work experience - identifying which core values are being violated and must be honoured in any new direction","The difference between entry-level and senior expectations in a new field"],correct:2},
+      {question:"In the skills audit, what does a skill scoring high on competence but low on enjoyment indicate?",options:["A skill that should be the foundation of the new career","A skill requiring further development before it produces satisfaction","A skill you have been rewarded for but may need to consciously reduce in a new direction - the currency of past career success but potentially a source of future misalignment","A skill that is not genuinely transferable"],correct:2},
+      {question:"What is the key insight about sector as a working conditions dimension?",options:["Commercial sectors always provide better career development","Sector choice is less important than role title","Commercial, non-profit, public sector, and self-employed contexts each have distinct cultures, paces, and incentive structures that significantly affect daily experience - sector fit matters as much as role fit","Large organisations offer better conditions than small ones for most career changers"],correct:2}
+    ]
+  },
+
+  3: {
+    tutorialVideo: "Career Exploration - Testing Ideas Before You Leap",
+    basicVideo: "The Portfolio Career - Multiple Streams of Purposeful Work",
+    content: `
+      <h2>Week 3: Exploration Without Leaping - Designing Career Experiments</h2>
+      <div class="safety-banner"><h4>&#128640; You Don't Have to Know Before You Go - You Just Have to Go a Little</h4><p>Clarity emerges from contact with real work, real people, and real environments. This week teaches you to generate that clarity through low-risk experimentation before making irreversible moves.</p></div>
+      <h3>&#127919; Learning Objectives</h3>
+      <ul>
+        <li>Understand the design thinking approach to career exploration</li>
+        <li>Learn to prototype career ideas through low-risk experiments</li>
+        <li>Develop a strategic information-gathering approach through conversations</li>
+        <li>Understand the portfolio career model and its growing viability</li>
+      </ul>
+      <h3>&#128218; Key Concepts</h3>
+      <h4>1. Design Thinking Applied to Career - Burnett and Evans</h4>
+      <p>Bill Burnett and Dave Evans at Stanford applied design thinking to career navigation. Core insight: designers do not start with the perfect solution - they prototype, test, learn, and iterate. Career designers should do the same. Key principles: Gravity problems vs actionable problems (gravity problems like "I'm too old" cannot be changed and must be worked around; actionable problems like skill gaps or network gaps can be addressed). Life design vs life plan (a plan assumes you know where you're going; a design process assumes you don't, and the destination reveals itself through movement). Reframing failure (a prototype that doesn't work is data - the career experiment that reveals "this is not right for me" provides exactly the information needed to design the next prototype). Wayfinding (adjusting course continuously based on current conditions, like a ship's navigator, rather than holding rigidly to the original heading).</p>
+      <h4>2. Career Prototyping - Low-Risk Experiments</h4>
+      <p>Career prototypes give real data about what a direction would feel like to live. They range from minimal to significant commitment: Conversations (talking to people doing the work you are curious about - the fastest and cheapest form of career data), Shadowing and observation (spending time in an environment to get sensory data beyond the theoretical), Side projects (doing the work on a small scale outside your current role to test whether reality matches appeal), Part-time or contract work (building experience while maintaining income), Education and training (gaining skills while testing whether the people in this field are people you want to work alongside), and Volunteer work (contributing to an organisation in your intended direction).</p>
+      <h4>3. Informational Interviews - The Most Underused Career Tool</h4>
+      <p>An informational interview is a genuine information-gathering conversation with someone doing the work you are curious about - not a job interview. Most people never use this tool; those who do consistently report it as the single most valuable source of career intelligence. How to do it well: Identify people at a range of experience levels. Make the approach low-pressure ("I'm exploring a career transition and would value 20-30 minutes of your perspective - I'm not asking for a job, just genuine insight"). Ask questions that produce real data ("What does your typical day actually look like?" "What do most people misunderstand about this field?" "What would you do differently?"). Listen for the reality beneath the presentation - the person's energy tells you as much as their words. Follow up genuinely and maintain the connection.</p>
+      <h4>4. The Portfolio Career Model</h4>
+      <p>Charles Handy's concept of the portfolio career - multiple concurrent activities rather than a single employment relationship - is increasingly relevant. For career changers it offers: maintenance of current income while building toward the new direction, genuine experience in the new field without a full leap, suitability for people with multiple genuine interests, and resilience through multiple income streams. Common combinations: primary employment plus consulting or freelancing in new direction, multiple part-time roles across sectors, or paid work plus significant voluntary contribution. The portfolio model requires strong self-management, boundary-setting, and the ability to market yourself across contexts - but for people with these capacities, it represents one of the most flexible and fulfilling ways to work in the contemporary economy.</p>
+      <h3>&#128161; Practical Exercises</h3>
+      <p><strong>Exercise 1: Three Career Prototypes</strong><br>Identify three potential career directions you are curious about. For each, design one specific prototype: a conversation, a side project, a course, or a volunteer role achievable within 4 weeks that gives real data about fit. Then actually do at least one.</p>
+      <p><strong>Exercise 2: Book Five Informational Interviews</strong><br>Identify five people currently doing work in directions you are curious about. Write the approach message for each. Send it. Track conversations in a "field notes" document: what surprised you? What confirmed your assumptions? What would you change about your direction based on what you heard?</p>
+      <p><strong>Exercise 3: Design Your Portfolio</strong><br>Design a portfolio career honouring your top three values, using your genuine strengths, and generating the income you need. Draw a simple diagram: what would each component be? How many hours per week? What would each component contribute financially, in terms of meaning, and in terms of growth?</p>
+      <h3>&#128203; Reflection Questions</h3>
+      <ul>
+        <li>Which gravity problem are you most tempted to use as a reason not to explore - and is it truly immovable?</li>
+        <li>What is the smallest possible career experiment you could run this week that would give you real data?</li>
+        <li>Who in your network is doing work you find genuinely fascinating - and have you ever asked them what it is actually like?</li>
+        <li>Does a portfolio career appeal to you - and if so, what combination of activities would most honour your genuine complexity?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'&#129514;',title:'Career Prototyping Design Guide',desc:"Burnett and Evans' framework with prototype design templates",file:'career-prototyping.pdf'},
+      {icon:'&#128483;',title:'Informational Interview Masterclass',desc:'Who to ask, how to approach, questions that generate real data',file:'informational-interviews.pdf'},
+      {icon:'&#128202;',title:'Portfolio Career Design Worksheet',desc:'Map your multi-stream career with time, income, and meaning allocation',file:'portfolio-career.pdf'},
+      {icon:'&#128300;',title:'Career Experiment Tracker',desc:'Log your prototypes, conversations, and key learnings',file:'experiment-tracker.pdf'},
+      {icon:'&#127911;',title:'Career Exploration Meditation Audio',desc:'12-minute guided practice for open, curious career exploration',file:'exploration-audio.mp3'},
+      {icon:'&#128218;',title:'Career Exploration Reading',desc:'Designing Your Life (Burnett & Evans), The Portfolio Life (Jones), Range (Epstein)',file:'exploration-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What is the core insight of Burnett and Evans' Designing Your Life framework?",options:["The perfect career can be identified through thorough research","Career direction should be determined by market demand","Designers do not start with the perfect solution - they prototype, test, learn, and iterate. Career navigation works the same way: clarity emerges through movement rather than analysis alone.","Career design requires professional coaching to be effective"],correct:2},
+      {question:"What is a gravity problem in the design thinking career framework?",options:["A problem caused by excessive career expectations","A challenge requiring significant preparation","A problem you cannot act on - like being too old or the economy being bad - that must be accepted and worked around. Distinguishing these from actionable problems prevents wasted energy.","A problem that pulls you back toward your current career"],correct:2},
+      {question:"How does design thinking reframe a career experiment revealing this is not right for me?",options:["As a costly mistake to have been avoided","As evidence of poor self-knowledge","As valuable data - tuition paid to the school of self-knowledge. The experiment that eliminates a direction provides exactly the information needed to design the next prototype more accurately.","As a sign that career change may not be viable"],correct:2},
+      {question:"What is wayfinding in career navigation?",options:["Using professional counsellors to determine direction","Following a structured career development plan","Adjusting course continuously based on current conditions rather than holding rigidly to an original heading. The goal is to keep moving and keep adjusting, not to find the right path and walk it perfectly.","Researching multiple paths before committing to one"],correct:2},
+      {question:"Why are informational interviews described as the most underused career tool?",options:["They are only accessible to people with established networks","They require significant preparation","Most people never use them, but those who do consistently report them as the single most valuable source of career intelligence - real data about what the day-to-day reality truly involves","They are primarily useful for confirming directions already decided upon"],correct:2},
+      {question:"What question in an informational interview most generates useful data?",options:["What qualifications do I need?","What is the salary range?","What does your typical day actually look like? and What do most people misunderstand about this field? - questions producing reality-level rather than promotional-level information","What are the best organisations to work for?"],correct:2},
+      {question:"What is the primary advantage of the portfolio career model for someone mid-career-change?",options:["It eliminates the need to choose a single direction","It is universally more financially rewarding","It allows maintenance of current income while building toward a new direction - reducing financial risk while gaining genuine experience and testing fit before a full irreversible leap","Portfolio careers are more respected by employers"],correct:2},
+      {question:"What does Charles Handy's portfolio career concept propose?",options:["Careers should be planned in distinct stages","Professional identity should be tied to a single expertise","An individual's working life increasingly consists of multiple concurrent activities rather than a single employer relationship - creating resilience, flexibility, and the possibility of honouring multiple genuine interests simultaneously","Self-employment is superior to traditional employment in all contexts"],correct:2},
+      {question:"What makes side projects particularly valuable as career prototypes?",options:["They always produce income","They satisfy employers that skills are current","They provide real experience on a small scale - building a portfolio, testing whether reality matches appeal, and generating genuine insights about fit that theoretical exploration cannot provide","They are the fastest way to transition into a new field"],correct:2},
+      {question:"What should you listen for beneath the presentation in an informational interview?",options:["Specific job openings","The interviewer's assessment of your suitability","The person's energy - do they light up talking about their work? Are there areas they avoid? What do they say about the hardest parts? The non-verbal and emotional information often tells a truer story than the content.","Technical requirements for entry into the field"],correct:2}
+    ]
+  },
+
+  4: {
+    tutorialVideo: "Managing the Fear - Courage, Risk, and the Psychology of Bold Moves",
+    basicVideo: "Financial Planning for Career Change - Making the Numbers Work",
+    content: `
+      <h2>Week 4: Courage and Strategy - Managing Fear and Making the Move</h2>
+      <div class="safety-banner"><h4>&#128640; Fear Is Not a Stop Sign - It Is Information That Requires a Strategy</h4><p>The gap between knowing you need to change and actually changing is almost entirely made of fear. This week takes that fear seriously - not to dismiss it, but to understand it psychologically, plan for it practically, and develop the specific courage that career change requires.</p></div>
+      <h3>&#127919; Learning Objectives</h3>
+      <ul>
+        <li>Understand the psychology of fear and risk in career transition</li>
+        <li>Learn specific strategies for building the courage change requires</li>
+        <li>Develop a practical financial plan for career transition</li>
+        <li>Create a phased transition strategy that reduces risk while building momentum</li>
+      </ul>
+      <h3>&#128218; Key Concepts</h3>
+      <h4>1. The Psychology of Career Change Fear</h4>
+      <p>Fear in career change is a rational response to genuine uncertainty. What makes it problematic is its unchallenged dominance. Key types: Loss aversion (Kahneman's research shows the pain of a potential loss is approximately twice as powerful as the pleasure of an equivalent gain - making the prospect of losing current income feel twice as costly as meaningful work feels valuable, even when rational calculus favours change), Fear of the unknown (the current career's familiar rhythms feel safer than the unknown new direction, even when promising), Fear of failure and judgment (the social dimension - what will people think if it fails? what will family say?), Imposter syndrome in the new direction (the deep doubt that you have no right to claim the new identity), and the courage required (Brene Brown defines courage as telling the story of who you are with your whole heart - career change is an act of this courage: not the absence of fear, but action in its presence).</p>
+      <h4>2. Strategies for Building Career Change Courage</h4>
+      <p>Effective strategies include: Premortem analysis (explicitly imagine failure - "it's five years from now and the change failed completely, what went wrong?" - which often reveals feared outcomes are survivable and preventable), Regret minimisation framework (Jeff Bezos's approach: project yourself to age 80, looking back - which decision will you regret more, having tried and failed or not having tried?), Progressive exposure (build courage through progressively more challenging experiments - each successful small act making the next more accessible), Community and accountability (fear is amplified in isolation and diminished in community - sharing intentions with trusted people creates accountability), and Evidence gathering (building an evidence base through prototypes and small wins challenges imposter syndrome with data: "I know I can do this because I have already done some version of it").</p>
+      <h4>3. Financial Planning for Career Transition</h4>
+      <p>Financial fear is one of the most legitimate barriers and cannot be dismissed with courage alone. Practical steps: Calculate your runway (minimum monthly income needed for essential obligations divided into current savings gives months of runway - this is the foundation of your transition plan), Build a transition fund (savings equivalent to 6-12 months of essential expenses transforms the transition from crisis to choice), Identify the income bridge (freelance work, consulting in current field, or monetising existing skills to generate income during transition without requiring the full new career to be established), Understand the income trajectory of the new direction (realistic income in year one, three, and five - how long to reach income parity?), and Reduce fixed costs during transition (the lifestyle designed for a senior income becomes a cage during career change).</p>
+      <h4>4. The Phased Transition Strategy</h4>
+      <p>Most successful career changes happen through a phased approach: Phase 1 - Exploration (3-6 months while still employed: complete self-knowledge work, run prototypes, conduct informational interviews, build savings, clarify direction), Phase 2 - Building (6-18 months: develop skills, portfolio, network, and reputation in the new direction through side projects, volunteer work, and part-time engagements - still employed), Phase 3 - Transition (when the new direction generates sufficient income or savings provide adequate runway, make the full move - with plan, network, and portfolio already established). The critical mistake: staying in the current role so long that resentment or crisis forces a reactive departure without adequate preparation. The best time to plan a career change is while you still have the resources to do it well.</p>
+      <h3>&#128161; Practical Exercises</h3>
+      <p><strong>Exercise 1: The Fear Inventory and Premortem</strong><br>Write every fear associated with your intended career change as specifically and honestly as possible. For your top three fears: How likely is this outcome actually? If it happened, could you survive it? What specific actions could reduce this risk? What is the cost of letting this fear make your career decision? Most fears shrink significantly under honest examination.</p>
+      <p><strong>Exercise 2: Financial Runway Calculation</strong><br>Calculate your essential monthly expenses (housing, food, transport, debt obligations). Calculate your current savings. Divide savings by monthly expenses to get your runway in months. What would it take to extend the runway to 12 months? What income bridge could you build? What discretionary expenses could be reduced without significant quality-of-life impact?</p>
+      <p><strong>Exercise 3: Design Your Phased Transition</strong><br>Using the three-phase framework, design your personal phased transition plan: What will you do in each phase? What milestones signal readiness to move to the next phase? What is your realistic timeline? What is the one thing you will do this week that belongs to Phase 1? A plan on paper is far more likely to become action than an intention in your head.</p>
+      <h3>&#128203; Reflection Questions</h3>
+      <ul>
+        <li>Which specific fear is most powerfully slowing your career change - and what would it take to address it directly?</li>
+        <li>If you imagined yourself at 80, looking back - what would you most regret about your career choices?</li>
+        <li>What is your current financial runway - and is it adequate for the transition you are planning?</li>
+        <li>What is the smallest brave thing you could do this week that would create real momentum?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'&#129504;',title:'Career Change Fear Psychology Guide',desc:'Loss aversion, imposter syndrome, and the courage research',file:'fear-psychology.pdf'},
+      {icon:'&#128176;',title:'Financial Runway Calculator',desc:'Calculate your transition fund, runway, and income bridge',file:'financial-runway.pdf'},
+      {icon:'&#128506;',title:'Phased Transition Planning Template',desc:'Three-phase plan with milestones, timelines, and weekly actions',file:'phased-transition.pdf'},
+      {icon:'&#128170;',title:'Courage-Building Strategies Guide',desc:'Premortem, regret minimisation, progressive exposure, and evidence building',file:'courage-strategies.pdf'},
+      {icon:'&#127911;',title:'Courage and Clarity Meditation Audio',desc:'12-minute guided practice for moving through career change fear',file:'courage-audio.mp3'},
+      {icon:'&#128218;',title:'Career Courage Reading',desc:'Daring Greatly (Brown), The Dip (Godin), Transitions (Bridges), Feel the Fear and Do It Anyway',file:'career-courage-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What does Kahneman's loss aversion research reveal about career change risk?",options:["People are naturally more risk-averse in all domains","Financial loss is objectively more harmful than career fulfillment is beneficial","The pain of a potential loss is approximately twice as powerful as the pleasure of an equivalent gain - making losing current income feel twice as costly as meaningful work feels valuable, even when rational calculus favours change","Loss aversion only applies to financial decisions"],correct:2},
+      {question:"What is the premortem analysis strategy for career change courage?",options:["Reviewing all previous career failures","Consulting a career counsellor to identify failure modes","Explicitly imagining failure - it's five years from now and the change failed completely, what went wrong? - which often reveals feared outcomes are survivable and preventable, reducing the hold of vague catastrophic fear","Preparing a contingency plan before beginning"],correct:2},
+      {question:"What is Jeff Bezos's regret minimisation framework?",options:["Identifying which decisions produce least financial regret","Choosing career paths maximising core professional values","Projecting yourself to age 80 and asking: which decision will you regret more - having tried and failed, or not having tried? For most career changers the answer clearly favours action.","A framework for minimising regret by making incremental rather than bold changes"],correct:2},
+      {question:"What is the income bridge concept in financial planning?",options:["The gap between current and target income","A loan designed for career changers","Income generated during transition through freelancing, consulting, or monetising existing skills - supporting the transition period without requiring the full new career to be established immediately","A temporary income reduction accepted as the cost of career change"],correct:2},
+      {question:"Why does the phased transition strategy increase career change success probability?",options:["It gives the current employer time to prepare","It ensures the new direction is fully established before any financial risk","Building skills, portfolio, network, and reputation while still employed means the transition phase begins with momentum rather than from zero - reducing financial desperation and providing real evidence of capability","Phased transitions are required by most professional licensing bodies"],correct:2},
+      {question:"What is described as the critical mistake in the phased transition strategy?",options:["Moving too quickly through Phase 2","Making the full transition before saving 12 months of expenses","Staying in the current role so long that resentment or crisis forces a reactive departure without adequate preparation - losing the resources needed to make the transition well","Telling colleagues about the intended career change prematurely"],correct:2},
+      {question:"How does community and accountability specifically reduce career change fear?",options:["Other people's confidence in you increases your own","Accountability partners provide practical support","Fear is amplified in isolation and diminished in community - sharing intentions with trusted supportive people reduces the psychological burden of carrying the transition alone and creates momentum that sustains action through difficulty","Community prevents the imposter syndrome accompanying all career changes"],correct:2},
+      {question:"What does imposter syndrome look like specifically in career change?",options:["Believing the new direction is not financially viable","Feeling unqualified relative to others already in the field","The deep doubt that you are not really qualified to pursue the direction you are drawn to - that others will see through you, your interest is not legitimate, and you have no right to claim the new identity","Doubting whether the career change decision is the right one"],correct:2},
+      {question:"Why is reducing fixed costs during transition described as creating breathing room?",options:["Lower expenses reduce taxable income","Reduced costs signal commitment to potential employers","The lifestyle designed for a senior income becomes a cage during career change - reducing fixed costs extends financial runway and creates psychological space to make considered rather than desperate decisions","Fixed costs are the primary cause of career change failure"],correct:2},
+      {question:"What does Brene Brown's definition of courage mean for career change?",options:["Acting without fear in high-stakes situations","The willingness to accept significant financial risk for meaningful work","Courage is telling the story of who you are with your whole heart - career change is an act of this courage. Not the absence of fear, but action in its presence. The question is not whether you will feel fear, but whether you will let fear make your decisions.","Courage in career change means ignoring others' opinions entirely"],correct:2}
+    ]
+  },
+
+  5: {
+    tutorialVideo: "Building Your Brand and Network - Getting Known in a New Field",
+    basicVideo: "Job Search Strategy for Career Changers - Playing a Different Game",
+    content: `
+      <h2>Week 5: Building Your Brand, Network, and Path Into the New Field</h2>
+      <div class="safety-banner"><h4>&#128640; In a Career Change, How You Tell Your Story Is as Important as the Story Itself</h4><p>Career changers face a specific challenge: presenting a non-linear background as an asset rather than a liability. This week teaches you to build a compelling narrative, develop a strategic network in your new field, and position yourself effectively even without direct experience.</p></div>
+      <h3>&#127919; Learning Objectives</h3>
+      <ul>
+        <li>Develop a compelling career change narrative that frames your background as an asset</li>
+        <li>Build a strategic network in your new field from scratch</li>
+        <li>Learn how to position yourself effectively without direct experience</li>
+        <li>Understand the specific job search strategy that works for career changers</li>
+      </ul>
+      <h3>&#128218; Key Concepts</h3>
+      <h4>1. Your Career Change Narrative - The Bridge Story</h4>
+      <p>Every career changer needs a compelling bridge story - a concise, coherent narrative connecting your past to your intended direction. Five elements: The Hook (opening that names both where you have been and where you are headed, without apology: "I spent 12 years in financial services, and I'm now building a career in social entrepreneurship - here's why my background is unusually relevant"), The Insight (the genuine realisation driving the change - not frustration with the current field but the pull toward the new one), The Transferable Thread (the connecting tissue between past and future - the skills, values, and experiences from the old direction directly relevant in the new one), The Momentum Evidence (what you have already done in the new direction - courses, projects, volunteer work - proving the change is real and intentional, not a crisis response), and The Vision (where you are headed and why - specific enough to inspire confidence, open enough to invite the organisation into the conversation). Your bridge story should be practised until fluent but natural, not scripted.</p>
+      <h4>2. Strategic Networking for Career Changers</h4>
+      <p>Building a network from zero in a new field requires specific strategies: Start with your informational interview network (each conversation is an opportunity to ask "is there anyone else you would recommend I speak with?" - rapidly expanding through warm introductions), Join the communities (professional associations, LinkedIn groups, conferences, meetups - participation builds presence and recognition over time), Give before you ask (leading with what you can offer - sharing useful content, making introductions, providing a relevant skill - builds goodwill before any request is made), LinkedIn strategy for career changers (update headline to reflect where you are going, not just where you have been; About section tells your bridge story; engage actively with content in your new field), and Visibility through content (writing, speaking, or creating content in your new field builds credibility, attracts like-minded people, and demonstrates genuine engagement at scale).</p>
+      <h4>3. Positioning Without Direct Experience</h4>
+      <p>The most common objection: "You don't have direct experience in this field." Strategies for addressing it: Lead with the transferable (frame your background as "unusual perspective" - many organisations value cross-sector thinking in business development, strategy, communications, and leadership roles), Build a portfolio (direct experience that does not exist on a CV can be created through side projects, volunteer work, pro bono consulting - real work addresses the experience gap more effectively than any explanation), Target entry points strategically (identify the strategic entry point in the new field rather than targeting the senior role you would have in your old field - the right next role, not the role you would have if you had always been in this field), and Leverage the fresh eyes advantage (career changers bring perspectives that long-term incumbents lack - genuine innovation from someone who sees the field without its assumptions, worth naming explicitly as an asset).</p>
+      <h4>4. The Career Changer's Job Search Strategy</h4>
+      <p>The standard approach - find a posting, submit a CV, wait - is particularly ineffective for career changers whose CVs don't match standard job specifications. More effective strategy: Target organisations not postings (identify aligned organisations, research them thoroughly, build connections before any role is posted - be known before you apply), The hidden job market (research suggests 70-80% of roles are filled through networks and direct approaches rather than advertised postings - warm introductions bypass automated screening that filters career changers' CVs), Tailor relentlessly (when applying to posted roles, customise every application connecting your bridge story explicitly to their needs), and Embrace and prepare for rejection (career change job searches involve more rejection than standard searches - building resilience for this specific pattern is practical preparation, not failure expectation).</p>
+      <h3>&#128161; Practical Exercises</h3>
+      <p><strong>Exercise 1: Write Your Bridge Story</strong><br>Write the full version of your bridge story - hook, insight, transferable thread, momentum evidence, and vision. Then condense it to 90 seconds (approximately 200 words). Practise saying it aloud until it sounds natural. Then practise with someone you trust: Is the connection between past and future clear? Does it inspire confidence? Does it sound like you?</p>
+      <p><strong>Exercise 2: LinkedIn Audit and Rebuild</strong><br>Audit your current LinkedIn profile from the perspective of someone in your new field encountering you for the first time: Does your headline tell them where you are going? Does your About section tell your bridge story? Does your activity reflect engagement with the new field? Rewrite the headline and About section. Follow the key voices in your new field. Begin engaging with one post per day this week.</p>
+      <p><strong>Exercise 3: Target Organisation Research</strong><br>Identify 10 organisations in your new field that align with your values. For each: research their mission, culture, and current team. Identify one person within each organisation for an informational conversation. Write the approach message for your top three. Then send them.</p>
+      <h3>&#128203; Reflection Questions</h3>
+      <ul>
+        <li>What is the genuine connecting thread between your old career and new direction - the insight making the transition more coherent than it might initially appear?</li>
+        <li>What have you already done in your intended new direction that could be described as momentum evidence?</li>
+        <li>Who in your current network is connected to your intended new field?</li>
+        <li>What fresh eyes advantage does your background give you in the new field - and how would you articulate it as a genuine asset?</li>
+      </ul>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete</button>
+    `,
+    resources: [
+      {icon:'&#128221;',title:'Bridge Story Writing Guide',desc:'Framework and templates for your compelling career change narrative',file:'bridge-story.pdf'},
+      {icon:'&#127760;',title:'LinkedIn for Career Changers',desc:'Profile optimisation, content strategy, and engagement guide',file:'linkedin-guide.pdf'},
+      {icon:'&#129309;',title:'Strategic Networking for Career Changers',desc:'Building from zero in a new field - communities, approaches, and scripts',file:'strategic-networking.pdf'},
+      {icon:'&#128203;',title:'Target Organisation Research Template',desc:'Research framework for the organisations you want to join',file:'target-org-research.pdf'},
+      {icon:'&#127911;',title:'Personal Brand and Visibility Audio',desc:'12-minute guided practice for confident professional visibility',file:'personal-brand-audio.mp3'},
+      {icon:'&#128218;',title:'Career Positioning Reading',desc:'You Are a Brand (Kaputa), Never Eat Alone (Ferrazzi), The 2-Hour Job Search (Dalton)',file:'positioning-reading.pdf'}
+    ],
+    assessment: [
+      {question:"What are the five elements of a compelling career change bridge story?",options:["Education, experience, skills, goals, and references","Chronological history, achievements, skills, career goal, and personal statement","Hook (connecting past to future without apology), Insight (genuine pull toward new direction), Transferable Thread (connecting tissue between past and future), Momentum Evidence (what you have already done), and Vision (where you are headed and why)","Problem, solution, qualifications, experience, and value proposition"],correct:2},
+      {question:"What is the hidden job market and why does it matter for career changers?",options:["Jobs in smaller organisations that do not advertise widely","Roles available only to candidates with specific clearances","Research suggests 70-80% of roles are filled through networks and direct approaches rather than advertised postings. For career changers whose CVs do not match standard specifications, warm introductions bypassing automated screening are disproportionately important.","International opportunities not listed on domestic job boards"],correct:2},
+      {question:"What is the fresh eyes advantage for career changers?",options:["Career changers have fewer fixed assumptions about task execution","Career changers are more motivated than candidates always in the field","Career changers bring perspectives, approaches, and skills that long-term incumbents lack - genuine insight from someone who sees the field without its assumptions. This is genuinely valuable and worth naming explicitly as an asset.","Career changers are willing to accept lower initial salaries"],correct:2},
+      {question:"Why is the standard job search approach particularly ineffective for career changers?",options:["Career changers are seeking more senior roles than are advertised","Career changers do not have time to wait for application processes","Career changers' CVs do not match standard job specifications, making them likely to be filtered out by automated screening - a targeted approach building connections before roles are posted is far more effective","Career changers need to demonstrate commitment by making many applications simultaneously"],correct:2},
+      {question:"What does give before you ask mean in building a network in a new field?",options:["Offering to work for free to gain experience","Making financial contributions to industry associations","Leading with what you can offer - sharing useful content, making introductions, providing a relevant skill - rather than leading with what you want. Building goodwill and relationship before making any request.","Completing extensive research before contacting anyone in the new field"],correct:2},
+      {question:"What is the momentum evidence element of the bridge story and why does it matter?",options:["Evidence of performance in the current career demonstrating potential","Letters of recommendation from current colleagues","What you have already done in the new direction - courses, projects, volunteer work. This proves the change is real and intentional rather than a crisis response, directly addressing the employer's risk concern.","Statistical evidence that the new direction has better long-term prospects"],correct:2},
+      {question:"What is the strategic purpose of the LinkedIn About section for a career changer?",options:["To provide a detailed chronological professional history","To list all technical skills relevant to both old and new field","To tell the bridge story concisely - connecting past to future in a way that makes sense to anyone in either field encountering you for the first time","To demonstrate seniority and professional credibility in the current field"],correct:2},
+      {question:"What does targeting organisations not postings mean as a job search strategy?",options:["Applying to large organisations rather than small ones","Focusing research on culture rather than role requirements","Identifying aligned organisations, researching them thoroughly, and building connections within them before any role is posted - aiming to be known before you apply, bypassing the disadvantage of a non-matching CV","Targeting organisations where you have existing personal connections"],correct:2},
+      {question:"What makes the insight element of the bridge story particularly important?",options:["It demonstrates emotional intelligence about career development","It shows the career change was carefully researched","It communicates the genuine pull toward the new direction rather than just frustration with the old one - framing the change as a positive response to clarity rather than escape from dissatisfaction","It provides context for any gaps in professional experience"],correct:2},
+      {question:"What does building visibility through content achieve for a career changer?",options:["It replaces the need for direct professional experience","It primarily targets recruiters who search social media","It builds credibility, attracts like-minded people, and demonstrates genuine engagement - functioning as a networking act at scale and addressing the no direct experience objection with evidence of knowledge and commitment","Content creation is only valuable for careers in creative or communications fields"],correct:2}
+    ]
+  },
+
+  6: {
+    tutorialVideo: "Your New Beginning - Integration, Identity, and Thriving in the New Career",
+    basicVideo: "Purpose in the Long Run - Sustaining Meaning Through a Changing Career",
+    content: `
+      <h2>Week 6: Integration - Your Career, Your Purpose, Your Ongoing Story</h2>
+      <div class="safety-banner"><h4>&#128640; A Career Change Is Not the End of the Story - It Is the Beginning of a Better Chapter</h4><p>Six weeks of honest self-examination, courageous planning, and strategic thinking converge here. The goal was never just to change jobs - it was to build a working life that honours who you genuinely are and sustains your energy and growth for the long term.</p></div>
+      <h3>&#127919; Learning Objectives</h3>
+      <ul>
+        <li>Integrate six weeks of learning into a comprehensive personal career roadmap</li>
+        <li>Understand the identity shift required in career change and how to navigate it</li>
+        <li>Develop practices for sustaining purpose and meaning over a long career</li>
+        <li>Build your career as an ongoing, evolving expression of who you are becoming</li>
+      </ul>
+      <h3>&#128218; Key Concepts</h3>
+      <h4>1. The Identity Shift - William Bridges' Three Phases</h4>
+      <p>Career change is an identity transition. William Bridges identifies three phases: The Ending (before you can begin something new, the old must end not just practically but psychologically - grieving the identity, status, community, and rhythms of the old career, even when you are glad to leave it; people who skip this phase carry the old identity into the new career), The Neutral Zone (the messy, ambiguous middle period where you are no longer what you were but not yet what you are becoming; uncomfortable but essential - where the real psychological work of transition happens; rushing through it by immediately performing the new identity before it is genuinely established is counterproductive), and The New Beginning (not a single moment but a gradual emergence - the new identity consolidating through real experience, early successes, and community in the new field; the new beginning is not the first day of the new job but the day you stop second-guessing whether you belong). Being patient and compassionate with yourself through all three phases is one of the most important practices of successful career transition.</p>
+      <h4>2. Job Crafting - Making Any Role More Purposeful</h4>
+      <p>Amy Wrzesniewski and Jane Dutton's job crafting concept: you have more power to shape the meaningfulness of your work than your job description suggests. Three dimensions: Task crafting (changing what you actually do - taking on tasks engaging your strengths, reducing tasks that deplete, volunteering for projects aligned with your direction), Relational crafting (changing who you interact with - seeking colleagues, clients, or stakeholders whose work energises you), and Cognitive crafting (changing how you think about your work's purpose - hospital cleaners who see their work as contributing to patient healing show dramatically higher satisfaction than those who see it as merely maintaining cleanliness, without any change in the work itself). Job crafting is particularly relevant in the early stage of a new role and in roles that are mostly right but not entirely.</p>
+      <h4>3. Sustaining Purpose Over a Long Career</h4>
+      <p>Key research insights: Purpose evolves (the career direction that felt deeply purposeful at 28 may need significant revision at 45 - treating purpose as fixed leads to loyalty to an outdated version of yourself; regular review of alignment between who you are now and what your work expresses is necessary maintenance), The contribution dimension (Adam Grant's research shows seeing the direct impact of your work on real people is one of the most powerful sustainers of motivation - even brief contact with the people your work serves dramatically increases engagement), Growth mindset (Carol Dweck's research shows people who see their abilities as developable sustain motivation far longer - every challenge becomes an opportunity for development rather than a threat to identity), Community (research consistently identifies meaningful relationships with colleagues as one of the most powerful predictors of sustained engagement - the relational dimension is not a distraction from performance but a foundation of it), and Avoiding the arrival fallacy (the belief that once you achieve the career goal sustained happiness will follow - research by Tal Ben-Shahar consistently shows achievement produces only temporary wellbeing elevation; sustained meaning requires ongoing investment in purpose, relationships, growth, and contribution, not arrival at a destination).</p>
+      <h4>4. Your Career as an Ongoing Story</h4>
+      <p>Liberating principles for the long career: Permission to change again (most people change direction multiple times across a working life - increasingly normal, healthy, and productive; the career change you make now will not be your last), The compound interest of self-knowledge (every experience, prototype, difficult period, and moment of genuine engagement adds to your self-knowledge - the most valuable career asset you have; this knowledge compounds across everything that follows), Continuous learning as career infrastructure (the half-life of professional skills is shrinking; treating learning as a continuous non-optional investment is the infrastructure of a long flourishing career), and Integration of life and work (the most sustainable version of a purposeful career does not require you to be a different person at work than elsewhere - where your values, relationships, creativity, and care flow through professional life as naturally as through the rest of it; that integration is the deepest form of career alignment and a worthy lifelong aspiration).</p>
+      <h3>&#128161; Practical Exercises</h3>
+      <p><strong>Exercise 1: Your Comprehensive Career Roadmap</strong><br>Drawing on all six weeks, write your personal career roadmap: (1) Your Ikigai centre as currently understood, (2) Your top 5 values and how the new direction honours them, (3) Your genuine strengths and how the new direction uses them, (4) Your phased transition plan with specific milestones and timelines, (5) Your bridge story in 90-second form, (6) Your three most important networking actions for the next 90 days, (7) Your financial runway and specific steps to extend it if needed. This is a living document - return to it quarterly.</p>
+      <p><strong>Exercise 2: Job Crafting Audit</strong><br>Whether still in your current role or having already made a move, identify: one task you could add or expand that uses a genuine strength, one relationship you could invest in that adds meaning, and one reframe of your current work connecting it more clearly to its genuine contribution. Implement at least one this week. Notice what shifts - even small crafting changes can meaningfully alter daily experience.</p>
+      <p><strong>Exercise 3: Your Career Purpose Statement</strong><br>Write a personal career purpose statement - 2-3 sentences articulating what you are here to contribute through your work, what strengths you will use, and who or what you are committed to serving. This is a compass for you, not a company mission statement. Write it, live with it for a week, revise it. Return to it whenever the direction feels unclear.</p>
+      <h3>&#128203; Reflection Questions</h3>
+      <ul>
+        <li>Looking across six weeks - what is the single most important insight you are carrying forward about yourself and your career?</li>
+        <li>Which phase of Bridges' transition model are you currently in - ending, neutral zone, or new beginning - and what does that phase need from you?</li>
+        <li>What does your career look like at its most aligned - the version where your strengths, values, and contribution are all fully expressed? And what is the next specific step toward that version?</li>
+        <li>Ten years from now, looking back on this decision - what will you be most glad you chose?</li>
+      </ul>
+      <h3>&#128640; A Closing Word</h3>
+      <p>You began this course with a restlessness - a sense that the work you were doing was not the full expression of who you are or what you are capable of. Over six weeks, you have done the honest work of understanding why that restlessness is information rather than ingratitude, of mapping your genuine strengths and values, of exploring new directions with curiosity rather than fear, of planning with realism rather than fantasy, of building the tools to enter a new field with confidence, and of understanding the long game of purpose and meaning. The self-knowledge you have built in these six weeks will not leave you. It will shape every decision, every conversation, every moment of doubt and every moment of clarity in the career story you are still writing. The work you were built for is waiting. Go find it.</p>
+      <button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>
+    `,
+    resources: [
+      {icon:'&#128506;',title:'Personal Career Roadmap Template',desc:'Six-week integration document with all key frameworks and milestones',file:'career-roadmap.pdf'},
+      {icon:'&#9986;&#65039;',title:'Job Crafting Workbook',desc:'Task, relational, and cognitive crafting with practical implementation guide',file:'job-crafting.pdf'},
+      {icon:'&#127919;',title:'Career Purpose Statement Guide',desc:'Framework and examples for writing your personal career purpose',file:'purpose-statement.pdf'},
+      {icon:'&#128260;',title:"Bridges' Transitions Framework Guide",desc:'The three phases of transition and what each one needs from you',file:'transitions-guide.pdf'},
+      {icon:'&#127911;',title:'Career Integration Meditation Audio',desc:'20-minute guided closing practice for career purpose and direction',file:'integration-audio.mp3'},
+      {icon:'&#127942;',title:'Course Completion Certificate',desc:'Download your certificate of completion',file:'certificate.pdf'}
+    ],
+    assessment: [
+      {question:"What are William Bridges' three phases of significant career transition?",options:["Research, decision, and implementation","Dissatisfaction, exploration, and commitment","The Ending (psychological closure of the old identity), the Neutral Zone (ambiguous middle period where real psychological work happens), and the New Beginning (gradual emergence and consolidation of the new identity)","Preparation, transition, and integration"],correct:2},
+      {question:"Why is the Neutral Zone described as essential despite being uncomfortable?",options:["It is where practical skills of the new career are developed","It allows time to reconsider the career change if necessary","It is where the real psychological work of transition happens - the old identity releasing and the new one forming. Rushing through it by performing the new identity before it is genuinely established produces internal conflict.","It provides time to build financial reserves before fully committing"],correct:2},
+      {question:"What is job crafting according to Wrzesniewski and Dutton?",options:["Redesigning your job description in negotiation with your employer","Selecting the right job from multiple opportunities","Actively shaping the meaningfulness of your work through task crafting (changing what you do), relational crafting (changing who you interact with), and cognitive crafting (changing how you think about your work's purpose) - without necessarily changing the role itself","Developing a specialist skill set that makes you indispensable"],correct:2},
+      {question:"What does the hospital cleaners example of cognitive crafting demonstrate?",options:["Job satisfaction is primarily determined by salary and conditions","People in low-status roles are generally more satisfied","Reframing the purpose of work - cleaners who see themselves as contributing to patient healing rather than maintaining cleanliness - produces dramatically higher satisfaction without any change in the actual work","Cognitive reframing is a temporary solution that loses effectiveness"],correct:2},
+      {question:"What is the arrival fallacy and why does it undermine sustained career meaning?",options:["The belief that arriving late to a career field makes success impossible","The false assumption that the right career can be found through research alone","The belief that achieving the career goal will produce sustained happiness - when research shows achievement produces only temporary wellbeing elevation. Sustained meaning requires ongoing investment in purpose, relationships, growth, and contribution.","The tendency to overestimate how quickly a new career will feel natural"],correct:2},
+      {question:"What does Adam Grant's research on contribution and motivation show?",options:["Financial incentives are more effective than purpose-based motivation","Remote workers feel less connected to the impact of their work","Seeing the direct impact of your work on real people is one of the most powerful sustainers of motivation - even brief contact with the people your work serves dramatically increases engagement and persistence","Contribution is only motivating when publicly recognised"],correct:2},
+      {question:"What does purpose evolves mean as a principle of sustaining career meaning?",options:["Career purpose should be redefined at each major life stage","Young people cannot have authentic career purpose","The career direction that felt deeply purposeful at one life stage may need significant revision at another - treating purpose as fixed leads to loyalty to an outdated version of yourself. Regular review of alignment is necessary maintenance.","Purpose evolves automatically without intentional reflection"],correct:2},
+      {question:"What does the integration of life and work represent as a career aspiration?",options:["A work-life balance giving equal time to both","The ability to work from home and manage personal responsibilities simultaneously","A working life where your values, relationships, creativity, and care flow through your professional life as naturally as through the rest of it - not requiring you to be a different person at work than elsewhere. The deepest form of career alignment.","Choosing a career that allows maximum personal flexibility"],correct:2},
+      {question:"What is the compound interest of self-knowledge as a career asset?",options:["Professional qualifications accumulating value over time","The financial returns on career investments made early","Every experience, prototype, difficult period, and moment of genuine engagement adds to self-knowledge - the most valuable career asset. This knowledge compounds across everything that follows, making each subsequent decision better calibrated.","The reputation building through consistent high performance"],correct:2},
+      {question:"Why is permission to change again an important principle for the long career?",options:["Career instability is increasingly valued by employers","Frequent career changes build broader transferable skills","Most people change direction multiple times across a working life - increasingly normal, healthy, and productive rather than a sign of instability. The career change you make now will not be your last, and treating it as the final destination creates unnecessary rigidity.","Career changes become easier with each subsequent transition"],correct:2}
+    ]
+  }
+
+};
+</script>
+</body>
+</html>

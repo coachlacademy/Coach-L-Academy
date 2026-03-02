@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Divorce &amp; Separation Recovery - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#f5f7fa 0%,#c3cfe2 100%);color:#333;min-height:100vh;}
+.header{background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);color:white;padding:20px;box-shadow:0 4px 15px rgba(0,0,0,.1);}
+.header-content{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.course-title h1{font-size:1.8rem;margin-bottom:5px;}
+.course-title p{font-size:.9rem;opacity:.9;}
+.user-info{display:flex;align-items:center;gap:15px;}
+.avatar{width:45px;height:45px;background:linear-gradient(135deg,#ab47bc 0%,#7b1fa2 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:bold;}
+.container{max-width:1400px;margin:0 auto;padding:30px 20px;}
+.progress-overview{background:white;border-radius:15px;padding:25px;margin-bottom:30px;box-shadow:0 5px 20px rgba(0,0,0,.08);}
+.progress-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-top:20px;}
+.stat-card{background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);color:white;padding:20px;border-radius:12px;text-align:center;}
+.stat-card h3{font-size:2rem;margin-bottom:5px;}
+.stat-card p{font-size:.9rem;opacity:.9;}
+.progress-bar{width:100%;height:25px;background:#e0e0e0;border-radius:15px;overflow:hidden;margin:20px 0;}
+.progress-fill{height:100%;background:linear-gradient(90deg,#7b1fa2 0%,#4a148c 100%);border-radius:15px;transition:width .5s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:white;font-weight:600;font-size:.9rem;min-width:45px;}
+.tabs{display:flex;gap:10px;margin-bottom:30px;border-bottom:2px solid #e0e0e0;flex-wrap:wrap;}
+.tab{padding:12px 25px;background:white;border:none;border-radius:10px 10px 0 0;cursor:pointer;font-size:1rem;font-weight:600;color:#666;transition:all .3s ease;}
+.tab.active{background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);color:white;}
+.module-selector{display:flex;gap:10px;margin-bottom:30px;overflow-x:auto;padding-bottom:10px;}
+.module-btn{padding:12px 25px;background:white;border:2px solid #7b1fa2;border-radius:25px;cursor:pointer;font-size:1rem;font-weight:600;color:#7b1fa2;white-space:nowrap;transition:all .3s ease;}
+.module-btn.active{background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);color:white;border-color:transparent;}
+.module-btn.completed{background:#4caf50;color:white;border-color:#4caf50;}
+.content-section{display:none;}
+.content-section.active{display:block;}
+.video-section{background:white;border-radius:15px;padding:25px;margin-bottom:30px;box-shadow:0 5px 20px rgba(0,0,0,.08);}
+.video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:25px;margin-top:20px;}
+.video-player{background:#000;border-radius:12px;overflow:hidden;position:relative;padding-top:56.25%;}
+.video-placeholder{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#434343 0%,#000 100%);}
+.play-btn{width:70px;height:70px;background:rgba(123,31,162,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s ease;}
+.play-btn:hover{background:#7b1fa2;transform:scale(1.1);}
+.play-btn::after{content:'\25BA';color:white;font-size:2rem;margin-left:5px;}
+.video-title{margin-top:15px;font-size:1.1rem;font-weight:600;color:#333;}
+.lesson-content{background:white;border-radius:15px;padding:30px;margin-bottom:30px;box-shadow:0 5px 20px rgba(0,0,0,.08);}
+.lesson-content h2{color:#7b1fa2;margin-bottom:20px;font-size:1.8rem;}
+.lesson-content h3{color:#4a148c;margin-top:25px;margin-bottom:15px;font-size:1.3rem;}
+.lesson-content h4{color:#7b1fa2;margin-top:20px;margin-bottom:10px;font-size:1.1rem;}
+.lesson-content p{line-height:1.8;margin-bottom:15px;color:#555;}
+.lesson-content ul{margin-left:25px;margin-bottom:15px;}
+.lesson-content li{margin-bottom:10px;line-height:1.6;color:#555;}
+.assessment-section{background:white;border-radius:15px;padding:30px;margin-bottom:30px;box-shadow:0 5px 20px rgba(0,0,0,.08);}
+.quiz-question{background:#f8f9fa;padding:20px;border-radius:12px;margin-bottom:20px;border-left:4px solid #7b1fa2;}
+.quiz-question h4{margin-bottom:15px;color:#333;font-size:1.1rem;}
+.quiz-options{display:flex;flex-direction:column;gap:10px;}
+.quiz-option{padding:12px 20px;background:white;border:2px solid #e0e0e0;border-radius:8px;cursor:pointer;transition:all .3s ease;}
+.quiz-option:hover{border-color:#7b1fa2;background:#f3e5f5;}
+.quiz-option input{margin-right:10px;}
+.submit-btn{padding:15px 40px;background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s ease;margin-top:20px;}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(123,31,162,.4);}
+.already-passed-notice{background:#e8f5e9;border:2px solid #4caf50;border-radius:12px;padding:20px;margin-bottom:20px;text-align:center;}
+.already-passed-notice h3{color:#2e7d32;margin-bottom:8px;}
+.already-passed-notice p{color:#388e3c;}
+.safety-banner{background:linear-gradient(135deg,#f3e5f5 0%,#ede7f6 100%);border:2px solid #7b1fa2;border-radius:12px;padding:20px;margin-bottom:25px;}
+.safety-banner h4{color:#4a148c;margin-bottom:8px;}
+.safety-banner p{color:#555;font-size:.95rem;line-height:1.6;margin:0;}
+.resources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:20px;}
+.resource-card{background:white;border-radius:12px;padding:20px;box-shadow:0 3px 15px rgba(0,0,0,.08);transition:all .3s ease;cursor:pointer;border:2px solid transparent;}
+.resource-card:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,.12);border-color:#7b1fa2;}
+.resource-icon{width:50px;height:50px;background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:15px;}
+.resource-card h4{margin-bottom:10px;color:#333;}
+.resource-card p{color:#666;font-size:.9rem;}
+.download-badge{display:inline-block;padding:5px 12px;background:#4caf50;color:white;border-radius:15px;font-size:.75rem;margin-top:10px;}
+.admin-btn{position:fixed;bottom:30px;right:30px;padding:15px 25px;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);color:white;border:none;border-radius:50px;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 5px 20px rgba(240,147,251,.4);z-index:50;transition:all .3s ease;}
+.admin-btn:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(240,147,251,.6);}
+@media(max-width:768px){.header-content{flex-direction:column;gap:15px;text-align:center;}.video-grid{grid-template-columns:1fr;}.module-selector{flex-wrap:wrap;}.resources-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title"><h1>Divorce &amp; Separation Recovery</h1><p>6-Week Comprehensive Course</p></div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome back!</div>
+        <div style="font-size:.85rem;opacity:.9;">Continue your healing journey</div>
+        <div style="font-size:.75rem;opacity:.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">&#9999;&#65039; Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#7b1fa2;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">Divorce &amp; Separation Recovery</h3>
+    <p style="color:#666;margin-bottom:30px;">Please enter your details to begin your healing journey.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Begin My Healing &#127808;</button>
+  </div>
+</div>
+<div class="container">
+  <div class="safety-banner">
+    <h4>&#127808; A Note on Care and Safety</h4>
+    <p>Divorce and separation are among the most painful experiences a person can navigate. Move through this course at your own pace and with self-compassion. If you are experiencing a crisis or thoughts of self-harm, please reach out immediately:<br><br>
+    <strong>Crisis Line:</strong> &#128222; 0800 12 13 14 &nbsp;|&nbsp; <strong>Suicide Helpline:</strong> 0800 567 567</p>
+  </div>
+  <div class="progress-overview">
+    <h2 style="margin-bottom:15px;">Your Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Modules Completed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#ab47bc 0%,#7b1fa2 100%);"><h3 id="lessonsViewed">0/12</h3><p>Lessons Viewed</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Assessments Passed</p></div>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+  </div>
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+  </div>
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+  <div class="video-section" style="margin-top:50px;">
+    <h2>&#128172; Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Book a one-on-one session with Coach L for personalised recovery guidance.</p>
+    <div style="background:linear-gradient(135deg,#7b1fa2 0%,#4a148c 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">&#127909; Live Video Consultation</h3>
+      <p style="color:white;opacity:.9;margin-bottom:20px;">Connect with Coach L for compassionate, confidential support.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#7b1fa2;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#7b1fa2;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<button class="admin-btn" onclick="viewAllResults()">&#128202; View Results</button>
+<script>
+const GS='https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SK='CoachL2025SecureKey';const CN='Divorce & Separation Recovery';const TW=6;const PX='coachL_DSR_';
+let cw=1,si={name:'',email:''};
+let cWks=new Set(JSON.parse(localStorage.getItem(PX+'cw')||'[]'));
+function saveCW(){localStorage.setItem(PX+'cw',JSON.stringify([...cWks]));}
+window.onload=function(){
+  const n=localStorage.getItem('studentName'),e=localStorage.getItem('studentEmail');
+  if(n&&e){si.name=n;si.email=e;updUD();}else{document.getElementById('nameModal').style.display='flex';}
+  updProg();refMB();selM([1,2,3,4,5,6].find(w=>!cWks.has(w))||1);
+};
+function vEmail(e){return/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);}
+function saveUserInfo(){
+  const n=document.getElementById('studentName').value.trim(),e=document.getElementById('studentEmail').value.trim();
+  if(!n){alert('Please enter your full name.');return;}
+  if(!e||!vEmail(e)){alert('Please enter a valid email address.');return;}
+  si.name=n;si.email=e;localStorage.setItem('studentName',n);localStorage.setItem('studentEmail',e);
+  document.getElementById('nameModal').style.display='none';updUD();
+}
+function updateEmail(){
+  const c=localStorage.getItem('studentEmail')||'',nw=prompt('Update email:',c);
+  if(!nw)return;if(!vEmail(nw.trim())){alert('Invalid email.');return;}
+  si.email=nw.trim();localStorage.setItem('studentEmail',nw.trim());alert('Updated: '+nw.trim());
+}
+function updUD(){document.getElementById('userAvatar').textContent=si.name.charAt(0).toUpperCase();document.getElementById('userName').textContent='Welcome, '+si.name+'!';}
+function refMB(){
+  document.querySelectorAll('.module-btn').forEach((b,i)=>{
+    const w=i+1;b.classList.remove('active','completed');
+    if(cWks.has(w)){b.classList.add('completed');b.textContent='Week '+w+' ✓';}else b.textContent='Week '+w;
+    if(w===cw)b.classList.add('active');
+  });
+}
+function selM(w){cw=w;refMB();updWC();}
+function showTab(t,btn){
+  document.querySelectorAll('.content-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(t).classList.add('active');if(btn)btn.classList.add('active');
+}
+function updWC(){
+  const w=weekData[cw];
+  document.getElementById('weekTitle').textContent='Week '+cw+': Learning Videos';
+  document.getElementById('tutorialTitle').textContent='Tutorial: '+w.tv;
+  document.getElementById('basicTitle').textContent='Basic: '+w.bv;
+  document.getElementById('lessonContent').innerHTML=w.content;
+  document.getElementById('resourcesTitle').textContent='Course Resources - Week '+cw;
+  document.getElementById('resourcesGrid').innerHTML=w.resources.map(r=>`<div class="resource-card" onclick="dlR('${r.f}','${r.t}')"><div class="resource-icon">${r.i}</div><h4>${r.t}</h4><p>${r.d}</p><span class="download-badge">Download</span></div>`).join('');
+  renderA();
+}
+function renderA(){
+  const w=weekData[cw],passed=cWks.has(cw);
+  let html='<h2>Week '+cw+' Assessment</h2>';
+  if(passed)html+='<div class="already-passed-notice"><h3>&#10003; Already passed!</h3><p>Your score has been recorded.</p></div>';
+  else html+='<p style="margin-bottom:30px;color:#666;">Answer all questions. You need 70% to pass.</p>';
+  w.qs.forEach((q,i)=>{html+='<div class="quiz-question"><h4>Q'+(i+1)+': '+q.q+'</h4><div class="quiz-options">'+q.o.map((opt,j)=>'<label class="quiz-option"><input type="radio" name="q'+i+'" value="'+j+'" '+(passed?'disabled':'')+'> '+opt+'</label>').join('')+'</div></div>';});
+  if(!passed)html+='<button class="submit-btn" onclick="subQ()">Submit Assessment</button>';
+  document.getElementById('assessmentContent').innerHTML=html;
+}
+function subQ(){
+  if(cWks.has(cw)){alert('Already passed!');return;}
+  const w=weekData[cw];let correct=0,answers=[],allOk=true;
+  w.qs.forEach((q,i)=>{const s=document.querySelector('input[name="q'+i+'"]:checked');if(!s){allOk=false;return;}const ua=parseInt(s.value),ok=ua===q.c;if(ok)correct++;answers.push({question:q.q,userAnswer:q.o[ua],correctAnswer:q.o[q.c],isCorrect:ok});});
+  if(!allOk){alert('Please answer all questions.');return;}
+  const score=Math.round((correct/w.qs.length)*100),passed=score>=70;
+  const payload={secretKey:SK,timestamp:new Date().toLocaleString(),studentName:si.name,studentEmail:si.email,courseName:CN,week:cw,score,correct,total:w.qs.length,passed:passed?'YES':'NO',detailedAnswers:JSON.stringify(answers)};
+  fetch(GS,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(e=>console.error(e));
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');all.push({...payload,answers});localStorage.setItem('assessmentResults',JSON.stringify(all));
+  if(passed){cWks.add(cw);saveCW();updProg();refMB();renderA();
+    alert(cw<TW?'Passed with '+score+'%! Continue to Week '+(cw+1)+' whenever you are ready.':'Course complete! '+score+'% - certificate coming by email.');
+  }else alert('You scored '+score+'% ('+correct+'/'+w.qs.length+'). Need 70% to pass.');
+}
+function updProg(){
+  const done=cWks.size,pct=Math.round((done/TW)*100);
+  document.getElementById('progressBar').style.width=pct+'%';document.getElementById('progressBar').textContent=pct+'%';
+  document.getElementById('modulesComplete').textContent=done+'/'+TW;
+  document.getElementById('lessonsViewed').textContent=(done*2)+'/'+(TW*2);
+  document.getElementById('assessmentsPassed').textContent=done+'/'+TW;
+}
+function playVideo(t,w){alert('Playing '+t+' video for Week '+w+'. Replace with your actual video embed.');}
+function markComplete(){showTab('assessment',document.querySelectorAll('.tab')[2]);window.scrollTo({top:0,behavior:'smooth'});}
+function dlR(file,title){fetch('resources/'+file,{method:'HEAD'}).then(r=>{if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);}else alert('Add "'+file+'" to /resources/ folder to enable downloads.')}).catch(()=>alert('Add "'+file+'" to /resources/ folder.'));}
+function startVideoCall(){
+  const iframe=document.getElementById('jitsiFrame');
+  const room='coachL-'+(si.email||'guest').replace(/[^a-zA-Z0-9]/g,'')+'-'+Date.now();
+  iframe.src='https://meet.jit.si/'+room+'#config.prejoinPageEnabled=false&userInfo.displayName='+encodeURIComponent(si.name);
+  document.getElementById('videoCallContainer').style.display='block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall(){if(confirm('End session?')){document.getElementById('jitsiFrame').src='';document.getElementById('videoCallContainer').style.display='none';}}
+function viewAllResults(){
+  const all=JSON.parse(localStorage.getItem('assessmentResults')||'[]');
+  if(!all.length){alert('No results yet.');return;}
+  const rows=all.map((r,i)=>'<div class="rc '+(r.passed==='YES'?'p':'f')+'"><b>#'+(i+1)+' - '+(r.passed==='YES'?'PASSED':'FAILED')+'</b><br>'+r.studentName+' | '+r.studentEmail+'<br>'+r.courseName+' Wk '+r.week+' | '+r.score+'% ('+r.correct+'/'+r.total+')<br>'+r.timestamp+'</div>').join('');
+  const win=window.open('','_blank','width=900,height=700');
+  win.document.write('<!DOCTYPE html><html><head><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#7b1fa2;}.rc{background:#fff;padding:15px;margin-bottom:15px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.1);}.p{border-left:5px solid #4caf50;}.f{border-left:5px solid #f44336;}</style></head><body><h1>Results - Coach L Academy</h1>'+rows+'</body></html>');
+  win.document.close();
+}
+const weekData={
+  1:{
+    tv:"Understanding the Grief of Divorce - What You Are Actually Losing",
+    bv:"The Psychology of Relationship Endings - Why It Hurts This Much",
+    content:`<h2>Week 1: Understanding What Is Happening to You</h2>
+<div class="safety-banner"><h4>You Are Not Falling Apart</h4><p>Divorce and separation are consistently ranked among the most stressful life events. If you feel like you are barely functioning, that is not weakness. It is a proportionate response to profound loss.</p></div>
+<h3>Learning Objectives</h3>
+<ul><li>Understand the full scope of what is being lost in divorce and separation</li><li>Learn grief frameworks that apply to relationship endings</li><li>Understand the neuroscience of heartbreak and why it physically hurts</li><li>Begin identifying and naming your specific losses honestly</li></ul>
+<h3>The Full Scope of Loss</h3>
+<p>Divorce grief is so overwhelming because it is not a single loss but a cascade of simultaneous losses — many unacknowledged by the people around you and sometimes by yourself. What is actually being lost includes: the relationship itself (the specific person, their presence, companionship, daily texture), the future you imagined (the plans, the growing old together — perhaps the most painful loss as it is the death of something that has not yet happened), your identity within the relationship (spouse, partner — roles that shaped how you understood yourself), your home or familiar environment, shared social networks, financial security and lifestyle, daily rituals and structure, and for parents the family unit and shared parenting life.</p>
+<h3>Grief Frameworks</h3>
+<p>Elisabeth Kubler-Ross's five stages — denial, anger, bargaining, depression, acceptance — apply to relationship loss with important nuances: the stages are not linear, and revisiting earlier stages is normal not regression. George Bonanno's research shows many people move through loss with more resilience and variability than the stage model suggests. Pauline Boss's concept of "ambiguous loss" — loss without clear closure — is particularly relevant where endings were unilateral, unexplained, or where one person still hopes for reconciliation.</p>
+<h3>The Neuroscience of Heartbreak</h3>
+<p>Heartbreak is not a metaphor — it is a neurobiological event. Research by Ethan Kross showed that social rejection and physical pain activate the same neural pathways. Long-term relationships create neurological dependency: a partner's presence becomes embedded in the brain's reward and regulation systems, making separation produce genuine withdrawal symptoms including sleep disruption, appetite changes, and emotional dysregulation. Cortisol spikes significantly during separation, suppressing immune function, disrupting sleep, and impairing decision-making — which is why you feel physically unwell and often make poor decisions in the immediate aftermath.</p>
+<h3>What Makes Divorce Grief Different</h3>
+<p>Divorce grief differs from bereavement: social ambiguity (no standardised rituals or acknowledged mourning period, leaving people feeling they should be over it faster), ongoing contact (co-parenting and legal proceedings make clean closure impossible), the question of choice (the leaver carries guilt; the left carries rejection — neither is easier), compound grief (relationship loss compounded by grief for identity, lifestyle, and future simultaneously), and the public nature of divorce adding social complexity and unwanted opinion.</p>
+<h3>Practical Exercises</h3>
+<p><strong>Exercise 1: The Loss Inventory</strong> — Write honestly about each loss category: which feel most acute right now? Which have you minimised or not yet allowed yourself to name? For each significant loss, write "I am grieving..." This naming is necessary acknowledgment that makes healing possible.</p>
+<p><strong>Exercise 2: Your Grief Map</strong> — Draw a timeline from the beginning of your relationship to now. Mark significant moments. For each point, write a word capturing your emotional experience. What does the whole picture show you?</p>
+<p><strong>Exercise 3: The Body Check-In</strong> — Take 10 minutes to scan your body from head to feet. Where do you feel the grief physically? Write what you notice. Then place your hand on the most affected area and acknowledge: "This is grief. It belongs here."</p>
+<button class="submit-btn" onclick="markComplete()">Mark as Complete</button>`,
+    resources:[
+      {i:"&#128148;",t:"The Full Loss Inventory",d:"Guide to naming every layer of divorce and separation loss",f:"loss-inventory.pdf"},
+      {i:"&#129504;",t:"Grief Frameworks for Relationship Endings",d:"Kubler-Ross, Bonanno, and Boss's ambiguous loss applied to divorce",f:"grief-frameworks.pdf"},
+      {i:"&#129504;",t:"The Neuroscience of Heartbreak",d:"Why separation physically hurts and what your brain and body are experiencing",f:"heartbreak-neuroscience.pdf"},
+      {i:"&#128507;",t:"Your Grief Map Worksheet",d:"Timeline and mapping tool for your relationship and loss journey",f:"grief-map.pdf"},
+      {i:"&#127911;",t:"Grief Grounding Audio",d:"15-minute guided somatic practice for moving through acute grief",f:"grief-grounding-audio.mp3"},
+      {i:"&#128218;",t:"Divorce Recovery Reading List",d:"Rebuilding (Fisher), Journey from Abandonment to Healing (Anderson), When Things Fall Apart (Chodron)",f:"divorce-reading.pdf"},
+    ],
+    qs:[
+      {q:"Why is divorce grief described as a cascade of simultaneous losses rather than a single loss?",o:["Because the divorce process creates multiple legal and financial problems", "Because each person experiences the ending differently", "Because divorce involves the simultaneous loss of the relationship, imagined future, identity, home, social networks, financial security, daily rituals, and more - many unacknowledged by others and sometimes by the grieving person themselves", "Because the grief process has multiple stages that must each be completed"],c:2},
+      {q:"What is the most important nuance about Kubler-Ross's five grief stages applied to divorce?",o:["The stages must be completed in order for healthy healing", "Acceptance is the final and most important stage", "The stages are not linear - people move non-sequentially and revisit earlier stages unexpectedly. This is not regression but normal grief, and not experiencing the expected stages does not indicate unhealthy grieving.", "Depression is the most significant stage and requires professional treatment"],c:2},
+      {q:"What is Pauline Boss's concept of ambiguous loss and why is it relevant to some separations?",o:["The uncertainty about whether the relationship can be saved", "The loss of things never clearly defined within the relationship", "Loss without clear closure - particularly relevant where endings were unilateral, unexplained, or where one person still hopes for reconciliation. The absence of defined finality complicates and prolongs the grief process.", "The ambivalent feelings of relief and sadness that often accompany divorce"],c:2},
+      {q:"What did Ethan Kross's research demonstrate about heartbreak?",o:["Heartbreak is primarily a psychological rather than physical experience", "Emotional pain is less intense than physical pain", "Social rejection and physical pain activate the same neural pathways - heartbreak literally hurts neurologically, not metaphorically. When someone says their heart aches, they describe a genuine neurological reality.", "Heartbreak is most intense in the first 48 hours after separation"],c:2},
+      {q:"Why do long-term relationships create neurological dependency?",o:["Because people become emotionally dependent on their partners", "Because long-term relationships involve hormonal bonding creating chemical addiction", "A partner's presence, voice, and touch become embedded in the brain's reward and regulation systems - making separation produce genuine withdrawal symptoms including sleep disruption, appetite changes, and emotional dysregulation", "Because daily routines organised around a partner become neurologically ingrained habits"],c:2},
+      {q:"What is the role of cortisol in the immediate aftermath of separation?",o:["Cortisol helps accelerate emotional processing and recovery", "Cortisol primarily affects romantic attachment systems", "Cortisol spikes significantly during separation, suppressing immune function, disrupting sleep, and impairing memory and decision-making - why people feel physically unwell and often make poor decisions immediately after", "Cortisol is only significantly elevated in the leaver, not the person left"],c:2},
+      {q:"What makes divorce grief different from bereavement in terms of social ambiguity?",o:["Divorce is considered less serious than death by most people", "People who divorce are judged more harshly than those who are bereaved", "Society lacks standardised rituals and acknowledged mourning periods for divorce - leaving people feeling they should be over it faster than they are, or feeling shame about the degree of their grief", "Divorce grief is not recognised as legitimate loss by mental health professionals"],c:2},
+      {q:"What makes the grief of the leaver different from the grief of the left?",o:["The leaver experiences no significant grief because they made the choice", "The person left always recovers more quickly", "The leaver often carries guilt and self-doubt; the person left carries rejection and sometimes betrayal. Neither experience is easier - they are different in character but equal in potential pain.", "The leaver's grief is primarily practical while the left person's grief is primarily emotional"],c:2},
+      {q:"What does George Bonanno's research on grief challenge about the stage model?",o:["That grief has a biological basis", "That therapy is helpful for grief processing", "That the stage model accurately represents most people's grief - showing many people move through loss with more resilience and variability than stages suggest, and that not experiencing expected stages does not indicate unhealthy grieving", "That acceptance is achievable after loss"],c:2},
+      {q:"What is the purpose of naming specific losses in the healing process?",o:["To assign responsibility for each loss to the appropriate person", "To calculate the full extent of harm caused", "Naming specific losses is necessary acknowledgment that makes healing possible - it creates the clarity required to begin processing each genuine grief", "To communicate the impact to the former partner"],c:2},
+    ]
+  },
+  2:{
+    tv:"Surviving the Acute Phase - Emotional First Aid for Separation",
+    bv:"Managing Co-Parenting, Legal Stress, and Practical Overwhelm",
+    content:`<h2>Week 2: Surviving the Acute Phase - Emotional First Aid</h2>
+<div class="safety-banner"><h4>The Goal Right Now Is Not to Thrive - It Is to Survive With Dignity</h4><p>In the acute phase the realistic goal is stabilisation: managing the emotional storm, making necessary decisions as wisely as possible, and not doing anything irreversible you will later regret.<br><br>Crisis support: <strong>Crisis Line: 0800 12 13 14 | Suicide Helpline: 0800 567 567</strong></p></div>
+<h3>Learning Objectives</h3>
+<ul><li>Understand the acute phase and what stabilisation looks like</li><li>Learn evidence-based emotional regulation strategies for acute grief</li><li>Develop practical strategies for managing co-parenting, legal, and financial stress</li><li>Build a minimum viable support structure</li></ul>
+<h3>The Acute Phase</h3>
+<p>The acute phase is characterised by emotional volatility, cognitive impairment, and practical overwhelm - precisely when the most decisions are required. Typical experiences include: emotional flooding (intense waves arriving without warning), cognitive disruption (difficulty concentrating and deciding), sleep disruption, appetite dysregulation, social withdrawal or compulsive social contact, rumination loops (the same thoughts replaying obsessively), and impulsive decision-making driven by the desperate desire to fix something.</p>
+<h3>Emotional First Aid - Regulation Strategies</h3>
+<p>The goal is not to stop feeling grief - it is to prevent emotional flooding from producing irreversible consequences. Evidence-based strategies: The physiological sigh (two quick inhales through the nose followed by a long slow exhale activates the parasympathetic nervous system, measurably reducing acute distress within 90 seconds). The 24-hour rule (for any significant decision, wait 24 hours before acting - major decisions warrant at least 72 hours; the decisions felt most urgent are often those most requiring patience). Scheduled worry time (rather than suppressing rumination - which research shows amplifies it - schedule a specific daily period for conscious processing and defer other intrusions). Physical movement (exercise metabolises cortisol, produces endorphins, and provides physical discharge for emotional flooding - even a 20-minute walk makes measurable difference). The minimum anchors (three to five daily commitments providing basic stability: a regular sleep time, a meal, physical movement, connection with one safe person).</p>
+<h3>Navigating Co-Parenting in the Acute Phase</h3>
+<p>Research consistently shows children's adjustment is most strongly predicted not by the divorce itself but by the level of ongoing conflict between parents they are exposed to. The most protective thing you can do for your children is manage co-parenting as civilly as possible. Children need age-appropriate honesty - not adult detail, not blame - simple information: "Mum and Dad are not going to live together anymore. We both love you very much." The business relationship model: treat co-parenting as a professional relationship - communication limited to child-related matters, conducted civilly and in writing where possible.</p>
+<h3>Legal and Financial Stress</h3>
+<p>Get informed, not immersed: understanding your basic legal rights and financial situation is necessary; becoming consumed by legal strategy is not. The scope limitation principle: confine legal and financial conversations to appropriate times and appropriate people - not at every social interaction or late at night alone. Assembling the right support: legal advice, financial advice, and emotional support are three distinct needs requiring distinct sources - no single person should meet all three.</p>
+<h3>Practical Exercises</h3>
+<p><strong>Exercise 1: Your Minimum Viable Stability Plan</strong> - Identify three to five daily anchors providing your minimum viable stability. Write these as specific commitments, not aspirations. They do not need to be impressive; they need to be achievable.</p>
+<p><strong>Exercise 2: The Decision Audit</strong> - List every significant decision you feel you need to make in the next month. Categorise each: (a) truly urgent with real deadlines, (b) important but can wait weeks, (c) not actually a decision - a fear disguised as one. For (b) and (c) write "Not yet." Reducing the perceived decision burden immediately reduces cognitive overwhelm.</p>
+<p><strong>Exercise 3: Your Support Map</strong> - Three circles: inner (crisis support), middle (regular emotional support), outer (practical support). For any empty circle, identify one action to begin filling it.</p>
+<button class="submit-btn" onclick="markComplete()">Mark as Complete</button>`,
+    resources:[
+      {i:"&#128158;",t:"Emotional First Aid Toolkit",d:"Evidence-based regulation strategies for acute divorce grief",f:"emotional-first-aid.pdf"},
+      {i:"&#128106;",t:"Co-Parenting Through Separation Guide",d:"The business relationship model, children's needs, and conflict reduction",f:"co-parenting-guide.pdf"},
+      {i:"&#128179;",t:"Legal and Financial Navigation Guide",d:"What to know, what to prioritise, how to assemble the right support",f:"legal-financial-guide.pdf"},
+      {i:"&#128200;",t:"Minimum Viable Stability Plan Template",d:"Daily anchors and structure for the acute phase of separation",f:"stability-plan.pdf"},
+      {i:"&#127911;",t:"Acute Grief Regulation Audio",d:"12-minute guided physiological regulation practice for intense emotional moments",f:"acute-grief-audio.mp3"},
+      {i:"&#128218;",t:"Acute Phase Reading",d:"Split (Burroughs), Conscious Uncoupling (Thomas), The Good Divorce (Ahrons)",f:"acute-phase-reading.pdf"},
+    ],
+    qs:[
+      {q:"What is the realistic goal of the acute phase of divorce and separation?",o:["Achieving emotional closure and accepting the ending", "Beginning healing and personal growth", "Stabilisation - managing the acute emotional storm, making necessary practical decisions as wisely as possible, and not doing anything irreversible. The goal right now is to survive with dignity, not to thrive.", "Establishing new routines and rediscovering yourself"],c:2},
+      {q:"What is the 24-hour rule as a strategy in the acute phase?",o:["Allowing yourself only 24 hours to feel upset before moving forward", "Limiting contact with the former partner to once per 24 hours", "Committing to wait at least 24 hours before acting on any significant decision - the decisions felt most urgent are often those most requiring patience. Major decisions warrant at least 72 hours.", "Spending 24 hours per week focused on legal and financial planning"],c:2},
+      {q:"How does the physiological sigh reduce acute emotional arousal?",o:["By distracting the mind from painful thoughts", "By slowing the heart rate through focused attention", "Two quick inhales fully inflate the lungs; the extended exhale activates the parasympathetic nervous system - measurably reducing physiological stress response within 90 seconds", "By releasing stored tension through controlled breathing"],c:2},
+      {q:"Why does research recommend scheduled worry time rather than attempting to suppress rumination?",o:["Because suppression requires too much cognitive effort", "Because structured thinking produces better solutions", "Research shows attempting to suppress rumination actually amplifies it. Scheduling a specific daily period while deferring other intrusions reduces constant mental intrusion while giving the mind permission to process.", "Because scheduling demonstrates discipline"],c:2},
+      {q:"What does research consistently show is the strongest predictor of children's adjustment to divorce?",o:["The child's age at the time of divorce", "The amount of time each parent spends with the child", "The level of ongoing conflict between parents the child is exposed to - not the divorce itself but parental conflict around it. Managed co-parenting civility is the most protective factor.", "Whether the child receives professional therapy during adjustment"],c:2},
+      {q:"What is the business relationship model of co-parenting recommended during the acute phase?",o:["Hiring a mediator to manage all co-parenting communication", "Treating the former partner as a stranger with no emotional connection", "Communication limited to child-related matters, conducted civilly and in writing where possible, with the same professional boundaries maintained with a difficult work colleague - reducing emotional entanglement while maintaining functional co-parenting", "Formalising all arrangements through the family court"],c:2},
+      {q:"What does the scope limitation principle for legal and financial stress mean?",o:["Limiting the legal proceedings to essential elements", "Reducing financial claims in the settlement", "Confining legal and financial conversations to appropriate times and appropriate people - not at every social interaction or late at night alone, which maintains continuous stress response", "Limiting contact with lawyers to reduce costs"],c:2},
+      {q:"Why is physical movement described as evidence-based for acute emotional distress?",o:["Because exercise provides distraction from painful thoughts", "Because physical activity builds resilience", "Exercise metabolises cortisol, produces endorphins, and provides physical discharge that emotional flooding needs - not primarily as distraction but as genuine physiological regulation. Even a 20-minute walk produces measurable difference.", "Because physical health supports the immune system weakened by grief"],c:2},
+      {q:"What are the three distinct support needs in divorce and separation requiring distinct sources?",o:["Emotional, social, and spiritual support", "Short-term crisis, medium-term adjustment, and long-term recovery support", "Legal advice, financial advice, and emotional support (therapy, support group, trusted friends) - no single person should be expected to meet all three", "Practical support, financial support, and childcare support"],c:2},
+      {q:"What does the support map exercise reveal about the minimum viable support structure?",o:["The number of people willing to help", "The quality of relationships formed during the marriage", "Whether the inner circle (crisis support), middle circle (regular emotional support), and outer circle (practical support) are adequately populated - identifying the most important gaps to address for basic stability", "The extent to which the former partner's support network can be maintained"],c:2},
+    ]
+  },
+  3:{
+    tv:"Processing the Anger, Shame, and Guilt of Relationship Endings",
+    bv:"The Grief Beneath the Grief - What You Haven't Let Yourself Feel",
+    content:`<h2>Week 3: Processing Difficult Emotions - Anger, Shame, Guilt, and Grief</h2>
+<div class="safety-banner"><h4>The Emotions You Have Not Yet Felt Are Running the Show</h4><p>This week gives you the framework and permission to feel the full range of what is actually present. What you actually feel, not what you should feel, is where healing begins.<br><br>Crisis support: <strong>0800 12 13 14 | Suicide Helpline: 0800 567 567</strong></p></div>
+<h3>Learning Objectives</h3>
+<ul><li>Understand and process anger in a way that is neither suppressed nor destructive</li><li>Examine and begin releasing guilt and shame about the relationship ending</li><li>Access the deeper grief beneath the surface emotional responses</li><li>Learn to hold multiple contradictory emotions simultaneously</li></ul>
+<h3>Anger - The Misunderstood Emotion of Divorce</h3>
+<p>Two problematic extremes: Suppressed anger (particularly in those socialised to prioritise harmony) converts into depression, physical symptoms, or sudden explosions at unrelated triggers. Destructive anger expressed through legal warfare, using children as weapons, or social media attacks causes irreversible harm. The healthy middle: anger is legitimate information - about violation of values, broken trust, and real harm caused. The task is to feel it, understand what it is telling you, express it safely, and release it. James Pennebaker's research shows expressive writing about anger and difficult emotions produces measurable improvements in immune function, psychological wellbeing, and physical health. Safe expression: physical movement, expressive writing, creative expression, and working with a therapist.</p>
+<h3>Guilt - Taking Honest but Proportionate Responsibility</h3>
+<p>Most divorces are not the result of a single guilty party. Appropriate guilt contains specific information about specific actions where genuine harm was caused - dishonesty, neglect, or infidelity - and can be addressed through accountability and amends. Excessive guilt takes on responsibility far beyond one's actual contribution, often absorbing the other person's narrative. This excessive guilt is frequently a defence against the anger that would need to be felt if responsibility were shared more accurately. Working with guilt: What specifically do I feel guilty about? Is this proportionate to my actual contribution? What amends, if any, are possible?</p>
+<h3>Shame - The Deepest and Most Damaging Emotion</h3>
+<p>While guilt says "I did something bad," shame says "I am something bad." Shame in divorce is pervasive: shame about failing at marriage, about what others think, about specific behaviours, about the circumstances of the ending. Brene Brown's research consistently shows shame thrives in silence and dissolves in honest, empathic witness. The most powerful antidote is being truly seen - sharing the specific shameful content with one safe, trusted person who receives it with empathy rather than judgment.</p>
+<h3>The Grief Beneath the Grief</h3>
+<p>Beneath anger, guilt, and shame lies the deeper grief that is harder to access and harder to bear: profound sadness for the relationship you hoped it would be, grief for the version of yourself within the relationship, grief for the family and future imagined, the specific ache of the absence of a particular person, fear about the future, and the tender vulnerability of having loved and lost. Reaching this deeper layer - moving through reactive emotions to the sadness beneath - is often where the most significant healing occurs.</p>
+<h3>Holding Multiple Emotions Simultaneously</h3>
+<p>One of the most disorienting aspects of divorce grief is the coexistence of contradictory emotions: relief and grief simultaneously, love and anger toward the same person, hope and terror about the future. These contradictions are not confusion - they are the honest emotional reality of complex human experiences. The psychological health lies in being able to hold both: "Both of these are true. Both belong here."</p>
+<h3>Practical Exercises</h3>
+<p><strong>Exercise 1: The Anger Letter (Not to Send)</strong> - Write a letter to your former partner or to the situation that will not be sent. Write without editing. Let the anger speak fully. Then read it back: what is the anger telling you? What values were violated? Do not send this letter.</p>
+<p><strong>Exercise 2: The Guilt and Shame Examination</strong> - Write every guilt and shame you are carrying. For each: Is it guilt or shame? Is it proportionate to your actual contribution? For shame items write: "This is part of my story. It does not define my worth."</p>
+<p><strong>Exercise 3: The Deeper Grief</strong> - Beneath the anger and guilt, sit quietly with this question: What is the deepest sadness here? Write about this sadness with the care you would offer someone you deeply loved who was grieving. This is perhaps the most important writing you will do in this course.</p>
+<button class="submit-btn" onclick="markComplete()">Mark as Complete</button>`,
+    resources:[
+      {i:"&#128162;",t:"Processing Anger in Divorce",d:"Healthy anger expression, what anger is telling you, and safe release strategies",f:"anger-processing.pdf"},
+      {i:"&#129294;",t:"Guilt and Shame Workbook",d:"Separating appropriate from excessive guilt, Brown's shame research applied to divorce",f:"guilt-shame-workbook.pdf"},
+      {i:"&#128148;",t:"Accessing the Deeper Grief",d:"Moving beneath reactive emotions to the core grief that needs processing",f:"deeper-grief.pdf"},
+      {i:"&#128203;",t:"Expressive Writing Guide",d:"Pennebaker's research and structured prompts for healing through writing",f:"expressive-writing.pdf"},
+      {i:"&#127911;",t:"Emotional Processing Meditation Audio",d:"15-minute guided practice for safely accessing and moving through difficult emotions",f:"emotional-processing-audio.mp3"},
+      {i:"&#128218;",t:"Emotional Processing Reading",d:"The Dance of Anger (Lerner), Daring Greatly (Brown), Healing After Loss (Hickman)",f:"emotional-processing-reading.pdf"},
+    ],
+    qs:[
+      {q:"What are the two problematic extremes of anger management in divorce?",o:["Expressing anger too early and expressing anger too late", "Anger directed at the former partner and anger directed at oneself", "Suppressed anger (which converts into depression, physical symptoms, or sudden explosions) and destructive anger (expressed through legal warfare, using children as weapons, or harassment) - both harmful compared to feeling, understanding, and safely expressing it", "Chronic anger and intermittent anger"],c:2},
+      {q:"What does James Pennebaker's research on expressive writing show?",o:["Writing about divorce increases rumination and prolongs grief", "Writing is only effective when shared with others", "Expressive writing about anger and other difficult emotions - about the experience and feelings, not just the facts - produces measurable improvements in immune function, psychological wellbeing, and physical health", "Structured writing about positive memories is more effective than writing about difficult emotions"],c:2},
+      {q:"What distinguishes appropriate guilt from excessive or misplaced guilt in divorce?",o:["Appropriate guilt is felt by the person who ended the relationship", "Appropriate guilt fades quickly; excessive guilt is persistent", "Appropriate guilt contains specific information about specific actions where genuine harm was caused and is proportionate to one's actual contribution. Excessive guilt takes on responsibility beyond that contribution - often absorbing the other person's narrative.", "Appropriate guilt motivates change; excessive guilt is self-destructive"],c:2},
+      {q:"What does Brene Brown's research show about the antidote to shame?",o:["Time and distance from the shameful event", "Positive self-talk and affirmations", "Shame thrives in silence and secrecy, and dissolves in honest, empathic witness. The most powerful antidote is being truly seen - sharing the specific shameful content with one safe trusted person who receives it with empathy rather than judgment.", "Understanding and reframing the experience cognitively"],c:2},
+      {q:"What is the key difference between guilt and shame?",o:["Guilt is more painful than shame", "Shame is culturally conditioned while guilt is universal", "Guilt says 'I did something bad' - it is about specific actions. Shame says 'I am something bad' - it is about fundamental identity and worth. Guilt calls for accountability; shame calls for empathy and witness.", "Guilt is always appropriate and shame is always a distortion"],c:2},
+      {q:"What is the grief beneath the grief that this week's content identifies?",o:["The grief for the relationship's early happy period", "The grief that appears after the initial shock has faded", "The deeper sadness beneath reactive emotions of anger, guilt, and shame - for the love, the hope, the version of yourself within the relationship, the family and future imagined. Reaching this deeper layer is often where the most significant healing occurs.", "The grief that only becomes accessible through professional therapy"],c:2},
+      {q:"What is the psychological significance of holding contradictory emotions simultaneously?",o:["It indicates unresolved ambivalence that needs to be resolved", "It demonstrates emotional immaturity", "Contradictory emotions are the honest emotional reality of complex experiences. Psychological health lies not in forcing one emotion but in holding both: 'Both of these are true. Both belong here.'", "It is a temporary state that resolves as grief progresses"],c:2},
+      {q:"What makes the anger letter not to send a therapeutically valuable exercise?",o:["It allows rehearsal of a future confrontation", "It provides material for discussion with a therapist", "By writing without editing or moderation, the full anger can be felt and expressed safely - then examined for what it reveals about violated values, real harm, and what the anger is protecting. The value is in the expression and examination, not the sending.", "It produces a record of grievances for the divorce proceedings"],c:2},
+      {q:"Why is excessive guilt described as sometimes being a defence against anger?",o:["Because taking blame reduces the pain of rejection", "Because guilt is easier to feel than anger in social contexts", "Taking on disproportionate responsibility allows avoidance of the anger that would need to be felt if the other person's contribution were acknowledged accurately. Excessive guilt can be more comfortable than justified anger.", "Because anger at a former partner is socially unacceptable while guilt is more sympathetic"],c:2},
+      {q:"What does the course recommend as safe anger expression methods?",o:["Confrontation with the former partner in a mediated setting", "Social media posts expressing feelings without naming the former partner", "Physical movement (running, vigorous exercise), expressive writing, creative expression, and working with a therapist who can hold the anger without being harmed by it", "Regular venting to trusted friends and family members"],c:2},
+    ]
+  },
+  4:{
+    tv:"Who Are You Now? Identity Reconstruction After Divorce",
+    bv:"Self-Worth, Attachment, and the Fear of Being Alone",
+    content:`<h2>Week 4: Identity - Who You Are Without the Relationship</h2>
+<div class="safety-banner"><h4>The Person You Were Before the Relationship Is Still There - And More Than Them</h4><p>One of the most disorienting experiences of divorce is the loss of relational identity. This week is about recovering the self that exists independently of the relationship, and beginning to discover who you are becoming.</p></div>
+<h3>Learning Objectives</h3>
+<ul><li>Understand the identity disruption of divorce and separation</li><li>Begin the process of identity reconstruction beyond the relationship role</li><li>Examine and strengthen self-worth independent of relationship status</li><li>Understand attachment patterns and how they affect recovery</li></ul>
+<h3>The Identity Disruption of Divorce</h3>
+<p>Identity is relational and contextual. Research on self-concept clarity - the degree to which one's self-concept is clear, consistent, and stable - shows it drops significantly after major relationship endings. Effects include difficulty answering "Who am I?" without reference to the relationship, loss of life narrative coherence, role loss (spouse, partner, husband, wife), dissolution of the shared couple identity, and uncertainty about preferences and desires that were shared or subsumed within the partnership.</p>
+<h3>Identity Reconstruction</h3>
+<p>Identity reconstruction is not simply returning to who you were before - it is the integration of who you were, who you became within the relationship (including what you learned), and who you are now capable of becoming. Key elements: Recovering the pre-relationship self (who were you before? what did you love, believe, want?), Reclaiming abandoned aspects (interests, friendships, values, or expressions of self that were minimised or suppressed within the partnership), Integrating the relationship's gifts (what did this relationship teach you? what capacity or insight do you carry forward as genuinely yours?), and Discovering the emerging self (the fuller, more complex person who has been tested and endured).</p>
+<h3>Self-Worth Independent of Relationship Status</h3>
+<p>Many people have unconsciously organised their sense of worth around their partnered status. When the partnership ends, the feeling of being rejected or left can activate deep worthiness wounds - the primitive fear of being fundamentally not enough, not loveable, not worth staying for. Being replaced or discovering infidelity compounds this with the specific sting of comparison. Kristin Neff's self-compassion research offers the most evidence-based framework: treating yourself with the same warmth, understanding, and patience you would offer a dear friend going through the same thing. Worth is not earned or lost through relationship outcomes - the ending tells you something about the fit between two people, not about what you deserve.</p>
+<h3>Attachment Patterns and Recovery</h3>
+<p>Attachment styles significantly shape the experience of and recovery from divorce. Anxious attachment: the most acute grief in early separation - obsessive thinking, difficulty tolerating aloneness, urgency to reconnect or replace, hypervigilance about abandonment. The healing work involves tolerating discomfort without immediately filling it. Avoidant attachment: may appear to recover quickly through suppression (busyness, emotional unavailability, rapid new relationships) but unprocessed grief often surfaces later, significantly delayed. The healing work involves consciously accessing what is being suppressed. Disorganised attachment: the most chaotic grief - oscillating between desperate reconnection and sudden withdrawal. Professional therapeutic support is particularly important.</p>
+<h3>Learning to Be Alone Without Being Lonely</h3>
+<p>The distinction between aloneness (being physically by yourself) and loneliness (the painful absence of genuine connection) is one of the most important skills developed in divorce recovery. Winnicott's concept of the capacity to be alone - finding companionship within oneself rather than requiring constant external company - is a foundational adult skill. The fear of aloneness drives many common post-divorce mistakes: rushing into new relationships, compulsive social schedules, overworking - all forms of avoiding the aloneness that is actually necessary for healing.</p>
+<h3>Practical Exercises</h3>
+<p><strong>Exercise 1: The Identity Timeline</strong> - Draw a timeline of your identity across your life: who were you at 15, at 20, at the beginning of this relationship, during it, and now? List five words describing who you were in each period. What aspects have been consistent? What got lost within the relationship? What is emerging now?</p>
+<p><strong>Exercise 2: The Reclamation List</strong> - Write everything you gave up, minimised, or suppressed during this relationship that you want to reclaim. Choose one item and do something about it this week - make one call, sign up for one class, revisit one interest. Reclamation begins with one concrete action.</p>
+<p><strong>Exercise 3: The Self-Compassion Letter</strong> - Write a letter to yourself from the perspective of a genuinely wise, warm, caring friend who knows your full story. What would they say about your worth? About what they see in you that you cannot see right now? Read this letter every morning for one week.</p>
+<button class="submit-btn" onclick="markComplete()">Mark as Complete</button>`,
+    resources:[
+      {i:"&#129758;",t:"Identity Reconstruction Guide",d:"Self-concept clarity, recovering the pre-relationship self, and the emerging identity",f:"identity-reconstruction.pdf"},
+      {i:"&#10084;&#65039;",t:"Self-Worth Workbook for Divorce Recovery",d:"Neff's self-compassion applied to rebuilding worth after relationship loss",f:"self-worth-workbook.pdf"},
+      {i:"&#128279;",t:"Attachment Patterns and Recovery",d:"How your attachment style shapes the experience and work of divorce recovery",f:"attachment-recovery.pdf"},
+      {i:"&#127775;",t:"Learning to Be Alone - A Guide",d:"Winnicott's capacity to be alone and building solitude tolerance",f:"aloneness-guide.pdf"},
+      {i:"&#127911;",t:"Identity and Self-Compassion Audio",d:"12-minute guided self-compassion practice for rebuilding worth after loss",f:"identity-audio.mp3"},
+      {i:"&#128218;",t:"Identity and Recovery Reading",d:"Untamed (Doyle), Rising Strong (Brown), After the Affair (Spring)",f:"identity-reading.pdf"},
+    ],
+    qs:[
+      {q:"What does research on self-concept clarity show about major relationship endings?",o:["Self-concept clarity is largely unaffected in psychologically healthy people", "Self-concept clarity increases after relationship endings as people rediscover themselves", "Self-concept clarity - the degree to which the self-concept is clear, consistent, and stable - drops significantly after major relationship endings, producing difficulty answering 'Who am I?' without reference to the relationship", "Self-concept clarity drops only when the person was left rather than the one who chose to leave"],c:2},
+      {q:"What does identity reconstruction after divorce involve beyond simply returning to who you were before?",o:["Adopting a completely new identity and leaving the past behind", "Recovering the pre-relationship self exactly as it was", "The integration of who you were before, who you became within the relationship including what you learned, and who you are now capable of becoming - making it a richer process than mere return to a previous state", "Reconstruction requires professional therapy and cannot be self-directed"],c:2},
+      {q:"What is meant by reclaiming abandoned aspects in identity reconstruction?",o:["Returning to a former career or profession", "Reconnecting with friendships that ended during the marriage", "Recovering interests, friendships, values, or expressions of self that were minimised or suppressed within the partnership - aspects of yourself that were not fully welcome in the relationship. Recovery is partly about reclaiming these.", "Abandoning the aspects of yourself that were shaped by the relationship"],c:2},
+      {q:"How does the ending of a relationship interact with deep worthiness wounds?",o:["Only people with pre-existing low self-worth experience worthiness wounds after divorce", "Being the person who ends the relationship protects against worthiness wounds", "The feeling of being rejected or left can activate primitive fears of fundamental unworthiness - 'I am not enough, not loveable, not worth staying for.' Being replaced or discovering infidelity compounds this with the specific sting of comparison.", "Worthiness wounds in divorce are primarily a cultural phenomenon rather than a psychological one"],c:2},
+      {q:"What does Kristin Neff's self-compassion research offer for rebuilding self-worth after divorce?",o:["A programme of positive affirmations for daily use", "The insight that self-worth must be earned through post-divorce achievement", "Treating yourself with the same warmth, understanding, and patience you would offer a dear friend going through the same thing - not self-indulgence but basic human decency toward yourself. This is the most evidence-based framework for rebuilding worth after relationship loss.", "The finding that self-compassion requires acceptance of responsibility for the relationship's failure"],c:2},
+      {q:"What characterises the recovery experience of people with anxious attachment patterns after divorce?",o:["Rapid apparent recovery followed by delayed grief", "Emotional unavailability and suppression of grief", "The most acute grief in early separation - obsessive thinking about the former partner, difficulty tolerating aloneness, urgency to reconnect or replace the relationship, and hypervigilance about abandonment. The healing work involves tolerating discomfort without immediately filling it.", "Chaotic oscillation between reconnection attempts and sudden withdrawal"],c:2},
+      {q:"What is the concern about people with avoidant attachment patterns in divorce recovery?",o:["They tend to become obsessively focused on the former partner", "They require more intensive therapeutic support than other patterns", "They may appear to recover quickly through suppression - busyness, emotional unavailability, rapid new relationships - but the unprocessed grief often surfaces later, sometimes significantly delayed. The healing work involves consciously accessing what is being suppressed.", "They are most likely to initiate legal conflict during the divorce process"],c:2},
+      {q:"What is Winnicott's capacity to be alone and why is it relevant to divorce recovery?",o:["The ability to manage all practical aspects of life independently", "The psychological skill of not needing social relationships for wellbeing", "A foundational adult skill of finding companionship within oneself rather than requiring constant external company. The fear of aloneness drives many common post-divorce mistakes including premature new relationships.", "The ability to live alone successfully after the dissolution of a shared household"],c:2},
+      {q:"What is the psychological distinction between aloneness and loneliness?",o:["Aloneness is temporary while loneliness is chronic", "Aloneness is chosen while loneliness is imposed", "Aloneness is being physically by yourself - which can be peaceful and necessary for healing. Loneliness is the painful absence of genuine connection - which can be felt in company as much as alone. Developing tolerance for aloneness reduces urgency that drives premature relationship replacement.", "Aloneness affects introverts differently from extroverts"],c:2},
+      {q:"What does integrating the relationship's gifts mean in the identity reconstruction process?",o:["Preserving positive memories of the relationship while moving forward", "Finding a way to remain friends with the former partner", "Acknowledging what the relationship - however painful - taught you and what capacities or insights emerged that you genuinely carry forward as yours. This prevents both idealising the relationship and entirely repudiating it.", "Appreciating the former partner's positive qualities despite the ending"],c:2},
+    ]
+  },
+  5:{
+    tv:"Building Your New Life - Practical and Emotional Foundations",
+    bv:"Navigating Dating, New Relationships, and the Fear of Love Again",
+    content:`<h2>Week 5: Building Forward - Your New Life and Future Relationships</h2>
+<div class="safety-banner"><h4>You Are Not Starting Over - You Are Starting From Here, With Everything You Know</h4><p>There comes a point in divorce recovery where survival gives way to possibility. This week bridges the gap between healing what was and building what comes next.</p></div>
+<h3>Learning Objectives</h3>
+<ul><li>Understand what it means to build a genuinely new life rather than simply replace the old one</li><li>Develop a post-divorce vision for your life in all its dimensions</li><li>Navigate the complex territory of dating and new relationships with honesty and wisdom</li><li>Address the specific fears around loving and being hurt again</li></ul>
+<h3>Building a Genuinely New Life</h3>
+<p>The impulse to replace the old life without the partner is understandable but misses the opportunity. Divorce, however painful, is an invitation to build a life more deliberately aligned with who you actually are. Elements of genuine reconstruction: Physical environment (creating a living space reflecting your own aesthetic and values - even small changes matter symbolically and practically), Social ecosystem (intentionally building a network genuinely yours rather than inherited from the couple relationship), Financial autonomy (understanding your own financial situation, building your own credit, managing your own accounts builds deep self-efficacy - particularly important for those who were financially dependent), and Purposeful activity. Viktor Frankl's research shows people who can identify purpose in their lives - even amid suffering - show dramatically greater resilience than those who cannot.</p>
+<h3>The Post-Divorce Vision</h3>
+<p>Research on post-traumatic growth shows people who develop a coherent vision for the life ahead recover more fully and more quickly than those focused primarily on what was lost. Components of a post-divorce vision: What kind of person do I want to be? What does my daily life look and feel like at its most aligned? What relationships do I want to cultivate? What do I want to accomplish, create, contribute, or experience? What would a good life look like - defined by my own standards, not those I inherited?</p>
+<h3>Navigating Post-Divorce Dating</h3>
+<p>The meaningful question about timing is not "how long should I wait?" but "have I sufficiently processed the previous relationship to bring genuine openness rather than unresolved pain to a new one?" Many therapists suggest at least one year of focused healing before pursuing serious new relationships. The rebound relationship - begun primarily to relieve loneliness or fill the void - rarely produces lasting connection and often complicates healing of the original loss. Post-divorce relationships are an opportunity to apply everything you have learned about what you need, what you will not accept, how you attach, and what healthy relationship looks like for you specifically. For parents: most child psychologists recommend at least 12 months of consistent relationship before introducing a new partner to children as a significant figure.</p>
+<h3>The Fear of Loving Again</h3>
+<p>Specific fears worth addressing directly: Fear of being hurt again (distinguishing healthy caution from protective armour that prevents genuine intimacy), Fear of repeating the same patterns (the well-founded concern that without healing, familiar dynamics will be unconsciously recreated - this fear is valuable; it is what makes the healing work necessary), Fear of trusting your own judgment ("I thought I knew this person and I was wrong"), and Fear of vulnerability. Brene Brown's research applies: there is no genuine intimacy without risk. The question is whether you will let fear permanently close what was meant to remain open.</p>
+<h3>Practical Exercises</h3>
+<p><strong>Exercise 1: Your New Life Vision</strong> - Give yourself 30 uninterrupted minutes. Write or draw your vision for your life in three years. What does your home feel like? Who are the people? What are you doing? Write in the present tense as though it is already real. This vision needs to be genuinely yours and genuinely engaging.</p>
+<p><strong>Exercise 2: The Relationship Learning Inventory</strong> - From this relationship, write everything you have learned: about what you need, what you will not accept, how you attach, what triggered your most unhelpful patterns, what you contributed to difficulties, and what a genuinely healthy relationship would look and feel like for you. This is the wisdom from suffering - the specific self-knowledge only this experience could produce.</p>
+<p><strong>Exercise 3: The Fear Letter to Love</strong> - Write a letter to the prospect of loving again. Tell it what you are afraid of. Tell it what you have lost. And then tell it what you still believe - about love, about connection, about what is possible for you. This is an honest conversation between you and your own future.</p>
+<button class="submit-btn" onclick="markComplete()">Mark as Complete</button>`,
+    resources:[
+      {i:"&#127968;",t:"Building Your New Life Guide",d:"Physical environment, social ecosystem, financial autonomy, and purposeful activity",f:"new-life-guide.pdf"},
+      {i:"&#127775;",t:"Post-Divorce Vision Workbook",d:"Post-traumatic growth research and structured vision-building for your new chapter",f:"vision-workbook.pdf"},
+      {i:"&#128149;",t:"Navigating Post-Divorce Dating Guide",d:"Timing, rebound patterns, what you have learned, and introducing partners to children",f:"post-divorce-dating.pdf"},
+      {i:"&#128588;",t:"The Fear of Loving Again",d:"Addressing the specific fears around vulnerability and trust after divorce",f:"fear-of-love.pdf"},
+      {i:"&#127911;",t:"New Life Visualisation Audio",d:"15-minute guided visualisation for your post-divorce life vision",f:"new-life-audio.mp3"},
+      {i:"&#128218;",t:"Building Forward Reading",d:"Option B (Sandberg and Grant), The Gifts of Imperfection (Brown)",f:"building-forward-reading.pdf"},
+    ],
+    qs:[
+      {q:"What is the key distinction between replacing the old life and genuinely reconstructing a new one?",o:["Replacing is faster; reconstructing requires more time and support", "Replacing maintains the same social network; reconstructing requires new friendships", "Replacing rebuilds the same life without the partner - familiar but misaligned; reconstructing builds something genuinely new and more deliberately aligned with who you actually are. Divorce is an invitation to build more intentionally.", "Replacing is appropriate for shorter marriages; reconstructing for longer ones"],c:2},
+      {q:"What does Viktor Frankl's research on meaning and resilience show relevant to post-divorce recovery?",o:["Suffering is necessary for personal growth and should not be avoided", "Professional therapy is essential for finding meaning after trauma", "People who can identify purpose in their lives - even in the midst of suffering - show dramatically greater resilience than those who cannot. Purposeful activity builds meaning that sustains recovery.", "Meaning can only be found after the grief process is substantially complete"],c:2},
+      {q:"What does research on post-traumatic growth show about developing a post-divorce vision?",o:["Vision-building is premature until acute grief has resolved", "Focusing on the future is a form of denial of the loss", "People who develop a coherent vision for the life ahead recover more fully and more quickly than those who focus primarily on what was lost. The vision does not need to be complete - it needs to be genuinely engaging.", "Post-traumatic growth only occurs in people with prior therapy experience"],c:2},
+      {q:"What is the meaningful question about post-divorce dating timing?",o:["How long has it been since the formal legal divorce was finalised?", "How ready do you feel emotionally to begin meeting new people?", "Not 'how long should I wait?' but 'have I sufficiently processed the previous relationship to bring genuine openness rather than unresolved pain to a new one?' The timeline follows internal readiness, not a fixed external standard.", "Whether your children are comfortable with the idea of you dating"],c:2},
+      {q:"What characterises a rebound relationship and why is it identified as potentially problematic?",o:["A relationship begun with someone who knew your former partner", "A relationship that develops very quickly in emotional intensity", "A relationship begun primarily to relieve loneliness or fill the void - in the acute phase of grief. Rarely producing lasting connection, rebound relationships often complicate healing of the original loss because the motivation is analgesia rather than genuine intimacy.", "Any relationship begun within 12 months of the separation"],c:2},
+      {q:"What is the baggage conversation in post-divorce relationships?",o:["The discussion about dividing practical belongings from the previous relationship", "An early conversation about each person's relationship history", "The eventual honest disclosure of the divorce history and its impact - not whether to disclose but when and how. Enough transparency to build genuine intimacy without overwhelming a new person with unprocessed content that belongs in therapy.", "The conversation about financial obligations from the previous marriage"],c:2},
+      {q:"Why is the fear of repeating the same patterns described as valuable in post-divorce recovery?",o:["Because it motivates people to stay single longer", "Because it is always an accurate assessment of risk", "It is a well-founded concern that without healing and self-knowledge work, familiar dynamics will be unconsciously recreated. This fear's value lies in making the healing work feel necessary rather than optional.", "Because it helps people select partners very different from their former spouse"],c:2},
+      {q:"What does building financial autonomy provide beyond practical security?",o:["A competitive advantage in any future divorce proceedings", "Protection against being financially dependent on a new partner", "A form of self-efficacy that is deeply stabilising - understanding your own financial situation, building your own credit, managing your own accounts, and developing financial competence builds confidence and independence that contributes significantly to psychological recovery", "Financial autonomy primarily reduces stress and therefore supports grief processing"],c:2},
+      {q:"What guidance does the course provide about introducing new partners to children?",o:["Children should be involved in approving new partners", "New partners should be introduced as friends before revealing the romantic relationship", "Most child psychologists recommend at least 12 months of consistent relationship before introduction to children as a significant partner - children need time and stability before new partners are introduced as important figures in their lives", "Introduction should follow the children's readiness rather than any fixed timeline"],c:2},
+      {q:"What does the course mean by the fear of loving again potentially becoming protective armour?",o:["Using the divorce experience to become overly selective about partners", "Developing healthy scepticism about new relationships", "A level of self-protection that goes beyond healthy caution into preventing any genuine intimacy - closing oneself permanently to vulnerability as a defence against future pain. The task is distinguishing healthy caution from armour that prevents the connection that makes life meaningful.", "Becoming emotionally unavailable as an unconscious repetition of the previous partner's behaviour"],c:2},
+    ]
+  },
+  6:{
+    tv:"Wholeness After Divorce - Integration, Growth, and Your New Chapter",
+    bv:"Meaning, Wisdom, and the Life That Becomes Possible",
+    content:`<h2>Week 6: Integration - Wholeness, Meaning, and Your New Chapter</h2>
+<div class="safety-banner"><h4>What Broke You Open Has Also Opened You</h4><p>Six weeks of honest, courageous, deeply personal work converge here. Divorce carries within it the possibility of becoming more fully yourself than the relationship allowed. This is the hard-won truth that profound loss and profound growth can occupy the same life.<br><br>Support remains available: <strong>Crisis Line: 0800 12 13 14 | Suicide Helpline: 0800 567 567</strong></p></div>
+<h3>Learning Objectives</h3>
+<ul><li>Integrate six weeks of healing work into a coherent personal narrative</li><li>Understand post-traumatic growth and how to cultivate it intentionally</li><li>Develop a sustainable ongoing healing and self-development practice</li><li>Step consciously into the new chapter with clarity, self-compassion, and hope</li></ul>
+<h3>Post-Traumatic Growth - What the Research Shows</h3>
+<p>Richard Tedeschi and Lawrence Calhoun identified that a significant proportion of people who experience major adversity - including divorce - report genuine positive transformation that would not have occurred without the adversity. This is not saying the adversity was good; it is the observation that humans can grow through suffering when given adequate support, time, and reflection. Five domains of PTG: Personal strength (discovering capacities and resilience you did not know you had), New possibilities (opportunities and directions visible precisely because the previous path closed), Relating to others (deepened empathy, authenticity, and genuine connection forged through vulnerability), Appreciation of life (heightened awareness of what genuinely matters), and Spiritual or existential change (a deepened relationship with meaning and purpose). PTG does not happen automatically - it requires active meaning-making. The question is not whether meaning can be found but whether you are willing to look for it.</p>
+<h3>The Coherent Narrative</h3>
+<p>Dan Siegel's research identifies narrative coherence - the ability to make honest, integrated sense of your own story including its most difficult chapters - as one of the strongest predictors of psychological wellbeing and relational health going forward. A coherent divorce narrative acknowledges what actually happened without minimising or dramatising, holds both the genuine gifts of the relationship and the genuine harm with equal honesty, understands your own contribution without excessive self-blame or total exoneration, has a "making sense" quality even when what happened was painful, and positions you as the author of what comes next rather than the victim of what came before.</p>
+<h3>Forgiveness - The Most Misunderstood Concept in Divorce Recovery</h3>
+<p>Critical clarifications: Forgiveness is not reconciliation - you can forgive someone and never have contact with them again, maintain legal boundaries, and still know the relationship was right to end. Forgiveness is not excusing - it does not mean what happened was acceptable; it means choosing to no longer allow the injury to define and consume your present. Forgiveness is not a requirement - healing does not require it, but does require release of the active bitterness that injures the carrier more than the target. Forgiveness is primarily for you. As Jack Kornfield describes it: "Forgiveness is giving up hope of a better past" - releasing the wish that it had been different, accepting it was what it was, choosing to live forward. Self-forgiveness is often the more difficult and more important work than forgiving the former partner.</p>
+<h3>The Ongoing Healing Practice</h3>
+<p>Healing from divorce is not a course you complete - it is an ongoing practice. The elements that sustain it: Therapy (a skilled therapist provides what no course, book, or support network can fully replace - a consistent, trained, non-judgmental witness; if you have not begun therapy, this is the most important single investment in your healing), Community (shared experience normalises and sustains in ways private healing cannot), Self-compassion practice (the daily basic orientation of treating yourself as you would a dear friend), Somatic practice (yoga, movement, breathwork - continuing to process what the mind alone cannot fully reach), and Meaningful engagement (continued investment in work, creative expression, or community contribution).</p>
+<h3>Practical Exercises</h3>
+<p><strong>Exercise 1: Write Your Coherent Divorce Narrative</strong> - In 3-5 paragraphs, write the coherent story of this relationship and its ending. Include what was genuinely valuable, what was genuinely difficult and harmful, your honest understanding of your contribution to both, what you have learned, and how you understand what happened without making yourself or the other person only a villain or only a victim. This should feel true, not comfortable.</p>
+<p><strong>Exercise 2: Your Post-Traumatic Growth Inventory</strong> - Looking at the five PTG domains, write about any genuine growth you have experienced or are beginning to experience in each. This is honest witnessing of the full picture, which includes both what was lost and what is emerging. Both deserve acknowledgment.</p>
+<p><strong>Exercise 3: A Letter to Your Future Self</strong> - Write a letter to yourself to be read one year from today. Tell that future version of you what you are learning, what you are committed to, what you hope for them, and what you most want them to know about who they are. Seal it, date it, and put it somewhere you will find it in 12 months. Then take one concrete action this week toward the life you described.</p>
+<h3>A Closing Word</h3>
+<p>You began this course in the middle of one of the most painful experiences a human being can navigate. You came carrying grief that most people around you may not have fully understood, loss that extended far beyond what was visible, and the enormous task of rebuilding a self and a life from the inside out. Over six weeks, you have looked honestly at what you are losing, at what you are feeling, at who you are without the relationship, at what broke in you and what is opening. You have named what needed naming. You have begun to feel what needed feeling. You have started to see the self that was always there beneath the relationship identity - and the emerging self that is becoming possible now. Divorce and separation do not have the final word on who you are or what your life can be. You do. Carry that knowledge into the new chapter. You have earned it.</p>
+<button class="submit-btn" onclick="markComplete()">Mark as Complete &amp; Get Certificate</button>`,
+    resources:[
+      {i:"&#127775;",t:"Post-Traumatic Growth Guide",d:"Tedeschi and Calhoun's five domains with reflective exercises for each",f:"ptg-guide.pdf"},
+      {i:"&#128214;",t:"Writing Your Coherent Narrative",d:"Siegel's narrative coherence framework applied to the divorce story",f:"coherent-narrative.pdf"},
+      {i:"&#129394;",t:"Forgiveness in Divorce Recovery",d:"What forgiveness is and is not - including the critical work of self-forgiveness",f:"forgiveness-guide.pdf"},
+      {i:"&#128200;",t:"Your Ongoing Healing Practice Plan",d:"Therapy, community, somatic practice, and meaningful engagement for the long journey",f:"healing-practice.pdf"},
+      {i:"&#127911;",t:"Integration and Wholeness Audio",d:"20-minute closing guided practice for divorce recovery integration",f:"integration-audio.mp3"},
+      {i:"&#127942;",t:"Course Completion Certificate",d:"Download your certificate of completion",f:"certificate.pdf"},
+    ],
+    qs:[
+      {q:"What is post-traumatic growth (PTG) and what does it NOT mean?",o:["PTG means the adversity was ultimately beneficial and worth experiencing", "PTG means the person has fully resolved and completed their grief", "PTG is genuine positive transformation following major adversity. It does NOT mean the adversity was good or worth it - it is the observation that humans can grow through suffering when given adequate support, time, and reflection", "PTG only occurs in people who had prior therapy or psychological resilience training"],c:2},
+      {q:"What are the five domains of post-traumatic growth identified by Tedeschi and Calhoun?",o:["Emotional healing, social rebuilding, financial recovery, physical health, and spiritual renewal", "Acceptance, forgiveness, self-discovery, new relationships, and future planning", "Personal strength, new possibilities, relating to others, appreciation of life, and spiritual or existential change", "Grief resolution, identity reconstruction, boundary setting, self-compassion, and visioning"],c:2},
+      {q:"What does Dan Siegel's research on narrative coherence show about its role in healing?",o:["Narrative coherence requires completing the full grief process before it can be achieved", "Narrative coherence means having resolved all feelings about the former partner", "The ability to make honest, integrated sense of your own story - including its most difficult chapters - is one of the strongest predictors of psychological wellbeing and relational health going forward", "Narrative coherence is primarily achieved through professional therapy rather than personal reflection"],c:2},
+      {q:"What is the critical clarification about forgiveness and reconciliation in divorce recovery?",o:["Forgiveness always requires some form of renewed contact with the former partner", "Reconciliation is the ultimate goal of forgiveness in divorce contexts", "Forgiveness is not reconciliation - you can forgive someone and never have contact with them again, maintain legal boundaries, and still know the relationship was right to end. Forgiveness is an internal act entirely separate from the relational decision about continued contact.", "Forgiveness and reconciliation are inseparable and must be pursued together"],c:2},
+      {q:"What does Jack Kornfield's description of forgiveness as giving up hope of a better past mean?",o:["Accepting that the relationship could not have been saved regardless of effort", "Releasing resentment toward the former partner for past behaviour", "Releasing the wish that things had been different - accepting that the past was what it was - and choosing to live forward rather than backward. The freedom that comes from no longer investing energy in wishing the past could be changed.", "Forgiving yourself for decisions made during the relationship"],c:2},
+      {q:"Why is self-forgiveness described as often the more difficult and more important work in divorce recovery?",o:["Because society judges the person who ended the relationship more harshly", "Because self-blame is more common than blame of the former partner", "For many people, forgiving themselves for staying too long, for their contribution to the relationship's difficulties, or for choices made during the marriage or divorce is the deeper and more sustained work - because we often hold ourselves to higher standards than we hold others and cannot escape our own judgment", "Because professional support is less available for self-forgiveness"],c:2},
+      {q:"What does the course identify as the most important single investment in divorce healing?",o:["A structured divorce recovery course", "A divorce support group offering peer connection", "A skilled therapist - providing what no course, book, or support network can fully replace: a consistent, trained, non-judgmental witness to the full complexity of the experience. If you have not begun therapy, this is the most important single investment in your healing.", "Financial counselling to ensure post-divorce stability"],c:2},
+      {q:"What is a coherent divorce narrative and what distinguishes it from an incoherent one?",o:["A narrative that presents the divorce in the most positive possible light", "A narrative focused on future possibilities rather than past pain", "An honest, integrated account that acknowledges what actually happened without minimising or dramatising, holds both the genuine gifts and genuine harm, understands your contribution without excessive self-blame, and positions you as the author of what comes next rather than the victim of what came before", "A narrative developed with the help of a professional therapist"],c:2},
+      {q:"Why does post-traumatic growth require active meaning-making rather than occurring automatically?",o:["Because PTG requires specific therapeutic techniques to activate", "Because suffering alone never produces growth without external support", "PTG does not happen automatically from adversity - it requires actively looking for meaning, what has been learned, what has opened, and what capacities have developed. The question is not whether meaning can be found but whether you are willing to look for it.", "Because PTG is only possible for people who had a growth mindset before the adversity"],c:2},
+      {q:"What is the significance of positioning yourself as the author of what comes next in the coherent narrative?",o:["It means taking sole responsibility for the divorce and its aftermath", "It means planning your future life in detail before fully grieving the past", "It means understanding yourself as an agent who shapes your ongoing story rather than a passive victim of what was done to you - holding both the reality of what happened and your capacity to choose how you respond and move forward", "It means rejecting any ongoing impact of the divorce on your future choices and relationships"],c:2},
+    ]
+  }
+};
+</script>
+</body>
+</html>
