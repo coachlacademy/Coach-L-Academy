@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Operating System</title>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+/* ===== GLOBAL ===== */
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0f172a;
+  color:white;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+h2{
+  color:#feca57;
+}
+
+/* ===== STATS ===== */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:#1e293b;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.stat h3{
+  margin:0;
+  font-size:28px;
+  color:#48dbfb;
+}
+
+/* ===== TABS ===== */
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.tab{
+  padding:10px 20px;
+  background:#1e293b;
+  border:none;
+  color:white;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.tab.active{
+  background:#feca57;
+  color:black;
+}
+
+/* ===== SECTIONS ===== */
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+/* ===== BUTTONS ===== */
+button{
+  padding:10px 18px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.primary{
+  background:#feca57;
+  color:black;
+}
+
+/* ===== BADGES ===== */
+.badge{
+  display:inline-block;
+  background:#ff6b6b;
+  padding:6px 12px;
+  border-radius:20px;
+  margin:5px;
+  font-size:12px;
+}
+
+textarea{
+  width:100%;
+  height:120px;
+  border-radius:6px;
+  padding:10px;
+  border:none;
+}
+
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🎓 High School Operating System</h1>
+
+<!-- ===== STATS ===== -->
+<div class="stats">
+  <div class="stat">
+    <h3 id="xpDisplay">0</h3>
+    <p>Total XP</p>
+  </div>
+  <div class="stat">
+    <h3 id="streakDisplay">0</h3>
+    <p>Learning Streak 🔥</p>
+  </div>
+  <div class="stat">
+    <h3 id="weekDisplay">1</h3>
+    <p>Current Week</p>
+  </div>
+</div>
+
+<!-- ===== TABS ===== -->
+<div class="tabs">
+  <button class="tab active" data-target="lessons">Lessons</button>
+  <button class="tab" data-target="quiz">Quiz</button>
+  <button class="tab" data-target="journal">Reflection</button>
+  <button class="tab" data-target="lifeskills">Life Vault</button>
+</div>
+
+<!-- ===== LESSONS ===== -->
+<div id="lessons" class="section active">
+  <h2>Week Content</h2>
+  <p id="lessonText">
+    Discipline compounds. Every small decision shapes your future.
+  </p>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="quiz" class="section">
+  <h2>Week Quiz</h2>
+  <div id="quizContainer"></div>
+  <button class="primary" id="submitQuiz">Submit Quiz</button>
+</div>
+
+<!-- ===== JOURNAL ===== -->
+<div id="journal" class="section">
+  <h2>Weekly Reflection</h2>
+  <textarea id="reflectionInput" placeholder="What did you learn this week?"></textarea>
+  <button class="primary" id="saveReflection">Save Reflection</button>
+</div>
+
+<!-- ===== LIFE VAULT ===== -->
+<div id="lifeskills" class="section">
+  <h2>Life Blueprint</h2>
+  <ul>
+    <li>📚 Study in focused blocks</li>
+    <li>🏆 Protect your reputation</li>
+    <li>💰 Save early — habit > amount</li>
+    <li>👑 Discipline now = leadership later</li>
+  </ul>
+</div>
+
+<h2>Achievements</h2>
+<div id="badges"></div>
+
+</div>
+
+<script>
+
+/* =============================
+   CONFIG MODULE
+============================= */
+
+const CONFIG = {
+  EMAIL_PUBLIC_KEY: "YOUR_PUBLIC_KEY",
+  EMAIL_SERVICE_ID: "YOUR_SERVICE_ID",
+  EMAIL_TEMPLATE_ID: "YOUR_TEMPLATE_ID"
+};
+
+/* =============================
+   STATE MODULE
+============================= */
+
+const State = {
+  xp: parseInt(localStorage.getItem("xp")) || 0,
+  streak: parseInt(localStorage.getItem("streak")) || 0,
+  currentWeek: parseInt(localStorage.getItem("week")) || 1,
+  completedWeeks: JSON.parse(localStorage.getItem("completed")) || []
+};
+
+/* =============================
+   UI MODULE
+============================= */
+
+const UI = {
+
+  updateStats(){
+    document.getElementById("xpDisplay").textContent = State.xp;
+    document.getElementById("streakDisplay").textContent = State.streak;
+    document.getElementById("weekDisplay").textContent = State.currentWeek;
+  },
+
+  switchTab(target){
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.getElementById(target).classList.add("active");
+    document.querySelector(`[data-target="${target}"]`).classList.add("active");
+  },
+
+  addBadge(text){
+    document.getElementById("badges").innerHTML +=
+      `<span class="badge">${text}</span>`;
+  },
+
+  showConfetti(){
+    confetti({ particleCount:120, spread:70 });
+  }
+
+};
+
+/* =============================
+   QUIZ MODULE
+============================= */
+
+const Quiz = {
+
+  questions:[
+    {
+      q:"What builds long-term success?",
+      options:[
+        "One big decision",
+        "Consistent daily habits",
+        "Luck"
+      ],
+      answer:1
+    }
+  ],
+
+  render(){
+    const container = document.getElementById("quizContainer");
+    container.innerHTML="";
+    this.questions.forEach((q,i)=>{
+      container.innerHTML += `
+        <p>${q.q}</p>
+        ${q.options.map((opt,j)=>
+          `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+        ).join("")}
+      `;
+    });
+  },
+
+  evaluate(){
+    let correct=0;
+    this.questions.forEach((q,i)=>{
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if(selected && parseInt(selected.value)===q.answer){
+        correct++;
+      }
+    });
+
+    if(correct === this.questions.length){
+      State.xp += 100;
+      State.completedWeeks.push(State.currentWeek);
+      localStorage.setItem("xp",State.xp);
+      localStorage.setItem("completed",JSON.stringify(State.completedWeeks));
+      UI.updateStats();
+      UI.addBadge("🏅 Week "+State.currentWeek+" Mastered");
+      UI.showConfetti();
+      Mail.send("Week "+State.currentWeek+" passed.");
+      alert("Passed!");
+    } else {
+      alert("Try again.");
+    }
+  }
+
+};
+
+/* =============================
+   JOURNAL MODULE
+============================= */
+
+const Journal = {
+
+  save(){
+    const text = document.getElementById("reflectionInput").value;
+    localStorage.setItem("reflection_week_"+State.currentWeek,text);
+    Mail.send("Reflection Week "+State.currentWeek+": "+text);
+    alert("Reflection saved.");
+  }
+
+};
+
+/* =============================
+   STREAK MODULE
+============================= */
+
+const Streak = {
+
+  check(){
+    const today = new Date().toDateString();
+    const lastVisit = localStorage.getItem("lastVisit");
+
+    if(lastVisit !== today){
+      State.streak++;
+      localStorage.setItem("streak",State.streak);
+      localStorage.setItem("lastVisit",today);
+    }
+
+    UI.updateStats();
+  }
+
+};
+
+/* =============================
+   MAIL MODULE
+============================= */
+
+const Mail = {
+
+  init(){
+    emailjs.init(CONFIG.EMAIL_PUBLIC_KEY);
+  },
+
+  send(message){
+    emailjs.send(
+      CONFIG.EMAIL_SERVICE_ID,
+      CONFIG.EMAIL_TEMPLATE_ID,
+      {
+        message:message,
+        xp:State.xp,
+        streak:State.streak
+      }
+    );
+  }
+
+};
+
+/* =============================
+   INIT
+============================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  Mail.init();
+  Streak.check();
+  UI.updateStats();
+  Quiz.render();
+
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.addEventListener("click",()=>{
+      UI.switchTab(tab.dataset.target);
+    });
+  });
+
+  document.getElementById("submitQuiz")
+    .addEventListener("click",()=>Quiz.evaluate());
+
+  document.getElementById("saveReflection")
+    .addEventListener("click",()=>Journal.save());
+
+});
+
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Operating System</title>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+/* ===== GLOBAL ===== */
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0f172a;
+  color:white;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+
+h2{
+  color:#feca57;
+}
+
+/* ===== STATS ===== */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.stat{
+  background:#1e293b;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.stat h3{
+  margin:0;
+  font-size:28px;
+  color:#48dbfb;
+}
+
+/* ===== TABS ===== */
+.tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.tab{
+  padding:10px 20px;
+  background:#1e293b;
+  border:none;
+  color:white;
+  cursor:pointer;
+  border-radius:8px;
+}
+
+.tab.active{
+  background:#feca57;
+  color:black;
+}
+
+/* ===== SECTIONS ===== */
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+/* ===== BUTTONS ===== */
+button{
+  padding:10px 18px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.primary{
+  background:#feca57;
+  color:black;
+}
+
+/* ===== BADGES ===== */
+.badge{
+  display:inline-block;
+  background:#ff6b6b;
+  padding:6px 12px;
+  border-radius:20px;
+  margin:5px;
+  font-size:12px;
+}
+
+textarea{
+  width:100%;
+  height:120px;
+  border-radius:6px;
+  padding:10px;
+  border:none;
+}
+
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>🎓 High School Operating System</h1>
+
+<!-- ===== STATS ===== -->
+<div class="stats">
+  <div class="stat">
+    <h3 id="xpDisplay">0</h3>
+    <p>Total XP</p>
+  </div>
+  <div class="stat">
+    <h3 id="streakDisplay">0</h3>
+    <p>Learning Streak 🔥</p>
+  </div>
+  <div class="stat">
+    <h3 id="weekDisplay">1</h3>
+    <p>Current Week</p>
+  </div>
+</div>
+
+<!-- ===== TABS ===== -->
+<div class="tabs">
+  <button class="tab active" data-target="lessons">Lessons</button>
+  <button class="tab" data-target="quiz">Quiz</button>
+  <button class="tab" data-target="journal">Reflection</button>
+  <button class="tab" data-target="lifeskills">Life Vault</button>
+</div>
+
+<!-- ===== LESSONS ===== -->
+<div id="lessons" class="section active">
+  <h2>Week Content</h2>
+  <p id="lessonText">
+    Discipline compounds. Every small decision shapes your future.
+  </p>
+</div>
+
+<!-- ===== QUIZ ===== -->
+<div id="quiz" class="section">
+  <h2>Week Quiz</h2>
+  <div id="quizContainer"></div>
+  <button class="primary" id="submitQuiz">Submit Quiz</button>
+</div>
+
+<!-- ===== JOURNAL ===== -->
+<div id="journal" class="section">
+  <h2>Weekly Reflection</h2>
+  <textarea id="reflectionInput" placeholder="What did you learn this week?"></textarea>
+  <button class="primary" id="saveReflection">Save Reflection</button>
+</div>
+
+<!-- ===== LIFE VAULT ===== -->
+<div id="lifeskills" class="section">
+  <h2>Life Blueprint</h2>
+  <ul>
+    <li>📚 Study in focused blocks</li>
+    <li>🏆 Protect your reputation</li>
+    <li>💰 Save early — habit > amount</li>
+    <li>👑 Discipline now = leadership later</li>
+  </ul>
+</div>
+
+<h2>Achievements</h2>
+<div id="badges"></div>
+
+</div>
+
+<script>
+
+/* =============================
+   CONFIG MODULE
+============================= */
+
+const CONFIG = {
+  EMAIL_PUBLIC_KEY: "YOUR_PUBLIC_KEY",
+  EMAIL_SERVICE_ID: "YOUR_SERVICE_ID",
+  EMAIL_TEMPLATE_ID: "YOUR_TEMPLATE_ID"
+};
+
+/* =============================
+   STATE MODULE
+============================= */
+
+const State = {
+  xp: parseInt(localStorage.getItem("xp")) || 0,
+  streak: parseInt(localStorage.getItem("streak")) || 0,
+  currentWeek: parseInt(localStorage.getItem("week")) || 1,
+  completedWeeks: JSON.parse(localStorage.getItem("completed")) || []
+};
+
+/* =============================
+   UI MODULE
+============================= */
+
+const UI = {
+
+  updateStats(){
+    document.getElementById("xpDisplay").textContent = State.xp;
+    document.getElementById("streakDisplay").textContent = State.streak;
+    document.getElementById("weekDisplay").textContent = State.currentWeek;
+  },
+
+  switchTab(target){
+    document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    document.getElementById(target).classList.add("active");
+    document.querySelector(`[data-target="${target}"]`).classList.add("active");
+  },
+
+  addBadge(text){
+    document.getElementById("badges").innerHTML +=
+      `<span class="badge">${text}</span>`;
+  },
+
+  showConfetti(){
+    confetti({ particleCount:120, spread:70 });
+  }
+
+};
+
+/* =============================
+   QUIZ MODULE
+============================= */
+
+const Quiz = {
+
+  questions:[
+    {
+      q:"What builds long-term success?",
+      options:[
+        "One big decision",
+        "Consistent daily habits",
+        "Luck"
+      ],
+      answer:1
+    }
+  ],
+
+  render(){
+    const container = document.getElementById("quizContainer");
+    container.innerHTML="";
+    this.questions.forEach((q,i)=>{
+      container.innerHTML += `
+        <p>${q.q}</p>
+        ${q.options.map((opt,j)=>
+          `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`
+        ).join("")}
+      `;
+    });
+  },
+
+  evaluate(){
+    let correct=0;
+    this.questions.forEach((q,i)=>{
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if(selected && parseInt(selected.value)===q.answer){
+        correct++;
+      }
+    });
+
+    if(correct === this.questions.length){
+      State.xp += 100;
+      State.completedWeeks.push(State.currentWeek);
+      localStorage.setItem("xp",State.xp);
+      localStorage.setItem("completed",JSON.stringify(State.completedWeeks));
+      UI.updateStats();
+      UI.addBadge("🏅 Week "+State.currentWeek+" Mastered");
+      UI.showConfetti();
+      Mail.send("Week "+State.currentWeek+" passed.");
+      alert("Passed!");
+    } else {
+      alert("Try again.");
+    }
+  }
+
+};
+
+/* =============================
+   JOURNAL MODULE
+============================= */
+
+const Journal = {
+
+  save(){
+    const text = document.getElementById("reflectionInput").value;
+    localStorage.setItem("reflection_week_"+State.currentWeek,text);
+    Mail.send("Reflection Week "+State.currentWeek+": "+text);
+    alert("Reflection saved.");
+  }
+
+};
+
+/* =============================
+   STREAK MODULE
+============================= */
+
+const Streak = {
+
+  check(){
+    const today = new Date().toDateString();
+    const lastVisit = localStorage.getItem("lastVisit");
+
+    if(lastVisit !== today){
+      State.streak++;
+      localStorage.setItem("streak",State.streak);
+      localStorage.setItem("lastVisit",today);
+    }
+
+    UI.updateStats();
+  }
+
+};
+
+/* =============================
+   MAIL MODULE
+============================= */
+
+const Mail = {
+
+  init(){
+    emailjs.init(CONFIG.EMAIL_PUBLIC_KEY);
+  },
+
+  send(message){
+    emailjs.send(
+      CONFIG.EMAIL_SERVICE_ID,
+      CONFIG.EMAIL_TEMPLATE_ID,
+      {
+        message:message,
+        xp:State.xp,
+        streak:State.streak
+      }
+    );
+  }
+
+};
+
+/* =============================
+   INIT
+============================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+  Mail.init();
+  Streak.check();
+  UI.updateStats();
+  Quiz.render();
+
+  document.querySelectorAll(".tab").forEach(tab=>{
+    tab.addEventListener("click",()=>{
+      UI.switchTab(tab.dataset.target);
+    });
+  });
+
+  document.getElementById("submitQuiz")
+    .addEventListener("click",()=>Quiz.evaluate());
+
+  document.getElementById("saveReflection")
+    .addEventListener("click",()=>Journal.save());
+
+});
+
+</script>
+</body>
+</html>
