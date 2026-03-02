@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life 10 — Work & Career | Coach L Wellness</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="favicon.png">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<style>
+:root {
+  --red: #ff4b2b;
+  --red2: #ff6b4a;
+  --blue: #00d2ff;
+  --green: #39ff14;
+  --gold: #f5c518;
+  --purple: #a855f7;
+  --orange: #ff8c00;
+  --dark: #0a0a0a;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --accent: #ff4b2b;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Barlow',sans-serif; background:var(--dark); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+.bg-fixed {
+  position:fixed; inset:0; z-index:-2;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(255,75,43,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, rgba(255,140,0,0.04) 0%, transparent 55%),
+    #0a0a0a;
+}
+.bg-grid {
+  position:fixed; inset:0; z-index:-1; opacity:0.025;
+  background-image: linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+                    linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:50px 50px;
+}
+
+nav {
+  position:fixed; top:0; width:100%; z-index:100;
+  padding:16px 36px; display:flex; justify-content:space-between; align-items:center;
+  background:rgba(0,0,0,0.85); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--glass-border);
+}
+.logo { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+.logo span { color:var(--red); }
+.nav-right { display:flex; gap:10px; align-items:center; }
+.btn-glass { padding:8px 18px; background:var(--glass); border:1px solid var(--glass-border); color:#fff; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer; transition:0.3s; text-transform:uppercase; letter-spacing:1px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
+.btn-glass:hover { border-color:var(--red); color:var(--red); }
+.user-chip { display:flex; align-items:center; gap:8px; background:var(--glass); border:1px solid var(--glass-border); padding:6px 14px; border-radius:30px; font-size:13px; }
+.avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,var(--red),var(--orange)); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:900; color:#fff; }
+
+.page-header { padding:100px 40px 40px; max-width:1100px; margin:0 auto; }
+.eyebrow { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--red); margin-bottom:8px; }
+.page-title { font-family:'Barlow Condensed',sans-serif; font-size:clamp(3rem,8vw,5.5rem); font-weight:900; text-transform:uppercase; line-height:0.9; letter-spacing:-2px; margin-bottom:12px; }
+.page-title span { color:var(--red); }
+.page-sub { font-size:15px; color:#bbb; max-width:580px; line-height:1.7; }
+
+.time-greeting { display:inline-flex; align-items:center; gap:10px; background:var(--glass); border:1px solid var(--glass-border); padding:8px 18px; border-radius:30px; font-size:13px; color:#ccc; margin-bottom:20px; }
+.time-dot { width:8px; height:8px; border-radius:50%; background:var(--red); animation:pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+.date-nav { display:flex; align-items:center; gap:14px; margin:0 auto 40px; max-width:1100px; padding:0 40px; flex-wrap:wrap; }
+.date-btn { background:var(--glass); border:1px solid var(--glass-border); color:#fff; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:16px; transition:0.3s; }
+.date-btn:hover { border-color:var(--red); color:var(--red); }
+.date-str { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:700; text-transform:uppercase; }
+.week-strip { display:flex; gap:6px; }
+.wday { display:flex; flex-direction:column; align-items:center; gap:3px; width:38px; padding:7px 0; border-radius:8px; cursor:pointer; background:var(--glass); border:1px solid var(--glass-border); transition:0.3s; }
+.wday.active { background:var(--red); border-color:var(--red); color:#fff; }
+.wday-n { font-size:13px; font-weight:700; }
+.wday-d { font-size:9px; text-transform:uppercase; letter-spacing:0.5px; opacity:0.7; }
+
+.main { max-width:1100px; margin:0 auto; padding:0 40px 200px; }
+
+.step { margin-bottom:32px; animation:fadeUp 0.5s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.step-header { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.step-num { font-family:'Barlow Condensed',sans-serif; font-size:11px; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--red); background:rgba(255,75,43,0.1); border:1px solid rgba(255,75,43,0.35); padding:4px 12px; border-radius:20px; white-space:nowrap; }
+.step-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; text-transform:uppercase; }
+.step-desc { font-size:12px; color:#bbb; margin-top:2px; }
+
+.card { background:var(--glass); border:1px solid var(--glass-border); border-radius:16px; padding:28px; backdrop-filter:blur(12px); position:relative; overflow:hidden; transition:border-color 0.3s; }
+.card::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(to right,transparent,rgba(255,255,255,0.08),transparent); }
+.card:hover { border-color:rgba(255,75,43,0.15); }
+.card-red    { border-color:rgba(255,75,43,0.3);  background:rgba(255,75,43,0.05); }
+.card-orange { border-color:rgba(255,140,0,0.25); background:rgba(255,140,0,0.04); }
+.card-gold   { border-color:rgba(245,197,24,0.25); background:rgba(245,197,24,0.04); }
+.card-green  { border-color:rgba(57,255,20,0.2);  background:rgba(57,255,20,0.04); }
+.card-blue   { border-color:rgba(0,210,255,0.2);  background:rgba(0,210,255,0.04); }
+.card-purple { border-color:rgba(168,85,247,0.25); background:rgba(168,85,247,0.04); }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.full { grid-column:1/-1; }
+
+/* STATUS TILES */
+.status-tiles { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+.status-tile { flex:1; min-width:120px; padding:16px 12px; border-radius:12px; text-align:center; background:var(--glass); border:2px solid var(--glass-border); cursor:pointer; transition:0.3s; }
+.status-tile:hover,.status-tile.active { transform:translateY(-3px); }
+.st-emoji { font-size:26px; display:block; margin-bottom:8px; }
+.st-label { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:900; text-transform:uppercase; }
+.st-desc { font-size:10px; color:#666; margin-top:3px; }
+.status-tile[data-s="Thriving"]:hover,.status-tile[data-s="Thriving"].active{border-color:var(--green);background:rgba(57,255,20,0.08);color:var(--green);}
+.status-tile[data-s="Coasting"]:hover,.status-tile[data-s="Coasting"].active{border-color:var(--blue);background:rgba(0,210,255,0.08);color:var(--blue);}
+.status-tile[data-s="Grinding"]:hover,.status-tile[data-s="Grinding"].active{border-color:var(--gold);background:rgba(245,197,24,0.08);color:var(--gold);}
+.status-tile[data-s="Burnt Out"]:hover,.status-tile[data-s="Burnt Out"].active{border-color:var(--red);background:rgba(255,75,43,0.08);color:var(--red);}
+.status-tile[data-s="Toxic Env"]:hover,.status-tile[data-s="Toxic Env"].active{border-color:var(--orange);background:rgba(255,140,0,0.08);color:var(--orange);}
+.status-tile[data-s="Transitioning"]:hover,.status-tile[data-s="Transitioning"].active{border-color:var(--purple);background:rgba(168,85,247,0.08);color:var(--purple);}
+
+/* TAG GRID */
+.tag-grid { display:flex; flex-wrap:wrap; gap:8px; }
+.ttag { padding:7px 14px; border-radius:20px; font-size:12px; font-weight:700; background:var(--glass); border:1px solid var(--glass-border); cursor:pointer; transition:0.25s; color:#bbb; text-transform:uppercase; letter-spacing:0.5px; }
+.ttag:hover { border-color:rgba(255,75,43,0.5); color:var(--red); }
+.ttag.active { border-color:rgba(255,75,43,0.6); background:rgba(255,75,43,0.1); color:var(--red); }
+
+/* BURNOUT METER */
+.burnout-meter { margin-bottom:24px; }
+.bm-label { display:flex; justify-content:space-between; font-size:12px; color:#888; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px; }
+.bm-bar-wrap { height:14px; border-radius:14px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:16px; }
+.bm-bar-fill { height:100%; border-radius:14px; transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
+input[type=range] { width:100%; -webkit-appearance:none; height:4px; border-radius:4px; outline:none; cursor:pointer; }
+input[type=range].red-range { background:linear-gradient(to right,rgba(255,255,255,0.06),var(--red)); }
+input[type=range].red-range::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#fff; cursor:pointer; box-shadow:0 0 10px rgba(255,75,43,0.5); border:2px solid var(--red); }
+
+/* EXPANDABLE PANELS */
+.panel-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+.panel-card { background:var(--glass); border:1px solid var(--glass-border); border-radius:14px; padding:22px; cursor:pointer; transition:0.3s; }
+.panel-card:hover { border-color:rgba(255,75,43,0.3); transform:translateY(-3px); }
+.panel-card.open { border-color:rgba(255,75,43,0.5); background:rgba(255,75,43,0.05); }
+.pc-icon { font-size:28px; margin-bottom:10px; display:block; }
+.pc-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; text-transform:uppercase; margin-bottom:4px; }
+.pc-desc { font-size:12px; color:#666; line-height:1.5; }
+.pc-expand { display:none; margin-top:14px; border-top:1px solid rgba(255,255,255,0.07); padding-top:14px; font-size:13px; color:#ccc; line-height:1.8; }
+.panel-card.open .pc-expand { display:block; }
+
+/* CHECK ITEMS */
+.check-item { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:8px; cursor:pointer; transition:0.25s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); margin-bottom:8px; }
+.check-item:hover { border-color:rgba(255,75,43,0.3); background:rgba(255,75,43,0.04); }
+.check-item.checked { border-color:rgba(255,75,43,0.4); background:rgba(255,75,43,0.07); }
+.check-box { width:20px; height:20px; border-radius:4px; border:2px solid #333; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; font-size:12px; transition:0.2s; }
+.check-item.checked .check-box { background:var(--red); border-color:var(--red); color:#fff; font-weight:900; }
+.check-text { font-size:13px; color:#ccc; line-height:1.5; }
+.check-item.checked .check-text { color:#666; text-decoration:line-through; }
+
+/* INFO BOX */
+.info-box { background:rgba(255,75,43,0.05); border:1px solid rgba(255,75,43,0.18); border-radius:10px; padding:14px 16px; font-size:13px; color:#ccc; line-height:1.7; margin-bottom:10px; }
+.info-box strong { color:var(--red); }
+.info-box.gold { background:rgba(245,197,24,0.05); border-color:rgba(245,197,24,0.18); }
+.info-box.gold strong { color:var(--gold); }
+.info-box.green { background:rgba(57,255,20,0.05); border-color:rgba(57,255,20,0.18); }
+.info-box.green strong { color:var(--green); }
+.info-box.blue { background:rgba(0,210,255,0.05); border-color:rgba(0,210,255,0.18); }
+.info-box.blue strong { color:var(--blue); }
+
+/* AFFIRM */
+.affirm-box { background:rgba(255,75,43,0.06); border:1px solid rgba(255,75,43,0.25); border-radius:12px; padding:26px; text-align:center; min-height:90px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.affirm-text { font-size:16px; line-height:1.7; color:#ddd; font-style:italic; transition:opacity 0.4s; }
+
+/* FORMS */
+textarea { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:14px; font-size:14px; font-family:'Barlow',sans-serif; resize:vertical; min-height:90px; transition:0.3s; line-height:1.6; }
+textarea:focus { outline:none; border-color:var(--red); background:rgba(255,75,43,0.03); }
+textarea::placeholder { color:#555; }
+label { display:block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#bbb; margin-bottom:8px; }
+input[type=text] { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+input[type=text]:focus { border-color:var(--red); }
+input[type=text]::placeholder { color:#555; }
+select { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--glass-border); border-radius:10px; color:#fff; padding:12px 14px; font-size:14px; font-family:'Barlow',sans-serif; transition:0.3s; outline:none; margin-bottom:10px; }
+select:focus { border-color:var(--red); }
+select option { background:#111; }
+
+.btn { padding:12px 24px; border-radius:8px; border:none; cursor:pointer; font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; text-transform:uppercase; letter-spacing:1px; transition:0.3s; }
+.btn-red { background:var(--red); color:#fff; }
+.btn-red:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.btn-outline { background:var(--glass); border:1px solid var(--glass-border); color:#fff; }
+.btn-outline:hover { border-color:var(--red); color:var(--red); }
+.btn-green { background:var(--green); color:#000; }
+.btn-gold { background:var(--gold); color:#000; }
+.btn-sm { padding:8px 16px; font-size:13px; }
+
+/* BAR */
+.bar-wrap { height:8px; border-radius:8px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:4px; }
+.bar-fill { height:100%; border-radius:8px; transition:width 0.5s; }
+
+.step-divider { height:1px; background:var(--glass-border); margin:32px 0; }
+
+.log-item { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; padding:14px; border-radius:10px; margin-bottom:10px; background:rgba(255,75,43,0.03); border:1px solid rgba(255,75,43,0.12); transition:0.3s; }
+.log-item:hover { border-color:rgba(255,75,43,0.25); }
+.li-left { flex:1; }
+.li-date { font-size:11px; color:#555; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+.li-title { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--red); }
+.li-note { font-size:13px; color:#777; margin-top:4px; line-height:1.5; }
+.li-del { background:none; border:none; color:#333; cursor:pointer; font-size:18px; transition:0.2s; }
+.li-del:hover { color:var(--red); }
+
+.summary-strip { position:sticky; bottom:0; z-index:50; background:rgba(0,0,0,0.93); backdrop-filter:blur(20px); border-top:1px solid rgba(255,75,43,0.2); padding:14px 40px; display:flex; gap:30px; align-items:center; flex-wrap:wrap; }
+.summary-item { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.summary-val { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--red); line-height:1; }
+.summary-key { font-size:9px; text-transform:uppercase; letter-spacing:1px; color:#666; }
+.summary-save { margin-left:auto; }
+
+.toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(100px); background:var(--red); color:#fff; padding:11px 26px; border-radius:30px; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:900; text-transform:uppercase; letter-spacing:1px; z-index:999; white-space:nowrap; transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+@media(max-width:768px){
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .full{grid-column:1;}
+  .page-header,.main,.date-nav{padding-left:16px;padding-right:16px;}
+  nav{padding:16px;}
+  .summary-strip{position:fixed;bottom:0;left:0;right:0;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);padding:16px;gap:16px;z-index:200;}
+  .summary-strip.open{transform:translateY(0);}
+  .summary-toggle{display:flex !important;}
+  .main{padding-bottom:80px !important;}
+}
+.summary-toggle{display:none;position:fixed;bottom:16px;right:16px;z-index:201;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;font-size:20px;background:var(--red);color:#fff;box-shadow:0 4px 20px rgba(0,0,0,0.5);align-items:center;justify-content:center;transition:transform 0.2s;}
+.summary-toggle:active{transform:scale(0.92);}
+</style>
+</head>
+<body>
+<div class="bg-fixed"></div>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="logo">Coach L <span>Wellness</span></div>
+  <div class="nav-right">
+    <div class="user-chip">
+      <div class="avatar" id="navAvatar" style="opacity:0;">?</div>
+      <span id="navName" style="opacity:0;">...</span>
+    </div>
+    <a href="wellness2.html" class="btn-glass">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="time-greeting">
+    <div class="time-dot"></div>
+    <span id="timeGreeting">Good morning</span>
+    <span id="clockTime" style="color:var(--red);font-weight:700;"></span>
+  </div>
+  <div class="eyebrow">Life 10 · Work &amp; Career</div>
+  <h1 class="page-title">Burnout<br>&amp;<br><span>Beyond</span></h1>
+  <p class="page-sub">Burnout is not weakness. It is what happens when a capable person has been running on empty for too long — in a system that was never designed to sustain them. This space is for the diagnosis, the recovery, the boundaries, and the bigger question: what do I actually want my work life to look like?</p>
+</div>
+
+<div class="date-nav">
+  <button class="date-btn" onclick="shiftDate(-1)">‹</button>
+  <div class="date-str" id="dateStr"></div>
+  <button class="date-btn" onclick="shiftDate(1)">›</button>
+  <div class="week-strip" id="weekStrip"></div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1: WORK STATUS -->
+  <div class="step" style="animation-delay:0.05s;">
+    <div class="step-header">
+      <div class="step-num">Step 1</div>
+      <div>
+        <div class="step-title">Where Are You at Work Right Now?</div>
+        <div class="step-desc">Honest self-assessment is the beginning of every recovery. No shame in naming the truth.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="status-tiles">
+        <div class="status-tile" data-s="Thriving" onclick="selectStatus(this)"><span class="st-emoji">🚀</span><div class="st-label">Thriving</div><div class="st-desc">Energised, growing, loving it</div></div>
+        <div class="status-tile" data-s="Coasting" onclick="selectStatus(this)"><span class="st-emoji">😐</span><div class="st-label">Coasting</div><div class="st-desc">Fine, but not fulfilled</div></div>
+        <div class="status-tile" data-s="Grinding" onclick="selectStatus(this)"><span class="st-emoji">⚙️</span><div class="st-label">Grinding</div><div class="st-desc">Pushing hard, running on fumes</div></div>
+        <div class="status-tile" data-s="Burnt Out" onclick="selectStatus(this)"><span class="st-emoji">🔥</span><div class="st-label">Burnt Out</div><div class="st-desc">Empty, exhausted, done</div></div>
+        <div class="status-tile" data-s="Toxic Env" onclick="selectStatus(this)"><span class="st-emoji">☠️</span><div class="st-label">Toxic Env</div><div class="st-desc">The environment is the problem</div></div>
+        <div class="status-tile" data-s="Transitioning" onclick="selectStatus(this)"><span class="st-emoji">🌱</span><div class="st-label">Transitioning</div><div class="st-desc">Changing, deciding, in between</div></div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>What is your honest work reality right now?</label>
+          <textarea id="workNote" placeholder="e.g. I dread Monday mornings. I haven't felt motivated in over a year. I'm doing the work of three people and getting paid for one. My manager takes credit for everything I produce. I'm scared to leave because of the money but I'm dying inside..." style="min-height:110px;"></textarea>
+        </div>
+        <div>
+          <label>🏷️ What work challenges are live for you right now?</label>
+          <div class="tag-grid" id="workTags"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: BURNOUT DIAGNOSIS -->
+  <div class="step" style="animation-delay:0.1s;">
+    <div class="step-header">
+      <div class="step-num">Step 2</div>
+      <div>
+        <div class="step-title">Burnout Diagnosis — How Burned Out Are You?</div>
+        <div class="step-desc">Burnout is a clinical condition recognised by the WHO. It has three dimensions. Rate yourself honestly across each one.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="card card-red">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:12px;">🧠 What Is Burnout? (WHO Definition)</div>
+          <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:12px;">Burnout is defined by the World Health Organisation as a syndrome resulting from chronic workplace stress that has not been successfully managed. It is characterised by three dimensions — and all three must be present for a full burnout diagnosis.</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="info-box"><strong>1. Exhaustion.</strong> Feelings of energy depletion. Not tired-after-a-long-week. Bone-deep depletion that sleep does not fix.</div>
+            <div class="info-box"><strong>2. Cynicism / Depersonalisation.</strong> Increased mental distance from your job. Negative, detached, or indifferent feelings about your work, your colleagues, or your clients.</div>
+            <div class="info-box"><strong>3. Reduced efficacy.</strong> Feelings of reduced professional accomplishment. The sense that nothing you do matters or makes a difference. Difficulty concentrating. Reduced performance despite effort.</div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:16px;">📊 Rate Your Burnout Dimensions</div>
+          <div class="burnout-meter" id="burnoutMeters"></div>
+          <div style="background:rgba(255,75,43,0.07);border:1px solid rgba(255,75,43,0.2);border-radius:12px;padding:18px;text-align:center;margin-top:16px;">
+            <div style="font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#555;margin-bottom:6px;">Your Burnout Score</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:56px;font-weight:900;color:var(--red);line-height:1;" id="burnoutScore">0</div>
+            <div style="font-size:12px;color:#777;margin-top:4px;" id="burnoutLabel">Rate each dimension above</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">🔍 Burnout vs Stress — Know the Difference</div>
+      <div class="grid-3">
+        <div class="info-box"><strong>Stress</strong> is characterised by overengagement — too much emotion, urgency, and reaction. Burnout is characterised by disengagement — emptiness, numbness, and detachment. Stress feels overwhelming. Burnout feels hollow.</div>
+        <div class="info-box"><strong>Stress</strong> produces urgency and anxiety. Burnout produces hopelessness and helplessness. With stress, you still care — too much. With burnout, you have stopped caring, and you feel guilty about not caring.</div>
+        <div class="info-box"><strong>Stress</strong> can be managed with rest, boundaries, and recovery. Burnout requires a more significant intervention — sometimes including time away, professional support, and a fundamental reassessment of your work arrangement.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: TOXIC WORKPLACE -->
+  <div class="step" style="animation-delay:0.15s;">
+    <div class="step-header">
+      <div class="step-num">Step 3</div>
+      <div>
+        <div class="step-title">Is Your Workplace Toxic? — Know the Signs</div>
+        <div class="step-desc">Not all burnout is your fault. Some environments are genuinely harmful. Naming what is happening is the first step to deciding what to do about it.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="panel-grid" id="toxicPanels"></div>
+
+      <div style="margin-top:24px;" class="card card-orange">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--orange);margin-bottom:14px;">⚖️ Your Labour Rights in South Africa</div>
+        <div class="grid-2">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="info-box" style="background:rgba(255,140,0,0.05);border-color:rgba(255,140,0,0.2);"><strong style="color:var(--orange);">The Labour Relations Act (LRA)</strong> protects employees from unfair dismissal and unfair labour practices. If you have been dismissed, demoted, or disciplined unfairly, you can refer a dispute to the CCMA (Commission for Conciliation, Mediation and Arbitration) — free of charge.</div>
+            <div class="info-box" style="background:rgba(255,140,0,0.05);border-color:rgba(255,140,0,0.2);"><strong style="color:var(--orange);">The Basic Conditions of Employment Act (BCEA)</strong> sets minimum standards: working hours (max 45 hrs/week), overtime pay, leave entitlements (21 days annual, 30 days sick per 3 years), and maternity leave (4 months, unpaid but UIF-eligible).</div>
+            <div class="info-box" style="background:rgba(255,140,0,0.05);border-color:rgba(255,140,0,0.2);"><strong style="color:var(--orange);">The Employment Equity Act</strong> prohibits unfair discrimination based on race, gender, disability, and other grounds. If you have been passed over for promotion, paid less, or treated differently based on any protected characteristic — this is actionable.</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div class="info-box" style="background:rgba(255,140,0,0.05);border-color:rgba(255,140,0,0.2);"><strong style="color:var(--orange);">Constructive dismissal</strong> is when an employer makes your working conditions so intolerable that you are effectively forced to resign. This is treated as an unfair dismissal under SA law. Document everything before you leave — it builds your case.</div>
+            <div class="info-box" style="background:rgba(255,140,0,0.05);border-color:rgba(255,140,0,0.2);"><strong style="color:var(--orange);">Bullying and harassment</strong> at work can be referred to the CCMA as an unfair labour practice. Sexual harassment is covered under the Code of Good Practice on the Handling of Sexual Harassment Cases.</div>
+            <div class="info-box" style="background:rgba(255,140,0,0.05);border-color:rgba(255,140,0,0.2);"><strong style="color:var(--orange);">CCMA Contact:</strong> 0861 16 2762 or ccma.org.za — Free dispute resolution. No lawyers needed. All workers regardless of salary are eligible.</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <label>📝 What toxic patterns are you experiencing at work right now?</label>
+          <textarea id="toxic_note" placeholder="e.g. My manager micromanages everything and takes credit for my work. I have been passed over for promotion three times while less experienced colleagues were promoted. I am the only Black woman in senior leadership and I am treated differently in every meeting. I am expected to be available 24/7..." style="min-height:90px;"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4: BOUNDARIES AT WORK -->
+  <div class="step" style="animation-delay:0.2s;">
+    <div class="step-header">
+      <div class="step-num">Step 4</div>
+      <div>
+        <div class="step-title">Boundaries at Work — Protect Your Energy</div>
+        <div class="step-desc">Boundaries at work are not about doing less. They are about doing what matters — sustainably. Without them, the workplace will take everything you have and ask for more.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-red">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">🚧 Why Work Boundaries Are Hard</div>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:16px;">
+          <div class="info-box"><strong>The Black tax hustle trap.</strong> Many Black South African professionals grew up watching their parents overwork to survive. The message was clear: you have to work twice as hard to get half as far. While this drive creates success, it also creates a deep inability to stop — even when your body and mind are begging you to.</div>
+          <div class="info-box"><strong>Fear of being seen as "difficult."</strong> For women and for Black professionals in particular, saying no, pushing back, or asserting limits is frequently interpreted as aggression or a bad attitude. The fear of this perception keeps millions of people overextended.</div>
+          <div class="info-box"><strong>Identity tied to productivity.</strong> If your worth as a person is connected to how much you produce, then resting feels like failing. This belief system — often formed in childhood — is one of the primary drivers of burnout.</div>
+          <div class="info-box"><strong>The "strong one" tax.</strong> If you are known as capable, you will attract more work. High performers are often punished with more responsibility without proportional compensation — because the organisation knows you'll do it.</div>
+        </div>
+        <label>🚧 What boundary do I need to draw or reinforce at work right now?</label>
+        <textarea id="boundary_note" placeholder="e.g. I need to stop answering work messages after 7pm. I need to stop volunteering for every project because I'm afraid of being passed over. I need to start saying 'let me check my capacity' instead of automatically saying yes. I need to stop accepting being underpaid..." style="min-height:90px;"></textarea>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">💡 How to Set Boundaries at Work — Practically</div>
+        <div class="panel-grid" id="boundaryPanels" style="grid-template-columns:1fr;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: RECOVERY FROM BURNOUT -->
+  <div class="step" style="animation-delay:0.25s;">
+    <div class="step-header">
+      <div class="step-num">Step 5</div>
+      <div>
+        <div class="step-title">Recovering from Burnout — What Actually Works</div>
+        <div class="step-desc">Recovery from burnout is not a weekend off. It is a systematic reintroduction of what the burnout depleted. This takes weeks to months — not days.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="panel-grid" id="recoveryPanels"></div>
+
+      <div style="margin-top:24px;" class="card card-green full">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;text-transform:uppercase;color:var(--green);margin-bottom:14px;">✅ My Burnout Recovery Plan — This Week</div>
+        <div class="grid-2">
+          <div>
+            <label>What am I removing or reducing this week?</label>
+            <textarea id="recovery_remove" placeholder="e.g. I will not check emails after 7pm. I will decline the optional Thursday meeting. I will not take on the new project my manager mentioned until my current load is manageable..." style="min-height:80px;margin-bottom:12px;"></textarea>
+            <label>What am I protecting or adding this week?</label>
+            <textarea id="recovery_add" placeholder="e.g. I will leave work on time every day this week — no matter what. I will take a real lunch break away from my desk. I will spend Saturday morning doing something I enjoy without thinking about work..." style="min-height:80px;"></textarea>
+          </div>
+          <div id="recoveryCommits"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6: CAREER TRANSITION & PURPOSE -->
+  <div class="step" style="animation-delay:0.3s;">
+    <div class="step-header">
+      <div class="step-num">Step 6</div>
+      <div>
+        <div class="step-title">Career Transition &amp; Finding Purpose at Work</div>
+        <div class="step-desc">Sometimes burnout is a sign you need to recover. Sometimes it is a sign you need to leave. Sometimes it is asking a bigger question: what do I actually want my working life to be?</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card card-purple">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:14px;">🔮 The Ikigai Framework — Find Your Intersection</div>
+        <p style="font-size:13px;color:#ccc;line-height:1.8;margin-bottom:14px;">Ikigai is a Japanese concept meaning "reason for being." It sits at the intersection of four questions. Where all four overlap is where sustainable, meaningful work lives.</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">What do you love?</div>
+            <textarea id="ikigai_love" placeholder="What activities make you lose track of time? What topics could you read about for hours? What did you love doing before the world told you to be practical?..." style="min-height:70px;"></textarea>
+          </div>
+          <div style="background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">What are you good at?</div>
+            <textarea id="ikigai_good" placeholder="What do people consistently come to you for? What comes naturally to you that others find difficult? What has every manager or mentor said you're exceptional at?..." style="min-height:70px;"></textarea>
+          </div>
+          <div style="background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">What does the world need?</div>
+            <textarea id="ikigai_need" placeholder="What problems do you see that nobody is solving well? What change would you make in your industry, community, or country if you could? What gap keeps frustrating you?..." style="min-height:70px;"></textarea>
+          </div>
+          <div style="background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;text-transform:uppercase;color:var(--purple);margin-bottom:8px;">What can you be paid for?</div>
+            <textarea id="ikigai_paid" placeholder="What skills do you have that people or organisations will pay for? What have you been paid for in the past that you could do differently or better? What is marketable about you?..." style="min-height:70px;"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">🗺️ Your Career Clarity Questions</div>
+
+        <label>If money were not a factor — what would you do with your working hours?</label>
+        <textarea id="career_if" placeholder="e.g. I would coach young people. I would build my own business. I would do the same work but in a different environment — one that respects me. I would write. I would do something with my hands..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What would staying in your current role for 5 more years cost you?</label>
+        <textarea id="career_cost" placeholder="e.g. My health — I am already showing physical symptoms of stress. My sense of self — I am becoming someone I don't recognise. My family — I am never present. My dreams — I have stopped believing they are possible..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What would it look like to leave — and what is actually stopping you?</label>
+        <textarea id="career_leave" placeholder="e.g. The money — I am the primary earner. Fear — I don't know if I'm good enough to do something else. The golden handcuffs — the package is too good to walk away from, but the cost to my soul is higher. I don't have a plan..." style="min-height:80px;margin-bottom:12px;"></textarea>
+
+        <label>What is one career move you know you need to make but keep postponing?</label>
+        <textarea id="career_move" placeholder="e.g. Having the conversation about my salary. Updating my CV and starting to apply. Registering my business. Having the difficult conversation with my manager. Enrolling in the course I've been putting off for 2 years..." style="min-height:70px;"></textarea>
+
+        <div style="margin-top:16px;" class="card card-gold">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;text-transform:uppercase;color:var(--gold);margin-bottom:10px;">💡 Leaving vs Staying — How to Decide</div>
+          <div class="panel-grid" id="leavingPanels" style="grid-template-columns:1fr;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: REFLECT + AFFIRM + LOG -->
+  <div class="step" style="animation-delay:0.35s;">
+    <div class="step-header">
+      <div class="step-num">Step 7</div>
+      <div>
+        <div class="step-title">Reflect, Commit &amp; Affirm</div>
+        <div class="step-desc">What you do with this clarity today matters. One decision. One boundary. One conversation. That is where it starts.</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <label>🔥 The one work thing I am addressing this week — no more postponing</label>
+        <textarea id="r_action" placeholder="e.g. I am going to send the email to HR about the pay equity issue. I am going to have the boundary conversation with my manager on Monday. I am going to apply for one role this week — just one. I am going to update my LinkedIn..." style="min-height:80px;margin-bottom:14px;"></textarea>
+
+        <label>🧘 How I will protect my energy this week outside of work</label>
+        <textarea id="r_energy" placeholder="e.g. No work emails after 7pm. At least one hour on Saturday doing something I love. Telling my family I need one evening of quiet this week. Going to bed by 10pm three nights..." style="min-height:70px;margin-bottom:14px;"></textarea>
+
+        <label>🔮 In 2 years, what do I want my working life to look like?</label>
+        <textarea id="r_vision" placeholder="e.g. I am running my own business or consulting. I am in a role that uses my full potential and pays me accordingly. I have a manager who sees me. I work from home 3 days a week. I have time for my family and my health. I wake up on Monday not dreading the day..." style="min-height:90px;margin-bottom:14px;"></textarea>
+
+        <label>💪 What have I survived at work that I haven't given myself credit for?</label>
+        <textarea id="r_survived" placeholder="e.g. I have stayed professional through situations that would have broken most people. I have delivered results with a fraction of the support and resources my colleagues had. I have navigated racism, sexism, and office politics without losing my integrity. I am still here..." style="min-height:80px;"></textarea>
+      </div>
+
+      <div class="card card-red" style="display:flex;flex-direction:column;gap:20px;">
+        <div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:var(--red);margin-bottom:14px;">🔥 Career Affirmation</div>
+          <div class="affirm-box"><div class="affirm-text" id="affirmText"></div></div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-outline" onclick="newAffirm()" style="flex:1;font-size:13px;padding:9px;">✦ New</button>
+            <button class="btn btn-outline" onclick="affirmByStatus()" style="flex:1;font-size:13px;padding:9px;">✦ Match Status</button>
+          </div>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;text-transform:uppercase;color:#bbb;margin-bottom:14px;">📅 Work Journal — Recent Entries</div>
+          <div id="workLog" style="margin-bottom:16px;"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-red" onclick="saveEntry()">🔥 Save Today's Entry</button>
+            <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-divider"></div>
+  <div style="text-align:center;padding:20px 0 160px;">
+    <button class="btn btn-red" style="font-size:20px;padding:18px 56px;" onclick="saveEntry()">🔥 Save Today's Entry</button>
+    &nbsp;&nbsp;
+    <button class="btn btn-outline" onclick="loadEntry()">↺ Load Saved Entry</button>
+  </div>
+</div>
+
+<button class="summary-toggle" id="summaryToggle" onclick="toggleSummary()" data-icon="🔥">🔥</button>
+<div class="summary-strip" id="summaryStrip">
+  <div class="summary-item"><div class="summary-val" id="s_status">—</div><div class="summary-key">Work Status</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_burnout">0</div><div class="summary-key">Burnout Score</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_tags">0</div><div class="summary-key">Active Issues</div></div>
+  <div class="summary-item"><div class="summary-val" id="s_commits">0</div><div class="summary-key">Commitments</div></div>
+  <div class="summary-save"><button class="btn btn-red" style="font-size:14px;padding:10px 24px;" onclick="saveEntry()">Save ✓</button></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const session=JSON.parse(localStorage.getItem('wl_session')||'{}');
+if(!session.loggedIn) window.location.href='wellness1.html';
+const userEmail=session.email,userName=session.name||'Friend',firstName=userName.split(' ')[0];
+document.getElementById('navName').textContent=firstName;
+document.getElementById('navAvatar').textContent=firstName.charAt(0).toUpperCase();
+document.getElementById('navName').style.opacity=document.getElementById('navAvatar').style.opacity='1';
+function key(s){return `wl_${userEmail}_${s}`;}
+
+function updateClock(){
+  const now=new Date(),h=now.getHours();
+  document.getElementById('timeGreeting').textContent=h<12?`Good morning, ${firstName}`:h<17?`Good afternoon, ${firstName}`:`Good evening, ${firstName}`;
+  document.getElementById('clockTime').textContent=String(h).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+}
+updateClock();setInterval(updateClock,30000);
+
+let currentDate=new Date();
+function dk(d){return d.toISOString().slice(0,10);}
+function fmt(d){return d.toLocaleDateString('en-ZA',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}
+function shiftDate(n){currentDate.setDate(currentDate.getDate()+n);renderDate();loadEntry();}
+function renderDate(){
+  document.getElementById('dateStr').textContent=fmt(currentDate);
+  const strip=document.getElementById('weekStrip');strip.innerHTML='';
+  for(let i=-3;i<=3;i++){
+    const d=new Date(currentDate);d.setDate(d.getDate()-d.getDay()+i+1);
+    const chip=document.createElement('div');chip.className='wday'+(dk(d)===dk(currentDate)?' active':'');
+    chip.innerHTML=`<span class="wday-n">${d.getDate()}</span><span class="wday-d">${d.toLocaleDateString('en',{weekday:'short'})}</span>`;
+    chip.onclick=()=>{currentDate=new Date(d);renderDate();loadEntry();};
+    strip.appendChild(chip);
+  }
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let state={workStatus:'',workNote:'',workTags:[],toxic_note:'',boundary_note:'',recovery_remove:'',recovery_add:'',ikigai_love:'',ikigai_good:'',ikigai_need:'',ikigai_paid:'',career_if:'',career_cost:'',career_leave:'',career_move:'',r_action:'',r_energy:'',r_vision:'',r_survived:'',commitChecked:[],burnoutScores:[5,5,5],ts:''};
+
+function selectStatus(el){
+  document.querySelectorAll('.status-tile').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');state.workStatus=el.dataset.s;
+  document.getElementById('s_status').textContent=el.dataset.s.split(' ')[0];
+}
+
+// ── WORK TAGS ─────────────────────────────────────────────────────────────────
+const WORK_TAGS=['Full burnout','Emotional exhaustion','Chronic overwork','Underpaid / undervalued','Toxic manager','Hostile colleagues','Racial discrimination','Gender discrimination','No work-life balance','Career plateau','Imposter syndrome','Being managed out','Wanting to resign','Starting a business','Career change needed','Workplace bullying','No recognition','Doing work of 3 people','Performance anxiety','Dreading Mondays'];
+function renderWorkTags(){
+  const w=document.getElementById('workTags');
+  WORK_TAGS.forEach(tag=>{
+    const t=document.createElement('div');t.className='ttag';t.textContent=tag;t.dataset.tag=tag;
+    t.onclick=()=>{
+      t.classList.toggle('active');
+      if(t.classList.contains('active')){if(!state.workTags.includes(tag))state.workTags.push(tag);}
+      else state.workTags=state.workTags.filter(x=>x!==tag);
+      document.getElementById('s_tags').textContent=state.workTags.length;
+    };
+    w.appendChild(t);
+  });
+}
+
+// ── BURNOUT METERS ────────────────────────────────────────────────────────────
+const BURNOUT_DIMS=[
+  {label:'Exhaustion',desc:'How depleted is your energy?',low:'Energised',high:'Completely empty'},
+  {label:'Cynicism',desc:'How detached do you feel from your work?',low:'Still care',high:'Completely numb'},
+  {label:'Reduced Efficacy',desc:'How much do you feel you\'re accomplishing?',low:'Productive',high:'Nothing matters'},
+];
+const BURNOUT_COLORS=['var(--red)','var(--orange)','var(--gold)'];
+function renderBurnoutMeters(){
+  const w=document.getElementById('burnoutMeters');
+  BURNOUT_DIMS.forEach((d,i)=>{
+    const pct=Math.round(state.burnoutScores[i]/10*100);
+    const div=document.createElement('div');div.style.marginBottom='20px;';
+    div.innerHTML=`
+      <div class="bm-label"><span>${d.label} — <em style="color:#555;font-style:normal;">${d.desc}</em></span><span id="bv_${i}" style="color:${BURNOUT_COLORS[i]};font-weight:900;">${state.burnoutScores[i]}/10</span></div>
+      <div class="bm-bar-wrap"><div class="bar-fill" id="bbar_${i}" style="width:${pct}%;background:${BURNOUT_COLORS[i]};"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:#444;margin-bottom:8px;"><span>${d.low}</span><span>${d.high}</span></div>
+      <input type="range" class="red-range" min="1" max="10" value="${state.burnoutScores[i]}" style="background:linear-gradient(to right,rgba(255,255,255,0.06),${BURNOUT_COLORS[i]});" oninput="updateBurnout(${i},this.value)">
+    `;
+    w.appendChild(div);
+  });
+}
+function updateBurnout(i,val){
+  state.burnoutScores[i]=parseInt(val);
+  document.getElementById('bv_'+i).textContent=val+'/10';
+  document.getElementById('bbar_'+i).style.width=Math.round(val/10*100)+'%';
+  const total=state.burnoutScores.reduce((a,b)=>a+b,0);
+  const score=Math.round(total/3);
+  document.getElementById('burnoutScore').textContent=score+'/10';
+  document.getElementById('s_burnout').textContent=score+'/10';
+  const labels=['Low — Monitor and maintain boundaries.','Moderate — Rest, reduce load, set boundaries now.','High — Urgent intervention needed. Seek support.','Severe — You are in a crisis. Please get help and rest.'];
+  document.getElementById('burnoutLabel').textContent=total<=10?labels[0]:total<=20?labels[1]:total<=25?labels[2]:labels[3];
+}
+
+// ── TOXIC PANELS ──────────────────────────────────────────────────────────────
+const TOXIC_SIGNS=[
+  {icon:'👑',title:'Narcissistic Leadership',desc:'A manager who makes work about them — not the work.',
+    expand:`<strong>Signs:</strong><br>
+    → Takes credit for your ideas and work without acknowledgement<br>
+    → Humiliates employees publicly; praises privately only to maintain loyalty<br>
+    → Changes rules and goalposts to ensure you cannot succeed without them<br>
+    → Surrounds themselves with people who agree — retaliate against independent thinkers<br>
+    → Your success feels threatening to them<br><br>
+    <strong>What to do:</strong> Document everything. Never share ideas verbally first — put them in writing (email/message) so there is a record of origin. Build relationships with people above and across your manager. Consider whether the organisation shares the values of this leader or whether there are channels above them.<br><br>
+    <em>Narcissistic managers rarely change. The decision is whether to stay and manage around them, or leave.</em>`},
+  {icon:'🎭',title:'Workplace Favouritism',desc:'Not all employees are treated equally — and everyone knows it.',
+    expand:`<strong>Signs:</strong><br>
+    → Consistent promotions, projects, and recognition for the same people — regardless of merit<br>
+    → Different rules applied to different employees (discipline, flexibility, standards)<br>
+    → Social exclusion of certain employees from informal networks and information<br>
+    → Performance reviews that don't reflect actual performance<br><br>
+    <strong>The racial dimension in SA:</strong> Favouritism in South African workplaces is frequently racialised — white or coloured employees consistently advanced over more qualified Black employees, often in organisations still compliant with EE targets on paper but not in practice.<br><br>
+    <strong>What to do:</strong> Build your paper trail — document your outputs, projects delivered, and contributions. Request formal feedback in writing. If there is a pattern of racial discrimination, the Employment Equity Act and the CCMA are available to you.`},
+  {icon:'📧',title:'Always-On Culture',desc:'The expectation that you are available 24/7.',
+    expand:`<strong>Signs:</strong><br>
+    → Messages at 10pm that expect responses<br>
+    → Annual leave that is never truly off — you're still on your phone<br>
+    → Guilt or punishment for not being available outside hours<br>
+    → Meetings scheduled with no notice and an implicit expectation to attend<br>
+    → "That's just how it works here" as a justification for unsustainable expectations<br><br>
+    <strong>The science:</strong> Research consistently shows that always-on culture reduces productivity, increases errors, accelerates burnout, and damages physical health. It is not a sign of a high-performing culture — it is a sign of a poorly managed one.<br><br>
+    <strong>What to do:</strong> Set a clear end-of-day. Communicate it once: "I am available until 6pm on weekdays. For urgent matters, please call." Then maintain it consistently. The first week will test it. After that, people adjust to the boundary you enforce.`},
+  {icon:'😶',title:'Psychological Unsafety',desc:'Where you cannot speak truth without consequences.',
+    expand:`<strong>Signs:</strong><br>
+    → Ideas are not welcomed from certain people or levels<br>
+    → Mistakes are punished rather than learned from<br>
+    → There is a "correct" opinion on everything and deviation is noted<br>
+    → People whisper — nobody says the true thing in the room<br>
+    → You self-censor constantly to protect your position<br><br>
+    <strong>What psychological safety is:</strong> Coined by Amy Edmondson at Harvard, psychological safety is the belief that you can speak up, take risks, and make mistakes without fear of punishment or humiliation. Teams with high psychological safety consistently outperform those without it.<br><br>
+    <strong>What to do:</strong> You cannot create psychological safety alone. If leadership does not model it, it will not exist. Assess whether this is a team issue (fixable) or a cultural one (rarely fixable without leadership change).`},
+  {icon:'⚖️',title:'Racial & Gender Microaggressions',desc:'The daily cuts that accumulate into something serious.',
+    expand:`<strong>What microaggressions look like at work:</strong><br>
+    → Being interrupted or talked over consistently — especially in meetings<br>
+    → Your ideas dismissed, then praised when a colleague (usually white or male) restates them<br>
+    → Being mistaken for support staff, the tea lady, or a junior despite your seniority<br>
+    → Being asked "where are you really from?" or told you "speak so well"<br>
+    → Hair, dress, or features commented on in ways that wouldn't happen to others<br>
+    → Being the "diversity hire" — a label used to undermine your legitimacy<br>
+    → Token inclusion — invited to meetings to look diverse, not to contribute<br><br>
+    <strong>The cumulative effect:</strong> Each individual incident may seem minor. The pattern — experienced daily, over years — is psychologically devastating. Research shows that Black professionals experience significantly higher rates of burnout than white counterparts in the same roles, primarily due to the additional labour of navigating racism.<br><br>
+    <strong>What to do:</strong> Name it when it happens — calmly and directly. "That's not accurate" or "I'd like to finish my point." Document it. Find allies. Know your rights under the Employment Equity Act.`},
+  {icon:'🏃',title:'Talent Exploitation',desc:'When your capability is used without fair reward.',
+    expand:`<strong>Signs:</strong><br>
+    → You are consistently given more responsibility than your title suggests — without compensation<br>
+    → Your skills are used freely but your career progression is stalled<br>
+    → You are told you're "not ready" for promotion while doing the work of someone two levels above you<br>
+    → Every time someone leaves, their work lands on you<br>
+    → You have become indispensable — which means they need you too much to promote you<br><br>
+    <strong>The South African dimension:</strong> This pattern disproportionately affects Black professionals, particularly Black women, who are overrepresented in organisations doing senior work at junior levels — a phenomenon sometimes called "invisible labour" or the "broken rung."<br><br>
+    <strong>What to do:</strong><br>
+    → Document the gap between your responsibilities and your title/pay<br>
+    → Ask directly: "What does promotion look like, and what is the timeline?"<br>
+    → Stop doing the senior work for free — unless there is a clear, written path to recognition<br>
+    → Know what the market pays for what you do. Use this in salary negotiations.`},
+];
+function renderToxicPanels(){
+  const g=document.getElementById('toxicPanels');
+  TOXIC_SIGNS.forEach(p=>{
+    const card=document.createElement('div');card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── BOUNDARY PANELS ───────────────────────────────────────────────────────────
+const BOUNDARY_PANELS=[
+  {icon:'🕖',title:'Time Boundaries',desc:'Define when you are and are not available.',
+    expand:`<strong>The boundary:</strong> Set a clear end-of-day time and communicate it once. "I'm available until 6pm on weekdays. For urgent matters, please call."<br><br>
+    <strong>Protecting it:</strong> Turn off work notifications after hours. Remove email from your personal phone if possible. When you do work outside hours — note it and claim it back (TOIL — time off in lieu).<br><br>
+    <strong>When pushed:</strong> "I'll pick this up first thing tomorrow morning when I can give it my full attention." This is a professional response that reframes your boundary as serving the work — not just yourself.<br><br>
+    <em>The first time you hold the boundary is the hardest. By the third time, people have adjusted.</em>`},
+  {icon:'🙅',title:'Saying No Professionally',desc:'You are allowed to decline. Here\'s how.',
+    expand:`Many professionals struggle with "no" because they were never taught professional alternatives. Here are frameworks:<br><br>
+    <strong>"Yes, and..." — Reframe the ask:</strong> "Yes, I can take that on. Which of my current priorities should I deprioritise to make room for it?" This puts the decision back with the manager — not on you to absorb it.<br><br>
+    <strong>"Let me check my capacity":</strong> Never say yes in the moment. "Let me review my current commitments and come back to you by end of day." This buys you time and removes the pressure of immediate agreement.<br><br>
+    <strong>The direct no:</strong> "My plate is currently full and I wouldn't be able to do this justice. I'd suggest [alternative person or approach]."<br><br>
+    <em>Saying no professionally is not a career risk. Saying yes to everything and doing it all badly — is.</em>`},
+  {icon:'📵',title:'Communication Boundaries',desc:'Protect your attention — it is your most valuable resource.',
+    expand:`<strong>After-hours messages:</strong> You are not obligated to respond to non-urgent work messages outside working hours. A simple policy: read in the morning, respond at start of business.<br><br>
+    <strong>Meeting boundaries:</strong> Push back on meetings with no agenda. "Could you share the agenda beforehand so I can prepare?" makes it harder to waste your time. Decline optional meetings during your most productive hours.<br><br>
+    <strong>Open-door traps:</strong> If you are constantly interrupted, create structured availability. "I'm heads-down until noon — I'll be free after that." or close your office/headphones as a signal.<br><br>
+    <strong>Group chats:</strong> Mute non-urgent group chats. You do not need to be constantly monitoring channels. Batch-check at set times.<br><br>
+    <em>Your attention is not a resource your employer owns 24/7. Guard it deliberately.</em>`},
+  {icon:'💰',title:'Compensation Boundaries',desc:'Know your worth and defend it.',
+    expand:`<strong>The data first:</strong> Before any salary conversation, know your market rate. Use LinkedIn Salary, Glassdoor, Payscale, or speak to a recruiter in your field. Know what your role pays in the market.<br><br>
+    <strong>The ask:</strong> "Based on my research, the market rate for this role with my experience is R[X]. I'd like to discuss aligning my compensation with this." Make it about data — not need.<br><br>
+    <strong>The evaluation gap:</strong> If you are consistently rated as excellent but not compensated as such — name this directly. "I notice a gap between my performance reviews and my compensation trajectory. I'd like to understand what is driving this."<br><br>
+    <strong>When they say no:</strong> "I understand. Can we agree on a timeline to revisit this — say in 3 months — and what milestones would support that?" Get the conversation on a formal schedule.<br><br>
+    <em>Every year you stay underpaid is a year that underpayment compounds. This is one of the most impactful financial decisions you will ever make.</em>`},
+];
+function renderBoundaryPanels(){
+  const g=document.getElementById('boundaryPanels');
+  BOUNDARY_PANELS.forEach(p=>{
+    const card=document.createElement('div');card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── RECOVERY PANELS ───────────────────────────────────────────────────────────
+const RECOVERY_PANELS=[
+  {icon:'😴',title:'Rest — Real Rest',desc:'Not scrolling. Not watching. Actual neurological rest.',
+    expand:`Burnout recovery starts with rest — but not passive screen-based rest, which maintains the brain in an alert, processing state. Recovery requires genuine neurological downtime.<br><br>
+    <strong>What real rest looks like:</strong><br>
+    → Sleep 8+ hours — non-negotiable in burnout recovery. Sleep is when cortisol resets.<br>
+    → Time in nature — even 20 minutes in a park or garden reduces cortisol measurably<br>
+    → Creative rest — looking at beauty, art, music without a goal<br>
+    → Social rest — time with people who give energy rather than drain it<br>
+    → Sensory rest — silence. No music, no podcasts, no input. Just quiet.<br>
+    → Spiritual rest — connection to something larger than your work problems<br><br>
+    <em>Most burned-out people are not resting. They are switching from one form of stimulation to another. Genuine rest is uncomfortable at first — because the depletion becomes visible when you stop moving. That's the point.</em>`},
+  {icon:'🚫',title:'Remove the Source',desc:'Recovery is impossible in the same conditions that caused the burnout.',
+    expand:`This is the hardest truth in burnout recovery: you cannot fully recover while still in the environment that caused the burnout at the same intensity. Something has to change.<br><br>
+    <strong>This might mean:</strong><br>
+    → Taking medical leave — burnout is recognised as a health condition<br>
+    → Reducing hours formally if possible<br>
+    → Delegating or dropping responsibilities that are above your pay grade<br>
+    → Having a direct conversation with your manager about your load<br>
+    → Taking annual leave properly — fully off, unreachable<br>
+    → In severe cases — resigning, if the financial position allows<br><br>
+    <strong>What your doctor can do:</strong> In South Africa, a GP can certify burnout as a stress-related illness and provide a sick certificate. Your employer cannot dismiss you for illness absence. Know your rights.<br><br>
+    <em>The brave thing is not to keep going. The brave thing is to stop long enough to actually recover.</em>`},
+  {icon:'🏃',title:'Movement',desc:'Exercise is the single most evidence-based burnout intervention.',
+    expand:`The research is unambiguous: regular physical exercise is as effective as antidepressants for mild-to-moderate depression and anxiety — and is one of the most powerful tools for burnout recovery.<br><br>
+    <strong>Why it works:</strong> Exercise reduces cortisol, releases endorphins and BDNF (brain-derived neurotrophic factor — literally regrows neurons), improves sleep quality, and creates a sense of agency in a situation where you may feel powerless.<br><br>
+    <strong>What counts:</strong> 20–30 minutes of moderate exercise, 3–5 times per week. This does not mean the gym. Walking counts. Dancing in your living room counts. Swimming, cycling, yoga — all count.<br><br>
+    <strong>Starting when depleted:</strong> Don't start with an ambitious programme. Start with a 15-minute walk. The goal in early recovery is to move the body, not to achieve performance metrics.<br><br>
+    <em>You will not feel like exercising when you are burned out. Do it anyway. The return on energy is almost immediate.</em>`},
+  {icon:'🤝',title:'Connection',desc:'Isolation accelerates burnout. Community recovers it.',
+    expand:`Burnout creates a withdrawal instinct — you want to isolate because everything feels like too much. But social isolation accelerates burnout rather than relieving it. Human connection is one of the primary biological mechanisms of stress recovery.<br><br>
+    <strong>What this doesn't mean:</strong> You don't have to be social in large groups or perform happiness. This is about quality connection — not quantity.<br><br>
+    <strong>What helps:</strong><br>
+    → One person who knows what's really going on and you can speak freely with<br>
+    → A professional — therapist, coach, or counsellor — for structured support<br>
+    → Your faith community, if faith is part of your life<br>
+    → People who make you laugh — laughter is neurologically restorative<br><br>
+    <strong>Therapy in SA:</strong> The South African Depression and Anxiety Group (SADAG) has a counselling line at 0800 456 789. Online therapy via platforms like PsychFind, BetterHelp, or Therapyin.Africa is increasingly accessible.<br><br>
+    <em>You were not designed to carry this alone. Asking for support is not weakness. It is the fastest route to recovery.</em>`},
+  {icon:'🎯',title:'Reclaim Meaning',desc:'Burnout hollows out purpose. Recovery requires rebuilding it.',
+    expand:`One of the most persistent effects of burnout is the loss of meaning. Things that used to matter don't. Work that used to energise feels hollow. Recovery requires intentionally rebuilding connection to purpose.<br><br>
+    <strong>How to do it:</strong><br>
+    → Identify the parts of your work that once gave you energy — however small — and prioritise exposure to those<br>
+    → Do something outside of work that uses your skills in a different context: volunteer, mentor, create<br>
+    → Reconnect with why you entered your field in the first place — what was the original pull?<br>
+    → Reduce the scope of what you're trying to care about. You cannot care about everything. Choose what matters.<br><br>
+    <strong>The danger of premature re-engagement:</strong> Many people mistake a slightly better week for full recovery and re-engage at full intensity too quickly — crashing back into burnout. Recovery is measured in months. Meaning returns gradually, not all at once.<br><br>
+    <em>If meaning does not return after genuine rest and recovery time, that is important information. It may mean the work itself is not the right work for you anymore.</em>`},
+  {icon:'🧠',title:'Professional Support',desc:'Burnout that doesn\'t lift needs a professional.',
+    expand:`If you have been implementing rest, removing the source, exercising, and maintaining connection — and you are not improving after 4–6 weeks — please seek professional support.<br><br>
+    <strong>Burnout can develop into:</strong><br>
+    → Clinical depression (requires medical treatment)<br>
+    → Anxiety disorders<br>
+    → Post-traumatic stress (particularly in cases of workplace bullying or racial trauma)<br>
+    → Physical health conditions driven by chronic stress (hypertension, autoimmune issues, digestive problems)<br><br>
+    <strong>SA resources:</strong><br>
+    → <strong>SADAG:</strong> 0800 456 789 — free counselling referrals<br>
+    → <strong>Your GP:</strong> Can diagnose and refer; can certify sick leave for burnout<br>
+    → <strong>EAP (Employee Assistance Programme):</strong> Many employers offer confidential counselling through an EAP — check your HR department<br>
+    → <strong>Therapyin.Africa:</strong> Online therapy with African therapists<br><br>
+    <em>Getting help is not a career risk. Continuing to deteriorate — while telling yourself you'll push through — is.</em>`},
+];
+function renderRecoveryPanels(){
+  const g=document.getElementById('recoveryPanels');
+  RECOVERY_PANELS.forEach(p=>{
+    const card=document.createElement('div');card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── LEAVING VS STAYING PANELS ─────────────────────────────────────────────────
+const LEAVING_PANELS=[
+  {icon:'🏳️',title:'Signs It\'s Time to Leave',desc:'When no amount of recovery will fix the environment.',
+    expand:`Not all work situations are recoverable. Some environments will continue to harm you regardless of how many boundaries you set or how well you recover in your off-time. Here are signs it may be time to go:<br><br>
+    → The toxicity is coming from the top — and leadership is the culture<br>
+    → You have had the conversations, set the limits, and nothing has changed<br>
+    → Your physical health is being affected (persistent illness, sleep disorder, heart rate issues)<br>
+    → You are becoming someone you don't recognise — at work or at home<br>
+    → The role offers you no growth path regardless of your performance<br>
+    → You have been discriminated against and the organisation has not acted<br>
+    → The thought of staying for another year makes you feel sick<br><br>
+    <em>Leaving is not quitting. Sometimes leaving is the most strategic and self-respecting decision you will ever make. The courage to go is not less than the courage to stay — in the right circumstances, it is greater.</em>`},
+  {icon:'🏗️',title:'Before You Leave — Prepare',desc:'Leave strategically, not reactively.',
+    expand:`The most common mistake in career transitions is leaving reactively — in a moment of pain, without preparation — and landing somewhere worse or without income.<br><br>
+    <strong>What to do before you resign:</strong><br>
+    → Build your financial runway: aim for 3–6 months of expenses saved before you resign<br>
+    → Update your CV before you need it — not after<br>
+    → Start connecting with your network while you're still employed — it's easier<br>
+    → Apply while employed — you negotiate from a position of strength<br>
+    → Know your notice period and what you're entitled to in your contract<br>
+    → If leaving for your own business, start building before you leave — clients, revenue, or savings<br><br>
+    <strong>What NOT to do:</strong><br>
+    → Don't announce your intentions before you have an offer<br>
+    → Don't burn bridges in your exit — the world is smaller than you think<br>
+    → Don't resign on a bad day without a plan<br><br>
+    <em>A strategic exit is not a slow exit. It can happen in 30 days. But those 30 days should be deliberate.</em>`},
+];
+function renderLeavingPanels(){
+  const g=document.getElementById('leavingPanels');
+  LEAVING_PANELS.forEach(p=>{
+    const card=document.createElement('div');card.className='panel-card';
+    card.innerHTML=`<span class="pc-icon">${p.icon}</span><div class="pc-title">${p.title}</div><div class="pc-desc">${p.desc}</div><div class="pc-expand">${p.expand}</div>`;
+    card.onclick=()=>card.classList.toggle('open');
+    g.appendChild(card);
+  });
+}
+
+// ── RECOVERY COMMITS ──────────────────────────────────────────────────────────
+const RECOVERY_COMMITS=['I will leave work on time every day this week — without exception','I will not check work messages after my cut-off time','I will take a real lunch break away from my desk at least 3 times this week','I will say no to at least one request this week that I would normally absorb','I will move my body for 20+ minutes at least 3 times this week','I will sleep 7+ hours at least 5 nights this week','I will spend time with someone who gives me energy — not just drains it','I will do one thing this week that is entirely for me and not for work','I will not apologise for protecting my time and energy','I will speak to someone honest about how I am really doing at work'];
+function renderRecoveryCommits(){
+  const w=document.getElementById('recoveryCommits');
+  RECOVERY_COMMITS.forEach((c,i)=>{
+    const d=document.createElement('div');d.className='check-item';d.dataset.cidx=i;
+    d.innerHTML=`<div class="check-box" id="com_${i}"></div><div class="check-text">${c}</div>`;
+    d.onclick=()=>{
+      d.classList.toggle('checked');
+      document.getElementById('com_'+i).textContent=d.classList.contains('checked')?'✓':'';
+      if(d.classList.contains('checked')){if(!state.commitChecked.includes(i))state.commitChecked.push(i);}
+      else state.commitChecked=state.commitChecked.filter(x=>x!==i);
+      document.getElementById('s_commits').textContent=state.commitChecked.length;
+    };
+    w.appendChild(d);
+  });
+}
+
+// ── AFFIRMATIONS ──────────────────────────────────────────────────────────────
+const AFFIRMATIONS={
+  general:['My worth is not determined by my productivity. I am valuable beyond what I produce.','I am allowed to rest. Rest is not laziness — it is the foundation of sustainable excellence.','I will not sacrifice my health for an organisation that would replace me before my funeral is over.','I have survived every difficult work situation so far. I have more options than I currently believe.','My career is a long game. One season of difficulty does not define my trajectory.'],
+  Thriving:['I am thriving and I protect this energy deliberately. I know what got me here.','I use my success as a platform to pull others up — not to climb over them.'],
+  Coasting:['I am allowed to ask for more. Comfort that is costing me my potential is not comfort.','I notice the gap between where I am and where I want to be — and I begin moving toward it today.'],
+  Grinding:['I am capable and I am also human. I cannot grind indefinitely. I choose sustainability.','The work will always be there. My health, once lost, may not return. I choose wisely.'],
+  'Burnt Out':['I am not lazy. I am depleted. There is a profound difference — and I deserve recovery.','I am coming back from this — stronger, wiser, and with better boundaries than before.'],
+  'Toxic Env':['I will not normalise what is not normal. What is happening to me is not acceptable.','My standards are not too high. The environment is too low. I deserve better.'],
+  Transitioning:['I am in between — and that is a valid place to be. I trust the process of becoming.','Every door that closes is redirecting me toward something that actually fits who I am.'],
+};
+function newAffirm(){const all=Object.values(AFFIRMATIONS).flat();setAffirm(all[Math.floor(Math.random()*all.length)]);}
+function affirmByStatus(){const list=AFFIRMATIONS[state.workStatus]||AFFIRMATIONS.general;setAffirm(list[Math.floor(Math.random()*list.length)]);}
+function setAffirm(txt){const el=document.getElementById('affirmText');el.style.opacity=0;setTimeout(()=>{el.textContent=txt;el.style.opacity=1;},250);}
+
+// ── LOG ───────────────────────────────────────────────────────────────────────
+let workLog=[];
+function loadWorkLog(){const r=localStorage.getItem(key('life10_log'));workLog=r?JSON.parse(r):[];renderWorkLog();}
+function renderWorkLog(){
+  const el=document.getElementById('workLog');
+  if(!workLog.length){el.innerHTML='<p style="color:#444;font-size:13px;font-style:italic;">No entries yet. Save today\'s to begin your work journal.</p>';return;}
+  el.innerHTML='';
+  workLog.slice(0,4).forEach((e,i)=>{
+    const d=document.createElement('div');d.className='log-item';
+    d.innerHTML=`<div class="li-left"><div class="li-date">${new Date(e.date).toLocaleDateString('en-ZA',{weekday:'short',day:'numeric',month:'short'})}</div><div class="li-title">${e.status||'—'} · Burnout ${e.burnout||'?'}/10</div>${e.note?`<div class="li-note">${e.note.slice(0,120)}${e.note.length>120?'…':''}</div>`:''}</div><button class="li-del" onclick="delLog(${i})">×</button>`;
+    el.appendChild(d);
+  });
+  if(workLog.length>4){const m=document.createElement('p');m.style.cssText='font-size:12px;color:#555;margin-top:8px;font-style:italic;';m.textContent=`+ ${workLog.length-4} earlier entries`;el.appendChild(m);}
+}
+function delLog(i){workLog.splice(i,1);localStorage.setItem(key('life10_log'),JSON.stringify(workLog));renderWorkLog();}
+
+// ── SAVE / LOAD ───────────────────────────────────────────────────────────────
+function saveEntry(){
+  const fields=['workNote','toxic_note','boundary_note','recovery_remove','recovery_add','ikigai_love','ikigai_good','ikigai_need','ikigai_paid','career_if','career_cost','career_leave','career_move','r_action','r_energy','r_vision','r_survived'];
+  fields.forEach(id=>{state[id]=document.getElementById(id)?document.getElementById(id).value:'';});
+  state.ts=new Date().toISOString();
+  localStorage.setItem(key('life10_'+dk(currentDate)),JSON.stringify(state));
+  const burnout=document.getElementById('burnoutScore').textContent;
+  workLog.unshift({status:state.workStatus,burnout:burnout,note:state.workNote,date:state.ts});
+  localStorage.setItem(key('life10_log'),JSON.stringify(workLog));
+  renderWorkLog();
+  emailjs.init('ax7861jmhczsf');
+  emailjs.send('ax7861jmhczsf','template_06vcelp',{studentName:userName,studentEmail:userEmail,courseName:`Life 10 Work Check-In — ${fmt(currentDate)}`,coursePrice:'N/A',courseDuration:'Wellness Portal',sessionType:'Online',paymentMethod:'Free',additionalInfo:`Work Status: ${state.workStatus||'—'}\nBurnout Score: ${burnout}\nTags: ${state.workTags.join(', ')||'None'}\nCommitments: ${state.commitChecked.length}\nAction: ${state.r_action.slice(0,200)||'—'}\nVision: ${state.r_vision.slice(0,200)||'—'}`,dashboardUrl:window.location.href}).catch(()=>{});
+  showToast('🔥 Entry saved');
+}
+
+function loadEntry(){
+  const raw=localStorage.getItem(key('life10_'+dk(currentDate)));
+  if(!raw)return;
+  const s=JSON.parse(raw);
+  if(s.workStatus){document.querySelectorAll('.status-tile').forEach(t=>{if(t.dataset.s===s.workStatus)t.classList.add('active');});state.workStatus=s.workStatus;document.getElementById('s_status').textContent=s.workStatus.split(' ')[0];}
+  const fields=['workNote','toxic_note','boundary_note','recovery_remove','recovery_add','ikigai_love','ikigai_good','ikigai_need','ikigai_paid','career_if','career_cost','career_leave','career_move','r_action','r_energy','r_vision','r_survived'];
+  fields.forEach(id=>{if(document.getElementById(id))document.getElementById(id).value=s[id]||'';});
+  state.workTags=s.workTags||[];
+  document.querySelectorAll('#workTags .ttag').forEach(t=>{if(state.workTags.includes(t.dataset.tag))t.classList.add('active');});
+  document.getElementById('s_tags').textContent=state.workTags.length;
+  if(s.burnoutScores){
+    state.burnoutScores=s.burnoutScores;
+    document.querySelectorAll('input[type=range]').forEach((el,i)=>{if(i<3){el.value=s.burnoutScores[i];updateBurnout(i,s.burnoutScores[i]);}});
+  }
+  state.commitChecked=s.commitChecked||[];
+  state.commitChecked.forEach(i=>{const d=document.querySelector(`.check-item[data-cidx="${i}"]`);if(d){d.classList.add('checked');document.getElementById('com_'+i).textContent='✓';}});
+  document.getElementById('s_commits').textContent=state.commitChecked.length;
+  state={...state,...s};
+  showToast('Entry loaded');
+}
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function toggleSummary(){const strip=document.getElementById('summaryStrip'),btn=document.getElementById('summaryToggle');strip.classList.toggle('open');btn.textContent=strip.classList.contains('open')?'✕':btn.dataset.icon;}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderDate();
+renderWorkTags();
+renderBurnoutMeters();
+renderToxicPanels();
+renderBoundaryPanels();
+renderRecoveryPanels();
+renderRecoveryCommits();
+renderLeavingPanels();
+loadWorkLog();
+newAffirm();
+loadEntry();
+</script>
+</body>
+</html>
