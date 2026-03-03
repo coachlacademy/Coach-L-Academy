@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High School Operating System - Coach L Academy</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #333; min-height: 100vh; }
+  .header { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: white; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .course-title h1 { font-size: 1.8rem; margin-bottom: 5px; }
+  .course-title p { font-size: 0.9rem; opacity: 0.9; }
+  .user-info { display: flex; align-items: center; gap: 15px; }
+  .avatar { width: 45px; height: 45px; background: linear-gradient(135deg, #42a5f5 0%, #1a237e 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; }
+  .container { max-width: 1400px; margin: 0 auto; padding: 30px 20px; }
+  .progress-overview { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .progress-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-top: 20px; }
+  .stat-card { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; }
+  .stat-card h3 { font-size: 2rem; margin-bottom: 5px; }
+  .stat-card p { font-size: 0.9rem; opacity: 0.9; }
+  .progress-bar { width: 100%; height: 25px; background: #e0e0e0; border-radius: 15px; overflow: hidden; margin: 20px 0; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #1a237e 0%, #42a5f5 100%); border-radius: 15px; transition: width 0.5s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 600; font-size: 0.9rem; min-width: 45px; }
+  .tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #e0e0e0; flex-wrap: wrap; }
+  .tab { padding: 12px 25px; background: white; border: none; border-radius: 10px 10px 0 0; cursor: pointer; font-size: 1rem; font-weight: 600; color: #666; transition: all 0.3s ease; }
+  .tab.active { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: white; }
+  .module-selector { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+  .module-btn { padding: 12px 25px; background: white; border: 2px solid #1a237e; border-radius: 25px; cursor: pointer; font-size: 1rem; font-weight: 600; color: #1a237e; white-space: nowrap; transition: all 0.3s ease; }
+  .module-btn.active { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: white; border-color: transparent; }
+  .module-btn.completed { background: #4caf50; color: white; border-color: #4caf50; }
+  .content-section { display: none; }
+  .content-section.active { display: block; }
+  .video-section { background: white; border-radius: 15px; padding: 25px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 25px; margin-top: 20px; }
+  .video-player { background: #000; border-radius: 12px; overflow: hidden; position: relative; padding-top: 56.25%; }
+  .video-placeholder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a237e 0%, #0d1b3e 100%); }
+  .play-btn { width: 70px; height: 70px; background: rgba(66,165,245,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
+  .play-btn:hover { background: #42a5f5; transform: scale(1.1); }
+  .play-btn::after { content: '▶'; color: white; font-size: 2rem; margin-left: 5px; }
+  .video-title { margin-top: 15px; font-size: 1.1rem; font-weight: 600; color: #333; }
+  .lesson-content { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .lesson-content h2 { color: #1a237e; margin-bottom: 20px; font-size: 1.8rem; }
+  .lesson-content h3 { color: #283593; margin-top: 25px; margin-bottom: 15px; font-size: 1.3rem; }
+  .lesson-content h4 { color: #1a237e; margin-top: 20px; margin-bottom: 10px; font-size: 1.1rem; }
+  .lesson-content p { line-height: 1.8; margin-bottom: 15px; color: #555; }
+  .lesson-content ul { margin-left: 25px; margin-bottom: 15px; }
+  .lesson-content li { margin-bottom: 10px; line-height: 1.6; color: #555; }
+  .info-banner { background: linear-gradient(135deg, #e8eaf6 0%, #e3f2fd 100%); border: 2px solid #1a237e; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .info-banner h4 { color: #1a237e; margin-bottom: 8px; }
+  .info-banner p { color: #555; font-size: 0.95rem; line-height: 1.6; margin: 0; }
+  .assessment-section { background: white; border-radius: 15px; padding: 30px; margin-bottom: 30px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+  .quiz-question { background: #f8f9fa; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #1a237e; }
+  .quiz-question h4 { margin-bottom: 15px; color: #333; font-size: 1.1rem; }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 12px 20px; background: white; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .quiz-option:hover { border-color: #1a237e; background: #e8eaf6; }
+  .quiz-option input { margin-right: 10px; }
+  .submit-btn { padding: 15px 40px; background: linear-gradient(135deg, #1a237e 0%, #283593 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 20px; }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,35,126,0.4); }
+  .already-passed-notice { background: #e8f5e9; border: 2px solid #4caf50; border-radius: 12px; padding: 20px; margin-bottom: 20px; text-align: center; }
+  .already-passed-notice h3 { color: #2e7d32; margin-bottom: 8px; }
+  .already-passed-notice p { color: #388e3c; }
+  .resources-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .resource-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: all 0.3s ease; cursor: pointer; border: 2px solid transparent; }
+  .resource-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-color: #1a237e; }
+  .resource-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #1a237e 0%, #283593 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 15px; }
+  .resource-card h4 { margin-bottom: 10px; color: #333; }
+  .resource-card p { color: #666; font-size: 0.9rem; }
+  .download-badge { display: inline-block; padding: 5px 12px; background: #4caf50; color: white; border-radius: 15px; font-size: 0.75rem; margin-top: 10px; }
+  /* Gamification */
+  .badges-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .badge { background: #f5f5f5; border: 2px solid #e0e0e0; border-radius: 12px; padding: 12px 16px; text-align: center; min-width: 90px; }
+  .badge.earned { background: linear-gradient(135deg, #e8eaf6, #e3f2fd); border-color: #1a237e; }
+  .badge-icon { font-size: 1.8rem; margin-bottom: 4px; }
+  .badge p { font-size: 0.72rem; color: #999; }
+  .badge.earned p { color: #1a237e; font-weight: 600; }
+  .xp-flash { display:none; position:fixed; top:80px; right:24px; background:linear-gradient(135deg,#1a237e,#42a5f5); color:white; padding:12px 22px; border-radius:30px; font-weight:700; font-size:1.1rem; z-index:999; box-shadow:0 4px 20px rgba(26,35,126,0.4); }
+  @keyframes xpFadeOut { 0%{opacity:1;transform:translateY(0);}70%{opacity:1;}100%{opacity:0;transform:translateY(-30px);} }
+  /* Journal */
+  .journal-prompt { background: #e8eaf6; border-left: 4px solid #1a237e; border-radius: 8px; padding: 12px 16px; margin-bottom: 12px; }
+  .journal-prompt p { color: #1a237e; font-weight: 600; margin: 0; font-size: 0.9rem; }
+  .journal-textarea { width: 100%; min-height: 160px; background: #fafafa; border: 2px solid #e0e0e0; border-radius: 10px; padding: 16px; color: #333; font-size: 0.95rem; resize: vertical; outline: none; font-family: inherit; line-height: 1.7; }
+  .journal-textarea:focus { border-color: #1a237e; }
+  .journal-saved { display:none; margin-top:12px; padding:12px; background:#e8f5e9; border:2px solid #4caf50; border-radius:8px; color:#2e7d32; font-weight:600; }
+  /* Life Vault */
+  .vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+  .vault-card { background: white; border-radius: 12px; padding: 22px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); border-top: 4px solid #1a237e; }
+  .vault-card h3 { color: #1a237e; margin-bottom: 14px; font-size: 1.1rem; }
+  .vault-card ul { margin-left: 18px; }
+  .vault-card li { margin-bottom: 8px; line-height: 1.6; color: #555; font-size: 0.9rem; }
+  .vault-icon { font-size: 2rem; margin-bottom: 10px; }
+  .admin-btn { position: fixed; bottom: 30px; right: 30px; padding: 15px 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 5px 20px rgba(240,147,251,0.4); z-index: 50; transition: all 0.3s ease; }
+  .admin-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(240,147,251,0.6); }
+  @media (max-width: 768px) { .header-content { flex-direction: column; gap: 15px; text-align: center; } .video-grid { grid-template-columns: 1fr; } .module-selector { flex-wrap: wrap; } .resources-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<canvas id="confettiCanvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:998;"></canvas>
+<div id="xpFlash" class="xp-flash"></div>
+
+<!-- ═══════════ HEADER (same structure as dashboard17) ═══════════ -->
+<div class="header">
+  <div class="header-content">
+    <div style="display:flex;align-items:center;gap:15px;">
+      <img src="favicon.png" alt="Coach L Academy" style="width:50px;height:50px;border-radius:10px;">
+      <div class="course-title">
+        <h1>High School Operating System</h1>
+        <p>6-Week Course &nbsp;·&nbsp; Coach L Academy</p>
+      </div>
+    </div>
+    <div class="user-info">
+      <div class="avatar" id="userAvatar">A</div>
+      <div>
+        <div style="font-weight:600;" id="userName">Welcome!</div>
+        <div style="font-size:0.85rem;opacity:0.9;" id="userSubGreeting">Continue your journey</div>
+        <div style="font-size:0.75rem;opacity:0.8;cursor:pointer;text-decoration:underline;" onclick="updateEmail()">✏️ Update email</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NAME MODAL (same structure as dashboard17) ═══════════ -->
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:200;align-items:center;justify-content:center;">
+  <div style="background:white;padding:40px;border-radius:20px;max-width:500px;width:90%;text-align:center;">
+    <img src="favicon.png" alt="Coach L Academy" style="width:80px;height:80px;margin-bottom:20px;border-radius:15px;">
+    <h2 style="color:#1a237e;margin-bottom:10px;">Welcome to</h2>
+    <h3 style="color:#333;margin-bottom:20px;">High School Operating System</h3>
+    <p style="color:#666;margin-bottom:30px;">Six weeks of frameworks most teenagers never get. Enter your details to begin.</p>
+    <input type="text" id="studentName" placeholder="Your Full Name" style="width:100%;padding:15px;margin-bottom:15px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <input type="email" id="studentEmail" placeholder="Your Email Address" style="width:100%;padding:15px;margin-bottom:25px;border:2px solid #e0e0e0;border-radius:10px;font-size:1.1rem;">
+    <button onclick="saveUserInfo()" style="padding:15px 40px;background:linear-gradient(135deg,#1a237e 0%,#283593 100%);color:white;border:none;border-radius:25px;font-size:1.1rem;cursor:pointer;">Let's Go 💪</button>
+  </div>
+</div>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<div class="container">
+
+  <div class="progress-overview">
+    <h2 style="margin-bottom:5px;">Your Progress</h2>
+    <p style="color:#888;font-size:0.9rem;margin-bottom:5px;">Complete each week's quiz to earn XP and unlock badges.</p>
+    <div class="progress-bar"><div class="progress-fill" id="progressBar" style="width:0%;">0%</div></div>
+    <div class="progress-stats">
+      <div class="stat-card"><h3 id="modulesComplete">0/6</h3><p>Weeks Done</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#1565c0 0%,#42a5f5 100%);"><h3 id="xpDisplay">0</h3><p>⚡ XP Earned</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#e65100 0%,#ff8f00 100%);"><h3 id="streakDisplay">0 🔥</h3><p>Day Streak</p></div>
+      <div class="stat-card" style="background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);"><h3 id="assessmentsPassed">0/6</h3><p>Quizzes Passed</p></div>
+    </div>
+    <div class="badges-row" id="badgesRow"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('content',this)">Content</button>
+    <button class="tab" onclick="showTab('resources',this)">Resources</button>
+    <button class="tab" onclick="showTab('assessment',this)">Assessment</button>
+    <button class="tab" onclick="showTab('journal',this)">Journal</button>
+    <button class="tab" onclick="showTab('lifevault',this)">Life Vault</button>
+  </div>
+
+  <div class="module-selector">
+    <button class="module-btn active" onclick="selectModule(1)">Week 1</button>
+    <button class="module-btn" onclick="selectModule(2)">Week 2</button>
+    <button class="module-btn" onclick="selectModule(3)">Week 3</button>
+    <button class="module-btn" onclick="selectModule(4)">Week 4</button>
+    <button class="module-btn" onclick="selectModule(5)">Week 5</button>
+    <button class="module-btn" onclick="selectModule(6)">Week 6</button>
+    <button class="module-btn" onclick="selectModule(7)">Week 7</button>
+    <button class="module-btn" onclick="selectModule(8)">Week 8</button>
+    <button class="module-btn" onclick="selectModule(9)">Week 9</button>
+    <button class="module-btn" onclick="selectModule(10)">Week 10</button>
+    <button class="module-btn" onclick="selectModule(11)">Week 11</button>
+    <button class="module-btn" onclick="selectModule(12)">Week 12</button>
+  </div>
+
+  <div id="content" class="content-section active">
+    <div class="video-section">
+      <h2 id="weekTitle">📹 Week 1: Learning Videos</h2>
+      <div class="video-grid">
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('tutorial',currentWeek)"></div></div></div>
+          <div class="video-title" id="tutorialTitle">Tutorial Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 18:45</p>
+        </div>
+        <div>
+          <div class="video-player"><div class="video-placeholder"><div class="play-btn" onclick="playVideo('basic',currentWeek)"></div></div></div>
+          <div class="video-title" id="basicTitle">Basic Learning Video</div>
+          <p style="color:#666;margin-top:5px;font-size:0.9rem;">Duration: 12:30</p>
+        </div>
+      </div>
+    </div>
+    <div class="lesson-content" id="lessonContent"></div>
+  </div>
+
+  <div id="resources" class="content-section">
+    <div class="video-section">
+      <h2 id="resourcesTitle">📚 Course Resources - Week 1</h2>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </div>
+
+  <div id="assessment" class="content-section">
+    <div class="assessment-section" id="assessmentContent"></div>
+  </div>
+
+  <div id="journal" class="content-section">
+    <div class="video-section">
+      <h2>📓 Weekly Reflection Journal</h2>
+      <p style="color:#666;margin-bottom:20px;">Writing forces clarity. Answer honestly — this is for you.</p>
+      <div class="journal-prompt"><p id="journalPrompt1">💡 Prompt 1</p></div>
+      <div class="journal-prompt"><p id="journalPrompt2">🔄 Prompt 2</p></div>
+      <div class="journal-prompt"><p id="journalPrompt3">🎯 Prompt 3</p></div>
+      <textarea class="journal-textarea" id="journalText" placeholder="Write your reflection here..."></textarea>
+      <br><button class="submit-btn" onclick="saveJournal()" style="margin-top:14px;">Save Reflection 📓</button>
+      <div class="journal-saved" id="journalSaved">✅ Reflection saved.</div>
+      <div id="pastReflections" style="margin-top:24px;"></div>
+    </div>
+  </div>
+
+  <div id="lifevault" class="content-section">
+    <div class="video-section">
+      <h2>👑 The Life Vault — Your Blueprint for Success</h2>
+      <p style="color:#666;margin-bottom:5px;">The condensed wisdom most teenagers never get. Study it. Live it. Return to it.</p>
+      <div class="vault-grid">
+        <div class="vault-card">
+          <div class="vault-icon">📚</div>
+          <h3>Study Mastery</h3>
+          <ul>
+            <li><strong>Active recall</strong> — close the book, write what you remember. Testing yourself beats passive reading every time.</li>
+            <li><strong>Past paper dominance</strong> — the exam is a pattern. Find it. Do every past paper under timed conditions.</li>
+            <li><strong>Focus cycles</strong> — 45 minutes on, 10 minutes off. No phone during work cycles.</li>
+            <li><strong>Exam strategy</strong> — read everything first, answer what you know, come back to hard questions.</li>
+            <li><strong>Spaced repetition</strong> — review after 1 day, 3 days, 1 week, 1 month.</li>
+            <li><strong>The night before</strong> — light review only. Sleep is your memory consolidation system.</li>
+          </ul>
+        </div>
+        <div class="vault-card">
+          <div class="vault-icon">🏆</div>
+          <h3>High School Strategy</h3>
+          <ul>
+            <li><strong>Protect your reputation</strong> — it follows you further and longer than you think.</li>
+            <li><strong>Choose disciplined friends</strong> — you become the average of the five people around you.</li>
+            <li><strong>Respect every teacher</strong> — managing difficult authority is a skill you will use for life.</li>
+            <li><strong>Build references early</strong> — a teacher who knows your character is worth more than any certificate.</li>
+            <li><strong>Show up consistently</strong> — presence, punctuality, and reliability are rare. Be rare.</li>
+            <li><strong>Don't create enemies</strong> — the person you disrespect in Grade 9 may be your employer at 25.</li>
+          </ul>
+        </div>
+        <div class="vault-card">
+          <div class="vault-icon">💰</div>
+          <h3>Financial Literacy</h3>
+          <ul>
+            <li><strong>Save before you spend</strong> — even R50/month now builds the habit that compounds into real wealth.</li>
+            <li><strong>Compound thinking</strong> — small consistent actions build exponentially. Money, skills, reputation.</li>
+            <li><strong>Avoid pyramid schemes</strong> — if it requires recruiting others to profit, it is a scheme.</li>
+            <li><strong>Credit awareness</strong> — a bad credit record can prevent you renting a flat at 25.</li>
+            <li><strong>Needs vs wants</strong> — delay gratification. It is one of the strongest predictors of adult success.</li>
+            <li><strong>Earn before you spend</strong> — create value, not just consume it.</li>
+          </ul>
+        </div>
+        <div class="vault-card">
+          <div class="vault-icon">👑</div>
+          <h3>Identity Building</h3>
+          <ul>
+            <li><strong>Discipline at home = leadership later</strong> — who you are when no one is watching is who you actually are.</li>
+            <li><strong>Responsibility becomes trust</strong> — every time you do what you said, you build trust capital.</li>
+            <li><strong>Trust becomes opportunity</strong> — people give opportunities to people they trust.</li>
+            <li><strong>Character compounds</strong> — the identity you build now is the platform you launch your adult life from.</li>
+            <li><strong>Values under pressure</strong> — your values only count when they cost you something.</li>
+            <li><strong>Own your mistakes</strong> — full responsibility, no excuses. The fastest way to rebuild credibility.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-section" style="margin-top:50px;">
+    <h2>💬 Need Personal Support?</h2>
+    <p style="color:#666;margin-bottom:20px;">Questions about any of this? Coach L will give you a real, honest, confidential conversation.</p>
+    <div style="background:linear-gradient(135deg,#1a237e 0%,#283593 100%);padding:30px;border-radius:15px;margin-bottom:20px;">
+      <h3 style="color:white;margin-bottom:15px;">🎥 Live Video Consultation</h3>
+      <p style="color:white;opacity:0.9;margin-bottom:20px;">Connect with Coach L directly for confidential, personalised support.</p>
+      <button onclick="startVideoCall()" style="padding:15px 40px;background:white;color:#1a237e;border:none;border-radius:25px;font-size:1.1rem;font-weight:600;cursor:pointer;">Start Session Now</button>
+    </div>
+    <div id="videoCallContainer" style="display:none;margin-top:20px;">
+      <div style="background:white;padding:20px;border-radius:15px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
+          <h3 style="color:#1a237e;">Live Session with Coach L</h3>
+          <button onclick="endVideoCall()" style="padding:8px 20px;background:#f44336;color:white;border:none;border-radius:20px;cursor:pointer;">End Session</button>
+        </div>
+        <iframe id="jitsiFrame" allow="camera;microphone;fullscreen;display-capture;autoplay" style="width:100%;height:600px;border:none;border-radius:10px;"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button class="admin-btn" onclick="viewAllResults()">📊 View Results</button>
+
+<script>
+// ── CONFIG (matches all other dashboards exactly) ─────────────
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz89hcA4Z70ZyOKnk2MBBc5kVWKG5aXljNgSzpXZbfXDOhGvtpeZXGSOadoZB_RdyPK/exec';
+const SECRET_KEY       = 'CoachL2025SecureKey';
+const COURSE_NAME      = 'High School Operating System';
+const TOTAL_WEEKS      = 12;
+const STORAGE_PREFIX   = 'coachL_HSOS_';
+
+// ── STATE ─────────────────────────────────────────────────────
+let currentWeek   = 1;
+let studentInfo   = { name: '', email: '' };
+let completedWeeks = new Set(JSON.parse(localStorage.getItem(STORAGE_PREFIX+'completedWeeks') || '[]'));
+let xp            = parseInt(localStorage.getItem(STORAGE_PREFIX+'xp') || '0');
+let streak        = parseInt(localStorage.getItem(STORAGE_PREFIX+'streak') || '0');
+let lastVisit     = localStorage.getItem(STORAGE_PREFIX+'lastVisit') || '';
+let reflections   = JSON.parse(localStorage.getItem(STORAGE_PREFIX+'reflections') || '{}');
+let badges        = JSON.parse(localStorage.getItem(STORAGE_PREFIX+'badges') || '[]');
+
+function saveCompletedWeeks(){ localStorage.setItem(STORAGE_PREFIX+'completedWeeks', JSON.stringify([...completedWeeks])); }
+function saveXP()            { localStorage.setItem(STORAGE_PREFIX+'xp', xp); }
+function saveStreak()        { localStorage.setItem(STORAGE_PREFIX+'streak', streak); localStorage.setItem(STORAGE_PREFIX+'lastVisit', lastVisit); }
+function saveBadges()        { localStorage.setItem(STORAGE_PREFIX+'badges', JSON.stringify(badges)); }
+function saveReflections()   { localStorage.setItem(STORAGE_PREFIX+'reflections', JSON.stringify(reflections)); }
+
+// ── TIME-BASED GREETING ───────────────────────────────────────
+function getTimeGreeting(firstName) {
+  const h = new Date().getHours();
+  if (h >= 5  && h < 12) return 'Good morning, ' + firstName + '! ☀️';
+  if (h >= 12 && h < 17) return 'Good afternoon, ' + firstName + '! 👋';
+  if (h >= 17 && h < 21) return 'Good evening, ' + firstName + '! 🌆';
+  return 'Good night, ' + firstName + '! 🌙';
+}
+function getSubGreeting() {
+  const h = new Date().getHours();
+  if (h >= 5  && h < 12) return 'Ready to build your operating system?';
+  if (h >= 12 && h < 17) return 'Keep going — consistency wins.';
+  if (h >= 17 && h < 21) return 'Evening session. This is how it compounds.';
+  return 'Late night learner. Respect. Keep it up.';
+}
+
+// ── STREAK ────────────────────────────────────────────────────
+function checkStreak() {
+  const today = new Date().toDateString();
+  if (lastVisit === today) return;
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  streak = (lastVisit === yesterday) ? streak + 1 : 1;
+  lastVisit = today;
+  saveStreak();
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+window.onload = function() {
+  const n = localStorage.getItem('studentName'), e = localStorage.getItem('studentEmail');
+  if (n && e) { studentInfo.name = n; studentInfo.email = e; updateUserDisplay(); }
+  else { document.getElementById('nameModal').style.display = 'flex'; }
+  checkStreak();
+  updateProgress();
+  renderBadges();
+  refreshModuleButtons();
+  selectModule([1,2,3,4,5,6,7,8,9,10,11,12].find(w => !completedWeeks.has(w)) || 1);
+};
+
+// ── USER MANAGEMENT (same pattern as dashboard17) ─────────────
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
+
+function saveUserInfo() {
+  const n = document.getElementById('studentName').value.trim();
+  const e = document.getElementById('studentEmail').value.trim();
+  if (!n) { alert('Please enter your full name.'); return; }
+  if (!e) { alert('Please enter your email address.'); return; }
+  if (!isValidEmail(e)) { alert('⚠️ "' + e + '" doesn\'t look like a valid email.\n\nExample: yourname@gmail.com'); document.getElementById('studentEmail').focus(); return; }
+  studentInfo.name = n; studentInfo.email = e;
+  localStorage.setItem('studentName', n); localStorage.setItem('studentEmail', e);
+  document.getElementById('nameModal').style.display = 'none';
+  updateUserDisplay();
+}
+
+function updateEmail() {
+  const cur = localStorage.getItem('studentEmail') || '', nw = prompt('Update your email address:', cur);
+  if (nw === null) return;
+  if (!isValidEmail(nw.trim())) { alert('⚠️ That doesn\'t look like a valid email.'); return; }
+  studentInfo.email = nw.trim(); localStorage.setItem('studentEmail', nw.trim()); alert('✅ Email updated to: ' + nw.trim());
+}
+
+function updateUserDisplay() {
+  const firstName = studentInfo.name.split(' ')[0];
+  document.getElementById('userAvatar').textContent = studentInfo.name.charAt(0).toUpperCase();
+  document.getElementById('userName').textContent = getTimeGreeting(firstName);
+  document.getElementById('userSubGreeting').textContent = getSubGreeting();
+}
+
+// ── NAVIGATION (same pattern as dashboard17) ──────────────────
+function refreshModuleButtons() {
+  document.querySelectorAll('.module-btn').forEach((btn, i) => {
+    const w = i + 1; btn.classList.remove('active', 'completed');
+    if (completedWeeks.has(w)) { btn.classList.add('completed'); btn.textContent = 'Week ' + w + ' ✓'; }
+    else { btn.textContent = 'Week ' + w; }
+    if (w === currentWeek) btn.classList.add('active');
+  });
+}
+
+function selectModule(week) { currentWeek = week; refreshModuleButtons(); updateWeekContent(); }
+
+function showTab(tabName, tabBtn) {
+  document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabName).classList.add('active');
+  if (tabBtn) tabBtn.classList.add('active');
+  if (tabName === 'journal') loadJournalEntry();
+}
+
+function updateWeekContent() {
+  const w = weekData[currentWeek];
+  document.getElementById('weekTitle').textContent = '📹 Week ' + currentWeek + ': Learning Videos';
+  document.getElementById('tutorialTitle').textContent = w.tutorialVideo;
+  document.getElementById('basicTitle').textContent = w.basicVideo;
+  document.getElementById('lessonContent').innerHTML = w.content;
+  document.getElementById('resourcesTitle').textContent = '📚 Course Resources - Week ' + currentWeek;
+  document.getElementById('resourcesGrid').innerHTML = w.resources.map(r => `<div class="resource-card" onclick="downloadResource('${r.file}','${r.title}')"><div class="resource-icon">${r.icon}</div><h4>${r.title}</h4><p>${r.desc}</p><span class="download-badge">📥 Download</span></div>`).join('');
+  renderAssessment();
+  const prompts = w.journalPrompts || ['What was the most important thing you learned?', 'What will you change?', 'What will you do differently this week?'];
+  document.getElementById('journalPrompt1').textContent = '💡 ' + prompts[0];
+  document.getElementById('journalPrompt2').textContent = '🔄 ' + prompts[1];
+  document.getElementById('journalPrompt3').textContent = '🎯 ' + prompts[2];
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────
+function updateProgress() {
+  const done = completedWeeks.size, pct = Math.round((done / TOTAL_WEEKS) * 100);
+  document.getElementById('progressBar').style.width = pct + '%'; document.getElementById('progressBar').textContent = pct + '%';
+  document.getElementById('modulesComplete').textContent = done + '/' + TOTAL_WEEKS;
+  document.getElementById('xpDisplay').textContent = xp;
+  document.getElementById('streakDisplay').textContent = streak + ' 🔥';
+  document.getElementById('assessmentsPassed').textContent = done + '/' + TOTAL_WEEKS;
+}
+
+function renderBadges() {
+  const defs = [
+    {w:1,icon:'🧠',name:'Mind Unlocked'},{w:2,icon:'🔥',name:'Iron Will'},
+    {w:3,icon:'💰',name:'Money Smart'},{w:4,icon:'🛡️',name:'Digital Shield'},
+    {w:5,icon:'📚',name:'Study Beast'},{w:6,icon:'🌟',name:'Leader Born'},
+    {w:7,icon:'🚨',name:'Bully Proof'},{w:8,icon:'💊',name:'Stay Sober'},
+    {w:9,icon:'❤️',name:'Body Wise'},{w:10,icon:'📱',name:'Screen Savvy'},
+    {w:11,icon:'✊',name:'GBV Aware'},{w:12,icon:'🤖',name:'Future Ready'}
+  ];
+  document.getElementById('badgesRow').innerHTML = defs.map(b => {
+    const earned = badges.includes(b.w);
+    return `<div class="badge ${earned?'earned':''}"><div class="badge-icon">${earned ? b.icon : '🔒'}</div><p>${earned ? b.name : 'Locked'}</p></div>`;
+  }).join('');
+}
+
+// ── QUIZ (same pattern as dashboard17) ────────────────────────
+function renderAssessment() {
+  const w = weekData[currentWeek], passed = completedWeeks.has(currentWeek);
+  let html = `<h2>📝 Week ${currentWeek} Assessment</h2>`;
+  if (passed) { html += `<div class="already-passed-notice"><h3>✅ You already passed this week!</h3><p>Great work! Your score has been recorded. +100 XP earned.</p></div>`; }
+  else { html += `<p style="margin-bottom:30px;color:#666;">Test your understanding. You need 70% to pass and earn 100 XP.</p>`; }
+  w.assessment.forEach((q, i) => { html += `<div class="quiz-question"><h4>Question ${i+1}: ${q.question}</h4><div class="quiz-options">${q.options.map((opt,j) => `<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" ${passed?'disabled':''}> ${opt}</label>`).join('')}</div></div>`; });
+  if (!passed) html += `<button class="submit-btn" onclick="submitQuiz()">Submit Assessment</button>`;
+  document.getElementById('assessmentContent').innerHTML = html;
+}
+
+function submitQuiz() {
+  if (completedWeeks.has(currentWeek)) { alert('You have already passed this assessment!'); return; }
+  const w = weekData[currentWeek]; let correct = 0, answers = [], allAnswered = true;
+  w.assessment.forEach((q, i) => { const sel = document.querySelector(`input[name="q${i}"]:checked`); if (!sel) { allAnswered = false; return; } const ua = parseInt(sel.value), ok = ua === q.correct; if (ok) correct++; answers.push({question:q.question, userAnswer:q.options[ua], correctAnswer:q.options[q.correct], isCorrect:ok}); });
+  if (!allAnswered) { alert('Please answer all questions before submitting.'); return; }
+  const score = Math.round((correct / w.assessment.length) * 100), passed = score >= 70;
+  submitToSheets(currentWeek, score, correct, w.assessment.length, answers, passed);
+  if (passed) {
+    completedWeeks.add(currentWeek); saveCompletedWeeks();
+    xp += 100; saveXP();
+    if (!badges.includes(currentWeek)) { badges.push(currentWeek); saveBadges(); }
+    updateProgress(); renderBadges(); refreshModuleButtons(); renderAssessment();
+    fireConfetti(); showXPFlash(100);
+    alert(currentWeek < TOTAL_WEEKS ? `🎉 Congratulations! You passed with ${score}%!\n\n+100 XP earned. Continue to Week ${currentWeek+1} whenever you're ready.` : `🏆 Course complete! You passed with ${score}%!\n\nYou now have the operating system most people never install. Use it. 🌟`);
+  } else {
+    alert(`You scored ${score}% (${correct}/${w.assessment.length}).\n\nYou need 70% to pass. Review the material and try again!`);
+  }
+}
+
+// ── JOURNAL ───────────────────────────────────────────────────
+function loadJournalEntry() {
+  const key = 'week' + currentWeek;
+  document.getElementById('journalText').value = reflections[key] || '';
+  document.getElementById('journalSaved').style.display = 'none';
+  renderPastReflections();
+}
+
+function saveJournal() {
+  const text = document.getElementById('journalText').value.trim();
+  if (!text) { alert('Write something first.'); return; }
+  const key = 'week' + currentWeek;
+  reflections[key] = text; saveReflections();
+  document.getElementById('journalSaved').style.display = 'block';
+  submitReflectionToSheets(text);
+  renderPastReflections();
+}
+
+function renderPastReflections() {
+  const entries = Object.keys(reflections);
+  if (!entries.length) return;
+  let html = '<h3 style="color:#1a237e;margin-bottom:14px;">📄 Past Reflections</h3>';
+  entries.sort().forEach(key => {
+    const wNum = key.replace('week','');
+    html += `<div style="background:#f8f9fa;border-left:4px solid #1a237e;border-radius:8px;padding:14px;margin-bottom:10px;"><strong style="color:#1a237e;font-size:0.85rem;">Week ${wNum}</strong><p style="color:#555;font-size:0.9rem;margin-top:6px;line-height:1.7;">${reflections[key]}</p></div>`;
+  });
+  document.getElementById('pastReflections').innerHTML = html;
+}
+
+// ── GOOGLE SHEETS (same as dashboard17) ───────────────────────
+function submitToSheets(week, score, correct, total, answers, passed) {
+  const payload = {secretKey:SECRET_KEY, timestamp:new Date().toLocaleString(), studentName:studentInfo.name, studentEmail:studentInfo.email, courseName:COURSE_NAME, week, score, correct, total, passed:passed?'YES':'NO', detailedAnswers:JSON.stringify(answers)};
+  fetch(GOOGLE_SHEET_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)}).then(()=>console.log('✅')).catch(e=>console.error('❌',e));
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]'); all.push({...payload, answers}); localStorage.setItem('assessmentResults', JSON.stringify(all));
+}
+
+function submitReflectionToSheets(text) {
+  const payload = {secretKey:SECRET_KEY, timestamp:new Date().toLocaleString(), studentName:studentInfo.name, studentEmail:studentInfo.email, courseName:COURSE_NAME, week:currentWeek, type:'reflection', reflection:text};
+  fetch(GOOGLE_SHEET_URL, {method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)}).catch(e=>console.error('❌',e));
+}
+
+// ── CONFETTI & XP FLASH ───────────────────────────────────────
+function fireConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  const pieces = [], colours = ['#1a237e','#42a5f5','#feca57','#ff6b6b','#55efc4','#a29bfe'];
+  for (let i = 0; i < 140; i++) pieces.push({x:Math.random()*canvas.width, y:-10, r:Math.random()*8+4, c:colours[Math.floor(Math.random()*colours.length)], dx:(Math.random()-0.5)*3, dy:Math.random()*4+2, rot:Math.random()*360, drot:(Math.random()-0.5)*5});
+  let frames = 0;
+  function draw() { ctx.clearRect(0,0,canvas.width,canvas.height); pieces.forEach(p=>{ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.c;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);ctx.restore();p.x+=p.dx;p.y+=p.dy;p.rot+=p.drot;}); if(++frames<120)requestAnimationFrame(draw); else ctx.clearRect(0,0,canvas.width,canvas.height); }
+  draw();
+}
+
+function showXPFlash(amount) {
+  const el = document.getElementById('xpFlash');
+  el.textContent = '+' + amount + ' XP ⚡'; el.style.display = 'block';
+  el.style.animation = 'none'; el.offsetHeight;
+  el.style.animation = 'xpFadeOut 2.5s forwards';
+  setTimeout(()=>{ el.style.display='none'; }, 2600);
+}
+
+// ── UTILITY (same pattern as dashboard17) ─────────────────────
+function playVideo(type, week) { alert(`Playing ${type} video for Week ${week}.\nReplace with your actual video embed.`); }
+function markComplete() { showTab('assessment', document.querySelectorAll('.tab')[2]); window.scrollTo({top:0, behavior:'smooth'}); }
+function downloadResource(file, title) {
+  fetch('resources/'+file, {method:'HEAD'}).then(r=>{ if(r.ok){const a=document.createElement('a');a.href='resources/'+file;a.download=file;a.target='_blank';document.body.appendChild(a);a.click();document.body.removeChild(a);}else{alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.');}}).catch(()=>alert('📁 '+title+'\n\nAdd "'+file+'" to your /resources/ folder to enable downloads.'));
+}
+function startVideoCall() {
+  const iframe = document.getElementById('jitsiFrame');
+  const room = 'coachL-HSOS-' + (studentInfo.email||'guest').replace(/[^a-zA-Z0-9]/g,'') + '-' + Date.now();
+  iframe.src = `https://meet.jit.si/${room}#config.prejoinPageEnabled=false&userInfo.displayName="${encodeURIComponent(studentInfo.name)}"`;
+  document.getElementById('videoCallContainer').style.display = 'block';
+  document.getElementById('videoCallContainer').scrollIntoView({behavior:'smooth'});
+}
+function endVideoCall() { if(confirm('End the session?')){ document.getElementById('jitsiFrame').src=''; document.getElementById('videoCallContainer').style.display='none'; } }
+function viewAllResults() {
+  const all = JSON.parse(localStorage.getItem('assessmentResults') || '[]');
+  if (!all.length) { alert('No assessment results yet.'); return; }
+  const rows = all.map((r,i) => `<div class="result-card ${r.passed==='YES'?'passed':'failed'}"><h2>Submission #${i+1} — ${r.passed==='YES'?'✅ PASSED':'❌ FAILED'}</h2><p><strong>Student:</strong> ${r.studentName}</p><p><strong>Email:</strong> ${r.studentEmail}</p><p><strong>Course:</strong> ${r.courseName}</p><p><strong>Week:</strong> ${r.week}</p><p><strong>Score:</strong> ${r.score}% (${r.correct}/${r.total})</p><p><strong>Date:</strong> ${r.timestamp}</p><div class="details"><h3>Answers:</h3><table><tr><th>Question</th><th>Student</th><th>Correct</th><th>Result</th></tr>${(r.answers||[]).map((a,j)=>`<tr><td><strong>Q${j+1}:</strong> ${a.question}</td><td>${a.userAnswer}</td><td>${a.correctAnswer}</td><td class="${a.isCorrect?'correct':'incorrect'}">${a.isCorrect?'✓':'✗'}</td></tr>`).join('')}</table></div></div>`).join('');
+  const win = window.open('','Results','width=1000,height=800');
+  win.document.write(`<!DOCTYPE html><html><head><title>Results</title><style>body{font-family:Arial,sans-serif;padding:20px;background:#f5f5f5;}h1{color:#1a237e;}.result-card{background:#fff;padding:20px;margin-bottom:20px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.1);}.passed{border-left:5px solid #4caf50;}.failed{border-left:5px solid #f44336;}.details{margin-top:15px;padding:15px;background:#f9f9f9;border-radius:5px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;text-align:left;border-bottom:1px solid #ddd;}th{background:#1a237e;color:#fff;}.correct{color:#4caf50;font-weight:bold;}.incorrect{color:#f44336;font-weight:bold;}</style></head><body><h1>📊 Results – High School Operating System</h1><p>Total: ${all.length}</p><button onclick="window.print()" style="padding:10px 20px;background:#1a237e;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-bottom:20px;">🖨️ Print</button>${rows}</body></html>`);
+  win.document.close();
+}
+const weekData={
+  1:{
+    tutorialVideo:"Who Are You Building? Identity, Discipline, and the Foundation of Everything",
+    basicVideo:"The Habit Architecture — How Your Daily Choices Become Your Character",
+    journalPrompts:[
+      "Who is the person you are currently becoming — based on your actual daily behaviour, not your intentions?",
+      "What is one habit you have right now that your future self will thank you for? What is one you need to cut?",
+      "What does discipline mean to you — and where in your life are you currently avoiding it?"
+    ],
+    content:`<h2>Week 1: Identity, Discipline, and the Foundation of Everything</h2>
+<div class="info-banner"><h4>&#128187; Your Operating System Starts Here</h4><p>Every phone, every computer runs on an operating system. You do too. This week is about understanding what yours is currently running — and deciding what you want it to run instead. No sugarcoating. Just truth.</p></div>
+
+<h3>&#129504; The Question Nobody Asks You Properly</h3>
+<p>Who are you becoming? Not who do you want to be — who are you <em>actually</em> becoming, right now, based on your daily behaviour? This is the most important question in your life and most teenagers never ask it properly. Most adults don't either.</p>
+<p>Here is the uncomfortable truth: <strong>you are not who you think you are. You are what you repeatedly do.</strong> Your identity is not a thought you have — it is a pattern you enact, every day, in how you treat your time, your body, your relationships, and your responsibilities. The good news: you can change the pattern. But only if you first see it clearly.</p>
+
+<h3>&#128293; What Discipline Actually Is</h3>
+<p>Most teenagers hear the word "discipline" and think: restriction. Rules. Someone controlling them. That is not what it is. Discipline is <strong>freedom through structure</strong>. It is the ability to do what needs to be done, when it needs to be done, regardless of how you feel about it in the moment.</p>
+<p>People without discipline are not free — they are slaves to their impulses, their moods, and whatever environment they happen to be in. The person who can only study when they feel like it will rarely study enough. The person who only shows up when it's convenient will not build anything meaningful. <strong>Discipline is what separates people who want things from people who get them.</strong></p>
+<ul>
+<li><strong>Discipline is built in small moments</strong> — getting up when your alarm goes off. Studying when you don't feel like it. Putting your phone down when you said you would. Keeping a promise to yourself.</li>
+<li><strong>Discipline compounds</strong> — every time you do what you said you would do, even when it's hard, you build evidence that you are someone who can be trusted — including by yourself. This evidence accumulates.</li>
+<li><strong>Discipline is not punishment</strong> — it is the willingness to be uncomfortable now so your future self can have what it needs. Every disciplined act is an investment.</li>
+</ul>
+
+<h3>&#128260; The Habit Architecture</h3>
+<p>Your brain is a pattern-recognition machine. It learns what you repeatedly do and automates it to save energy. This is why habits — once formed — require almost no willpower to maintain. <strong>Good news: you can deliberately engineer the patterns your brain automates.</strong></p>
+<p>How habits actually form: <em>Cue → Routine → Reward</em>. Every habit has a trigger (cue), a behaviour (routine), and something that makes the brain want to repeat it (reward). To build a new habit, you attach a new routine to an existing cue and engineer a meaningful reward. To break a bad habit, you identify the cue and interrupt the routine before the reward kicks in.</p>
+<ul>
+<li><strong>Start absurdly small</strong> — the habit of studying for 2 minutes a day is infinitely more valuable than the plan to study for 3 hours that never happens. Start small. Build from there.</li>
+<li><strong>Identity-based habits</strong> — instead of "I'm trying to exercise", say "I'm someone who values their physical health." Your identity drives your habits more than motivation does. Change the story you tell yourself.</li>
+<li><strong>Environment design</strong> — put your phone in another room when you study. Keep a book on your desk. Remove friction from the habits you want and add friction to the ones you don't. Your environment is shaping you constantly — shape it back.</li>
+<li><strong>Never miss twice</strong> — everyone misses once. The difference between people who build lasting habits and those who don't is that disciplined people don't let one miss become two. Miss a day. Don't miss two.</li>
+</ul>
+
+<h3>&#127775; Character — The Only Currency That Doesn't Depreciate</h3>
+<p>Your matric marks will matter for a few years. Your degree will matter for longer. But your character — your reputation for reliability, honesty, follow-through, and integrity — will matter for the rest of your life. And it is built or destroyed in small moments, one interaction at a time.</p>
+<p><strong>What character actually means in practice:</strong></p>
+<ul>
+<li>You do what you say you will do.</li>
+<li>You tell the truth even when it costs you.</li>
+<li>You take responsibility when you get something wrong, without excuses.</li>
+<li>You treat people consistently — not differently based on what they can do for you.</li>
+<li>You are the same person whether someone is watching or not.</li>
+</ul>
+<p>This last point is the most important. <strong>Who you are when no one is watching is who you actually are.</strong> And the world, over time, figures it out.</p>
+
+<h3>&#128170; The Assignment for Week 1</h3>
+<p>Identify one habit you want to build this month. Make it specific, small, and measurable. Write it in your journal this week along with the cue you will attach it to and the reward you will give yourself. Then do it every day for the next 7 days. Just 7 days. That's it. Start there.</p>
+
+<button class="submit-btn" onclick="markComplete()">Week 1 Quiz — Prove You Know This &#9889;</button>`,
+    resources:[
+      {icon:"&#129504;",title:"Identity Audit Worksheet",desc:"A structured reflection to map who you are becoming vs. who you want to become",file:"identity-audit.pdf"},
+      {icon:"&#128293;",title:"Discipline Daily Tracker",desc:"21-day habit tracker to build your core disciplines",file:"discipline-tracker.pdf"},
+      {icon:"&#128260;",title:"Habit Architecture Blueprint",desc:"Step-by-step guide to building lasting habits using cue-routine-reward",file:"habit-blueprint.pdf"},
+      {icon:"&#127775;",title:"Character Audit — The 5 Questions",desc:"A quick honest assessment of your current character",file:"character-audit.pdf"},
+      {icon:"&#127909;",title:"Week 1 Mindset Audio",desc:"15-minute morning mindset session for disciplined thinking",file:"week1-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Identity, according to Week 1, is best understood as:",options:["The goals and ambitions you have for your future","The image you project to other people at school and online","The patterns you enact every day — what you repeatedly do, not what you intend to do","The values your parents or community taught you growing up"],correct:2},
+      {question:"Discipline is described as 'freedom through structure'. What does this mean?",options:["Being told what to do by authority figures frees you from having to make decisions","Following strict rules makes life more predictable and therefore less stressful","People without discipline are actually slaves to impulse and mood. The ability to act regardless of how you feel gives you real agency and real outcomes.","Structure in your routine removes the need to make difficult decisions each day"],correct:2},
+      {question:"The habit loop described in Week 1 is:",options:["Goal → Motivation → Result","Intention → Action → Reward","Cue → Routine → Reward — a trigger leads to a behaviour which leads to a brain signal to repeat it","Awareness → Decision → Habit — you must first notice before you can change"],correct:2},
+      {question:"Why is 'starting absurdly small' recommended for building habits?",options:["Small habits are easier to track and measure over time","Small habits require less motivation which means they are more sustainable across your life","A habit that actually happens consistently — even if tiny — is infinitely more valuable than a plan that never gets executed. Consistency builds the neural pathway; the size comes later.","Small habits build confidence gradually without the risk of failure"],correct:2},
+      {question:"'Identity-based habits' means:",options:["Creating habits that match the identity of successful people you admire","Forming habits based on your natural personality type and learning style","Framing your habits around who you are becoming — 'I am someone who values their health' — rather than just the behaviour you want. Identity drives habits more reliably than motivation.","Building habits that reflect your cultural and family identity"],correct:2},
+      {question:"What is the 'Never Miss Twice' principle?",options:["You should never allow yourself to skip a habit more than twice in a month","Missing twice means the habit is wrong for you and you should choose a different one","Everyone misses once. The difference between people who build lasting habits and those who don't: don't let one miss become two. One miss is human. Two misses is a new pattern.","If you miss twice, you should restart the habit from day one to rebuild momentum"],correct:2},
+      {question:"Your character is built primarily through:",options:["The big decisions you make at key moments in your life","The reputation you establish among your peers and teachers","Small consistent moments — doing what you said you would, telling the truth, taking responsibility, treating people consistently whether or not anyone is watching","The values you articulate and believe in even if your behaviour doesn't always match them"],correct:2},
+      {question:"'Environment design' as a discipline strategy means:",options:["Choosing the right school and classroom environment for your learning style","Structuring your physical space and surroundings to make good habits easier and bad habits harder — removing friction from what you want and adding friction to what you don't","Designing a quiet, distraction-free study space with the right lighting and furniture","Choosing friends and peer groups that support your goals and values"],correct:2},
+      {question:"The most important character trait described in Week 1 is:",options:["Being confident and assertive in how you present yourself to others","Being skilled, intelligent, and capable of achieving high academic results","Being the same person whether someone is watching or not — who you are when no one is watching is who you actually are","Being loyal to your friends even when it requires making difficult sacrifices"],correct:2},
+      {question:"According to Week 1, which asset 'doesn't depreciate' and matters most over a lifetime?",options:["Academic qualifications and the credentials you earn through formal education","Financial savings and the wealth you build through smart money decisions","Character — your reputation for reliability, honesty, follow-through, and integrity. It is built or destroyed in small moments and compounds over a lifetime.","Skills and expertise you develop in areas that are in demand in the job market"],correct:2},
+    ]
+  },
+  2:{
+    tutorialVideo:"Emotional Intelligence, Decision-Making, and Not Wrecking Your Life Under Pressure",
+    basicVideo:"The Psychology of Peer Pressure — Why Smart People Make Stupid Decisions",
+    journalPrompts:[
+      "Describe a time you made a decision under pressure that you later regretted. What was driving that decision?",
+      "Who in your life challenges you to be better — and who, if you're honest, pulls you away from your best self?",
+      "What is one emotional trigger you have that leads to decisions you regret? What will you do differently when it fires?"
+    ],
+    content:`<h2>Week 2: Emotional Intelligence, Decisions, and Pressure</h2>
+<div class="info-banner"><h4>&#128293; Your Emotions Are Data — Not Directions</h4><p>Most people treat their feelings as commands. "I feel embarrassed so I act defensively." "I feel bored so I pick up my phone." "I feel pressure so I go along with it." This week is about building the gap between feeling and action — and learning to choose what happens in that gap.</p></div>
+
+<h3>&#129504; What Emotional Intelligence Actually Is</h3>
+<p>Emotional intelligence (EQ) is not about being emotionally open, talking about your feelings, or being a "people person." It is a set of specific, learnable skills: <strong>recognising what you are feeling, understanding why, regulating how you respond, and reading other people accurately.</strong> High EQ is more predictive of success in relationships, careers, and life outcomes than IQ alone.</p>
+<ul>
+<li><strong>Self-awareness</strong> — noticing what you're feeling, in real time, before you act. "I'm feeling defensive right now. Why?" Most people skip this step entirely.</li>
+<li><strong>Self-regulation</strong> — the ability to feel something strongly and still choose your response. The gap between stimulus and response is where your freedom lives.</li>
+<li><strong>Empathy</strong> — accurately reading what another person is experiencing. Not assuming. Not projecting. Actually reading them. This is a skill, not a personality trait.</li>
+<li><strong>Social awareness</strong> — reading the room, understanding dynamics, knowing when and how to say things. Tone, timing, and context matter enormously.</li>
+</ul>
+
+<h3>&#128165; Decision-Making Under Pressure</h3>
+<p>Most bad teenage decisions are not made because teenagers are stupid. They are made because the decision was made <strong>under pressure, with incomplete information, with social stakes involved, in a moment where thinking clearly was nearly impossible.</strong> Understanding this doesn't excuse bad decisions — it helps you prepare for the conditions that produce them.</p>
+<p>The three most dangerous decision conditions for teenagers:</p>
+<ul>
+<li><strong>Social pressure in real time</strong> — when the decision needs to happen now, in front of people, and the cost of saying no feels higher than the cost of saying yes. This is where preparation matters. Decide in advance. "If X happens, I will do Y." Pre-made decisions hold better under pressure than in-the-moment improvisation.</li>
+<li><strong>Emotional flooding</strong> — when you are angry, scared, hurt, or humiliated, your prefrontal cortex (the rational decision-making part of your brain) is impaired. Major decisions made during emotional flooding are almost always ones you regret. Learn to delay: "I'll respond to this when I've slept." "I'll decide tomorrow."</li>
+<li><strong>The false urgency trap</strong> — "You have to decide now." "Everyone else already said yes." "If you don't, someone else will." Real decisions that matter almost always have time. When you feel artificially rushed, that is usually a sign something is being engineered to prevent you from thinking clearly.</li>
+</ul>
+
+<h3>&#128101; Peer Pressure — The Real Mechanics</h3>
+<p>Peer pressure is not usually someone standing over you saying "do this or else." It is far more subtle and far more powerful. It is the way that belonging to a group requires certain behaviours — and the cost of different behaviour is exclusion, mockery, or being seen as "weird." <strong>The desire to belong is one of the most powerful forces in human psychology. It is not weakness — it is wiring.</strong> But you can work with your wiring rather than being driven by it.</p>
+<ul>
+<li><strong>Choose your tribe deliberately</strong> — the single most powerful thing you can do for your future is choose who you spend your time with. The group you belong to shapes your behaviour, your language, your aspirations, and your idea of what's normal. Choose people whose normal is somewhere you want to go.</li>
+<li><strong>Prepare your exits</strong> — have a practiced response for pressure situations. "I'm good." "Not tonight." "That's not my thing." Said with zero apology and immediate subject change. The people who most effectively resist pressure are people who have a phrase and use it without hesitation.</li>
+<li><strong>The bystander problem</strong> — most group decisions feel unanimous but aren't. In many situations where everyone "goes along," half the people would have preferred not to. Knowing this makes it easier to be the person who says something different — because you may be speaking for more people than you think.</li>
+</ul>
+
+<h3>&#128170; The Resilience Framework</h3>
+<p>Resilience is not the ability to avoid difficulty. It is the ability to move through it without losing your direction. People who develop resilience early have a massive advantage — not because life gets easier for them, but because difficulty costs them less. Here is what resilience is actually built from:</p>
+<ul>
+<li><strong>Meaning</strong> — knowing why something matters makes it much easier to push through the how. If your goal is clear and important to you, difficulty is a price worth paying.</li>
+<li><strong>Self-efficacy</strong> — evidence from your own history that you have done hard things before. Every time you push through difficulty, you build a record. That record becomes your confidence.</li>
+<li><strong>Support systems</strong> — you do not need to be an island. Resilient people are not alone — they have relationships they can lean on without shame. Building these relationships before you need them is the move.</li>
+<li><strong>Perspective</strong> — the ability to ask "Will this matter in five years?" is one of the most useful questions in your arsenal. Not to dismiss things that matter, but to correctly size problems that feel bigger than they are.</li>
+</ul>
+
+<button class="submit-btn" onclick="markComplete()">Week 2 Quiz — Prove You Know This &#9889;</button>`,
+    resources:[
+      {icon:"&#129504;",title:"EQ Self-Assessment",desc:"Measure your emotional intelligence across four core dimensions",file:"eq-assessment.pdf"},
+      {icon:"&#128165;",title:"Decision-Making Framework",desc:"A step-by-step tool for making good decisions under pressure",file:"decision-framework.pdf"},
+      {icon:"&#128101;",title:"Peer Pressure Survival Guide",desc:"Practical strategies and phrases for high-pressure social situations",file:"peer-pressure-guide.pdf"},
+      {icon:"&#128170;",title:"Resilience Builder Workbook",desc:"Exercises to build mental and emotional resilience",file:"resilience-workbook.pdf"},
+      {icon:"&#127909;",title:"Week 2 Mindset Audio",desc:"Guided session on emotional regulation and pressure management",file:"week2-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Emotional intelligence is primarily:",options:["Being openly emotional and comfortable discussing your feelings with others","Being a warm, empathetic person who naturally connects well with people","A set of learnable skills: recognising what you feel, understanding why, regulating your response, and reading others accurately. More predictive of success than IQ alone.","Being able to stay calm and unemotional in difficult or stressful situations"],correct:2},
+      {question:"'The gap between stimulus and response' refers to:",options:["The time between hearing something and being able to process it cognitively","The difference between how something makes you feel and how you show it externally","The space where your freedom lives — the ability to feel something strongly and still choose your response rather than react automatically","The delay between when a decision is made and when its consequences become apparent"],correct:2},
+      {question:"Why are most bad teenage decisions made, according to Week 2?",options:["Because teenagers lack the intelligence or information to make good decisions","Because teenagers have not yet developed the brain capacity for good judgment","Because the conditions — social pressure, emotional flooding, time pressure, incomplete information — make thinking clearly nearly impossible. Prepare for the conditions, not just the decisions.","Because teenagers prioritise peer approval over long-term outcomes"],correct:2},
+      {question:"'Emotional flooding' makes decision-making dangerous because:",options:["You are more likely to be influenced by other people when emotionally activated","You cannot accurately predict how your decision will affect others when emotional","Your prefrontal cortex — the rational decision-making part of your brain — is impaired when you're angry, scared, hurt, or humiliated. Major decisions made in this state are almost always regretted.","You tend to overthink and become paralysed when making decisions under emotional stress"],correct:2},
+      {question:"The 'false urgency trap' in decision-making is:",options:["Believing a decision is more important than it is because you're afraid of getting it wrong","Feeling like you need to make a decision immediately when you actually have time — often engineered to prevent you from thinking clearly","Making hasty decisions because you assume others are moving faster than they are","Prioritising speed over quality in decisions because of competitive pressure"],correct:2},
+      {question:"What makes peer pressure so powerful, according to Week 2?",options:["Teenagers lack confidence and are easily manipulated by more assertive peers","The desire to belong is one of the most powerful forces in human psychology — not a weakness but wiring — and peer pressure exploits this by making different behaviour costly","Social media amplifies the opinions and behaviours of peers into constant unavoidable exposure","Adults fail to prepare teenagers for peer pressure situations with practical tools"],correct:2},
+      {question:"The most effective strategy for resisting peer pressure described in Week 2 is:",options:["Having strong values and reminding yourself of them in high-pressure moments","Explaining your reasons clearly so others understand your position","Having a practiced, short response — 'I'm good', 'Not tonight', 'That's not my thing' — said without apology and followed by a subject change. Preparation beats improvisation.","Avoiding situations where peer pressure is likely to occur"],correct:2},
+      {question:"The 'bystander problem' reveals that:",options:["People who watch harmful events without intervening share moral responsibility","Most group decisions are actually made by a small number of dominant individuals","In many 'unanimous' group situations, half the people would have preferred a different outcome. Being the person who speaks differently may represent more people than you think.","Bystanders in pressure situations are always aware of alternative options but choose to conform"],correct:2},
+      {question:"Resilience, as described in Week 2, is built from:",options:["Avoiding difficult situations and protecting yourself from experiences that could harm you","Natural temperament and personality traits that some people are born with","Meaning, self-efficacy (evidence from your own history of doing hard things), support systems, and perspective. It is learnable and built through difficulty, not around it.","Positive thinking and the ability to maintain an optimistic outlook in difficult circumstances"],correct:2},
+      {question:"The question 'Will this matter in five years?' is described as useful because:",options:["It helps you focus only on truly important decisions and dismiss trivial ones","It helps you correctly size problems — not to dismiss things that genuinely matter, but to avoid spending disproportionate energy on things that feel bigger than they are","It gives you perspective on how much your decisions today will define your future","It forces you to think long-term and consider the consequences of your actions more carefully"],correct:2},
+    ]
+  },
+  3:{
+    tutorialVideo:"Money, Credit, and Why Financial Literacy Is the Skill Most Adults Wish They Had Earlier",
+    basicVideo:"Compound Interest, Scam Detection, and Building Your First Financial Foundation",
+    journalPrompts:[
+      "Be honest: what is your current relationship with money? Do you save, spend impulsively, or avoid thinking about it?",
+      "What financial habit do you want to establish in the next 3 months — and what specifically will you do this week to start?",
+      "Name one financial mistake you have seen an adult in your life make. What would you do differently?"
+    ],
+    content:`<h2>Week 3: Financial Literacy — The Skill Nobody Taught You</h2>
+<div class="info-banner"><h4>&#128181; Money Is Not Taught in Schools. That's a Problem. Let's Fix It.</h4><p>Most adults are financially illiterate. Not because they're not intelligent — because nobody ever taught them. This week gives you the foundation that most people wish they had at 15. Use it.</p></div>
+
+<h3>&#128181; The Single Most Important Money Principle</h3>
+<p><strong>Spend less than you earn. Always.</strong> This sounds obvious. The majority of adults in South Africa do not do this consistently. Consumer debt — money owed on credit cards, clothing accounts, personal loans — is the financial quicksand that swallows lives. It is normal to be in debt. That doesn't make it smart. Your goal is to be financially different from average, not financially normal.</p>
+
+<h3>&#9201; Compound Interest — The Most Powerful Force in Personal Finance</h3>
+<p>Compound interest means you earn interest on your interest. Over time, this creates exponential growth. Money saved at 17 is worth dramatically more than money saved at 35 — not because the amounts are different, but because time amplifies everything. <strong>The earlier you start, the less you have to contribute to end up with the same amount.</strong></p>
+<p>Example: R500 saved monthly from age 17, earning 10% per year, becomes over R3 million by age 60. The same saving started at 35 produces less than R700,000 by the same age. Same discipline. Same rate. A 20-year head start = 4.5x the outcome. Time is your greatest financial asset and you have more of it right now than you ever will again.</p>
+
+<h3>&#127968; Building Your Financial Foundation</h3>
+<ul>
+<li><strong>Start a savings habit now</strong> — even R50 per month. The amount is not the point. The habit is. A savings habit started at 17 is a fundamentally different life from one started at 30.</li>
+<li><strong>Needs vs wants</strong> — before any purchase above a certain amount, ask: is this a need or a want? This is not about never spending money on things you want. It is about making that choice consciously, not automatically.</li>
+<li><strong>Emergency fund first</strong> — before investing or big spending, build three months of basic living costs saved separately. This is what prevents one bad month from creating a debt spiral.</li>
+<li><strong>Never use a clothing account as a budget strategy</strong> — clothing accounts at Edgars, Mr Price, Jet etc. have interest rates that make them among the most expensive forms of credit available. Pay cash or don't buy it.</li>
+</ul>
+
+<h3>&#128203; Understanding Credit — Your Score Follows You</h3>
+<p>A credit score is a number that follows you for your entire adult life. It affects your ability to rent a flat, get a phone contract, take out a home loan, and in some cases get a job. It is built or damaged by: paying debts on time, amount owed, length of credit history, types of credit, and new applications. You will encounter credit in your adult life. What you do with it in your early 20s affects your 30s, 40s, and beyond.</p>
+<ul>
+<li><strong>One missed payment</strong> can damage your credit record for up to five years.</li>
+<li><strong>Judgment orders</strong> — if you don't pay and are taken to court — remain on your record for five years and make most financial activity nearly impossible.</li>
+<li><strong>Your first credit product</strong> matters. Use it carefully. A prepaid phone or a small credit card paid off in full every month is a better way to start than clothing account debt.</li>
+</ul>
+
+<h3>&#128683; Scam Detection — Young People Are Targeted</h3>
+<p>Pyramid schemes, multi-level marketing schemes, cryptocurrency scams, and "investment opportunities" specifically target young South Africans who want to make money fast and who don't yet have the financial literacy to recognise the warning signs.</p>
+<p><strong>Warning signs of a financial scam:</strong></p>
+<ul>
+<li>Guaranteed returns with little or no risk</li>
+<li>Requires you to recruit others to earn</li>
+<li>Urgency — "invest now before the opportunity closes"</li>
+<li>Complex explanations that don't quite make sense</li>
+<li>Promoted enthusiastically by someone you trust who got in early</li>
+<li>"Passive income" that requires almost no effort or skill</li>
+</ul>
+<p><strong>The rule:</strong> if it sounds too easy, it's too good to be true. Real money is built through work, skill, saving, and time. Not through shortcuts. The people who promote shortcuts are either being deceived themselves or are making money from the people they recruit.</p>
+
+<button class="submit-btn" onclick="markComplete()">Week 3 Quiz — Prove You Know This &#9889;</button>`,
+    resources:[
+      {icon:"&#128181;",title:"Personal Finance Starter Kit",desc:"Budget template, savings tracker, and spending analysis tool",file:"finance-starter-kit.pdf"},
+      {icon:"&#9201;",title:"Compound Interest Calculator Guide",desc:"See the real numbers — what saving R100/month from 17 actually becomes",file:"compound-calculator.pdf"},
+      {icon:"&#128203;",title:"Credit Score Explained",desc:"How your credit score works and how to build it correctly from the start",file:"credit-score-guide.pdf"},
+      {icon:"&#128683;",title:"Scam Detection Checklist",desc:"10 red flags that identify financial scams targeting young South Africans",file:"scam-checklist.pdf"},
+      {icon:"&#127909;",title:"Week 3 Money Mindset Audio",desc:"Building a healthy relationship with money from the ground up",file:"week3-audio.mp3"},
+    ],
+    assessment:[
+      {question:"The single most important money principle in Week 3 is:",options:["Invest early and consistently to take advantage of compound growth over time","Avoid debt entirely as it is always a sign of financial mismanagement","Spend less than you earn — always. Consumer debt is the financial quicksand that swallows lives. Being financially average is not a goal.","Save a fixed percentage of everything you earn before spending anything else"],correct:2},
+      {question:"Why does money saved at 17 produce dramatically more wealth than money saved at 35?",options:["Younger people have fewer expenses so they can save larger amounts consistently","Interest rates are typically higher for younger savers without existing credit history","Compound interest means interest earned on interest — and time amplifies this exponentially. A 20-year head start with the same monthly amount and same rate can produce 4-5x the outcome.","Younger people have more energy and discipline to maintain consistent savings habits"],correct:2},
+      {question:"The purpose of building an emergency fund before investing is:",options:["To prove financial discipline and responsibility before taking on investment risk","To have money available for opportunities that require rapid capital deployment","To prevent one bad month — job loss, medical cost, unexpected expense — from creating a debt spiral. Three months of basic living costs saved separately is the foundation.","To comply with financial regulations that require liquid assets before investment accounts"],correct:2},
+      {question:"Why are clothing accounts specifically called out as financially dangerous?",options:["They encourage impulsive purchasing behaviour and poor spending decisions","They create obligations that reduce your ability to save and invest consistently","Clothing accounts at major retailers carry extremely high interest rates — making them among the most expensive forms of credit available. Pay cash or don't buy it.","They negatively affect your credit score by showing consumer debt on your credit record"],correct:2},
+      {question:"A credit score follows you for life and affects:",options:["Only your ability to borrow money for large purchases like a car or home","Your academic record and professional reputation in some industries","Your ability to rent a flat, get a phone contract, take out a home loan, and sometimes get a job. Decisions made in your early 20s affect your 30s, 40s, and beyond.","Only your relationship with formal financial institutions like banks"],correct:2},
+      {question:"One missed credit payment can damage your credit record for:",options:["Six months, after which the record is automatically cleared","One year, unless you settle the debt in full during that period","Up to five years. A judgment order — if you're taken to court — also remains for five years and makes most financial activity nearly impossible.","Two years, after which responsible behaviour can restore your rating"],correct:2},
+      {question:"The key warning sign that distinguishes a pyramid scheme from a legitimate investment is:",options:["Returns that are higher than what a bank would offer on a savings account","The involvement of cryptocurrency or other unregulated financial instruments","It requires you to recruit others to earn — your income depends not on the value of a product or investment, but on the number of people below you in the scheme","It promises passive income without requiring specialist knowledge or skills"],correct:2},
+      {question:"'Needs vs wants' is described as useful because:",options:["It helps you avoid spending money on things that don't increase your long-term happiness","It forces you to live a minimalist lifestyle that maximises savings rates","It makes spending on wants conscious and deliberate rather than automatic — not about never spending on what you want, but about choosing to, not defaulting to","It is the basis of all formal budget planning and financial management systems"],correct:2},
+      {question:"What is the recommended first credit product for a young person building their credit history?",options:["A clothing account at a major retailer which allows small, manageable purchases","A personal loan from a reputable bank which demonstrates ability to manage structured debt","A prepaid phone or a small credit card paid off in full every month — building credit history without accumulating interest-bearing debt","A bank overdraft facility which provides flexibility without formal debt commitment"],correct:2},
+      {question:"Real money, according to Week 3, is built through:",options:["Identifying opportunities early and investing before others recognise their value","Networking effectively and building relationships with financially successful people","Work, skill, saving, and time. Not through shortcuts. People who promote shortcuts are either deceived themselves or profiting from those they recruit.","Taking calculated risks on high-return investments while you are young and can afford to lose"],correct:2},
+    ]
+  },
+  4:{
+    tutorialVideo:"Online Safety, Reputation Management, and Your Digital Footprint",
+    basicVideo:"Sextortion, Cyberbullying, and the Online Threats Nobody Prepares Teenagers For",
+    journalPrompts:[
+      "If a future employer searched your name online today, what would they find? What would you want them to find instead?",
+      "Have you ever posted, shared, or said something online that you later regretted? What drove that decision?",
+      "What does your current online behaviour say about your character — and does it match who you want to become?"
+    ],
+    content:`<h2>Week 4: Online Safety, Reputation, and Your Digital Footprint</h2>
+<div class="info-banner"><h4>&#128737; The Internet Never Forgets — and Neither Do Future Employers</h4><p>Your digital footprint is already being formed. Every post, comment, photo, and account is part of a record that follows you. This week is about understanding what that record contains — and taking control of it.</p></div>
+
+<h3>&#128247; Your Digital Footprint — What It Is and Why It Matters</h3>
+<p>Your digital footprint is the cumulative record of everything you do online: posts, comments, likes, photos, messages, accounts, searches (on some platforms), and content you're tagged in. It is permanent, searchable, and increasingly visible to people you haven't met yet — including employers, university admissions offices, and future partners.</p>
+<p>Studies consistently show that employers and institutions search candidates online. What they find influences decisions. A photo, a comment, a tweet from three years ago — if it is public, it is findable. <strong>Your online reputation is part of your real reputation. There is no meaningful separation.</strong></p>
+
+<h3>&#128737; Sextortion — The Trap You Must Know About</h3>
+<p>Sextortion is one of the fastest-growing crimes targeting teenagers globally and in South Africa. Here is how it works: a stranger (usually presenting as an attractive peer) initiates contact online. They build rapport quickly. They request, encourage, or trick you into sending intimate images. Once they have the images, they threaten to share them with your family, friends, school, or publicly unless you pay money — or send more images. This trap has destroyed lives and contributed to suicides.</p>
+<p><strong>What you must know:</strong></p>
+<ul>
+<li>This can happen to absolutely anyone. It is not a reflection of stupidity. It is a sophisticated, rehearsed manipulation.</li>
+<li>The "person" you are talking to is almost certainly not who they say they are. Profiles are fake. Photos are stolen.</li>
+<li>If it happens: do not pay. Paying does not stop it — it confirms you can be extorted. Report immediately to your parents/trusted adult, and to the South African Police Service.</li>
+<li>Intimate images of minors (under 18) are illegal to possess, share, or distribute — regardless of whether the person consented to the original photo. Anyone who threatens you with them is committing a crime.</li>
+</ul>
+
+<h3>&#128245; Cyberbullying — When Harm Follows You Home</h3>
+<p>Cyberbullying is distinct from physical bullying in one critical way: it has no off switch. Physical bullying ends when you leave the environment. Online harassment follows you home, into your bedroom, at 2am. It is also more visible — humiliation in front of potentially thousands of people rather than a small group.</p>
+<p>If you are being cyberbullied: <strong>document everything</strong> (screenshots), block and report, tell a trusted adult, and know that you are not alone and it is not your fault. If you witness cyberbullying: saying nothing is a choice that enables it. You do not need to make a spectacle — a private message to the target can matter more than a public response.</p>
+
+<h3>&#128640; Building a Positive Digital Presence</h3>
+<p>Your digital footprint is not just about avoiding harm — it is an opportunity. Teenagers who intentionally build a positive online presence have significant advantages: they are easier to verify, easier to vouch for, and easier to trust. Here is how:</p>
+<ul>
+<li><strong>Post with intention</strong> — before posting, ask: would I be comfortable if my future employer, my future partner, or my parents saw this? If not, don't post it.</li>
+<li><strong>Build something</strong> — a portfolio, a blog, a project, a contribution to a community. Something that shows you are a person who creates, not just consumes.</li>
+<li><strong>Privacy settings</strong> — audit your current accounts. Who can see what? Are your settings what you intended them to be?</li>
+<li><strong>Separate accounts wisely</strong> — there is nothing wrong with keeping personal life personal. Just know that separation is not always guaranteed.</li>
+</ul>
+
+<h3>&#128272; Password Hygiene and Basic Digital Security</h3>
+<ul>
+<li><strong>Never reuse passwords</strong> — if one account is compromised, all accounts with the same password are compromised.</li>
+<li><strong>Use a password manager</strong> — you do not need to remember 40 different strong passwords. A reputable password manager does it for you.</li>
+<li><strong>Two-factor authentication</strong> — turn it on for email, banking, and social media. It makes account takeover dramatically harder.</li>
+<li><strong>Phishing</strong> — most hacks start with an email or message that tricks you into clicking something or entering your details somewhere fake. Look carefully at sender addresses. When in doubt, don't click.</li>
+</ul>
+
+<button class="submit-btn" onclick="markComplete()">Week 4 Quiz — Prove You Know This &#9889;</button>`,
+    resources:[
+      {icon:"&#128737;",title:"Sextortion Response Guide",desc:"What to do if you or someone you know is targeted — step by step",file:"sextortion-guide.pdf"},
+      {icon:"&#128247;",title:"Digital Footprint Audit",desc:"A checklist to review and clean up your current online presence",file:"digital-audit.pdf"},
+      {icon:"&#128245;",title:"Cyberbullying Action Plan",desc:"How to document, report, and respond to online harassment",file:"cyberbullying-plan.pdf"},
+      {icon:"&#128272;",title:"Password Security Guide",desc:"How to create and manage strong passwords without losing your mind",file:"password-guide.pdf"},
+      {icon:"&#127909;",title:"Week 4 Online Safety Audio",desc:"Real talk on reputation, privacy, and staying safe online",file:"week4-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Your digital footprint is best described as:",options:["The list of websites and apps you use on a regular basis","Your public social media profiles and the content you share on them","The cumulative permanent record of everything you do online — posts, comments, likes, photos, accounts, tags — visible to people you haven't met yet including future employers and institutions","The data collected by platforms about your online behaviour for advertising purposes"],correct:2},
+      {question:"How does sextortion typically begin?",options:["A hacker gains access to your device and finds existing intimate images without any contact","A stranger presents as an attractive peer, builds rapport quickly, then requests or tricks you into sending intimate images before threatening to share them unless you pay","A romantic partner shares intimate images without consent after a breakup","Someone gains access to your cloud storage or device and extracts intimate content directly"],correct:2},
+      {question:"If you are targeted by sextortion, the correct response is:",options:["Pay the requested amount once to resolve the situation and prevent further escalation","Delete all evidence and block the person immediately to prevent further contact","Do not pay — paying confirms you can be extorted and does not stop it. Report immediately to a trusted adult and the South African Police Service.","Send only a small amount to demonstrate willingness to negotiate a resolution"],correct:2},
+      {question:"Why is cyberbullying described as more damaging than physical bullying in one specific way?",options:["It reaches a larger audience and therefore causes more widespread reputational damage","It is more difficult to prove and therefore harder to address through official channels","It has no off switch. Physical bullying ends when you leave the space. Online harassment follows you home and can continue 24 hours a day.","It creates permanent records that cannot be removed, unlike verbal or physical incidents"],correct:2},
+      {question:"If you witness someone being cyberbullied, the most effective response described in Week 4 is:",options:["Publicly defend the target in the comment section to show visible solidarity","Report the content to the platform and encourage others to do the same","A private message to the target can matter more than a public response — saying nothing is a choice that enables the bullying","Alert school authorities immediately as they have the power to intervene formally"],correct:2},
+      {question:"The test for whether to post something online, according to Week 4, is:",options:["Whether it represents your authentic self and the values you want to be associated with","Whether you would be comfortable if your future employer, future partner, or parents saw it","Whether it could be misunderstood or taken out of context by people who don't know you","Whether it is consistent with the image you have been deliberately building online"],correct:2},
+      {question:"Why is reusing passwords across multiple accounts dangerous?",options:["It makes it easier for hackers to guess patterns in your password choices","If one account is compromised, every account with the same password is automatically vulnerable","Password reuse violates most platform terms of service and can result in account suspension","It increases the likelihood of accidentally using the wrong password and being locked out"],correct:2},
+      {question:"Phishing attacks most commonly begin with:",options:["Malicious software installed on your device without your knowledge or action","Someone gaining physical access to your device or observing your screen","An email or message that tricks you into clicking something or entering your details on a fake site. Most hacks start here, not with sophisticated technical attacks.","A request to connect on a social platform from someone you don't recognise"],correct:2},
+      {question:"Intimate images of minors (under 18) that are shared or threatened to be shared are:",options:["A private matter best resolved between the individuals involved without involving authorities","Illegal only if shared publicly — threats to share them are not themselves a crime","Illegal to possess, share, or distribute regardless of consent to the original photo. The person threatening you is committing a crime, not you.","Subject to school disciplinary procedures rather than criminal law"],correct:2},
+      {question:"Building a positive digital presence is described in Week 4 as an opportunity because:",options:["Social media platforms reward accounts with positive content with greater visibility and reach","A positive online presence demonstrates emotional maturity and character to peers","People who intentionally build a positive presence are easier to verify, vouch for, and trust — significant advantages in employment, admissions, and relationships","It offsets any negative content that might otherwise be found by people searching your name"],correct:2},
+    ]
+  },
+  5:{
+    tutorialVideo:"The Study System — How to Learn Faster, Remember More, and Dominate Your Exams",
+    basicVideo:"Focus, Flow, and the Science of How High Achievers Actually Study",
+    journalPrompts:[
+      "Be brutally honest: describe your current study system. What works? What doesn't? What have you been avoiding?",
+      "What is your biggest academic challenge right now — and what specifically is the thing you need to change?",
+      "If you were to study for the next 4 weeks at your absolute best, what would be different about how you're working?"
+    ],
+    content:`<h2>Week 5: The Study System — How High Achievers Actually Learn</h2>
+<div class="info-banner"><h4>&#128218; Studying Harder Is Not the Answer. Studying Smarter Is.</h4><p>Most students are using study methods that feel productive but don't produce results. This week gives you the science of how memory and learning actually work — and the systems that flow from that science.</p></div>
+
+<h3>&#129504; How Memory Actually Works</h3>
+<p>Understanding memory is the foundation of studying well. Memory is not a recording system. It is a reconstruction system. Every time you "remember" something, you are reconstructing it from cues. This means: <strong>the more times you reconstruct information, the stronger and more reliable the memory becomes.</strong> This is why passive reading is almost useless for retention — you are not reconstructing anything. You are observing.</p>
+<p>The two most evidence-backed learning strategies:</p>
+<ul>
+<li><strong>Active recall</strong> — close the book. Write down everything you remember. Go back and check. Fill the gaps. Repeat. This is uncomfortable and feels slower than reading — and it produces 3-4x better retention. The discomfort is the learning.</li>
+<li><strong>Spaced repetition</strong> — review material at increasing intervals: after 1 day, then 3 days, then 1 week, then 1 month. Each review strengthens the memory trace. This is how long-term retention is built — not marathon sessions before exams.</li>
+</ul>
+
+<h3>&#127919; The Past Paper Principle</h3>
+<p>Most subjects — especially maths, sciences, accounting, and languages — have a pattern. The exam is not random. It tests the same types of questions in the same types of ways, year after year. <strong>Past papers are the single most valuable study resource most students underuse.</strong></p>
+<ul>
+<li>Do past papers under timed, exam conditions — no notes, no phone, clock running.</li>
+<li>After completing each paper, mark it honestly and analyse every mistake. Not just "I got it wrong" but "why did I get it wrong? What did I not understand?"</li>
+<li>Track which question types you consistently get wrong. Those are your training targets — not the chapters you already understand.</li>
+</ul>
+
+<h3>&#8987; Focus and Deep Work</h3>
+<p>The ability to focus deeply — to give your full attention to one difficult task for an extended period — is becoming increasingly rare and increasingly valuable. Teenagers who can do this have a significant advantage in study, in work, and in creative output.</p>
+<ul>
+<li><strong>Work in cycles</strong> — 45 minutes of focused work, 10 minutes of genuine rest. Not "check social media." Actually rest. Walk around. Get water. Give your brain a real break.</li>
+<li><strong>Single-task</strong> — multitasking in studying does not exist. You are switching rapidly between tasks, and each switch costs you cognitive overhead. Do one thing at a time, fully.</li>
+<li><strong>The phone is the enemy of focus</strong> — not because phones are bad, but because notifications are engineered by billion-dollar companies to interrupt you. Put your phone in another room during study cycles. Not on silent. In another room.</li>
+<li><strong>Study environment matters</strong> — the same place, at the same time, signals your brain that it's time to work. Remove decision fatigue from your study routine.</li>
+</ul>
+
+<h3>&#127922; Exam Strategy — The Day Itself</h3>
+<ul>
+<li><strong>Read everything first</strong> — spend 5 minutes reading the whole paper before writing a word. Identify what you can answer well, what will take time, and what you should budget carefully.</li>
+<li><strong>Answer what you know first</strong> — build momentum and confidence, maximise marks from what you know before spending time on what you don't.</li>
+<li><strong>Don't die on one question</strong> — if you're stuck, move on. Come back. One difficult question is not worth sacrificing the marks you can earn on the rest of the paper.</li>
+<li><strong>The night before</strong> — light review only. Sleep is your memory consolidation system. Your brain processes and strengthens memory during sleep. Cramming at 2am costs you marks the next day.</li>
+<li><strong>Morning of</strong> — eat, hydrate, arrive early. Anxiety impairs performance. Preparation is the antidote to anxiety. Do the preparation; manage the anxiety.</li>
+</ul>
+
+<h3>&#9889; The Mindset Behind Academic Success</h3>
+<p>The most important mindset shift in academic performance: <strong>struggle is not a signal that something is wrong. It is a signal that learning is happening.</strong> The discomfort of not immediately understanding something, of working through confusion, of rereading a paragraph multiple times — this is not a problem. It is the process. Students who understand this use confusion as a starting point. Students who don't avoid the discomfort and call it studying.</p>
+
+<button class="submit-btn" onclick="markComplete()">Week 5 Quiz — Prove You Know This &#9889;</button>`,
+    resources:[
+      {icon:"&#128218;",title:"Active Recall Study System",desc:"Step-by-step guide to implementing active recall for any subject",file:"active-recall-guide.pdf"},
+      {icon:"&#127919;",title:"Past Paper Strategy Blueprint",desc:"How to use past papers as your primary study tool — with marking guide",file:"past-paper-strategy.pdf"},
+      {icon:"&#8987;",title:"Deep Focus System",desc:"Build 90-minute deep work sessions with zero distraction",file:"deep-focus-system.pdf"},
+      {icon:"&#127922;",title:"Exam Day Checklist",desc:"What to do the week before, the night before, and the morning of your exam",file:"exam-checklist.pdf"},
+      {icon:"&#127909;",title:"Week 5 Study Mindset Audio",desc:"Shift your relationship with difficulty and discomfort in learning",file:"week5-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Memory is described in Week 5 as a reconstruction system rather than a recording system. This means:",options:["Your memories are unreliable and should not be trusted without external verification","Different people reconstruct the same events in different ways based on their experiences","The more times you reconstruct information — actively retrieving and rebuilding it — the stronger and more reliable the memory becomes. Passive reading does not achieve this.","Memory is built through emotional association rather than repetition or retrieval practice"],correct:2},
+      {question:"Active recall produces 3-4x better retention than passive reading because:",options:["It forces you to engage with material for longer periods of sustained concentration","It creates emotional investment in the material which strengthens memory encoding","You are reconstructing information — closing the book, writing what you remember, checking, filling gaps. The discomfort of retrieval is the learning.","It creates a more complete and organised set of notes that are easier to review later"],correct:2},
+      {question:"Spaced repetition means reviewing material:",options:["Multiple times in a single session to ensure it is thoroughly understood","At increasing intervals — 1 day, 3 days, 1 week, 1 month — strengthening memory traces over time","Every day for a set period until you can reproduce it from memory without errors","At random intervals to test recall in unpredictable conditions and prevent pattern recognition"],correct:2},
+      {question:"Past papers are described as the most valuable underused study resource because:",options:["They provide an accurate prediction of what questions will appear in upcoming exams","Completing them gives you a realistic score that motivates better performance","Most subjects have patterns — the exam tests the same question types repeatedly. Past papers reveal the pattern. Working through them under timed conditions is the most direct exam preparation.","Examiners often reuse questions from previous years with minor modifications"],correct:2},
+      {question:"The correct way to use a past paper, according to Week 5, is:",options:["Read through it to familiarise yourself with the question styles before attempting answers","Complete it with your notes available to check accuracy while practising","Under timed, exam conditions with no notes or phone, then mark it honestly and analyse every mistake — not just what was wrong but why","Complete it over several sessions to allow for deeper reflection between sections"],correct:2},
+      {question:"'Deep work' or focused study is becoming increasingly valuable because:",options:["The job market increasingly rewards specialists who can concentrate for extended periods","Social media has reduced the average attention span making sustained focus rarer and more valuable","The ability to give full attention to one difficult task for an extended period is becoming rarer and increasingly differentiating in both academic and professional contexts","Employers now test for cognitive endurance as part of hiring processes"],correct:2},
+      {question:"Why should your phone be in another room — not just on silent — during study cycles?",options:["Silent phones still emit light that can be distracting in peripheral vision","The habit of picking up the phone becomes automatic even when there are no notifications","Notifications are engineered by billion-dollar companies to interrupt you. Even the presence of the phone reduces cognitive capacity. Physical distance removes the trigger.","Research shows that the electromagnetic field from phones in proximity affects concentration"],correct:2},
+      {question:"The exam strategy of 'read everything first' is recommended because:",options:["You need to plan your answers fully before writing to avoid wasting time on poor structure","Reading first helps reduce anxiety by showing you the full scope of what is required","Spending 5 minutes to understand the whole paper helps you identify what you can answer well, budget your time, and build a strategy before writing a single word","It is a requirement in most formal examination settings to avoid academic misconduct"],correct:2},
+      {question:"'Don't die on one question' in an exam context means:",options:["Avoid spending more than two minutes on any single question to maintain even time distribution","Focus on questions that carry the most marks first to maximise your potential score","If you are stuck, move on and come back later. One difficult question is not worth sacrificing marks you can earn on the rest of the paper.","Prioritise breadth of coverage over depth on any single question in time-pressured situations"],correct:2},
+      {question:"The key mindset shift about struggle and learning described in Week 5 is:",options:["Struggling indicates you need additional support and should seek help from teachers or tutors","Struggle is a signal that the material is too advanced and you should return to foundational content first","Struggle is not a signal that something is wrong — it is a signal that learning is happening. The discomfort of confusion is the process. Students who understand this use it as a starting point.","Struggling consistently with a subject indicates a learning difference that may require formal assessment"],correct:2},
+    ]
+  },
+  6:{
+    tutorialVideo:"Long-Term Thinking, Leadership, and Building a Life Worth Being Proud Of",
+    basicVideo:"The Compound Life — How Your Decisions Right Now Are Writing Your Future",
+    journalPrompts:[
+      "What does your ideal life look like at 30? What is the person who lives that life doing every single day — right now, at your age?",
+      "What is the single most important lesson from these six weeks that you will actually carry into your life?",
+      "Who are you choosing to become — and what is the first concrete thing you will do tomorrow to start becoming that person?"
+    ],
+    content:`<h2>Week 6: Long-Term Thinking and Building a Life Worth Being Proud Of</h2>
+<div class="info-banner"><h4>&#127775; This Is the Week That Ties Everything Together</h4><p>Six weeks of operating system. You now have frameworks most people never get. This final week is about installing them permanently — and understanding what kind of life they make possible.</p></div>
+
+<h3>&#127775; The Compound Life</h3>
+<p>Compound interest in finance means small consistent actions produce enormous outcomes over time. The same principle applies to everything in life: your health, your skills, your reputation, your relationships, your knowledge. <strong>Your choices right now are compound interest.</strong> Not in some abstract future sense — literally. The person who studies consistently for three years compounds knowledge. The person who protects their health consistently compounds physical capacity. The person who builds their character consistently compounds trust and opportunity.</p>
+<p>The inverse is also true. Bad habits compound too. Debt grows. Unhealthy patterns entrench. Reputation damage accumulates. <strong>The direction you are moving in right now — not where you are — is what matters most.</strong></p>
+
+<h3>&#128200; Long-Term Thinking — The Rarest Skill</h3>
+<p>Long-term thinking is the ability to make decisions based on your future self's interests, not just your present self's comfort. It is rare because: the brain is wired for short-term rewards, the culture constantly promotes immediate gratification, and the costs of long-term thinking are immediate while the benefits are distant.</p>
+<p>But here is the truth: <strong>the people who develop long-term thinking early have a compounding advantage that virtually nothing can overcome.</strong> A 17-year-old who can think in terms of years and decades has an operating system that most adults are still trying to install at 40.</p>
+<p>Practical long-term thinking tools:</p>
+<ul>
+<li><strong>The 10-10-10 rule</strong> — for any significant decision: how will I feel about this in 10 minutes? 10 months? 10 years? The answers should align. If the 10-minute answer is good but the 10-year answer is bad, don't do it.</li>
+<li><strong>Your future self as a stakeholder</strong> — before any major decision, ask: what would my 30-year-old self think of this choice? Your future self is real. They will live with the decisions your present self makes.</li>
+<li><strong>Work backwards from outcomes</strong> — what do you want your life to look like at 30? 40? What is the person who lives that life doing every single day right now? That is your operating instruction.</li>
+</ul>
+
+<h3>&#128081; Leadership — It Is Not a Title</h3>
+<p>Leadership is not something that is given to you when you reach a certain position. It is a way of showing up that you either practice or you don't. At its most fundamental, leadership means: <strong>taking responsibility, setting the direction, and bringing others with you.</strong> Not waiting to be told. Not blaming circumstances. Not managing your image while avoiding accountability.</p>
+<ul>
+<li><strong>Lead yourself first</strong> — you cannot lead others effectively if you cannot lead yourself. Self-discipline, emotional regulation, and follow-through are the foundation of all leadership.</li>
+<li><strong>Leaders raise the standard</strong> — they do not lower themselves to whatever behaviour is acceptable in the group. They demonstrate what is possible and invite others toward it.</li>
+<li><strong>Accountability without defensiveness</strong> — when something goes wrong in your sphere of responsibility, the first question is not "whose fault is this?" but "what is mine to fix?" This is the most powerful leadership behaviour there is.</li>
+</ul>
+
+<h3>&#127942; What You Now Have</h3>
+<p>You have spent six weeks installing a framework for your life. Identity and discipline. Emotional intelligence and decision-making. Financial literacy. Online safety. Academic performance. Long-term thinking. This is not a school subject that ends when the term does. This is an operating system that runs — or fails to run — in everything you do from here.</p>
+<p><strong>The people who will use what they have learned here are the ones who start tomorrow.</strong> Not when they feel ready. Not when the situation is perfect. Tomorrow. One thing. One new behaviour. One small upgrade to the operating system. That is how it works. That is how everything works.</p>
+<p>You cannot say you weren't told. Go build something worth being proud of. You have everything you need to start.</p>
+
+<button class="submit-btn" onclick="markComplete()">Week 6 Complete — Get My Certificate &#127942;</button>`,
+    resources:[
+      {icon:"&#127775;",title:"Your 5-Year Life Blueprint",desc:"A structured planning tool — from where you are to where you want to be",file:"five-year-blueprint.pdf"},
+      {icon:"&#128200;",title:"Long-Term Thinking Framework",desc:"The 10-10-10 rule and decision tools for thinking in decades",file:"longterm-thinking.pdf"},
+      {icon:"&#128081;",title:"Leadership Self-Assessment",desc:"Where are you leading — and where do you need to step up?",file:"leadership-assessment.pdf"},
+      {icon:"&#127942;",title:"HSOS Completion Certificate",desc:"You earned this. Download and keep it.",file:"certificate.pdf"},
+      {icon:"&#127909;",title:"Final Integration Audio — Your Future Self",desc:"A guided reflection on who you are choosing to become",file:"week6-audio.mp3"},
+    ],
+    assessment:[
+      {question:"'Your choices right now are compound interest' means:",options:["Making one large correct decision early in life produces better long-term outcomes than many small decisions","The financial decisions you make as a teenager have the greatest impact due to the length of time they can compound","Small consistent daily decisions accumulate exponentially over time — in knowledge, health, reputation, relationships, and skills. The direction you're moving right now is what matters most.","Early investment in education produces compound returns in the form of higher earning potential throughout your career"],correct:2},
+      {question:"Why is long-term thinking described as 'rare'?",options:["Most people lack the intelligence to accurately model future outcomes from present decisions","Modern education systems do not teach future planning or consequence analysis","The brain is wired for short-term rewards, culture promotes immediate gratification, and the costs of long-term thinking are immediate while the benefits are distant — making it cognitively and culturally difficult","Most people have too many immediate pressures to dedicate attention to long-term planning"],correct:2},
+      {question:"The 10-10-10 rule for decision-making asks:",options:["Whether a decision will affect you in 10 minutes, 10 months, and 10 years — and whether the answers align. If 10 minutes is good but 10 years is bad, don't do it.","How 10 different people in your life would react to this decision across 10 different scenarios","Whether you have 10 minutes, 10 hours, or 10 days to implement the decision properly","What 10% improvement in 10 key areas of life would produce the outcome you want in 10 years"],correct:2},
+      {question:"'Your future self as a stakeholder' means:",options:["Planning your finances to ensure your future self has sufficient material security","Considering how your decisions look from the perspective of the person you will be in 10-20 years — who is real and will live with the decisions your present self makes","Imagining the advice your most successful future version would give to your current self","Treating your long-term goals as real obligations that justify present sacrifice"],correct:2},
+      {question:"Leadership, as defined in Week 6, is primarily:",options:["A set of qualities some people are born with that enables them to naturally guide and motivate others","A formal role or position that gives you authority over others in an organisation or group","Taking responsibility, setting the direction, and bringing others with you — a way of showing up, not a title given. You either practice it or you don't.","The ability to communicate a compelling vision that motivates people to work toward a shared goal"],correct:2},
+      {question:"'Lead yourself first' means:",options:["Your personal goals should take priority over collective or group objectives","You cannot lead others effectively if you cannot manage yourself — self-discipline, emotional regulation, and follow-through are the foundation","Developing your own capabilities and expertise before taking on responsibility for others","Personal leadership requires a foundation of confidence and self-belief that must be built before external leadership"],correct:2},
+      {question:"The most powerful leadership behaviour described in Week 6 is:",options:["Articulating a clear and compelling vision that others find motivating and meaningful","Maintaining consistent standards and not accepting lower performance from yourself or others","When something goes wrong in your sphere: asking 'what is mine to fix?' rather than 'whose fault is this?' — accountability without defensiveness","Demonstrating calm and confidence under pressure to give others stability and direction"],correct:2},
+      {question:"Bad habits are described in Week 6 as compounding in the same way as good ones. This means:",options:["Negative behaviours are self-reinforcing and become harder to break the longer they continue","The same neurological mechanisms that build positive habits are used to build negative ones","Debt grows, unhealthy patterns entrench, and reputation damage accumulates — the direction you're moving right now matters as much as the direction you want to go eventually","Small bad decisions produce proportionally larger negative consequences over time through accumulation"],correct:2},
+      {question:"'Working backwards from outcomes' as a planning strategy means:",options:["Starting from your desired result and identifying the specific steps that lead to it in reverse order","Avoiding analysis of past failures and focusing only on where you want to go next","Asking: what does my life look like at 30 or 40? Then: what is the person living that life doing every single day right now? That daily behaviour is the instruction.","Setting stretch goals that exceed what you believe is currently achievable to create upward pressure"],correct:2},
+      {question:"The final message of Week 6 about applying what you've learned is:",options:["Review these materials regularly and return to them when you face important decisions","Share what you've learned with people in your life who would benefit from this framework","Start tomorrow — not when ready, not when perfect. One thing. One new behaviour. One upgrade to the operating system. That is how it works. You cannot say you weren't told.","Commit to revisiting each week's content once per month to reinforce what you have learned"],correct:2},
+    ]
+  }
+
+  ,7:{
+    tutorialVideo:"Physical Bullying, Blessers & the Traps Set for Teenagers",
+    basicVideo:"Recognising Manipulation, Grooming, and How to Get Out Safely",
+    journalPrompts:[
+      "Have you ever witnessed bullying and said nothing? What stopped you — and what would you do differently now?",
+      "Have you or someone you know ever been offered something by an older person in exchange for company or affection? What felt wrong about it?",
+      "What does it mean to you to stand up for someone who is being targeted — even when it costs you?"
+    ],
+    content:`<h2>Week 7: Physical Bullying, Blessers &amp; the Traps Set for Teenagers</h2>
+<div class="info-banner"><h4>&#128680; Some Adults Are Not Safe. Some Situations Are Traps. This Week Teaches You to Recognise Both.</h4><p>Bullying is not just teasing. Blessers are not generous strangers. Both involve power being used against you — and both have patterns you can learn to see and respond to.</p></div>
+
+<h3>&#129354; Physical Bullying — What It Actually Is</h3>
+<p>Physical bullying includes hitting, pushing, kicking, stealing belongings, damaging property, and any unwanted physical contact used to intimidate or hurt. It is one of the most visible forms of bullying but often the most minimised — "boys will be boys", "just toughen up." <strong>Physical bullying is assault. It is a crime. It is never the victim's fault.</strong></p>
+<p>Physical bullying follows a pattern:</p>
+<ul>
+<li><strong>Target selection</strong> — bullies target people who appear isolated, won't fight back, or are different in some visible way. Being targeted says nothing about your worth. It reveals the bully's need for control.</li>
+<li><strong>Testing</strong> — small provocations first: a shove, a grab, a minor humiliation. This tests your response and whether bystanders will intervene.</li>
+<li><strong>Escalation</strong> — if unchallenged, it escalates. The bully learns the behaviour carries no consequences.</li>
+<li><strong>Audience</strong> — most bullying happens in front of others. The bully needs witnesses. Bystander silence is interpreted as approval.</li>
+</ul>
+<p><strong>If you are being physically bullied:</strong> Document every incident (date, time, what happened, who witnessed it). Report to a trusted adult immediately. If in immediate danger, contact SAPS: 10111. You are not weak for needing help — you are smart for getting it.</p>
+<p><strong>If you witness bullying:</strong> You don't have to physically intervene if it's unsafe. But silence is a choice. Check on the target afterwards. Report it. Refuse to laugh. These small actions shift the balance.</p>
+
+<h3>&#128181; Blessers — The Trap Disguised as Generosity</h3>
+<p>A "blesser" is an older person — usually significantly older — who offers gifts, money, phones, clothes, hair, nails, or outings to a younger person in exchange for their company, affection, or sexual access. <strong>This is not generosity. It is exploitation.</strong> The older party has vastly more power, money, and experience — the younger person often doesn't fully understand the price being paid until the trap is already closed.</p>
+<p><strong>How the blesser trap works — the real scenario:</strong></p>
+<ul>
+<li><strong>The hook:</strong> An older person notices a teenager. Starts with small gestures — airtime, a meal, a lift. No conditions stated. "I just want to look after you." This feels good. Nothing is asked for yet.</li>
+<li><strong>The investment:</strong> Gifts escalate — hair, clothes, phone data. Regular contact. "I do so much for you." An emotional and material debt quietly builds.</li>
+<li><strong>The ask:</strong> Once the investment is high enough, the real expectation emerges — physical access. By this point the young person feels they owe something, fears losing the income, or has been convinced it is love.</li>
+<li><strong>The trap:</strong> Saying no is now costly — loss of money, gifts, shame, or threats. Leaving becomes harder the longer it continues.</li>
+</ul>
+<p><strong>The hard truth:</strong> No adult who genuinely cares about a teenager's future needs to purchase access to them. Gifts are not love. They are currency — and you are what is being bought.</p>
+<p><strong>Warning signs of a blesser relationship:</strong></p>
+<ul>
+<li>They are significantly older and frame the age gap as a feature, not a concern</li>
+<li>Gifts and money appear early, before they really know you</li>
+<li>They want to keep the relationship secret from your family</li>
+<li>They make you feel special by giving you things your peers don't have</li>
+<li>They withdraw affection or gifts when you say no to something</li>
+<li>They pressure you into situations that make you uncomfortable</li>
+<li>They say things like "I've given you so much — is this too much to ask?"</li>
+</ul>
+
+<h3>&#127917; Grooming — When Adults Trick Teenagers Step by Step</h3>
+<p>Grooming is the deliberate process by which an adult builds trust, access, and emotional dependence with a young person — with the intention of eventually exploiting them. It happens in person and online. It is calculated and patient. By the time the young person realises what is happening, they often feel trapped, ashamed, or disbelieving.</p>
+<p><strong>The grooming stages — a real scenario:</strong></p>
+<ul>
+<li><strong>Target selection:</strong> The groomer looks for vulnerability — a teenager who seems lonely, has family problems, lacks confidence, or is hungry for attention and approval.</li>
+<li><strong>Gaining access:</strong> Offering tutoring, lifts, mentorship, online connection. Positioning themselves as helpful and trustworthy. Becoming a fixture in the teenager's life.</li>
+<li><strong>Trust building:</strong> "I'm the only one who really gets you." Creating a special, exclusive bond. Making the teenager feel more understood than by anyone else.</li>
+<li><strong>Desensitisation:</strong> Slowly introducing sexual topics, jokes, physical contact, or inappropriate content — watching carefully for resistance, backing off if challenged, then trying again later.</li>
+<li><strong>Isolation:</strong> "Your friends are immature." "Your parents are controlling." Gradually creating distance from everyone who might notice or object.</li>
+<li><strong>Maintaining control:</strong> Once exploitation begins, using shame ("no one will believe you"), threats ("I'll show everyone what you did"), or emotional blackmail ("I'll hurt myself if you leave") to keep the young person silent.</li>
+</ul>
+<p><strong>If any adult relationship in your life contains these patterns — even if the person feels like a friend — tell a trusted adult or call Childline: 116 (free, 24/7). You are not in trouble. It is not your fault. You deserve support.</strong></p>
+
+<h3>&#128137; Peer Bullying Scenarios — What They Look Like</h3>
+<ul>
+<li><strong>The group exclusion:</strong> A group of friends suddenly stops including someone. Inside jokes are made loudly within earshot. This is deliberate. It is bullying.</li>
+<li><strong>The "joke" that isn't:</strong> A person is mocked repeatedly and told "can't you take a joke?" The repetition and targeting are what make it bullying, not the laughter.</li>
+<li><strong>The steal-and-deny:</strong> Belongings are taken, damaged, or hidden. "I don't know what you're talking about." Combined with the social pressure not to report.</li>
+<li><strong>The corridor confrontation:</strong> Being blocked, shoved, or intimidated in spaces where teachers aren't watching. Calculated to exploit blind spots.</li>
+</ul>
+
+<h3>&#128137; Help Lines</h3>
+<ul>
+<li><strong>Childline SA:</strong> 116 (free, 24/7)</li>
+<li><strong>SAPS:</strong> 10111</li>
+<li><strong>Stop GBV Helpline:</strong> 0800 428 428</li>
+<li><strong>Lifeline:</strong> 0861 322 322</li>
+</ul>
+<button class="submit-btn" onclick="markComplete()">Week 7 Quiz &#9889;</button>`,
+    resources:[
+      {icon:"&#128680;",title:"Bully Response Action Plan",desc:"What to do when you are targeted or witness bullying — step by step",file:"bully-action-plan.pdf"},
+      {icon:"&#128181;",title:"Blesser Red Flags Checklist",desc:"12 warning signs that a relationship is exploitative, not generous",file:"blesser-checklist.pdf"},
+      {icon:"&#127917;",title:"Grooming Awareness Guide",desc:"How grooming works, how to recognise it, and what to do",file:"grooming-guide.pdf"},
+      {icon:"&#128137;",title:"SA Help Lines Card",desc:"Emergency and support contacts — save these to your phone now",file:"helplines-sa.pdf"},
+      {icon:"&#127909;",title:"Week 7 Safety Audio",desc:"Real talk on bullying, blessers, and protecting yourself",file:"week7-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Physical bullying typically follows which pattern?",options:["Random acts with no consistent target","Target selection, small testing provocations, escalation when unchallenged, performed in front of an audience","Direct confrontation that immediately escalates to serious violence","Verbal abuse that only turns physical when the bully feels threatened"],correct:1},
+      {question:"Being physically bullied says what about the victim?",options:["They have made themselves a target through their behaviour","They are in an environment where authority figures have failed","Nothing — being targeted reflects the bully's need for control, not the victim's worth","They need to become more assertive to prevent future targeting"],correct:2},
+      {question:"What is a blesser relationship actually based on?",options:["A cross-generational friendship based on mutual respect and care","An older person purchasing access to a younger person through gifts and money — exploitation dressed as generosity","A mentoring relationship where material support is part of genuine investment in someone's future","A romantic relationship where an age gap is accepted by both parties"],correct:1},
+      {question:"How does the blesser trap typically begin?",options:["With an explicit demand for sexual access in exchange for money","With genuine-seeming generosity and no stated conditions — building obligation before the real expectation appears","With social pressure from peers to pursue wealthy older partners","With gifts that are openly presented as payment for company"],correct:1},
+      {question:"Which is a clear red flag of a blesser or exploitative relationship?",options:["They are older and have more life experience to offer","They want to keep the relationship secret from your family and withdraw gifts when you set limits","They offer career advice and connections","They introduce you to their wider social circle"],correct:1},
+      {question:"Grooming begins by targeting young people who:",options:["Are high-achieving and therefore more susceptible to flattery","Appear vulnerable — lonely, seeking approval, from difficult home situations, or hungry for attention","Are physically attractive and likely to be receptive to romantic attention","Are socially active and therefore easy to access in group settings"],correct:1},
+      {question:"What does the isolation stage of grooming involve?",options:["Locking the young person in a physical space to prevent them leaving","Creating distance from friends and family who might notice or object: 'They don't understand us'","Preventing the young person from attending school or community activities","Monitoring the young person's movements and communications"],correct:1},
+      {question:"If you recognise grooming patterns in an adult relationship, you should:",options:["Confront the adult directly to give them a chance to explain themselves","Tell a trusted adult or call Childline 116 — you are not in trouble and it is not your fault","Gradually reduce contact without telling anyone to avoid causing drama","Document the interactions in case they escalate before taking action"],correct:1},
+      {question:"The bystander's most effective action when witnessing bullying is:",options:["Physical intervention to stop the bully regardless of personal safety","Loudly calling out the bully in front of their audience","Checking on the target afterwards, refusing to laugh, and reporting — silence enables bullying","Staying uninvolved to avoid becoming a target"],correct:2},
+      {question:"What is the key reason no legitimate adult requires gifts or transactions to show care for a teenager?",options:["Adults have a legal obligation to provide support without conditions","Genuine care for a teenager's future does not require purchasing access to them — gifts used this way are currency, not love","Offering gifts to teenagers is illegal under South African child protection law","Adults in mentoring roles are forbidden from giving gifts to avoid conflicts of interest"],correct:1},
+    ]
+  }
+  ,8:{
+    tutorialVideo:"Substance Abuse — Alcohol, Drugs, Vaping and What They Actually Do to You",
+    basicVideo:"Addiction, Peer Pressure, and How to Say No Without Losing Your Friends",
+    journalPrompts:[
+      "Be honest: what substances are present in your environment? What pressure, if any, do you face around them?",
+      "What does 'escape' look like for you — and are the ways you escape actually helping or creating new problems?",
+      "What would you say to a close friend who you could see was developing a problem with alcohol or drugs?"
+    ],
+    content:`<h2>Week 8: Substance Abuse — The Real Facts, Not the Lectures</h2>
+<div class="info-banner"><h4>&#128138; Most of What You've Been Told About Drugs and Alcohol Is Incomplete. Here Are the Actual Facts.</h4><p>This week is not about "just say no." You've heard that. This week gives you information that helps you make real decisions — and recognise when someone you care about is in trouble.</p></div>
+
+<h3>&#129504; How Addiction Works — The Brain Science</h3>
+<p>Every addictive substance works by hijacking your brain's reward system. Normally, your brain releases dopamine — the feel-good chemical — when you eat, connect with people, or achieve something. Addictive substances flood this system artificially, producing far more dopamine than any natural activity can. <strong>The brain responds by reducing its own dopamine production — meaning you need more of the substance to feel the same effect, and normal life feels flat.</strong></p>
+<p>This is tolerance and dependency. It builds gradually. The person who says "I can stop whenever I want" is often already past the point where stopping is easy.</p>
+<p><strong>The teenage brain is especially vulnerable.</strong> Your brain develops until around age 25 — particularly the prefrontal cortex (decision-making and impulse control). Substances introduced during this window cause more lasting changes than the same substances introduced in adulthood. This is science, not a scare tactic.</p>
+
+<h3>&#127866; Alcohol — Most Dangerous Because It's Normalised</h3>
+<p>Alcohol is the most widely used and most socially accepted drug in South Africa. Its social acceptance makes it more dangerous, not less. Because it is legal and normalised, people underestimate its impact.</p>
+<ul>
+<li><strong>Short-term:</strong> impaired judgment, reduced inhibition, slowed reaction time, memory impairment, aggression, blackouts. Most teenage accidents, fights, and unprotected sex happen under alcohol.</li>
+<li><strong>Long-term:</strong> liver damage, brain damage (even in teenagers), dependency, academic decline, increased depression and anxiety risk.</li>
+<li><strong>Binge drinking</strong> — large amounts in short periods — can cause alcohol poisoning, which can be fatal. It is common among teenagers and particularly dangerous.</li>
+<li><strong>Drink spiking</strong> — substances added to drinks without your knowledge to disorient or incapacitate you. Never leave your drink unattended. If you feel suddenly extremely intoxicated after very little, tell someone you trust immediately — this is an emergency.</li>
+</ul>
+
+<h3>&#128680; Vaping — The "Safe" Alternative That Isn't</h3>
+<p>Vapes contain nicotine (the same addictive substance as cigarettes), flavourings, and aerosols with long-term effects still being studied. <strong>Nicotine addiction develops faster in teenagers than adults.</strong> The appealing flavours and packaging are deliberately designed to attract young people. Vaping has been linked to serious lung conditions, including a condition called EVALI that has hospitalised and killed young people.</p>
+
+<h3>&#128138; Drugs Common Among South African Teenagers</h3>
+<ul>
+<li><strong>Dagga (Cannabis):</strong> South Africa's most used illegal drug. Common myths: "natural so safe", "can't get addicted." Reality: heavy adolescent use is linked to permanent IQ reduction (up to 8 points in studies), psychosis risk, motivation problems, and about 1 in 6 teenage users becoming dependent.</li>
+<li><strong>Nyaope/Whoonga:</strong> A street drug containing heroin. Extremely addictive — dependency often develops within weeks. There is no casual use of nyaope. It destroys health, relationships, and prospects rapidly.</li>
+<li><strong>Tik (Methamphetamine):</strong> A stimulant causing extreme highs followed by severe crashes. Highly addictive. Physical deterioration is rapid and visible. Associated with aggression, paranoia, and psychosis.</li>
+<li><strong>Prescription medication abuse:</strong> Using medication not prescribed to you. Treated as "less serious" because it's medicine — the addiction and health risks are equivalent to street drugs.</li>
+</ul>
+
+<h3>&#128137; Real Scenario: The Party</h3>
+<p>You're at a friend's house. Someone passes around something — dagga, drinks, pills. Everyone seems to be taking it. The host says "don't be boring." Your closest friend looks at you. <strong>What do you do?</strong></p>
+<p>The pressure feels enormous in that moment. Here is what is true: most people at that party are also feeling the pressure. "Everyone is doing it" is almost never accurate. A practiced response ("I'm good thanks" said once, clearly, and dropped) is more powerful than any explanation. You do not owe anyone a reason. And the people who keep pushing after one clear no are telling you something important about who they are.</p>
+
+<h3>&#128137; If You or Someone You Know Has a Problem</h3>
+<p>Signs: using more than intended, using to cope with emotions, unable to stop despite wanting to, hiding use, feeling sick when not using. <strong>Addiction is a health condition, not a moral failure. Getting help is intelligence.</strong></p>
+<ul>
+<li><strong>SANCA:</strong> 0861 4 SANCA (72622)</li>
+<li><strong>Narcotics Anonymous SA:</strong> 083 900 6962</li>
+<li><strong>Lifeline:</strong> 0861 322 322</li>
+</ul>
+<button class="submit-btn" onclick="markComplete()">Week 8 Quiz &#9889;</button>`,
+    resources:[
+      {icon:"&#129504;",title:"Addiction Brain Science Guide",desc:"How substances change your brain — explained clearly without scare tactics",file:"addiction-brain.pdf"},
+      {icon:"&#127866;",title:"Alcohol Facts for Teenagers",desc:"Short-term effects, long-term damage, drink spiking, binge drinking statistics",file:"alcohol-facts.pdf"},
+      {icon:"&#128138;",title:"SA Drug Awareness Guide",desc:"Honest facts on dagga, nyaope, tik, and prescription abuse",file:"drug-awareness.pdf"},
+      {icon:"&#128137;",title:"How to Talk to a Friend About a Problem",desc:"Scripts and approaches for the hardest conversation you'll have",file:"friend-conversation.pdf"},
+      {icon:"&#127909;",title:"Week 8 Recovery Audio",desc:"Real stories from young people who got out",file:"week8-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Why are teenagers more vulnerable to addiction than adults?",options:["They have less willpower and are more easily influenced","The teenage brain develops until around 25 — substances during this window cause more lasting brain chemistry changes than in adulthood","They lack life experience to understand consequences","They are more impulsive by nature"],correct:1},
+      {question:"How do addictive substances create dependency?",options:["They create physical pain when absent","They flood the brain's dopamine system, causing the brain to reduce natural production — needing more substance for the same effect, and less pleasure from normal life","They alter personality over time","They disrupt sleep that only the substance can relieve"],correct:1},
+      {question:"What makes alcohol particularly dangerous for teenagers?",options:["It is the strongest substance they can easily access","Its social acceptance causes people to underestimate its impact — it is behind more teenage accidents, fights, and unprotected sex than any illegal drug","It is specifically marketed at young people","It is more physically addictive than most illegal drugs"],correct:1},
+      {question:"What should you do if you feel extremely intoxicated after very little alcohol?",options:["Lie down somewhere quiet until it passes","Tell someone you trust immediately — your drink may have been spiked and you need to be in safe hands","Drink water and eat something","Contact the person who gave you the drink"],correct:1},
+      {question:"What is the reality about 'everyone is doing it' in substance pressure situations?",options:["Peer pressure is real — most people present are genuinely comfortable with the substance","It is almost never accurate — most people present are also feeling pressure; a clear practiced refusal is more powerful than any explanation","Social conformity is a basic human need and resistance requires exceptional confidence","The statement is partly true at parties where substance use is already established"],correct:1},
+      {question:"What does research show about heavy dagga use during adolescence?",options:["Casual use has no long-term effects","It is linked to permanent IQ reduction, psychosis risk, motivation problems, and 1 in 6 teenage users becoming dependent","Effects are fully reversible when stopped before 18","Risks are the same as alcohol — no more concerning"],correct:1},
+      {question:"What distinguishes nyaope from other drugs teenagers encounter?",options:["It is the most widely used drug among SA teenagers","It contains heroin, causes dependency within weeks, and there is no such thing as casual use — it destroys health and prospects rapidly","It is less physically addictive but more psychologically harmful","Its effects are similar to alcohol but longer-lasting"],correct:1},
+      {question:"Addiction is best described as:",options:["A moral failure indicating weak character","A health condition involving brain chemistry changes — getting help is intelligence, not weakness","A choice always reversible through willpower","A teenage phase most grow out of"],correct:1},
+      {question:"Which is a sign of a developing substance problem?",options:["Using occasionally in social settings with no desire to use alone","Using to cope with emotions or stress, using more than intended, feeling sick when not using","Having tried a substance once out of curiosity","Using on weekends only with no academic impact"],correct:1},
+      {question:"Why is prescription medication abuse treated as equally serious to street drugs?",options:["Prescription medications are more widely available and therefore more commonly abused","The addiction potential and health risks are equivalent to street drugs — 'it's medicine' does not reduce the harm","Prescription abuse is more socially acceptable and therefore harder to recognise and address","Prescription medications interact with other substances in ways that make combination use especially dangerous"],correct:1},
+    ]
+  }
+  ,9:{
+    tutorialVideo:"Teen Pregnancy, Sexual Health &amp; What You Were Never Properly Taught",
+    basicVideo:"Consent, Contraception, and Navigating Sexual Pressure",
+    journalPrompts:[
+      "How comfortable are you discussing sex, pregnancy, and health with the adults in your life? What makes it hard?",
+      "What does consent mean to you — and do you think most teenagers your age actually understand it fully?",
+      "If a friend told you they might be pregnant, what would you say? Where would you direct them?"
+    ],
+    content:`<h2>Week 9: Teen Pregnancy, Sexual Health &amp; What You Were Never Properly Taught</h2>
+<div class="info-banner"><h4>&#10084;&#65039; South Africa Has One of the Highest Teen Pregnancy Rates in the World. Most of It Is Preventable. Information Is Protection.</h4><p>This week covers what you need to know about your body, consent, contraception, and sexual health. Not judgment. Not shame. Just facts that protect you.</p></div>
+
+<h3>&#128202; The Reality in South Africa</h3>
+<p>Approximately <strong>30% of girls in South Africa will have been pregnant before age 20.</strong> Teen pregnancy is associated with school dropout, poverty, and limited future opportunities for both the mother and child. It is not inevitable. <strong>Accurate information is one of the most powerful preventions available — and most teenagers are not getting it.</strong></p>
+
+<h3>&#128274; Consent — Non-Negotiable, Always</h3>
+<p>Consent is the freely given, enthusiastic, informed agreement to sexual activity. It is not silence. It is not "they didn't say no." It is not compliance under pressure. It cannot be given when intoxicated. <strong>It must be ongoing — saying yes once does not mean yes forever or yes to everything.</strong></p>
+<ul>
+<li><strong>Clear and enthusiastic</strong> — not reluctant or pressured</li>
+<li><strong>Ongoing</strong> — can be withdrawn at any point, even during the activity</li>
+<li><strong>Specific</strong> — yes to one thing is not yes to another</li>
+<li><strong>Sober</strong> — a person who is drunk or high cannot legally give consent</li>
+<li><strong>Equal</strong> — genuine consent cannot exist when one person has power over the other (teacher/student, employer/employee, significantly older/younger)</li>
+</ul>
+<p><strong>Under South African law:</strong> the age of consent is 16. Sexual activity with anyone under 16 is statutory rape regardless of apparent agreement. This applies to everyone — including peers the same age.</p>
+
+<h3>&#127973; Contraception — Your Options, Free and Available</h3>
+<p>Contraception is free or very low-cost at all public clinics in South Africa. Accessing it is responsible, not shameful.</p>
+<ul>
+<li><strong>Male condoms</strong> — the ONLY method that protects against both pregnancy AND STIs including HIV. Free at all public clinics. Use every time.</li>
+<li><strong>Female condoms</strong> — also protect against STIs. Available at clinics.</li>
+<li><strong>The pill</strong> — taken daily, 99% effective when correct. Does NOT protect against STIs. Available at clinics.</li>
+<li><strong>The injection (Depo-Provera)</strong> — every 3 months, highly effective. Does NOT protect against STIs.</li>
+<li><strong>The implant</strong> — inserted under the arm, lasts 3 years. Does NOT protect against STIs.</li>
+<li><strong>Emergency contraception (Morning After Pill)</strong> — within 72 hours of unprotected sex (the sooner the better). Available at pharmacies without a prescription. It is NOT an abortion pill — it prevents pregnancy. Not for regular use.</li>
+</ul>
+<p><strong>The rule:</strong> no method except condoms protects against STIs and HIV. Use condoms alongside other contraception for maximum protection.</p>
+
+<h3>&#128300; STIs and HIV — Know Your Status</h3>
+<p>STIs are common, often have no symptoms, and are serious. South Africa has the largest HIV epidemic in the world — approximately 13% of the population lives with HIV. Young women aged 15–24 are the highest-risk group.</p>
+<ul>
+<li><strong>HIV is no longer a death sentence</strong> — with treatment (ARVs), people with HIV live full, long lives. But prevention is far better.</li>
+<li><strong>PrEP</strong> — a daily pill for HIV-negative people that reduces HIV risk by up to 99%. Free at public clinics.</li>
+<li><strong>Testing</strong> — free at all public clinics. Know your status. Regular testing is healthcare, not paranoia.</li>
+</ul>
+
+<h3>&#129330; Real Scenario: The Pressure</h3>
+<p>You're with a partner. Things are moving in a direction you're not sure about. They say: "If you loved me you would." Or: "Everyone does this." Or they just go quiet and sulky when you say you're not ready. <strong>This is not consent culture. This is coercion.</strong> A person who genuinely cares about you will never pressure you into sexual activity. Pressure, guilt, and silence as punishment are not love. They are control. You have the right to say no — clearly, without apology, at any point. And if saying no ends the relationship, that is important information about who that person actually is.</p>
+
+<h3>&#129330; If You Are or Suspect You May Be Pregnant</h3>
+<p>A pregnancy test costs around R30 at any pharmacy. Free at public clinics. Find out early — early options are more available. In South Africa, abortion is legal on request up to 20 weeks, available free at designated public facilities. Whatever you decide — continuing, adoption, or termination — you deserve accurate information, medical care, and support.</p>
+<ul>
+<li><strong>Marie Stopes SA:</strong> 0800 11 77 85 (free, confidential)</li>
+<li><strong>Your local public clinic</strong></li>
+</ul>
+<button class="submit-btn" onclick="markComplete()">Week 9 Quiz &#9889;</button>`,
+    resources:[
+      {icon:"&#128274;",title:"Consent Explained Clearly",desc:"What consent is, what it isn't, and what South African law says",file:"consent-guide.pdf"},
+      {icon:"&#127973;",title:"Contraception Options Guide",desc:"Every method explained — effectiveness, STI protection, availability",file:"contraception-guide.pdf"},
+      {icon:"&#128300;",title:"STI &amp; HIV Prevention Guide",desc:"Know your status, protect yourself, access free testing and PrEP",file:"sti-hiv-guide.pdf"},
+      {icon:"&#129330;",title:"Teen Pregnancy Support Guide",desc:"Options, rights, and support services if you or someone you know is pregnant",file:"pregnancy-support.pdf"},
+      {icon:"&#127909;",title:"Week 9 Health Audio",desc:"Honest conversations on sex, health, and decisions",file:"week9-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Consent to sexual activity must be:",options:["Given once at the start of a relationship and assumed ongoing","Freely given, enthusiastic, ongoing, sober, and specific — withdrawable at any time","Verbal only — physical signals don't count legally","Assumed unless the person explicitly says no"],correct:1},
+      {question:"Under South African law, the age of consent is:",options:["14","16 — sexual activity with anyone under 16 is statutory rape regardless of apparent agreement","18","There is no fixed age — it depends on maturity"],correct:1},
+      {question:"Which contraceptive method is the ONLY one protecting against both pregnancy AND HIV/STIs?",options:["The contraceptive pill","The injection (Depo-Provera)","Condoms — male and female","The implant"],correct:2},
+      {question:"Emergency contraception (Morning After Pill) must be taken:",options:["Within 5 days with equal effectiveness throughout","Within 72 hours — the sooner the better","As a regular backup to other contraception","Combined with another pill for effectiveness"],correct:1},
+      {question:"A partner saying 'if you loved me you would' in a sexual context is:",options:["A legitimate expression of emotional vulnerability in a relationship","Coercion — using guilt to pressure someone into sex is not consent; a person who genuinely cares will never pressure you","A sign of deep feelings that should be taken seriously","Normal communication that should be met with honest conversation about readiness"],correct:1},
+      {question:"PrEP is:",options:["Treatment for people with HIV to prevent progression","A daily pill for HIV-negative people reducing HIV risk by up to 99% — free at public clinics","An antibiotic for common STIs","A vaccine against HIV currently in trials"],correct:1},
+      {question:"Why are young women aged 15-24 the highest-risk HIV group in South Africa?",options:["Biological susceptibility","Multiple factors including unequal power in relationships, limited access to information, and high-risk partner behaviour","Less access to healthcare than older women","Higher sexual activity than other groups"],correct:1},
+      {question:"STI testing if sexually active is described as:",options:["Necessary only after unprotected sex","Healthcare — many STIs have no symptoms; regular testing is responsible, not paranoid","Required by law for people under 18","Only necessary if you have multiple partners"],correct:1},
+      {question:"If a teenager thinks they may be pregnant, the most important first step is:",options:["Wait to see if their period arrives","Find out early — a test costs R30 at pharmacies and is free at clinics; early knowledge means more options","Tell their parents before anything else","Talk to the other person involved first"],correct:1},
+      {question:"In South Africa, abortion is:",options:["Illegal except in exceptional circumstances","Legal on request up to 20 weeks, available free at designated public facilities","Legal up to 12 weeks for rape or incest only","Legal but requiring parental consent for those under 18"],correct:1},
+    ]
+  }
+  ,10:{
+    tutorialVideo:"Social Media, the Algorithm, and Taking Your Mind Back",
+    basicVideo:"TikTok, Instagram, Self-Esteem, and Comparison Culture",
+    journalPrompts:[
+      "Be honest about your screen time. How many hours a day? What are you getting from it — and what is it costing you?",
+      "When you scroll social media, how do you feel afterwards compared to when you started? What does that tell you?",
+      "What would change in your life if you cut your daily social media use by half for one month?"
+    ],
+    content:`<h2>Week 10: Social Media, the Algorithm &amp; Taking Your Mind Back</h2>
+<div class="info-banner"><h4>&#128241; Social Media Platforms Are Designed by Brilliant Engineers to Keep You Scrolling. You Are Not Weak for Being Hooked. But You Can Understand How It Works — and Take Back Control.</h4><p>This week is not about quitting social media. It is about using it deliberately instead of being used by it.</p></div>
+
+<h3>&#9881;&#65039; How the Algorithm Actually Works</h3>
+<p>Every major social media platform — TikTok, Instagram, YouTube, Snapchat — is optimised for one metric: <strong>time on platform.</strong> The longer you stay, the more advertising revenue they generate. The algorithm's job is to keep you scrolling.</p>
+<ul>
+<li><strong>Emotional content surfaces first</strong> — content triggering strong emotions (desire, fear, anger, envy, entertainment) generates more engagement. The algorithm rewards emotionally activating content with reach. This is why extreme, shocking, and aspirational content dominates your feed — not because it is true or valuable, but because it keeps you watching.</li>
+<li><strong>Variable reward</strong> — your feed works like a slot machine. Most scrolls are nothing. But occasionally something genuinely interesting appears. This unpredictability is precisely what makes it addictive — the same mechanism as gambling.</li>
+<li><strong>Social comparison triggers</strong> — content showing other people's highlight reels, bodies, relationships, and lifestyles creates aspiration and envy. Both generate emotional activation. Both keep you scrolling.</li>
+<li><strong>Infinite scroll</strong> — no natural stopping point. Books end. Episodes end. Social media was designed to never end. Without a stopping cue, you rely entirely on willpower — which depletes.</li>
+</ul>
+
+<h3>&#128200; What Social Media Is Doing to Self-Esteem</h3>
+<p>Research consistently shows heavy social media use correlates with reduced self-esteem, increased depression, and increased anxiety — particularly among teenage girls. <strong>Facebook's own internal research (leaked in 2021) showed they knew Instagram harmed teenage girls' body image — and published it anyway.</strong></p>
+<ul>
+<li><strong>Upward comparison</strong> — you compare your real, messy behind-the-scenes with everyone else's curated highlight reel. You will almost always lose this comparison. It is structurally designed to make you feel inadequate.</li>
+<li><strong>The beauty filter problem</strong> — filters create physical standards that are literally unachievable because they do not reflect real bodies. Many young people now feel distress about not looking like their own filtered photos.</li>
+<li><strong>Likes as validation</strong> — when self-worth depends on external approval measured in numbers, you hand control of how you feel about yourself to strangers and an algorithm.</li>
+<li><strong>FOMO</strong> — seeing curated versions of other people's social lives creates the persistent feeling that everyone else is having more fun and more connection. This is an illusion most people feel simultaneously.</li>
+</ul>
+
+<h3>&#127917; Real Scenario: The Comparison Spiral</h3>
+<p>You pick up your phone before bed. You scroll Instagram for "a few minutes." Thirty minutes later you're still scrolling. You've seen three girls with bodies you don't have, two people at a party you weren't invited to, and a couple whose relationship looks perfect. You put the phone down feeling vaguely terrible about your life — which was fine before you started scrolling. <strong>Nothing in your actual life changed in those 30 minutes. But your feelings about it did. That is the algorithm working exactly as designed.</strong></p>
+
+<h3>&#127917; Trends, Challenges &amp; Going Viral</h3>
+<p>Viral trends spread because platforms reward content that drives sharing. Some are harmless. Some are dangerous. <strong>The fact that thousands are doing something does not make it safe or sensible.</strong> Before any trend: ask who benefits from this going viral, what is the actual risk, and would you do this if it wasn't being filmed.</p>
+
+<h3>&#128275; Taking Back Control</h3>
+<ul>
+<li><strong>Track your actual usage</strong> — screen time is built into most phones. Check it honestly. Most people are shocked by the reality.</li>
+<li><strong>Phone-free time</strong> — no phone for the first 30 minutes after waking (your brain is most impressionable then). No phone during meals. No phone in the bedroom if possible.</li>
+<li><strong>Curate aggressively</strong> — unfollow anything that consistently makes you feel worse about yourself. You are not obligated to consume content that damages you.</li>
+<li><strong>Turn off notifications</strong> — you decide when you check social media. Not the app. Notifications are interruption requests. Decline them.</li>
+<li><strong>Introduce stopping cues</strong> — set a timer before you start. Decide how long. Your willpower is finite; engineer your environment instead.</li>
+<li><strong>Replace, don't just remove</strong> — "use less social media" alone rarely works. Replace the time with something that gives real fulfilment: exercise, creating something, genuine human connection.</li>
+</ul>
+<button class="submit-btn" onclick="markComplete()">Week 10 Quiz &#9889;</button>`,
+    resources:[
+      {icon:"&#9881;&#65039;",title:"Algorithm Explained",desc:"How TikTok, Instagram, and YouTube are designed to maximise time on platform",file:"algorithm-guide.pdf"},
+      {icon:"&#128200;",title:"Social Media &amp; Self-Esteem",desc:"What the research (including Facebook's own leaked study) actually shows",file:"social-esteem-research.pdf"},
+      {icon:"&#128275;",title:"Digital Detox Protocol",desc:"A 30-day plan to reduce screen time and reclaim your focus",file:"digital-detox.pdf"},
+      {icon:"&#127917;",title:"Trend Safety Checklist",desc:"How to evaluate viral challenges before participating",file:"trend-checklist.pdf"},
+      {icon:"&#127909;",title:"Week 10 Focus Audio",desc:"Reclaiming your attention and building real confidence",file:"week10-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Social media platforms optimise primarily for:",options:["User wellbeing and positive mental health outcomes","Time on platform — longer engagement generates more advertising revenue","Content quality and accuracy","User growth and new demographics"],correct:1},
+      {question:"The 'variable reward' mechanism in social media is similar to:",options:["A game that increases difficulty as skill grows","A slot machine — unpredictable rewards are more addictive than consistent ones","An inbox requiring responses to maintain relationships","A news feed updating based on demonstrated interests"],correct:1},
+      {question:"Upward social comparison on social media damages self-esteem because:",options:["People exaggerate achievements online","You compare your real behind-the-scenes with everyone else's curated highlight reel — a structurally unfair comparison designed to make you feel inadequate","Social media users are generally more successful than average","Seeing others succeed creates discouragement rather than motivation"],correct:1},
+      {question:"Facebook's own leaked 2021 research showed:",options:["No significant impact on teenage mental health","Instagram was harmful to teenage girls' body image and self-esteem — and they knew and published it anyway","Effects limited to already-vulnerable users","Adult use was harmful but teenage use was within acceptable parameters"],correct:1},
+      {question:"The beauty filter problem means:",options:["Filters make photos less realistic","Filters create physical standards that are literally unachievable because they don't reflect real bodies — many young people feel distress about not looking like their own filtered photos","Filters promote superficial judgment","Filters create unrealistic photography expectations"],correct:1},
+      {question:"Tying self-worth to social media likes is a problem because:",options:["Likes don't reflect genuine appreciation","You hand control of how you feel about yourself to strangers and an algorithm — external validation beyond your control","It creates pressure to post constantly","It leads to unhealthy comparison"],correct:1},
+      {question:"Before participating in a viral trend, you should ask:",options:["How many people have done it without problems","Who benefits from this going viral, what is the actual risk, and would I do this if it weren't being filmed","Whether it aligns with my personal brand","Whether my followers would engage positively"],correct:1},
+      {question:"'No phone for the first 30 minutes after waking' is recommended because:",options:["Blue light from screens disrupts the transition from sleep","Your brain is most impressionable immediately after waking — starting the day with social media sets comparison and reactivity as your mental default","Morning is most productive for focused work","Overnight notifications create unnecessary stress"],correct:1},
+      {question:"'Use less social media' as a strategy usually fails without:",options:["External accountability from friends or family","Replacing screen time with something genuinely fulfilling — removing the habit creates a void that needs to be filled","Blocking apps using phone settings","Starting a social media detox on a Monday to align with weekly routines"],correct:1},
+      {question:"FOMO (Fear of Missing Out) in social media context is best described as:",options:["A legitimate concern others are accessing unavailable opportunities","An illusion created by curated versions of other people's lives — most people feel it simultaneously while believing they're the only ones missing out","A motivational force encouraging greater social activity","A form of social anxiety that predates social media"],correct:1},
+    ]
+  }
+  ,11:{
+    tutorialVideo:"Gender-Based Violence — Understanding It, Surviving It, Stopping It",
+    basicVideo:"Healthy vs Unhealthy Relationships, Red Flags, and How to Get Safe",
+    journalPrompts:[
+      "What does a healthy relationship look like to you — and where did you learn what you know about relationships?",
+      "Have you ever witnessed or experienced something in a relationship that didn't feel right? What stopped you from acting?",
+      "What would you tell a close friend who was in a relationship that seemed controlling or dangerous?"
+    ],
+    content:`<h2>Week 11: Gender-Based Violence — Understanding, Surviving &amp; Stopping It</h2>
+<div class="info-banner"><h4>&#9994; South Africa Has One of the Highest GBV Rates in the World. It Affects Girls, Boys, Women, and Men. Knowing the Signs Could Save Your Life — or Someone Else's.</h4><p>GBV does not start with violence. It starts with control. This week gives you the tools to recognise it early, respond to it, and refuse to perpetuate it.</p></div>
+
+<h3>&#128203; What Gender-Based Violence Actually Is</h3>
+<p>GBV is any harmful act directed at a person based on their gender. It includes: physical violence, sexual violence, emotional and psychological abuse, economic abuse (controlling someone's money), and stalking. <strong>It happens in relationships, families, schools, and communities — by partners, family members, acquaintances, and strangers.</strong></p>
+<p><strong>South Africa statistics:</strong></p>
+<ul>
+<li>South Africa's femicide rate is approximately 5 times the global average — a woman is murdered every 3 hours</li>
+<li>In 2022/23, over 53,000 sexual offences were reported — and sexual violence is massively underreported</li>
+<li>Men and boys are also victims of GBV — including sexual assault and intimate partner violence</li>
+</ul>
+
+<h3>&#128681; Unhealthy Relationship Red Flags — The Early Signs</h3>
+<p>GBV rarely begins with violence. It begins with control. By the time physical violence appears, the pattern of control is usually already deeply established.</p>
+<ul>
+<li><strong>Jealousy framed as love:</strong> "I'm only like this because I love you so much." Jealousy is not proof of love. It is a need for control dressed in the language of care.</li>
+<li><strong>Isolation:</strong> "Your friends are bad for you." "Your family just wants to control you." Gradually cutting you off from your support system — which makes leaving much harder and makes the abuser your only source of support.</li>
+<li><strong>Monitoring and controlling:</strong> Demanding to know your location constantly. Checking your phone. Telling you what to wear. Controlling who you spend time with.</li>
+<li><strong>Put-downs and humiliation:</strong> Insults dismissed as "just a joke." Public embarrassment. Making you feel stupid, ugly, or worthless — then blaming your reaction.</li>
+<li><strong>Extreme mood swings:</strong> Loving one moment, explosive or cold the next. Walking on eggshells to manage their mood. This instability keeps you focused on managing them rather than noticing the pattern.</li>
+<li><strong>Threats:</strong> "If you leave I'll hurt myself." "If you tell anyone I'll share your photos." Using fear as a control mechanism.</li>
+<li><strong>Physical intimidation without hitting — yet:</strong> Blocking doorways. Standing over you. Destroying objects. These are rehearsals.</li>
+</ul>
+
+<h3>&#128260; The Cycle of Abuse — Why People Stay</h3>
+<p>Abusive relationships follow a predictable cycle that makes leaving from the outside look simple and from the inside look impossible:</p>
+<ul>
+<li><strong>Tension building</strong> — walking on eggshells, minor incidents, a sense of something about to break</li>
+<li><strong>Incident</strong> — the abusive event: verbal, emotional, or physical</li>
+<li><strong>Reconciliation (Honeymoon phase)</strong> — apologies, affection, gifts, "it will never happen again." <strong>This is the phase that keeps people in abusive relationships.</strong> The person you fell for seems to have returned. The hope that this is the real change.</li>
+<li><strong>Calm</strong> — things seem normal again. Then the tension begins building once more.</li>
+</ul>
+<p>The cycle typically shortens over time — the honeymoon phase grows shorter, the incidents grow worse. <strong>If you are in this cycle, the pattern will not fix itself. It escalates.</strong></p>
+
+<h3>&#127917; Real Scenario: The Controlling Partner</h3>
+<p>You've been dating someone for four months. At first it felt flattering — they always wanted to know where you were, they got upset when you spent time with friends. "It just means they love me," you thought. Now they check your phone daily. They've argued with two of your close friends and created enough tension that you see them less. When you wear something they don't like, there's a fight. You find yourself changing your behaviour to avoid upsetting them. You are not happy. But you're not sure what to do.</p>
+<p><strong>This is not love. This is control. And the pattern described is already several stages deep.</strong> Tell a trusted adult. Call a helpline. Make a safety plan. The longer this continues, the harder leaving becomes.</p>
+
+<h3>&#128682; Getting Safe</h3>
+<p>Leaving is the most dangerous time in an abusive relationship. More violence occurs when someone tries to leave than at any other point. Safety planning is not an overreaction — it is intelligence.</p>
+<ul>
+<li>Tell a trusted adult: a friend, family member, teacher, counsellor</li>
+<li>Know the emergency numbers — and save them somewhere the abuser cannot find</li>
+<li>Have important documents (ID, school records) accessible</li>
+<li>If in immediate danger: SAPS 10111</li>
+</ul>
+<p><strong>Support in South Africa:</strong></p>
+<ul>
+<li><strong>Stop GBV Helpline:</strong> 0800 428 428 (free, 24/7)</li>
+<li><strong>Childline SA:</strong> 116 (free)</li>
+<li><strong>TEARS Foundation:</strong> SMS "help" to 085 512 0755</li>
+<li><strong>SAPS:</strong> 10111</li>
+</ul>
+
+<h3>&#128170; Boys, Men, and GBV</h3>
+<p>GBV affects everyone. Men and boys face additional barriers to help-seeking because of social expectations that they should be "strong" and not show vulnerability. <strong>Silence protects abusers, not victims. Asking for help is strength.</strong> For young men: refusing to participate in cultures of disrespect toward women and girls — in group chats, locker rooms, social situations — is not weakness. It is the highest form of leadership.</p>
+<button class="submit-btn" onclick="markComplete()">Week 11 Quiz &#9889;</button>`,
+    resources:[
+      {icon:"&#128681;",title:"Relationship Red Flags Checklist",desc:"25 early warning signs of a potentially abusive relationship",file:"red-flags-checklist.pdf"},
+      {icon:"&#128260;",title:"Cycle of Abuse Explained",desc:"Why people stay — and how to break the cycle",file:"abuse-cycle.pdf"},
+      {icon:"&#128682;",title:"Safety Planning Guide",desc:"How to prepare to leave safely and what to do in an emergency",file:"safety-plan.pdf"},
+      {icon:"&#9994;",title:"GBV Resources SA",desc:"All helplines, shelters, and support services across South Africa",file:"gbv-resources.pdf"},
+      {icon:"&#127909;",title:"Week 11 Courage Audio",desc:"Honest conversations about love, control, and getting free",file:"week11-audio.mp3"},
+    ],
+    assessment:[
+      {question:"Gender-based violence is:",options:["Exclusively physical violence between adult intimate partners","Any harmful act directed at a person based on their gender — including physical, sexual, emotional, economic abuse and stalking, by any perpetrator","Violence that only affects women in heterosexual relationships","Physical assault serious enough to require medical treatment"],correct:1},
+      {question:"GBV in South Africa: approximately how often is a woman murdered?",options:["Once every 24 hours","Every 3 hours — South Africa's femicide rate is approximately 5 times the global average","Once every week","Every 8 hours in high-crime areas"],correct:1},
+      {question:"Abusive relationships typically begin with:",options:["A single serious incident of physical violence","Gradual control — jealousy framed as love, isolation from support networks, monitoring — escalating over time before reaching physical violence","Mutual conflict that spirals","Warning signs most victims ignore due to emotional attachment"],correct:1},
+      {question:"'Jealousy framed as love' is a red flag because:",options:["Jealousy is normal but shouldn't be expressed violently","Jealousy in this context is a need for control, not proof of care — it is a warning sign presented in the language of love","It creates unhealthy dependency","Partners who show jealousy early are more likely to be unfaithful"],correct:1},
+      {question:"The 'honeymoon phase' of the abuse cycle is dangerous because:",options:["It creates false security that allows tension to rebuild unnoticed","The affection and promises to change during this phase are what keep people in the relationship — it feels like the person they fell for returning","It causes victims to blame themselves","It involves promises the abuser has no intention of keeping"],correct:1},
+      {question:"Why is leaving an abusive relationship described as the most dangerous time?",options:["The abuser becomes more calculating after separation","More violence occurs when someone tries to leave than at any other point — safety planning is essential","Leaving removes legal protections","Financial dependence makes leaving practically impossible"],correct:1},
+      {question:"Isolation by an abusive partner serves to:",options:["Reflect the partner's social anxiety","Remove the victim's support system, create dependence on the abuser, and make leaving harder — it is a deliberate control tactic","Reflect a communication style the abuser is working on","Mark a normal early stage of new relationships"],correct:1},
+      {question:"Boys and men who are GBV victims face additional barriers because:",options:["Services are designed exclusively for female victims","Social expectations that men should not show vulnerability — these expectations protect abusers, not victims; asking for help is strength","Male cases are taken less seriously by authorities","Male GBV is less severe and less likely to require formal help"],correct:1},
+      {question:"For young men, refusing to participate in cultures of disrespect toward women means:",options:["Avoiding groups where this occurs entirely","Not joining in with disrespectful language or behaviour in group chats, locker rooms, and social situations — this is leadership, not weakness","Actively reporting every instance of disrespect to authorities","Confronting disrespectful peers publicly and aggressively"],correct:1},
+      {question:"If you recognise the abuse cycle in your own relationship, the most important step is:",options:["Confront the abuser directly with what you have learned","Tell a trusted adult, know the helpline numbers, and create a safety plan — the pattern will not fix itself; it escalates","Give the relationship one more chance after the honeymoon phase","Document incidents before taking any action"],correct:1},
+    ]
+  }
+  ,12:{
+    tutorialVideo:"Technology, AI and Building Your Future in a World That's Changing Fast",
+    basicVideo:"Gaming, Digital Careers, AI Risks and Opportunities for SA Teenagers",
+    journalPrompts:[
+      "What technology skills do you already have — and how could they become real opportunities?",
+      "What does artificial intelligence mean to you — and what job in your field might AI change in the next 10 years?",
+      "What is one thing you will do in the next 30 days to build a skill that will matter in the future?"
+    ],
+    content:`<h2>Week 12: Technology, AI &amp; Building Your Future in a Changing World</h2>
+<div class="info-banner"><h4>&#129302; AI Is Not the Future. It Is the Present. The Question Is Whether You Will Be Someone Who Uses It — or Someone It Replaces.</h4><p>This final week is about understanding what technology is doing to the world, what that means for your life, and how to position yourself on the right side of the change.</p></div>
+
+<h3>&#129302; What AI Actually Is — And What It Isn't</h3>
+<p>Artificial intelligence is software that learns from data to perform tasks that previously required human intelligence: writing, coding, image generation, analysis, customer service, translation, legal research, medical diagnosis. <strong>AI does not think. It does not feel. It predicts the most likely next output based on patterns in its training data.</strong> But its predictions are increasingly good — good enough to automate tasks that millions of people are currently paid to do.</p>
+<p>What AI is currently capable of: writing articles, emails, and code; generating images and video from text; data analysis; customer service conversations; legal document review; medical image analysis; real-time translation across hundreds of languages.</p>
+<p>What AI currently struggles with: genuine creativity from lived experience, complex ethical judgment, physical tasks requiring fine motor skills, truly novel problem-solving with no precedent, and authentic human connection.</p>
+
+<h3>&#128188; What This Means for Careers</h3>
+<p><strong>Jobs most at risk:</strong> data entry, basic customer service, routine accounting, simple coding tasks, paralegal research, basic journalism, and any role involving pattern recognition in structured data.</p>
+<p><strong>Jobs most resilient:</strong> roles requiring genuine human connection (therapy, teaching, social work, coaching), skilled trades requiring physical judgment (plumbing, electrical, construction), creative direction and strategic thinking, roles requiring accountability and ethical judgment, and roles where the human relationship is the product.</p>
+<p><strong>The most valuable position:</strong> learning to work with AI — using it as a tool that amplifies your human capabilities. The person who can write well AND use AI to write faster will outcompete both the person who ignores AI and the person who relies on it without judgment.</p>
+
+<h3>&#127918; Gaming — Opportunity or Trap?</h3>
+<p>Gaming is a R250 billion+ global industry that creates millions of jobs. It is also a powerful system designed to maximise time-on-platform using the same psychological mechanisms as social media.</p>
+<ul>
+<li><strong>Real career paths:</strong> game development (programming, design, art, sound, storytelling), esports (real careers but odds equivalent to professional sport), content creation (real income but highly saturated market), and adjacent roles in marketing, event management, and coaching.</li>
+<li><strong>The trap:</strong> addictive design, sleep disruption, isolation, and the opportunity cost of time. Signs of a gaming problem: playing to escape emotions, inability to reduce despite wanting to, significant impact on sleep, school, and relationships.</li>
+</ul>
+
+<h3>&#127466;&#127462; Digital Opportunities for South African Teenagers</h3>
+<p>South Africa's digital economy is growing and geography matters less and less for digital work. You can compete globally from anywhere. Skills accessible and in demand now:</p>
+<ul>
+<li><strong>Coding:</strong> Python, JavaScript, web development — learnable free at freeCodeCamp, Codecademy, Khan Academy. A competent SA programmer can earn internationally competitive rates remotely.</li>
+<li><strong>Digital design:</strong> graphic design, UI/UX, video editing. Canva, Figma, DaVinci Resolve are free. Skills learnable on YouTube.</li>
+<li><strong>Digital marketing:</strong> social media management, SEO, content strategy. Google and Meta offer free certifications.</li>
+<li><strong>AI literacy:</strong> knowing how to use and prompt AI tools effectively is an advantage across virtually every industry. Learnable now, free.</li>
+<li><strong>Free SA programmes:</strong> WeThinkCode_, CodeYourFuture, Umuzi — free or subsidised coding and digital training for young South Africans.</li>
+</ul>
+
+<h3>&#128680; Real Scenario: The Shortcut</h3>
+<p>You have a 1,500-word essay due tomorrow. You discover you can paste the question into an AI tool and get a complete essay in 30 seconds. You copy it, submit it, get a good mark. Repeat five times. Exam day arrives. The skills the essays were supposed to build — research, argument, synthesis, writing — you don't have. The certificate says you can do something you cannot. <strong>You have robbed yourself of the skills using the tool that was supposed to build them. The grade is empty. And it shows when it counts.</strong></p>
+
+<h3>&#128680; AI Risks You Need to Know</h3>
+<ul>
+<li><strong>Deepfakes</strong> — AI-generated video or audio of real people saying things they never said. Used for political manipulation, revenge porn, and fraud. Verify shocking content before sharing.</li>
+<li><strong>AI misinformation</strong> — false news and fabricated quotes spreading faster than verification. Critical thinking matters more than ever.</li>
+<li><strong>Academic dishonesty</strong> — the real cost is not getting caught; it is arriving at adulthood without the skills the work was designed to build.</li>
+<li><strong>Data privacy</strong> — "free" AI tools collect your data. Nothing is truly free. Read what you consent to.</li>
+</ul>
+<button class="submit-btn" onclick="markComplete()">Week 12 Complete — You Have Finished the Operating System &#127942;</button>`,
+    resources:[
+      {icon:"&#129302;",title:"AI Explained for Teenagers",desc:"What AI is, what it does, and what it means for your future",file:"ai-explained.pdf"},
+      {icon:"&#128188;",title:"Future-Proof Career Guide",desc:"AI-resilient careers and skills to build now",file:"future-careers.pdf"},
+      {icon:"&#127918;",title:"Gaming Career Pathways",desc:"Real routes into game development, esports, and digital careers",file:"gaming-careers.pdf"},
+      {icon:"&#127466;&#127462;",title:"SA Digital Opportunities Directory",desc:"Free coding schools, certifications, and digital career pathways in South Africa",file:"sa-digital-opps.pdf"},
+      {icon:"&#127909;",title:"Week 12 Future Audio",desc:"Final session — building the life technology makes possible",file:"week12-audio.mp3"},
+    ],
+    assessment:[
+      {question:"AI predicts outputs by:",options:["Accessing the internet in real time to find relevant information","Recognising patterns in training data to predict the most likely next output — effectively, but without understanding or consciousness","Using logical rules programmed by humans","Learning from each individual user's behaviour"],correct:1},
+      {question:"Which jobs are most resilient to AI automation?",options:["Routine data processing and pattern recognition","Roles requiring genuine human connection, physical dexterity, ethical judgment, or where the human relationship is the product","Creative work like writing and image generation","Administrative work involving documents and communication"],correct:1},
+      {question:"The most valuable career position regarding AI is:",options:["Becoming an AI engineer who builds AI systems","Learning to work with AI as a tool that amplifies human capabilities — outcompeting both those who ignore it and those who rely on it without judgment","Specialising in fields far from technology","Focusing exclusively on physical skills AI cannot replicate"],correct:1},
+      {question:"What does the 'shortcut scenario' with AI-generated essays illustrate?",options:["That detection systems are sophisticated and consequences of being caught are severe","That submitting AI work robs you of the skill-building the task was designed to create — the credential without the skill is empty and shows when it counts","That AI tools violate the intellectual property of their creators","That AI use creates unfair advantage over students without access"],correct:1},
+      {question:"A deepfake is:",options:["A fake social media profile deceiving people about someone's identity","AI-generated video or audio of real people saying or doing things they never did — used for political manipulation, revenge porn, and fraud","A type of virus that uses AI to evade detection","A false news article mimicking legitimate journalism"],correct:1},
+      {question:"The real cost of academic AI dishonesty is:",options:["Detection risk and severe consequences if caught","Arriving at adulthood without the skills the work was designed to build — the grade is empty and shows when it counts","Violating the IP of the AI company","Creating unfair advantage over others"],correct:1},
+      {question:"Which free resource is recommended for learning to code in South Africa?",options:["Paid bootcamps with income-share agreements","freeCodeCamp, Codecademy, Khan Academy — free platforms where skills command internationally competitive remote rates","University CS programmes for most rigorous training","Paid Udemy courses with employer-recognised certifications"],correct:1},
+      {question:"AI misinformation is increasingly dangerous because:",options:["Most people cannot distinguish AI from human writing","AI-generated false content spreads faster than verification can keep up — making critical thinking and source checking more important than ever","AI systems have political biases built in by developers","Platforms are not required to label AI-generated content"],correct:1},
+      {question:"Signs of a problematic relationship with gaming include:",options:["Playing daily as part of a structured routine","Playing to escape negative emotions, inability to reduce despite wanting to, and significant impact on sleep, school, and relationships","Preferring online gaming with friends to in-person activities","Spending money on in-game items"],correct:1},
+      {question:"'AI literacy' as a career skill means:",options:["Ability to build and train AI models from scratch","Knowing how to prompt, use, and apply AI tools effectively — an advantage across virtually every industry, learnable free now","A formal qualification in AI from an accredited institution","Ability to identify AI-generated content in professional settings"],correct:1},
+    ]
+  }
+
+};
+</script>
+</body>
+</html>
